@@ -1,0 +1,6 @@
+const test=require("node:test");const assert=require("node:assert/strict");const MathLab=require("../math-core.js");
+test("every double-and-half step preserves the product",()=>{const steps=MathLab.buildSteps(48,25,2);assert.deepEqual(steps.map(s=>[s.a,s.b]),[[48,25],[24,50],[12,100]]);assert.ok(steps.every(s=>s.product===1200))});
+test("the core example has the correct result",()=>assert.equal(MathLab.product(48,25),1200));
+test("generated challenges stay integral and have correct answers",()=>{for(let i=0;i<200;i+=1){const c=MathLab.generateChallenge(()=>(i%199)/199);assert.equal(c.answer,c.a*c.b);assert.ok(c.steps.every(s=>Number.isInteger(s.a)&&Number.isInteger(s.b)));assert.ok(c.steps.every(s=>s.product===c.answer))}});
+test("rapid next, previous, and replay calls cannot corrupt lesson state",()=>{const state=new MathLab.LessonState(4);for(let i=0;i<30;i+=1)state.next();assert.equal(state.step,4);for(let i=0;i<30;i+=1)state.previous();assert.equal(state.step,0);state.next();state.next();state.replay();state.previous();assert.equal(state.step,0)});
+test("invalid halving inputs are rejected",()=>{assert.throws(()=>MathLab.transformPair(7,25));assert.throws(()=>MathLab.buildSteps(10,25,-1))});

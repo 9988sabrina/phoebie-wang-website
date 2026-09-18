@@ -1,0 +1,6 @@
+.DS_Store
+tmp/
+test-results/
+screenshots/
+private-delivery/
+*practice-pack*.pdf
