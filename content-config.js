@@ -12,3 +12,6 @@ window.LEARNING_LAB_CONFIG = Object.freeze({
   media: Object.freeze({ lessonVideoUrl: "", phoebieNarrationUrl: "" }),
   contact: Object.freeze({ publicEmail: "", responseTarget: "2-3 business days after launch" })
 });
+
+// Owner configuration hooks: fill these only after analytics and email privacy review.
+window.SITE_CONFIG = { ga4Id: "", emailEmbedHtml: "" };
