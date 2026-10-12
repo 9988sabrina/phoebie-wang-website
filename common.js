@@ -7,20 +7,20 @@
     nav.classList.toggle("open", !open);
   });
   const targets = {
-    learn: "lesson.html",
-    product: "product.html",
-    play: "play.html",
-    tools: "tools.html",
-    reviews: "reviews/index.html",
-    best: "best-ai-tools.html",
-    about: "about.html",
-    newsletter: "newsletter.html",
-    disclosure: "disclosure.html",
+    learn: "/lesson.html",
+    product: "/product.html",
+    play: "/play.html",
+    tools: "/tools.html",
+    reviews: "/reviews/index.html",
+    best: "/best-ai-tools.html",
+    about: "/about.html",
+    newsletter: "/newsletter.html",
+    disclosure: "/disclosure.html",
     go: ""
   };
   if (targets[document.body.dataset.page]) document.querySelectorAll(".site-nav a").forEach((link) => {
-    const linkPath = new URL(link.href, window.location.href).pathname.replace(/^\//, "");
-    if (linkPath.endsWith(targets[document.body.dataset.page])) link.setAttribute("aria-current", "page");
+    const linkPath = new URL(link.href, window.location.href).pathname;
+    if (linkPath === targets[document.body.dataset.page]) link.setAttribute("aria-current", "page");
   });
   document.querySelectorAll("[data-clear-progress]").forEach((button) => button.addEventListener("click", () => {
     localStorage.removeItem("phoebieplays-state-v2");
