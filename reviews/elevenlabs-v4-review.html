@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="ElevenLabs Eleven v4 review: inline emotion tags, 90+ languages, 10-second voice cloning. Pricing, pros, cons, and who it&#x27;s for.">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#fff8e8">
+    <link rel="canonical" href="https://www.phoebiewang.com/reviews/elevenlabs-v4-review.html">
+    <meta property="og:title" content="ElevenLabs Eleven v4: AI Voice That Takes Direction Mid-Sentence | Phoebie Wang">
+    <meta property="og:description" content="ElevenLabs Eleven v4 review: inline emotion tags, 90+ languages, 10-second voice cloning. Pricing, pros, cons, and who it&#x27;s for.">
+    <meta property="og:url" content="https://www.phoebiewang.com/reviews/elevenlabs-v4-review.html">
+    <meta property="og:type" content="article">
+    <title>ElevenLabs Eleven v4: AI Voice That Takes Direction Mid-Sentence | Phoebie Wang</title>
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="../styles.css">
+    <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Review", "itemReviewed": {"@type": "SoftwareApplication", "name": "ElevenLabs Eleven v4"}, "author": {"@type": "Person", "name": "Phoebie Wang"}, "datePublished": "2026-10-12", "reviewBody": "ElevenLabs&#x27; Eleven v4 (launched September 28, 2026, alongside v4 Turbo) is the company&#x27;s most expressive text-to-speech model yet: 90+ languages, voice cloning from as little as 10 seconds of audio, and — the headline feature — inline audio tags like `[laughs]`, `[whispers]`, and `[sighs]`"}</script>
+    <!-- ANALYTICS: paste GA4 tag here once SITE_CONFIG.ga4Id is set -->
+</head>
+  <body data-page="reviews">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header"><a class="brand" href="../index.html" aria-label="Phoebie Wang home"><span class="brand-mark" aria-hidden="true">P</span><span>Phoebie Wang<small>AI tools, tested &amp; explained</small></span></a><button class="menu-button" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button><nav id="site-nav" class="site-nav" aria-label="Main navigation"><a href="../tools.html">AI Tools</a><a href="../reviews/index.html">Reviews</a><a href="../best-ai-tools.html">Best Picks</a><a href="../lesson.html">Learning Lab</a><a href="../about.html">About</a></nav></header>
+    <main id="main" class="wrap policy-page">
+      <p class="rv-disclosure">This post contains affiliate links. If you buy through them, I may earn a commission at no extra cost to you. I only recommend tools I've actually tried.</p>
+      <header class="page-hero"><p class="eyebrow">Hands-on review</p><h1>ElevenLabs Eleven v4: AI Voice That Takes Direction Mid-Sentence</h1><p class="lede">ElevenLabs&#x27; most expressive voice model takes emotional direction mid-sentence — here&#x27;s the full first look.</p><p><strong>Updated:</strong> October 12, 2026</p></header>
+      <section class="rv-verdict" aria-labelledby="verdict-title"><h2 id="verdict-title">The 60-second verdict</h2>
+<p>ElevenLabs&#x27; Eleven v4 (launched September 28, 2026, alongside v4 Turbo) is the company&#x27;s most expressive text-to-speech model yet: 90+ languages, voice cloning from as little as 10 seconds of audio, and — the headline feature — inline audio tags like `[laughs]`, `[whispers]`, and `[sighs]` that let you direct emotion <em>inside</em> a sentence, no separate editing pass. v4 Turbo trades a little quality for ~100ms latency aimed at voice agents. If your work is narration, ads, or character voice, v4 is the one to watch; if you build realtime voice agents, Turbo is the pick. Pricing is character-based, with a launch discount that ran through October 12 — check the current rates before budgeting.</p>
+</section>
+<section>
+<h2>What it is</h2>
+<p>ElevenLabs is the best-known AI voice company (reportedly valued around $22B in 2026 on ~$600M ARR pace). Eleven v4 is its flagship TTS model, successor to v3, built on a new architecture for context-aware emotional speech. It shipped with immediate availability across ElevenLabs&#x27; own surfaces — the ElevenCreative studio, ElevenAgents platform, and the ElevenAPI (model IDs `eleven_v4` and `eleven_v4_turbo`).</p>
+<p>The big idea: previous TTS gave you one emotional setting per generation. v4 lets you <strong>direct delivery inline</strong> — emotion, pacing, even sound effects — written directly in the script, with the model also using surrounding context to adjust expression on its own.</p>
+</section>
+<section>
+<h2>How it works: the audio tags (first-look notes)</h2>
+<p>This is the feature everyone is talking about, so here&#x27;s how it works per ElevenLabs&#x27; launch materials and early technical write-ups:</p>
+<ul><li><strong>Inline direction tags.</strong> Write `[laughs]`, `[whispers]`, `[sighs]` — or free-form directions like `[strong French accent]` — directly in your text, placed right before the words they affect. v4 <em>performs</em> them instead of reading them aloud. (Older models like Flash v2.5 would literally say the word &quot;laughs&quot; — v4 acts it out.)</li><li><strong>Stackable tags.</strong> v3 introduced single tags; v4 lets you stack multiple tags in sequence and follows their order, while using surrounding context to smooth the transitions — less manual annotation needed.</li><li><strong>Sound effects.</strong> Beyond voice direction, v4 handles inline SFX cues, which matters for ads and character work.</li><li><strong>90+ languages</strong>, up from ~70 in v3. ElevenLabs reports the biggest quality jumps in Japanese, Brazilian Portuguese, Mandarin, and Cantonese.</li><li><strong>Voice cloning from 10 seconds.</strong> Instant voice cloning (IVC) needs only ~10s of reference audio, and v4 holds the cloned identity more reliably across long texts than v3. Professional voice cloning (PVC) consistency is also improved.</li><li><strong>v4 Turbo for realtime.</strong> Same expressive range, tuned for stream-in/stream-out: ~100ms median inference, ~150ms time-to-first-speech per ElevenLabs&#x27; figures — built for voice agents, support bots, and realtime calls.</li></ul>
+<p>One integration note for developers: v4 is served on ElevenLabs&#x27; text-to-dialogue streaming endpoint (not the older TTS websocket), so existing code needs small changes to adopt it.</p>
+<p>ElevenLabs also rolled v4 into <strong>ElevenReader</strong>, its reading app — which now narrates PDFs, ebooks, and articles in 90+ languages (up from 32), with 10 hours/month of TTS uploads on the Free plan.</p>
+</section>
+<section>
+<h2>Pricing</h2>
+<p>ElevenLabs prices API use per character. Reported figures around launch (October 2026):</p>
+<ul><li><strong>Eleven v4:</strong> $80 per million characters standard; a launch promo cut it to $22/M through October 12, 2026.</li><li><strong>v4 Turbo:</strong> $40 per million characters standard; promo price $11/M through October 12.</li><li>Creator+ plan subscribers reportedly got 2× credits on v4 during the promo window.</li></ul>
+<p>Treat all of this as <strong>verify-at-publish</strong>: the promo has likely expired by the time you read this, and plan pricing changes often. ElevenLabs&#x27; official pricing page is the source of truth. (Third-party resellers like Venice/OpenRouter list their own per-character rates, e.g. ~$0.08–0.09/1K chars for v4 — convenient for trying it without a subscription, but not ElevenLabs&#x27; own pricing.)</p>
+</section>
+<section>
+<h2>Pros &amp; cons</h2><h3>Pros</h3><ul><li>Most expressive ElevenLabs model to date; inline emotion direction is a genuine workflow change, not a gimmick.</li><li>90+ languages with notably better Asian-language quality (Mandarin, Cantonese, Japanese).</li><li>10-second voice cloning with better long-form identity stability.</li><li>v4 Turbo gives voice-agent builders sub-150ms speech with the same tag system.</li><li>Free tier of ElevenReader lets anyone hear v4 quality without paying.</li></ul><h3>Cons</h3><ul><li>It&#x27;s still prompt-and-listen: directing <em>well</em> takes experimentation; tags are powerful but not magic.</li><li>API migration required (new endpoint, new model IDs) — not a drop-in upgrade for existing integrations.</li><li>Character-based pricing punishes long-form experimentation; budget before you binge.</li><li>Launch promo pricing has expired — the standard rates are 3–4× higher than the promo window.</li></ul>
+</section>
+<section>
+<h2>Who it&#x27;s for</h2>
+<ul><li><strong>Video creators &amp; podcasters</strong> who need narration with actual acting in it — ads, explainers, character voices. This is v4&#x27;s home turf, and the reason it leads our creator-audio picks.</li><li><strong>Authors &amp; publishers</strong> exploring audiobook narration: long-form identity stability is the specific v4 improvement to watch.</li><li><strong>Voice-agent builders</strong>: skip straight to v4 Turbo and benchmark time-to-first-speech on your own stack — vendor latency slides are directional.</li><li><strong>Multilingual teams</strong>: if your content ships in Mandarin, Cantonese, Japanese, or Brazilian Portuguese, v4&#x27;s reported quality jumps are worth an A/B test against v3.</li><li><strong>Hold off</strong> if you need deterministic, broadcast-identical reads of the same script every time — expressive models trade some consistency for performance.</li></ul>
+</section>
+<section>
+<h2>FAQ</h2>
+<p><strong>When did Eleven v4 launch?</strong> September 28, 2026, announced on X with 2.2M+ views, alongside v4 Turbo. ElevenLabs cited a #1 rank from Artificial Analysis on launch day.</p>
+<p><strong>What&#x27;s the difference between v4 and v4 Turbo?</strong> v4 is quality-first (audiobooks, ads, character work, long-form). v4 Turbo keeps the expressive range and tag system but is optimized for realtime streaming (~100ms inference) for voice agents.</p>
+<p><strong>How do the audio tags work?</strong> Place a tag like `[whispers]` immediately before the words it should affect. v4 performs the direction; you can stack tags and add free-form directions like `[strong French accent]`.</p>
+<p><strong>Can it clone my voice?</strong> Yes — instant cloning from ~10 seconds of reference audio, with better identity preservation across long texts than v3. Professional voice cloning is also improved.</p>
+<p><strong>Is there a free way to try it?</strong> ElevenReader&#x27;s Free plan includes v4-powered narration (10 hrs/month of TTS uploads). The API had a launch promo through Oct 12, 2026 — check current pricing.</p>
+</section>
+<section>
+<h2>Final verdict</h2>
+<p>Eleven v4 is the rare model update that changes <em>how you write for it</em>: the script becomes a direction sheet, not just words. For creators, that means fewer takes, fewer editing passes, and voiceover that can finally act. The pricing promo is gone, so go in through ElevenReader free or a small credit pack, A/B it against whatever you use now, and let your ears decide.</p>
+<p><strong>Try it:</strong> <a href="/go/elevenlabs.html">ElevenLabs — hear v4 for yourself</a> <em>(affiliate link)</em> <strong>Also consider:</strong> <a href="/go/descript.html">Descript</a> for editing the video around your new voiceover · <a href="/best-ai-tools.html#video">Best AI video tools for creators</a></p>
+<div class="button-row"><a class="button primary" href="../go/elevenlabs.html">Try ElevenLabs</a><a class="button secondary" href="../tools.html">Browse all tools</a></div>
+</section>
+<section><h2>Get the weekly test notes</h2><p>One short email a week: the newest AI tool tests, price changes, and the occasional gem. No spam, unsubscribe anytime.</p><!-- EMAIL_EMBED: paste Kit/Beehiiv form here --></section>
+    </main>
+    <footer class="site-footer"><div class="wrap footer-grid"><div><strong>Phoebie Wang</strong><span>AI tools, tested &amp; explained.</span></div><nav aria-label="Footer"><a href="../disclosure.html">Affiliate Disclosure</a><a href="../privacy.html">Privacy</a><a href="../terms.html">Terms</a><a href="../refunds.html">Digital Product &amp; Refunds</a><button class="link-button" data-clear-progress type="button">Clear local progress</button></nav></div><p class="legal-note">Parent-managed project. Reviews and business details require parent approval before publication.</p></footer>
+    <script src="../content-config.js"></script><script src="../common.js"></script>
+  </body>
+</html>
