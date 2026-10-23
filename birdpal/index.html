@@ -1,0 +1,696 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Bird Pal Buddies helps you teach your pet bird to talk. Made by Phoebie.">
+<meta name="theme-color" content="#FFFBF1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Bird Pal">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-180.png">
+<style>*,*::before,*::after{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;-webkit-tap-highlight-color:transparent}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Bird Pal Buddies</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@500;700;800&display=swap">
+<style>
+/* Layout: one phone-width column, three screens (home, practice, dance) swapped in place. Single bright look on purpose, Phoebie's four colors. */
+:root{
+  --sky:#2F7FD8; --sky-soft:#DCEBFB;
+  --sun:#FFC83D; --sun-deep:#B07A00;
+  --cherry:#E2463F; --leaf:#3FA34D; --leaf-deep:#256B30;
+  --paper:#FFFBF1; --ink:#1E2A3A; --muted:#5D6878; --line:#E6DFCC;
+  --display:"Baloo 2", "Arial Rounded MT Bold", system-ui, sans-serif;
+  --body:"Nunito", system-ui, -apple-system, sans-serif;
+  color-scheme: light;
+}
+html,body{background:var(--paper);color:var(--ink)}
+body{font-family:var(--body);font-size:16px;line-height:1.5;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:12px 32px}
+.app{max-width:420px;margin:0 auto;display:flex;flex-direction:column;gap:16px}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.brand{font-family:var(--display);font-weight:800;font-size:22px;color:var(--sky);letter-spacing:.2px}
+.chip{font-weight:800;font-size:13px;background:var(--sun);color:var(--ink);border-radius:999px;padding:4px 12px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.screen{display:flex;flex-direction:column;gap:16px;align-items:stretch}
+h1{font-family:var(--display);font-weight:800;font-size:34px;line-height:1.05;margin:0;text-align:center;text-wrap:balance}
+h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align:center}
+.sub{color:var(--muted);text-align:center;margin:0}
+.stage{position:relative;display:flex;justify-content:center;align-items:flex-end;min-height:220px}
+.bubble{position:absolute;top:0;right:4%;background:#fff;border:2.5px solid var(--ink);border-radius:18px;padding:8px 14px;font-family:var(--display);font-weight:700;font-size:17px;line-height:1.15;max-width:52%}
+.bubble::after{content:"";position:absolute;left:18px;bottom:-12px;border:10px solid transparent;border-top-color:var(--ink);border-bottom:0}
+.nori{width:190px;max-width:60%;height:auto}
+.big{appearance:none;border:3px solid var(--ink);border-radius:22px;background:var(--sun);color:var(--ink);font-family:var(--display);font-weight:800;font-size:24px;line-height:1.15;padding:20px 16px;cursor:pointer;box-shadow:0 6px 0 var(--ink);transition:transform .08s,box-shadow .08s}
+.big:active{transform:translateY(5px);box-shadow:0 1px 0 var(--ink)}
+.big.green{background:var(--leaf);color:#fff;font-size:22px;padding:14px 16px}
+.big.blue{background:var(--sky);color:#fff;font-size:20px;padding:12px 16px}
+.big:focus-visible,.wordchip:focus-visible,.ghost:focus-visible,input:focus-visible{outline:3px solid var(--cherry);outline-offset:3px}
+.wordbox{background:#fff;border:3px solid var(--ink);border-radius:18px;padding:10px 12px;text-align:center}
+.label{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted)}
+.word{font-family:var(--display);font-weight:800;font-size:40px;line-height:1.1;color:var(--cherry);word-break:break-word}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.wordchip{appearance:none;border:2px solid var(--line);background:#fff;border-radius:999px;padding:6px 14px;font:700 15px var(--body);color:var(--ink);cursor:pointer}
+.wordchip[aria-pressed="true"]{border-color:var(--sky);background:var(--sky-soft);color:var(--sky)}
+.add{display:flex;gap:8px}
+.add input{flex:1;min-width:0;border:2px solid var(--line);border-radius:12px;padding:10px 12px;font:600 16px var(--body);background:#fff;color:var(--ink)}
+.ghost{appearance:none;border:2px solid var(--ink);background:transparent;border-radius:12px;padding:8px 14px;font:800 15px var(--body);color:var(--ink);cursor:pointer}
+.status{min-height:24px;text-align:center;font-weight:800;color:var(--sky);margin:0;font-variant-numeric:tabular-nums}
+.err{color:var(--cherry);font-size:14px;font-weight:700;margin:0}
+.row{display:flex;align-items:center;gap:10px}
+.row .nori{width:96px}
+.cheer{font-family:var(--display);font-weight:700;font-size:20px}
+.back{align-self:flex-start}
+.streak{background:#fff;border:3px solid var(--ink);border-radius:18px;padding:12px;text-align:center}
+.streak b{display:block;font-family:var(--display);font-size:38px;line-height:1;color:var(--leaf-deep);font-variant-numeric:tabular-nums}
+.tip{font-size:14px;color:var(--muted);text-align:center;margin:0}
+#confetti{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.dance .nori{width:200px}
+.dancing .bodyg{animation:bob .5s ease-in-out infinite alternate;transform-origin:100px 190px}
+.dancing .wingL{animation:flapL .25s ease-in-out infinite alternate;transform-origin:70px 120px}
+.dancing .wingR{animation:flapR .25s ease-in-out infinite alternate;transform-origin:130px 120px}
+.notes span{position:absolute;font-size:30px;color:var(--sky);animation:float 1.6s ease-in-out infinite}
+@keyframes bob{from{transform:rotate(-10deg) translateY(0)}to{transform:rotate(10deg) translateY(-14px)}}
+@keyframes flapL{from{transform:rotate(10deg)}to{transform:rotate(-40deg)}}
+@keyframes flapR{from{transform:rotate(-10deg)}to{transform:rotate(40deg)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+.sayit .nori{animation:none}
+@media (prefers-reduced-motion:reduce){.dancing .bodyg,.dancing .wingL,.dancing .wingR,.notes span{animation:none}}
+.big.soft{background:#fff;font-size:20px;padding:14px 16px}
+.card{background:#fff;border:3px solid var(--ink);border-radius:18px;padding:14px;display:flex;flex-direction:column;gap:10px}
+.card h3{font-family:var(--display);font-weight:800;font-size:20px;margin:0}
+.seg{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.seg .wordchip{padding:8px 4px;text-align:center}
+.clock{font-family:var(--display);font-weight:800;font-size:56px;line-height:1;text-align:center;color:var(--sky);font-variant-numeric:tabular-nums}
+.phase{align-self:center;font-weight:800;font-size:15px;border-radius:999px;padding:4px 14px;background:var(--sky-soft);color:var(--sky)}
+.phase.talk{background:var(--sun);color:var(--ink)}
+.phase.done{background:var(--leaf);color:#fff}
+.meter{height:12px;border:2px solid var(--ink);border-radius:999px;overflow:hidden;background:#fff}
+.meter i{display:block;height:100%;width:0;background:var(--leaf)}
+.checklist{margin:0;padding-left:20px;font-size:14px;color:var(--muted)}
+.voice{display:flex;flex-wrap:wrap;align-items:center;gap:8px;justify-content:center;font-size:14px}
+.voice label{cursor:pointer}
+.voice input{position:absolute;opacity:0;width:1px;height:1px}
+.ok{color:var(--leaf-deep);font-weight:800}
+.voice .big{flex:1 1 100%;-webkit-user-select:none;user-select:none;touch-action:none;-webkit-touch-callout:none}
+.big.rec{background:var(--cherry)}
+.del{align-self:center;border-color:var(--cherry);color:var(--cherry)}
+.confirm{background:#fff;border:3px solid var(--cherry);border-radius:16px;padding:12px;display:flex;flex-direction:column;gap:10px;text-align:center;font-weight:800}
+.confirmBtns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.ghost.danger{background:var(--cherry);border-color:var(--cherry);color:#fff}
+.steps{margin:0;padding-left:22px;color:var(--muted);font-weight:700;display:flex;flex-direction:column;gap:2px}
+.listen{display:flex;align-items:center;gap:14px;background:var(--sky-soft);border:3px solid var(--sky);border-radius:18px;padding:12px 14px;color:var(--ink)}
+.ring{width:56px;height:56px;flex:none;border-radius:50%;border:5px solid var(--sky);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:800;font-size:26px;color:var(--sky);animation:pulse 1s ease-in-out infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
+.treat{display:flex;align-items:center;gap:14px;background:var(--sun);border:3px solid var(--ink);border-radius:18px;padding:12px 14px}
+.treat b{font-family:var(--display);font-size:20px}
+.treatNum{width:58px;height:58px;flex:none;border-radius:50%;background:#fff;border:3px solid var(--ink);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:800;font-size:28px;font-variant-numeric:tabular-nums}
+.treat.done{background:var(--leaf);color:#fff}.treat.done .treatNum{color:var(--leaf-deep)}
+@media (prefers-reduced-motion:reduce){.ring{animation:none}}
+.install h3{font-size:18px}
+.credit{font-size:12px;color:var(--muted);text-align:center;margin:8px 0 0}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <g id="noriArt">
+      <g class="bodyg">
+        <path d="M58 190 L44 214 M66 192 L58 216" stroke="#1E2A3A" stroke-width="5" stroke-linecap="round"/>
+        <path d="M70 168 Q40 200 34 214 Q60 206 84 182 Z" fill="#E2463F" stroke="#1E2A3A" stroke-width="4" stroke-linejoin="round"/>
+        <ellipse cx="100" cy="140" rx="52" ry="58" fill="#3FA34D" stroke="#1E2A3A" stroke-width="4"/>
+        <ellipse cx="104" cy="152" rx="30" ry="36" fill="#FFC83D" stroke="#1E2A3A" stroke-width="3"/>
+        <path d="M86 196 v14 M96 198 v14 M108 198 v14 M118 196 v14" stroke="#1E2A3A" stroke-width="4" stroke-linecap="round"/>
+        <g class="wingL"><path d="M58 112 Q20 132 34 176 Q60 168 72 128 Z" fill="#F28C28" stroke="#1E2A3A" stroke-width="4" stroke-linejoin="round"/><path d="M44 140 l14 6 M42 154 l14 4" stroke="#1E2A3A" stroke-width="3" stroke-linecap="round"/></g>
+        <g class="wingR"><path d="M142 112 Q180 132 166 176 Q140 168 128 128 Z" fill="#F28C28" stroke="#1E2A3A" stroke-width="4" stroke-linejoin="round"/><path d="M156 140 l-14 6 M158 154 l-14 4" stroke="#1E2A3A" stroke-width="3" stroke-linecap="round"/></g>
+        <circle cx="100" cy="66" r="40" fill="#3FA34D" stroke="#1E2A3A" stroke-width="4"/>
+        <path d="M84 30 Q78 6 92 4 Q96 18 98 28 Q100 2 114 6 Q112 22 108 30 Q122 12 130 22 Q120 32 114 38 Z" fill="#E2463F" stroke="#1E2A3A" stroke-width="4" stroke-linejoin="round"/>
+        <circle cx="114" cy="62" r="12" fill="#fff" stroke="#1E2A3A" stroke-width="3"/>
+        <circle cx="117" cy="62" r="6" fill="#1E2A3A"/><circle cx="119" cy="59" r="2" fill="#fff"/>
+        <path d="M108 50 l2 -7 M114 49 l1 -7 M120 50 l2 -6" stroke="#1E2A3A" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M136 64 Q160 72 146 88 Q136 84 128 78 Z" fill="#FFC83D" stroke="#1E2A3A" stroke-width="4" stroke-linejoin="round"/>
+        <circle cx="96" cy="82" r="7" fill="#F7A6A0"/>
+      </g>
+    </g>
+  </defs>
+</svg>
+
+<main class="app">
+  <div class="bar">
+    <span class="brand">Bird Pal Buddies</span>
+    <span class="chip" id="streakChip">0 day streak</span>
+  </div>
+
+  <!-- HOME -->
+  <section class="screen" id="home">
+    <div class="stage">
+      <div class="bubble">Hello! My name is Nori</div>
+      <svg class="nori" viewBox="0 0 200 222" role="img" aria-label="Nori, a green bird with orange wings and a red crest"><use href="#noriArt"/></svg>
+    </div>
+    <h1>Let's help your bird learn to talk!</h1>
+    <button class="big" id="goTeach">Teach Nori with me</button>
+    <button class="big soft" id="goPractice">Tap to help your pet bird</button>
+    <button class="big soft" id="goLesson">Morning lesson by the cage</button>
+    <div class="card install" id="installCard" hidden>
+      <h3>Put Bird Pal on your home screen</h3>
+      <p class="tip" id="installHow" style="text-align:left;margin:0"></p>
+      <button class="big blue" type="button" id="installBtn" hidden>Install the app</button>
+    </div>
+    <p class="tip">Nori learns best from you! Talk to Nori every day, then let the app help while you are busy.</p>
+  </section>
+
+  <!-- PRACTICE -->
+  <section class="screen" id="practice" hidden>
+    <button class="ghost back" data-go="home">Home</button>
+    <div class="wordbox">
+      <div class="label">Today's word</div>
+      <div class="word" id="word">Hello!</div>
+    </div>
+    <div class="chips" id="chips" aria-label="Pick a word"></div>
+    <form class="add" id="addForm" autocomplete="off">
+      <input id="newWord" maxlength="24" placeholder="Pretty bird!" aria-label="Add a new word">
+      <button class="ghost" type="submit">Add</button>
+    </form>
+    <p class="err" id="addErr" hidden></p>
+    <button type="button" class="ghost del" id="delWord">Delete this word</button>
+    <div class="confirm" id="delConfirm" hidden>
+      <span id="delAsk"></span>
+      <div class="confirmBtns">
+        <button type="button" class="ghost danger" id="delYes">Yes, delete</button>
+        <button type="button" class="ghost" id="delNo">Keep it</button>
+      </div>
+    </div>
+    <div class="voice">
+      <button type="button" class="big blue" id="holdRec" hidden>Hold to record my voice</button>
+      <label class="big blue" for="voiceFile" id="pickRec" style="text-align:center">Record my voice</label>
+      <input type="file" id="voiceFile" accept="audio/*" capture>
+      <span id="voiceState"></span>
+    </div>
+    <p class="tip" id="recTip">Tap, say the word once, then save the recording. Nori will use your voice!</p>
+    <p class="err" id="voiceErr" hidden></p>
+    <button class="big" id="play">Tap to help your pet bird</button>
+    <p class="status" id="status" aria-live="polite"></p>
+    <div class="row">
+      <svg class="nori" viewBox="0 0 200 222" aria-hidden="true"><use href="#noriArt"/></svg>
+      <span class="cheer">"You can do it!"</span>
+    </div>
+    <button class="big green" id="saidIt">Nori said it!</button>
+  </section>
+
+  <!-- TEACH NORI -->
+  <section class="screen" id="teach" hidden>
+    <button class="ghost back" data-go="home">Home</button>
+    <h2>Teach Nori with me</h2>
+    <div class="chips" id="teachChips" aria-label="Pick a word"></div>
+    <div class="wordbox">
+      <div class="label">Say this to Nori</div>
+      <div class="word" id="teachWord">Hello!</div>
+    </div>
+    <ol class="steps">
+      <li>Look at Nori and smile.</li>
+      <li>Say the word slowly and happily.</li>
+      <li>Tap the button, then wait and listen.</li>
+    </ol>
+    <button class="big" id="iSaid">I said it!</button>
+    <div class="listen" id="listenBox" hidden aria-live="polite">
+      <div class="ring"><span id="listenNum">5</span></div>
+      <div><b>Listening to Nori...</b><br><span class="tip" style="text-align:left">Stay quiet so Nori can try.</span></div>
+    </div>
+    <p class="status" id="teachCount">You said it 0 times today</p>
+    <button class="big green" id="goodNori">Good Nori! Nori said it!</button>
+  </section>
+
+  <!-- MORNING LESSON -->
+  <section class="screen" id="lesson" hidden>
+    <button class="ghost back" data-go="home">Home</button>
+    <h2>Morning lesson</h2>
+
+    <div id="lessonSetup" class="screen">
+      <div class="card">
+        <h3>Which words?</h3>
+        <div class="chips" id="lessonWords" aria-label="Words for the lesson"></div>
+        <p class="err" id="lessonErr" hidden></p>
+      </div>
+      <div class="card">
+        <h3>How long?</h3>
+        <div class="seg" id="lengths"></div>
+        <p class="tip" style="text-align:left">Every 5 minutes the app says each word 3 times, then stays quiet so your bird can rest and practice.</p>
+      </div>
+      <div class="card">
+        <h3>Before you start</h3>
+        <ul class="checklist">
+          <li>Plug in the phone or tablet.</li>
+          <li>Turn the volume to medium. Not too loud for little ears!</li>
+          <li>Keep this app open with the screen on.</li>
+          <li>Put it near the cage, not inside it.</li>
+        </ul>
+      </div>
+      <button class="big" id="startLesson">Start morning lesson</button>
+    </div>
+
+    <div id="lessonRun" class="screen" hidden>
+      <span class="phase" id="phase">Quiet time</span>
+      <div class="clock" id="clock">2:00:00</div>
+      <div class="meter" aria-hidden="true"><i id="meter"></i></div>
+      <div class="wordbox"><div class="label" id="nowLabel">Next word</div><div class="word" id="nowWord">Hello!</div></div>
+      <p class="status" id="lessonStatus" aria-live="polite"></p>
+      <button class="big green" id="saidIt2">Nori said it!</button>
+      <button class="ghost" id="stopLesson" style="align-self:center">Stop lesson</button>
+    </div>
+  </section>
+
+  <!-- DANCE PARTY -->
+  <section class="screen dance" id="dance" hidden>
+    <h2>Your bird did it!</h2>
+    <div class="stage" id="danceStage" style="min-height:260px">
+      <canvas id="confetti"></canvas>
+      <div class="notes" aria-hidden="true"><span style="left:8%;top:20%">&#9835;</span><span style="right:8%;top:40%;animation-delay:.5s">&#9834;</span></div>
+      <svg class="nori" id="danceNori" viewBox="0 0 200 222" role="img" aria-label="Nori dancing"><use href="#noriArt"/></svg>
+    </div>
+    <div class="treat" id="treatBox" aria-live="polite">
+      <div class="treatNum" id="treatNum">10</div>
+      <div><b id="treatText">Give Nori a treat now!</b><br><span>Quick, while Nori remembers the word.</span></div>
+    </div>
+    <p class="sub" id="learned"></p>
+    <div class="streak"><b id="streakBig">1 day streak!</b><span class="label">days in a row</span></div>
+    <button class="big blue" id="again">Practice again</button>
+  </section>
+
+  <p class="credit">Made by Phoebie</p>
+</main>
+
+<script>
+(function(){
+  var art=document.getElementById("noriArt");
+  document.querySelectorAll("svg.nori").forEach(function(svg){
+    var u=svg.querySelector("use");var g=art.cloneNode(true);g.removeAttribute("id");
+    if(u)svg.replaceChild(g,u);
+  });
+  var KEY="birdpal-v1", VKEY="birdpal-voice:";
+  var state={words:["Hello!","Nori!","Pretty bird!","I love you","Good morning"],current:"Hello!",days:[],lessonWords:["Hello!","Nori!"],lessonMin:30,v:2};
+  try{var s=JSON.parse(localStorage.getItem(KEY)||"null");if(s&&s.words){for(var k in s)state[k]=s[k];}}catch(e){}
+  if(state.v!==2){state.v=2;if(state.lessonMin===120)state.lessonMin=30;}
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){}}
+  function getVoice(w){try{return localStorage.getItem(VKEY+w);}catch(e){return null;}}
+  try{state.words.forEach(function(w){var v=localStorage.getItem(VKEY+w);if(v&&v.indexOf("data:audio/wav")!==0)localStorage.removeItem(VKEY+w);});}catch(e){}
+
+  var $=function(id){return document.getElementById(id);};
+  var screens=["home","teach","practice","lesson","dance"];
+  var returnTo="practice";
+  function show(name){
+    screens.forEach(function(s){$(s).hidden=(s!==name);});
+    if(name!=="practice")stopPlay();
+    if(name!=="dance")stopParty();
+    if(name==="lesson")renderLessonSetup();
+    window.scrollTo(0,0);
+  }
+  document.querySelectorAll("[data-go]").forEach(function(b){b.addEventListener("click",function(){if(lesson.running&&b.closest("#lesson"))stopLesson();show(b.dataset.go);});});
+
+  function today(d){d=d||new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}
+  function streak(){
+    var set={};state.days.forEach(function(d){set[d]=1;});
+    var d=new Date(),n=0;
+    if(!set[today(d)]){d.setDate(d.getDate()-1);}
+    while(set[today(d)]){n++;d.setDate(d.getDate()-1);}
+    return n;
+  }
+  function renderStreak(){var n=streak();$("streakChip").textContent=n+" day streak";$("streakBig").textContent=n+" day streak!";}
+
+  /* ---------- saying a word: her recorded voice if she added one, else the device voice ---------- */
+  var player=document.createElement("video");player.setAttribute("playsinline","");player.setAttribute("webkit-playsinline","");player.playsInline=true;player.preload="auto";
+  player.setAttribute("aria-hidden","true");player.style.cssText="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;left:0;bottom:0";
+  document.body.appendChild(player);
+  /* Original recordings (like iPhone videos) are kept in the browser's file storage and played as they are. */
+  var rawUrls={},idb=null;
+  function openDb(){
+    if(idb)return idb;
+    idb=new Promise(function(ok,bad){try{var r=indexedDB.open("birdpal",1);r.onupgradeneeded=function(){r.result.createObjectStore("voices");};r.onsuccess=function(){ok(r.result);};r.onerror=function(){bad(r.error);};}catch(e){bad(e);}});
+    return idb;
+  }
+  function idbDo(mode,fn){return openDb().then(function(db){return new Promise(function(ok,bad){var t=db.transaction("voices",mode),st=t.objectStore("voices"),res=fn(st);t.oncomplete=function(){ok(res&&res.result);};t.onerror=function(){bad(t.error);};t.onabort=function(){bad(t.error);};});});}
+  function rawPut(w,blob){return idbDo("readwrite",function(st){return st.put(blob,w);}).then(function(){if(rawUrls[w])URL.revokeObjectURL(rawUrls[w]);rawUrls[w]=URL.createObjectURL(blob);});}
+  function rawDel(w){if(rawUrls[w]){URL.revokeObjectURL(rawUrls[w]);delete rawUrls[w];}return idbDo("readwrite",function(st){return st.delete(w);}).catch(function(){});}
+  function rawLoad(){
+    return openDb().then(function(db){return new Promise(function(ok){var t=db.transaction("voices","readonly"),st=t.objectStore("voices"),c=st.openCursor();
+      c.onsuccess=function(){var cur=c.result;if(cur){rawUrls[cur.key]=URL.createObjectURL(cur.value);cur.continue();}else ok();};c.onerror=function(){ok();};});}).catch(function(){});
+  }
+  function hasVoice(w){return !!(getVoice(w)||rawUrls[w]);}
+  function dropVoice(w){try{localStorage.removeItem(VKEY+w);}catch(e){}return rawDel(w);}
+  var clipUrls={};
+  function clipUrl(w){
+    var d=getVoice(w);if(!d)return rawUrls[w]||null;
+    if(clipUrls[w]&&clipUrls[w].d===d)return clipUrls[w].u;
+    try{
+      var parts=d.split(","),mime=(parts[0].match(/data:([^;]+)/)||[])[1]||"audio/wav",bin=atob(parts[1]),arr=new Uint8Array(bin.length);
+      for(var i=0;i<bin.length;i++)arr[i]=bin.charCodeAt(i);
+      if(clipUrls[w])URL.revokeObjectURL(clipUrls[w].u);
+      var u=URL.createObjectURL(new Blob([arr],{type:mime}));clipUrls[w]={d:d,u:u};return u;
+    }catch(e){return d;}
+  }
+  function robot(w,fin,done){
+    if(!("speechSynthesis" in window)){done(false);return;}
+    var u=new SpeechSynthesisUtterance(w);u.rate=0.85;u.pitch=1.4;u.onend=fin;u.onerror=fin;
+    speechSynthesis.cancel();speechSynthesis.speak(u);
+  }
+  function sayOnce(w){
+    return new Promise(function(done){
+      var finished=false,fin=function(){if(!finished){finished=true;done(true);}};
+      setTimeout(fin,8000);
+      var src=clipUrl(w);
+      if(src){
+        player.onended=fin;
+        player.onerror=function(){showVoiceProblem("play "+(player.error&&player.error.code));robot(w,fin,done);};
+        player.src=src;player.currentTime=0;player.volume=1;
+        var p=player.play();
+        if(p&&p.catch)p.catch(function(err){if(err&&err.name==="NotAllowedError"){fin();}else{showVoiceProblem(err&&err.name);robot(w,fin,done);}});
+        return;
+      }
+      robot(w,fin,done);
+    });
+  }
+  function showVoiceProblem(code){
+    $("voiceErr").textContent="Your recording didn't play, so the app used its own voice. Try recording again. (code: "+(code||"?")+")";$("voiceErr").hidden=false;
+  }
+  function hush(){try{speechSynthesis.cancel();}catch(e){}try{player.pause();}catch(e){}}
+  function wait(ms){return new Promise(function(r){setTimeout(r,ms);});}
+
+  /* ---------- practice ---------- */
+  function renderWords(){
+    var box=$("chips");box.innerHTML="";
+    state.words.forEach(function(w){
+      var b=document.createElement("button");b.type="button";b.className="wordchip";b.textContent=w;
+      b.setAttribute("aria-pressed",String(w===state.current));
+      b.addEventListener("click",function(){state.current=w;$("delConfirm").hidden=true;save();stopPlay();renderWords();});
+      box.appendChild(b);
+    });
+    $("word").textContent=state.current;
+    renderDelete();
+    $("voiceState").innerHTML=hasVoice(state.current)?'<span class="ok">Using your voice</span> <button class="ghost" type="button" id="hearVoice">Play my voice</button> <button class="ghost" type="button" id="dropVoice">Remove</button>':'';
+    var d=$("dropVoice");if(d)d.addEventListener("click",function(){dropVoice(state.current).then(renderWords);renderWords();});
+    var h=$("hearVoice");if(h)h.addEventListener("click",function(){stopPlay();$("voiceErr").hidden=true;sayOnce(state.current);});
+  }
+  function renderDelete(){
+    var only=state.words.length<=1;
+    $("delWord").hidden=only||!$("delConfirm").hidden;
+    $("delWord").textContent="Delete \""+state.current+"\"";
+  }
+  $("delWord").addEventListener("click",function(){
+    stopPlay();
+    $("delAsk").textContent="Delete \""+state.current+"\" from your words?";
+    $("delConfirm").hidden=false;renderDelete();$("delNo").focus();
+  });
+  $("delNo").addEventListener("click",function(){$("delConfirm").hidden=true;renderDelete();});
+  $("delYes").addEventListener("click",function(){
+    var w=state.current,i=state.words.indexOf(w);
+    if(i>=0&&state.words.length>1){
+      state.words.splice(i,1);
+      state.lessonWords=state.lessonWords.filter(function(x){return x!==w;});
+      dropVoice(w);
+      state.current=state.words[Math.max(0,i-1)];save();
+    }
+    $("delConfirm").hidden=true;renderWords();
+  });
+  $("addForm").addEventListener("submit",function(e){
+    e.preventDefault();
+    var v=$("newWord").value.trim();
+    if(!v){$("addErr").textContent="Type a word first.";$("addErr").hidden=false;return;}
+    if(state.words.indexOf(v)<0)state.words.push(v);
+    state.current=v;$("newWord").value="";$("addErr").hidden=true;save();renderWords();
+  });
+  $("newWord").addEventListener("input",function(){$("addErr").hidden=true;});
+  $("voiceFile").addEventListener("change",function(){
+    var f=this.files&&this.files[0];this.value="";$("voiceErr").hidden=true;if(!f)return;
+    if(f.size>80000000){$("voiceErr").textContent="That recording is too long. Record just the word, a few seconds.";$("voiceErr").hidden=false;return;}
+    saveClip(f);
+  });
+
+  /* Every recording is turned into a small, clear WAV file: quiet parts trimmed, volume evened out, 6 seconds max. WAV plays on every phone. */
+  var decodeCtx=null;
+  function readBuf(blob){return blob.arrayBuffer?blob.arrayBuffer():new Promise(function(ok,bad){var r=new FileReader();r.onload=function(){ok(r.result);};r.onerror=bad;r.readAsArrayBuffer(blob);});}
+  function decode(buf){
+    decodeCtx=decodeCtx||new (window.AudioContext||window.webkitAudioContext)();
+    return new Promise(function(ok,bad){var p=decodeCtx.decodeAudioData(buf,ok,bad);if(p&&p.catch)p.catch(bad);});
+  }
+  function toWav(ab){
+    var rate=22050,src=ab.sampleRate,ch=ab.numberOfChannels,len=ab.length,mono=new Float32Array(len);
+    for(var c=0;c<ch;c++){var d=ab.getChannelData(c);for(var i=0;i<len;i++)mono[i]+=d[i]/ch;}
+    var peak=0;for(i=0;i<len;i++)peak=Math.max(peak,Math.abs(mono[i]));
+    var th=Math.max(0.02,peak*0.08),s=0,e=len-1;
+    while(s<len&&Math.abs(mono[s])<th)s++;while(e>s&&Math.abs(mono[e])<th)e--;
+    s=Math.max(0,s-Math.round(src*0.15));e=Math.min(len-1,e+Math.round(src*0.25));
+    if(e-s>src*6)e=s+src*6;
+    var n=Math.max(1,Math.floor((e-s)*rate/src)),gain=peak>0?0.9/peak:1,out=new Int16Array(n);
+    for(i=0;i<n;i++){var x=s+i*src/rate,i0=Math.floor(x),f=x-i0,v=(mono[i0]||0)*(1-f)+(mono[i0+1]||0)*f;
+      v=Math.max(-1,Math.min(1,v*gain));out[i]=v<0?v*32768:v*32767;}
+    var b=new ArrayBuffer(44+n*2),dv=new DataView(b),w=function(o,t){for(var k=0;k<t.length;k++)dv.setUint8(o+k,t.charCodeAt(k));};
+    w(0,"RIFF");dv.setUint32(4,36+n*2,true);w(8,"WAVE");w(12,"fmt ");dv.setUint32(16,16,true);dv.setUint16(20,1,true);dv.setUint16(22,1,true);
+    dv.setUint32(24,rate,true);dv.setUint32(28,rate*2,true);dv.setUint16(32,2,true);dv.setUint16(34,16,true);w(36,"data");dv.setUint32(40,n*2,true);
+    new Int16Array(b,44).set(out);
+    return {blob:new Blob([b],{type:"audio/wav"}),peak:peak};
+  }
+  function saveClip(blob){
+    var word=state.current;
+    $("voiceErr").hidden=true;
+    $("voiceState").innerHTML='<span class="ok">Saving your voice...</span>';
+    var saved=function(){renderWords();$("voiceState").insertAdjacentHTML("afterbegin",'<span class="ok">Saved! Tap Play my voice to hear it. </span>');};
+    var keepOriginal=function(reason){
+      return rawPut(word,blob).then(function(){try{localStorage.removeItem(VKEY+word);}catch(e){}saved();})
+        .catch(function(e){renderWords();$("voiceErr").textContent="The app couldn't save that recording. (code: "+(reason||"")+"/"+((e&&e.name)||"store")+")";$("voiceErr").hidden=false;});
+    };
+    readBuf(blob).then(decode).then(function(ab){
+      var res=toWav(ab);
+      if(res.peak<0.01){renderWords();$("voiceErr").textContent="That recording is silent. Hold the phone closer and say the word loudly.";$("voiceErr").hidden=false;return;}
+      var r=new FileReader();r.onload=function(){
+        try{localStorage.setItem(VKEY+word,r.result);rawDel(word);saved();}
+        catch(e){keepOriginal("full");}
+      };r.readAsDataURL(res.blob);
+    }).catch(function(e){return keepOriginal((e&&e.name)||"decode");});
+  }
+
+  /* Hold-to-record: works when the app runs as its own web page. Inside Claude the microphone is off, so the button opens the phone's recorder instead. */
+  var framed=false;try{framed=window.self!==window.top;}catch(e){framed=true;}
+  var isIOS=/iPhone|iPad|iPod/.test(navigator.userAgent)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1);
+  if(isIOS)$("recTip").textContent="The camera will open. Point it anywhere, tap the red button, say the word, tap stop, then tap Use Video. The app keeps only your voice.";
+  var canHold=!framed&&window.MediaRecorder&&navigator.mediaDevices&&navigator.mediaDevices.getUserMedia;
+  if(canHold){
+    $("holdRec").hidden=false;$("pickRec").hidden=true;
+    $("recTip").textContent="Press and hold the button, say the word, then let go.";
+    var rec=null,chunks=[],stream=null,startedAt=0;
+    var hb=$("holdRec");
+    hb.addEventListener("contextmenu",function(e){e.preventDefault();});
+    hb.addEventListener("pointerdown",async function(e){
+      e.preventDefault();$("voiceErr").hidden=true;hush();
+      try{stream=stream||await navigator.mediaDevices.getUserMedia({audio:true});}
+      catch(err){$("voiceErr").textContent="The microphone is off. Allow the microphone for this page, then try again.";$("voiceErr").hidden=false;return;}
+      chunks=[];rec=new MediaRecorder(stream);
+      rec.ondataavailable=function(ev){if(ev.data&&ev.data.size)chunks.push(ev.data);};
+      rec.onstop=function(){
+        hb.classList.remove("rec");hb.textContent="Hold to record my voice";
+        if(Date.now()-startedAt<500){$("voiceErr").textContent="Keep holding while you talk, then let go.";$("voiceErr").hidden=false;return;}
+        saveClip(new Blob(chunks,{type:rec.mimeType||"audio/webm"}));
+      };
+      startedAt=Date.now();rec.start();hb.classList.add("rec");hb.textContent="Recording... let go to stop";
+      setTimeout(function(){if(rec&&rec.state==="recording")rec.stop();},5000);
+    });
+    var stopRec=function(){if(rec&&rec.state==="recording")rec.stop();};
+    hb.addEventListener("pointerup",stopRec);hb.addEventListener("pointerleave",stopRec);hb.addEventListener("pointercancel",stopRec);
+  }
+
+  var TIMES=5,playing=false,runId=0;
+  function stopPlay(){playing=false;runId++;hush();$("play").textContent="Tap to help your pet bird";$("status").textContent="";}
+  $("play").addEventListener("click",function(){
+    if(playing){stopPlay();return;}
+    playing=true;var id=++runId;$("play").textContent="Stop";
+    (async function(){
+      for(var i=1;i<=TIMES;i++){
+        if(id!==runId)return;
+        $("status").textContent="Saying it "+i+" of "+TIMES;
+        var ok=await sayOnce(state.current);
+        if(!ok){$("status").textContent="This device can't talk. Say \""+state.current+"\" out loud 5 times!";playing=false;$("play").textContent="Tap to help your pet bird";return;}
+        await wait(2200);
+      }
+      if(id!==runId)return;
+      playing=false;$("play").textContent="Tap to help your pet bird";$("status").textContent="Now listen. Did your bird say it?";
+    })();
+  });
+
+  /* ---------- morning lesson ---------- */
+  var LENGTHS=[15,30,60,120], CYCLE=5*60*1000, REPS=3;
+  var lesson={running:false,id:0,start:0,end:0,tick:null,lock:null};
+  function fmt(ms){var s=Math.max(0,Math.ceil(ms/1000)),h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=s%60;
+    return (h?h+":"+String(m).padStart(2,"0"):m)+":"+String(x).padStart(2,"0");}
+  function lenLabel(m){return m<60?m+" min":(m/60)+(m===60?" hour":" hours");}
+  function renderLessonSetup(){
+    if(lesson.running)return;
+    state.lessonWords=state.lessonWords.filter(function(w){return state.words.indexOf(w)>=0;});
+    var box=$("lessonWords");box.innerHTML="";
+    state.words.forEach(function(w){
+      var b=document.createElement("button");b.type="button";b.className="wordchip";b.textContent=w;
+      b.setAttribute("aria-pressed",String(state.lessonWords.indexOf(w)>=0));
+      b.addEventListener("click",function(){var i=state.lessonWords.indexOf(w);if(i>=0)state.lessonWords.splice(i,1);else state.lessonWords.push(w);$("lessonErr").hidden=true;save();renderLessonSetup();});
+      box.appendChild(b);
+    });
+    var seg=$("lengths");seg.innerHTML="";
+    LENGTHS.forEach(function(m){
+      var b=document.createElement("button");b.type="button";b.className="wordchip";b.textContent=lenLabel(m);
+      b.setAttribute("aria-pressed",String(m===state.lessonMin));
+      b.addEventListener("click",function(){state.lessonMin=m;save();renderLessonSetup();});
+      seg.appendChild(b);
+    });
+    $("startLesson").textContent="Start "+lenLabel(state.lessonMin)+" lesson";
+  }
+  async function wake(){try{if(navigator.wakeLock)lesson.lock=await navigator.wakeLock.request("screen");}catch(e){lesson.lock=null;}}
+  document.addEventListener("visibilitychange",function(){if(lesson.running&&document.visibilityState==="visible")wake();});
+
+  function setPhase(kind,text){var p=$("phase");p.className="phase"+(kind?" "+kind:"");p.textContent=text;}
+  function updateClock(){
+    var now=Date.now(),left=lesson.end-now,total=lesson.end-lesson.start;
+    $("clock").textContent=fmt(left);
+    $("meter").style.width=Math.min(100,Math.round((now-lesson.start)/total*100))+"%";
+    if(left<=0)finishLesson();
+  }
+  async function talkCycle(id){
+    var words=state.lessonWords.slice();
+    setPhase("talk","Talking");$("nowLabel").textContent="Saying now";
+    for(var i=0;i<words.length;i++){
+      $("nowWord").textContent=words[i];
+      for(var r=1;r<=REPS;r++){
+        if(id!==lesson.id)return;
+        $("lessonStatus").textContent="\""+words[i]+"\" "+r+" of "+REPS;
+        await sayOnce(words[i]);await wait(2500);
+      }
+      if(id!==lesson.id)return;
+      $("lessonStatus").textContent="Listening to Nori...";
+      await wait(5000);
+    }
+    if(id!==lesson.id)return;
+    setPhase("","Quiet time");$("nowLabel").textContent="Next word";$("nowWord").textContent=words[0];
+    $("lessonStatus").textContent="Shh, Nori is resting and practicing.";
+  }
+  async function lessonLoop(id){
+    while(id===lesson.id&&Date.now()<lesson.end){
+      var cycleStart=Date.now();
+      await talkCycle(id);
+      var next=cycleStart+CYCLE;
+      while(id===lesson.id&&Date.now()<next&&Date.now()<lesson.end){await wait(1000);}
+    }
+  }
+  $("startLesson").addEventListener("click",function(){
+    if(!state.lessonWords.length){$("lessonErr").textContent="Pick at least one word.";$("lessonErr").hidden=false;return;}
+    lesson.running=true;lesson.id++;lesson.start=Date.now();lesson.end=lesson.start+state.lessonMin*60000;
+    $("lessonSetup").hidden=true;$("lessonRun").hidden=false;$("stopLesson").textContent="Stop lesson";
+    wake();updateClock();lesson.tick=setInterval(updateClock,1000);
+    lessonLoop(lesson.id);
+  });
+  function stopLesson(){
+    lesson.running=false;lesson.id++;clearInterval(lesson.tick);hush();
+    try{if(lesson.lock)lesson.lock.release();}catch(e){}lesson.lock=null;
+  }
+  function finishLesson(){
+    if(!lesson.running)return;stopLesson();
+    setPhase("done","All done!");$("clock").textContent="0:00";$("meter").style.width="100%";
+    $("nowLabel").textContent="Great job";$("nowWord").textContent="Lesson done!";
+    $("lessonStatus").textContent="See you tomorrow morning!";$("stopLesson").textContent="Back to setup";
+  }
+  $("stopLesson").addEventListener("click",function(){stopLesson();$("lessonRun").hidden=true;$("lessonSetup").hidden=false;renderLessonSetup();});
+
+  /* ---------- dance party ---------- */
+  var raf=null,bits=[],audio=null;
+  function tune(){
+    try{audio=audio||new (window.AudioContext||window.webkitAudioContext)();
+      var notes=[659,784,880,1047,880,1047,1319],t=audio.currentTime;
+      notes.forEach(function(f,i){var o=audio.createOscillator(),g=audio.createGain();o.type="triangle";o.frequency.value=f;
+        g.gain.setValueAtTime(0.0001,t+i*.14);g.gain.exponentialRampToValueAtTime(.18,t+i*.14+.02);g.gain.exponentialRampToValueAtTime(.0001,t+i*.14+.13);
+        o.connect(g).connect(audio.destination);o.start(t+i*.14);o.stop(t+i*.14+.15);});
+    }catch(e){}
+  }
+  function party(){
+    var c=$("confetti"),st=$("danceStage"),r=st.getBoundingClientRect(),dpr=window.devicePixelRatio||1;
+    c.width=r.width*dpr;c.height=r.height*dpr;var x=c.getContext("2d");x.setTransform(dpr,0,0,dpr,0,0);
+    var cols=["#2F7FD8","#FFC83D","#E2463F","#3FA34D","#F28C28"];
+    bits=[];for(var i=0;i<90;i++)bits.push({x:Math.random()*r.width,y:-Math.random()*r.height,vy:1.5+Math.random()*2.5,vx:-1+Math.random()*2,s:5+Math.random()*6,a:Math.random()*6,c:cols[i%5]});
+    var reduce=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
+    function frame(){x.clearRect(0,0,r.width,r.height);
+      bits.forEach(function(b){if(!reduce){b.y+=b.vy;b.x+=b.vx;b.a+=.1;if(b.y>r.height){b.y=-10;b.x=Math.random()*r.width;}}
+        x.save();x.translate(b.x,b.y);x.rotate(b.a);x.fillStyle=b.c;x.fillRect(-b.s/2,-b.s/4,b.s,b.s/2);x.restore();});
+      if(!reduce)raf=requestAnimationFrame(frame);}
+    if(reduce)bits.forEach(function(b){b.y=Math.random()*r.height;});
+    frame();
+    $("danceNori").classList.add("dancing");
+  }
+  var treatTimer=null;
+  function startTreat(){
+    clearInterval(treatTimer);var n=10,box=$("treatBox");box.classList.remove("done");
+    $("treatNum").textContent=n;$("treatText").textContent="Give Nori a treat now!";
+    treatTimer=setInterval(function(){n--;$("treatNum").textContent=Math.max(n,0);
+      if(n<=0){clearInterval(treatTimer);box.classList.add("done");$("treatNum").textContent="\u2713";$("treatText").textContent="Treat time is over. Great teaching!";}
+    },1000);
+  }
+  function stopParty(){clearInterval(treatTimer);cancelAnimationFrame(raf);var n=$("danceNori");if(n)n.classList.remove("dancing");}
+
+  function celebrate(word,from){
+    returnTo=from;
+    var t=today();if(state.days.indexOf(t)<0)state.days.push(t);save();renderStreak();
+    $("learned").textContent="Your bird said \""+word+"\". Nori is so proud!";
+    $("again").textContent=from==="lesson"?"Back to the lesson":from==="teach"?"Teach another word":"Practice again";
+    startTreat();
+    screens.forEach(function(s){$(s).hidden=(s!=="dance");});window.scrollTo(0,0);
+    party();tune();
+  }
+  $("saidIt").addEventListener("click",function(){stopPlay();celebrate(state.current,"practice");});
+  $("saidIt2").addEventListener("click",function(){celebrate($("nowWord").textContent,"lesson");});
+  $("again").addEventListener("click",function(){stopParty();screens.forEach(function(s){$(s).hidden=(s!==returnTo);});window.scrollTo(0,0);});
+  /* ---------- teach Nori: Phoebie is the teacher ---------- */
+  var teach={day:"",count:0,timer:null};
+  try{var tc=JSON.parse(localStorage.getItem("birdpal-teach")||"null");if(tc&&tc.day===today()){teach.day=tc.day;teach.count=tc.count;}}catch(e){}
+  function renderTeach(){
+    var box=$("teachChips");box.innerHTML="";
+    state.words.forEach(function(w){
+      var b=document.createElement("button");b.type="button";b.className="wordchip";b.textContent=w;
+      b.setAttribute("aria-pressed",String(w===state.current));
+      b.addEventListener("click",function(){state.current=w;save();renderTeach();renderWords();});
+      box.appendChild(b);
+    });
+    $("teachWord").textContent=state.current;
+    $("teachCount").textContent="You said it "+teach.count+(teach.count===1?" time":" times")+" today";
+  }
+  function stopListen(){clearInterval(teach.timer);$("listenBox").hidden=true;$("iSaid").hidden=false;}
+  $("iSaid").addEventListener("click",function(){
+    teach.day=today();teach.count++;
+    try{localStorage.setItem("birdpal-teach",JSON.stringify({day:teach.day,count:teach.count}));}catch(e){}
+    renderTeach();
+    var n=5;$("listenNum").textContent=n;$("listenBox").hidden=false;$("iSaid").hidden=true;
+    clearInterval(teach.timer);
+    teach.timer=setInterval(function(){n--;$("listenNum").textContent=n;if(n<=0)stopListen();},1000);
+  });
+  $("goodNori").addEventListener("click",function(){stopListen();celebrate(state.current,"teach");});
+  $("goTeach").addEventListener("click",function(){stopListen();renderTeach();show("teach");});
+  $("goPractice").addEventListener("click",function(){show("practice");});
+  $("goLesson").addEventListener("click",function(){show("lesson");});
+
+  /* ---------- real app: install + offline (only on the website, never inside Claude) ---------- */
+  if(document.querySelector('link[rel="manifest"]')&&!framed){
+    if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){});});}
+    var standalone=(window.matchMedia&&matchMedia("(display-mode: standalone)").matches)||navigator.standalone===true;
+    if(!standalone){
+      if(isIOS){
+        $("installHow").textContent="In Safari, tap the Share button (the square with an arrow), then tap \u201cAdd to Home Screen.\u201d Nori's icon will show up with your other apps.";
+        $("installCard").hidden=false;
+      }
+      var deferred=null;
+      window.addEventListener("beforeinstallprompt",function(e){e.preventDefault();deferred=e;
+        $("installHow").textContent="Tap the button to add Bird Pal to this device like a real app.";
+        $("installBtn").hidden=false;$("installCard").hidden=false;});
+      $("installBtn").addEventListener("click",function(){if(!deferred)return;deferred.prompt();deferred.userChoice.then(function(){deferred=null;$("installCard").hidden=true;});});
+      window.addEventListener("appinstalled",function(){$("installCard").hidden=true;});
+    }
+  }
+
+  renderWords();renderStreak();
+  rawLoad().then(function(){renderWords();});
+})();
+</script>
+
+</body>
+</html>
