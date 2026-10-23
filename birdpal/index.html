@@ -108,6 +108,11 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
 .treat.done{background:var(--leaf);color:#fff}.treat.done .treatNum{color:var(--leaf-deep)}
 @media (prefers-reduced-motion:reduce){.ring{animation:none}}
 .install h3{font-size:18px}
+.bubble2{background:#fff;border:2.5px solid var(--ink);border-radius:16px;padding:10px 14px;font-family:var(--display);font-weight:700;font-size:17px;line-height:1.25;text-align:center}
+.bubble2:empty{display:none}
+.grownups{background:#fff;border:2px solid var(--line);border-radius:14px;padding:10px 14px;font-size:14px;color:var(--muted)}
+.grownups summary{cursor:pointer;font-weight:800;color:var(--ink)}
+.grownups ul{margin:8px 0 0;padding-left:18px;display:flex;flex-direction:column;gap:4px}
 .credit{font-size:12px;color:var(--muted);text-align:center;margin:8px 0 0}
 </style>
 </head>
@@ -157,6 +162,15 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
       <p class="tip" id="installHow" style="text-align:left;margin:0"></p>
       <button class="big blue" type="button" id="installBtn" hidden>Install the app</button>
     </div>
+    <details class="grownups">
+      <summary>For grown-ups</summary>
+      <ul>
+        <li>Birds learn words best from people. The app helps with practice; it doesn't replace time together.</li>
+        <li>Not every bird learns to talk, and that's okay. The streak counts days your child taught, not words learned.</li>
+        <li>Recordings and progress stay only on this device. Nothing is uploaded. A new phone starts fresh.</li>
+        <li>Lessons pause if the screen locks. Keep the app open and the phone plugged in.</li>
+      </ul>
+    </details>
     <p class="tip">Nori learns best from you! Talk to Nori every day, then let the app help while you are busy.</p>
   </section>
 
@@ -208,17 +222,18 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
       <div class="word" id="teachWord">Hello!</div>
     </div>
     <ol class="steps">
-      <li>Look at Nori and smile.</li>
-      <li>Say the word slowly and happily.</li>
-      <li>Tap the button, then wait and listen.</li>
+      <li>Pick a word and teach Nori!</li>
+      <li>Say it clearly, tap the button, then listen quietly.</li>
+      <li>Did Nori try? Tap &ldquo;Good Nori!&rdquo; and give a treat.</li>
     </ol>
     <button class="big" id="iSaid">I said it!</button>
     <div class="listen" id="listenBox" hidden aria-live="polite">
       <div class="ring"><span id="listenNum">5</span></div>
-      <div><b>Listening to Nori...</b><br><span class="tip" style="text-align:left">Stay quiet so Nori can try.</span></div>
+      <div><b>Let's listen. Take your time, Nori.</b><br><span class="tip" style="text-align:left">Stay quiet so Nori can try.</span></div>
     </div>
+    <div class="bubble2" id="tryLine" hidden></div>
     <p class="status" id="teachCount">You said it 0 times today</p>
-    <button class="big green" id="goodNori">Good Nori! Nori said it!</button>
+    <button class="big green" id="goodNori">Good Nori! Nori tried it!</button>
   </section>
 
   <!-- MORNING LESSON -->
@@ -235,13 +250,14 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
       <div class="card">
         <h3>How long?</h3>
         <div class="seg" id="lengths"></div>
-        <p class="tip" style="text-align:left">Every 5 minutes the app says each word 3 times, then stays quiet so your bird can rest and practice.</p>
+        <p class="tip" style="text-align:left">A listening helper, not a replacement for time together. Every 5 minutes the app says each word 3 times, then stays quiet so Nori can rest.</p>
       </div>
       <div class="card">
         <h3>Before you start</h3>
         <ul class="checklist">
           <li>Plug in the phone or tablet.</li>
-          <li>Turn the volume to medium. Not too loud for little ears!</li>
+          <li>Start with the volume low, and keep the phone about 2 feet (half a meter) from the cage.</li>
+          <li>Stop the lesson if Nori looks scared or moves away.</li>
           <li>Keep this app open with the screen on.</li>
           <li>Put it near the cage, not inside it.</li>
         </ul>
@@ -262,18 +278,20 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
 
   <!-- DANCE PARTY -->
   <section class="screen dance" id="dance" hidden>
-    <h2>Your bird did it!</h2>
+    <h2>Good Nori!</h2>
+    <div class="treat" id="treatBox" aria-live="polite">
+      <div class="treatNum" id="treatNum" aria-hidden="true">&#9733;</div>
+      <div style="flex:1;min-width:0"><b id="treatText">Reward Nori now!</b><br><span id="treatSub">Say "Good bird!" and give a treat right away.</span></div>
+    </div>
+    <button class="big green" type="button" id="treatDone">I gave Nori a treat</button>
     <div class="stage" id="danceStage" style="min-height:260px">
       <canvas id="confetti"></canvas>
       <div class="notes" aria-hidden="true"><span style="left:8%;top:20%">&#9835;</span><span style="right:8%;top:40%;animation-delay:.5s">&#9834;</span></div>
       <svg class="nori" id="danceNori" viewBox="0 0 200 222" role="img" aria-label="Nori dancing"><use href="#noriArt"/></svg>
     </div>
-    <div class="treat" id="treatBox" aria-live="polite">
-      <div class="treatNum" id="treatNum">10</div>
-      <div><b id="treatText">Give Nori a treat now!</b><br><span>Quick, while Nori remembers the word.</span></div>
-    </div>
+    <div class="bubble2" id="noriLine"></div>
     <p class="sub" id="learned"></p>
-    <div class="streak"><b id="streakBig">1 day streak!</b><span class="label">days in a row</span></div>
+    <div class="streak"><b id="streakBig">1 day streak!</b><span class="label">days in a row you taught Nori</span></div>
     <button class="big blue" id="again">Practice again</button>
   </section>
 
@@ -288,9 +306,9 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
     if(u)svg.replaceChild(g,u);
   });
   var KEY="birdpal-v1", VKEY="birdpal-voice:";
-  var state={words:["Hello!","Nori!","Pretty bird!","I love you","Good morning"],current:"Hello!",days:[],lessonWords:["Hello!","Nori!"],lessonMin:30,v:2};
+  var state={words:["Hello!","Nori!","Pretty bird!","I love you","Good morning"],current:"Hello!",days:[],lessonWords:["Hello!","Nori!"],lessonMin:10,v:3};
   try{var s=JSON.parse(localStorage.getItem(KEY)||"null");if(s&&s.words){for(var k in s)state[k]=s[k];}}catch(e){}
-  if(state.v!==2){state.v=2;if(state.lessonMin===120)state.lessonMin=30;}
+  if(state.v!==3){state.v=3;if([5,10,15,30].indexOf(state.lessonMin)<0||state.lessonMin===30)state.lessonMin=10;}
   function save(){try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){}}
   function getVoice(w){try{return localStorage.getItem(VKEY+w);}catch(e){return null;}}
   try{state.words.forEach(function(w){var v=localStorage.getItem(VKEY+w);if(v&&v.indexOf("data:audio/wav")!==0)localStorage.removeItem(VKEY+w);});}catch(e){}
@@ -516,7 +534,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
   });
 
   /* ---------- morning lesson ---------- */
-  var LENGTHS=[15,30,60,120], CYCLE=5*60*1000, REPS=3;
+  var LENGTHS=[5,10,15,30], CYCLE=5*60*1000, REPS=3;
   var lesson={running:false,id:0,start:0,end:0,tick:null,lock:null};
   function fmt(ms){var s=Math.max(0,Math.ceil(ms/1000)),h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=s%60;
     return (h?h+":"+String(m).padStart(2,"0"):m)+":"+String(x).padStart(2,"0");}
@@ -620,19 +638,27 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
     $("danceNori").classList.add("dancing");
   }
   var treatTimer=null;
+  var YES_LINES=["That's my line! High five... wing five?","Did you hear that? I said it! Snack time!","Nailed it. I'm basically a talking genius now."];
+  var TRY_LINES=["Almost! My brain is still loading... try one more?","Hmm, not quite. I'm practicing in my head. Again?","I heard you! My mouth is just being shy today."];
+  function pick(a){return a[Math.floor(Math.random()*a.length)];}
   function startTreat(){
-    clearInterval(treatTimer);var n=10,box=$("treatBox");box.classList.remove("done");
-    $("treatNum").textContent=n;$("treatText").textContent="Give Nori a treat now!";
-    treatTimer=setInterval(function(){n--;$("treatNum").textContent=Math.max(n,0);
-      if(n<=0){clearInterval(treatTimer);box.classList.add("done");$("treatNum").textContent="\u2713";$("treatText").textContent="Treat time is over. Great teaching!";}
-    },1000);
+    var box=$("treatBox");box.classList.remove("done");
+    $("treatNum").innerHTML="&#9733;";$("treatText").textContent="Reward Nori now!";
+    $("treatSub").textContent="Say \u201cGood bird!\u201d and give a treat right away.";
+    $("treatDone").hidden=false;
   }
+  $("treatDone").addEventListener("click",function(){
+    var box=$("treatBox");box.classList.add("done");$("treatNum").textContent="\u2713";
+    $("treatText").textContent="Great teaching!";$("treatSub").textContent="Nori learns fastest when the treat comes right away.";
+    $("treatDone").hidden=true;
+  });
   function stopParty(){clearInterval(treatTimer);cancelAnimationFrame(raf);var n=$("danceNori");if(n)n.classList.remove("dancing");}
 
   function celebrate(word,from){
     returnTo=from;
     var t=today();if(state.days.indexOf(t)<0)state.days.push(t);save();renderStreak();
-    $("learned").textContent="Your bird said \""+word+"\". Nori is so proud!";
+    $("learned").textContent="Nori tried \u201c"+word+"\u201d! Every try counts.";
+    $("noriLine").textContent=pick(YES_LINES);
     $("again").textContent=from==="lesson"?"Back to the lesson":from==="teach"?"Teach another word":"Practice again";
     startTreat();
     screens.forEach(function(s){$(s).hidden=(s!=="dance");});window.scrollTo(0,0);
@@ -658,13 +684,15 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
   function stopListen(){clearInterval(teach.timer);$("listenBox").hidden=true;$("iSaid").hidden=false;}
   $("iSaid").addEventListener("click",function(){
     teach.day=today();teach.count++;
+    if(state.days.indexOf(teach.day)<0){state.days.push(teach.day);save();renderStreak();}
+    $("tryLine").hidden=true;
     try{localStorage.setItem("birdpal-teach",JSON.stringify({day:teach.day,count:teach.count}));}catch(e){}
     renderTeach();
     var n=5;$("listenNum").textContent=n;$("listenBox").hidden=false;$("iSaid").hidden=true;
     clearInterval(teach.timer);
-    teach.timer=setInterval(function(){n--;$("listenNum").textContent=n;if(n<=0)stopListen();},1000);
+    teach.timer=setInterval(function(){n--;$("listenNum").textContent=n;if(n<=0){stopListen();$("tryLine").textContent="Nori says: "+pick(TRY_LINES);$("tryLine").hidden=false;}},1000);
   });
-  $("goodNori").addEventListener("click",function(){stopListen();celebrate(state.current,"teach");});
+  $("goodNori").addEventListener("click",function(){stopListen();$("tryLine").hidden=true;celebrate(state.current,"teach");});
   $("goTeach").addEventListener("click",function(){stopListen();renderTeach();show("teach");});
   $("goPractice").addEventListener("click",function(){show("practice");});
   $("goLesson").addEventListener("click",function(){show("lesson");});
