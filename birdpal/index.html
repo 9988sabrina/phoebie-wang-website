@@ -113,6 +113,14 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
 .grownups{background:#fff;border:2px solid var(--line);border-radius:14px;padding:10px 14px;font-size:14px;color:var(--muted)}
 .grownups summary{cursor:pointer;font-weight:800;color:var(--ink)}
 .grownups ul{margin:8px 0 0;padding-left:18px;display:flex;flex-direction:column;gap:4px}
+.preview{display:flex;flex-direction:column;gap:6px;background:#FFF3C4;border:3px solid var(--sky);border-radius:18px;padding:12px 14px;text-align:center}
+.preview b{font-family:var(--display);font-size:20px;color:var(--sky)}
+.preview span{font-weight:700}
+.preview .big{text-decoration:none;font-size:18px;padding:10px 14px}
+.big.ok{background:var(--leaf)}
+.big.bad{background:var(--cherry);animation:shake .35s}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.err.tip{color:var(--muted);font-weight:700}
 .credit{font-size:12px;color:var(--muted);text-align:center;margin:8px 0 0}
 </style>
 </head>
@@ -142,6 +150,11 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
 </svg>
 
 <main class="app">
+  <div class="preview" id="previewBanner" hidden>
+    <b>Record in the Bird Pal app</b>
+    <span id="previewLine">The chat one can't hear me. Open the real Bird Pal!</span>
+    <a class="big blue" href="https://www.phoebiewang.com/birdpal/" target="_blank" rel="noopener">Open Bird Pal</a>
+  </div>
   <div class="bar">
     <span class="brand">Bird Pal Buddies</span>
     <span class="chip" id="streakChip">0 day streak</span>
@@ -296,7 +309,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
     <button class="big blue" id="again">Practice again</button>
   </section>
 
-  <p class="credit">Made by Phoebie</p>
+  <p class="credit">Made by Phoebie &middot; <span id="buildTag">v1.6</span></p>
 </main>
 
 <script>
@@ -390,6 +403,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
   function playVoice(w){
     return new Promise(function(ok,bad){
       var v=voices[w];if(!v){bad(new Error("none"));return;}
+      try{if(navigator.audioSession&&navigator.audioSession.type!=="play-and-record")navigator.audioSession.type="playback";}catch(e){}
       var c=ctx();
       var go=function(ab){
         try{if(cur){cur.onended=null;cur.stop();}}catch(e){}
@@ -397,11 +411,26 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
         src.onended=function(){if(cur===src)cur=null;ok();};cur=src;src.start(0);
       };
       if(v.decoded){go(v.decoded);return;}
+      var own=wavToBuffer(c,v.buf);if(own){v.decoded=own;go(own);return;}
       try{
         var p=c.decodeAudioData(v.buf.slice(0),function(ab){v.decoded=ab;go(ab);},function(e){bad(e||{name:"DecodeError"});});
         if(p&&p.catch)p.catch(function(){});
       }catch(e){bad(e);}
     });
+  }
+  function wavToBuffer(c,buf){
+    try{
+      var dv=new DataView(buf),tag=function(o){return String.fromCharCode(dv.getUint8(o),dv.getUint8(o+1),dv.getUint8(o+2),dv.getUint8(o+3));};
+      if(buf.byteLength<44||tag(0)!=="RIFF"||tag(8)!=="WAVE")return null;
+      var p=12,fmt=null,data=null;
+      while(p+8<=buf.byteLength){var id=tag(p),sz=dv.getUint32(p+4,true);if(id==="fmt ")fmt=p+8;else if(id==="data"){data={o:p+8,n:Math.min(sz,buf.byteLength-p-8)};break;}p+=8+sz+(sz&1);}
+      if(!fmt||!data||dv.getUint16(fmt,true)!==1||dv.getUint16(fmt+14,true)!==16)return null;
+      var ch=dv.getUint16(fmt+2,true),rate=dv.getUint32(fmt+4,true),frames=Math.floor(data.n/(2*ch));
+      if(!frames)return null;
+      var ab=c.createBuffer(ch,frames,rate);
+      for(var k=0;k<ch;k++){var out=ab.getChannelData(k);for(var i=0;i<frames;i++)out[i]=dv.getInt16(data.o+(i*ch+k)*2,true)/32768;}
+      return ab;
+    }catch(e){return null;}
   }
   function robot(w,fin,done){
     if(!("speechSynthesis" in window)){done(false);return;}
@@ -528,35 +557,78 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
   /* Hold-to-record: works when the app runs as its own web page. Inside Claude the microphone is off, so the button opens the phone's recorder instead. */
   var framed=false;try{framed=window.self!==window.top;}catch(e){framed=true;}
   var isIOS=/iPhone|iPad|iPod/.test(navigator.userAgent)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1);
-  if(isIOS&&framed){
+  if(framed){
+    $("previewBanner").hidden=false;
+    $("previewLine").textContent=pick(["Squawk! Tap the home screen Bird Pal, Phoebie!","The chat one can't hear me. Open the real Bird Pal!","Come record on the home screen app, pretty please!"]);
+  }
+  if(framed){
     $("pickRec").hidden=true;
     $("recTip").innerHTML='To record your own voice, open the Bird Pal app from your home screen. If you don\u2019t have it yet, open <a href="https://www.phoebiewang.com/birdpal/">phoebiewang.com/birdpal</a> in Safari and tap Share, then Add to Home Screen.';
   } else if(isIOS){
     $("recTip").textContent="The camera will open. Point it anywhere, tap the red button, say the word, tap stop, then tap Use Video. The app keeps only your voice.";
   }
-  var canHold=!framed&&window.MediaRecorder&&navigator.mediaDevices&&navigator.mediaDevices.getUserMedia;
+  var canHold=!framed&&navigator.mediaDevices&&navigator.mediaDevices.getUserMedia;
+  var SAVED_LINES=["Yay! You saved my words. I'm learning so fast!","Good job, Phoebie! Let's hear it again!","Perfect! That one is saved. Teach me more!"];
   if(canHold){
     $("holdRec").hidden=false;$("pickRec").hidden=true;
     $("recTip").textContent="Press and hold the button, say the word, then let go.";
-    var rec=null,chunks=[],stream=null,startedAt=0;
-    var hb=$("holdRec");
+    var hb=$("holdRec"),recState=null;
+    var setSession=function(t){try{if(navigator.audioSession)navigator.audioSession.type=t;}catch(e){}};
+    var setBtn=function(mode){
+      hb.classList.remove("rec","ok","bad");
+      if(mode==="rec"){hb.classList.add("rec");hb.textContent="Listening... let go to save";}
+      else if(mode==="ok"){hb.classList.add("ok");hb.textContent="Saved!";setTimeout(function(){if(hb.classList.contains("ok")){hb.classList.remove("ok");hb.textContent="Hold to record my voice";}},1800);}
+      else if(mode==="bad"){hb.classList.add("bad");hb.textContent="Try again";setTimeout(function(){hb.classList.remove("bad");hb.textContent="Hold to record my voice";},1800);}
+      else hb.textContent="Hold to record my voice";
+    };
+    var showErr=function(t){$("voiceErr").classList.remove("tip");$("voiceErr").textContent=t;$("voiceErr").hidden=false;};
+    var finishRec=function(r){
+      try{if(r.src)r.src.disconnect();if(r.proc){r.proc.onaudioprocess=null;r.proc.disconnect();}if(r.mute)r.mute.disconnect();}catch(e){}
+      if(r.stream)r.stream.getTracks().forEach(function(t){t.stop();});
+      if(recState===r)recState=null;
+      setSession("playback");
+      if(Date.now()-r.start<500||(!r.mr&&!r.len)){setBtn();showErr("Keep holding while you talk, then let go.");return;}
+      if(r.mr){setBtn();saveClip(new Blob(r.blobs,{type:r.mr.mimeType||"audio/mp4"}));return;}
+      var all=new Float32Array(r.len),o=0;r.chunks.forEach(function(ch){all.set(ch,o);o+=ch.length;});
+      var res=toWav({sampleRate:r.rate,numberOfChannels:1,length:r.len,getChannelData:function(){return all;}});
+      if(res.peak<0.01){setBtn("bad");showErr("That recording is silent. Hold the phone closer and say the word loudly.");return;}
+      var word=state.current;
+      rawPut(word,res.blob).then(function(){
+        try{localStorage.removeItem(VKEY+word);}catch(e){}
+        renderWords();setBtn("ok");
+        $("voiceState").insertAdjacentHTML("afterbegin",'<span class="ok">'+pick(SAVED_LINES)+' </span>');
+        $("voiceErr").textContent="Can't hear it? Turn up the volume and flip the side switch off silent.";$("voiceErr").hidden=false;$("voiceErr").classList.add("tip");
+        sayOnce(word);
+      }).catch(function(e){setBtn("bad");showErr("The app couldn't save that recording. (code: "+((e&&e.name)||"store")+")");});
+    };
+    var stopRec=function(){
+      var r=recState;if(!r||r.stopped)return;r.stopped=true;
+      if(r.mr){if(r.mr.state==="recording")r.mr.stop();return;}
+      if(r.stream)finishRec(r);
+    };
     hb.addEventListener("contextmenu",function(e){e.preventDefault();});
     hb.addEventListener("pointerdown",async function(e){
-      e.preventDefault();$("voiceErr").hidden=true;hush();
-      try{stream=stream||await navigator.mediaDevices.getUserMedia({audio:true});}
-      catch(err){$("voiceErr").textContent="The microphone is off. Allow the microphone for this page, then try again.";$("voiceErr").hidden=false;return;}
-      chunks=[];rec=new MediaRecorder(stream);
-      rec.ondataavailable=function(ev){if(ev.data&&ev.data.size)chunks.push(ev.data);};
-      rec.onstop=function(){
-        hb.classList.remove("rec");hb.textContent="Hold to record my voice";
-        if(Date.now()-startedAt<500){$("voiceErr").textContent="Keep holding while you talk, then let go.";$("voiceErr").hidden=false;return;}
-        saveClip(new Blob(chunks,{type:rec.mimeType||"audio/webm"}));
-      };
-      startedAt=Date.now();rec.start();hb.classList.add("rec");hb.textContent="Recording... let go to stop";
-      setTimeout(function(){if(rec&&rec.state==="recording")rec.stop();},5000);
+      e.preventDefault();if(recState)return;$("voiceErr").hidden=true;$("voiceErr").classList.remove("tip");hush();
+      setSession("play-and-record");
+      var c=ctx(),r={chunks:[],len:0,stopped:false,start:Date.now()};recState=r;
+      try{r.stream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false}});}
+      catch(err){recState=null;setSession("playback");setBtn("bad");showErr("The microphone is off. Allow the microphone for Bird Pal, then try again.");return;}
+      if(r.stopped){finishRec(r);return;}
+      try{await c.resume();}catch(e2){}
+      if(c.createScriptProcessor){
+        r.rate=c.sampleRate;r.src=c.createMediaStreamSource(r.stream);r.proc=c.createScriptProcessor(4096,1,1);
+        r.mute=c.createGain();r.mute.gain.value=0;
+        r.proc.onaudioprocess=function(ev){if(r.stopped)return;var d=ev.inputBuffer.getChannelData(0);r.chunks.push(new Float32Array(d));r.len+=d.length;};
+        r.src.connect(r.proc);r.proc.connect(r.mute);r.mute.connect(c.destination);
+      }else if(window.MediaRecorder){
+        r.mr=new MediaRecorder(r.stream);r.blobs=[];
+        r.mr.ondataavailable=function(ev){if(ev.data&&ev.data.size)r.blobs.push(ev.data);};
+        r.mr.onstop=function(){finishRec(r);};r.mr.start();
+      }
+      setBtn("rec");
+      setTimeout(function(){if(recState===r)stopRec();},6000);
     });
-    var stopRec=function(){if(rec&&rec.state==="recording")rec.stop();};
-    hb.addEventListener("pointerup",stopRec);hb.addEventListener("pointerleave",stopRec);hb.addEventListener("pointercancel",stopRec);
+    hb.addEventListener("pointerup",stopRec);hb.addEventListener("pointercancel",stopRec);hb.addEventListener("pointerleave",stopRec);
   }
 
   var TIMES=5,playing=false,runId=0;
@@ -759,6 +831,8 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
     }
   }
 
+  (function(){var sa=(window.matchMedia&&matchMedia("(display-mode: standalone)").matches)||navigator.standalone===true;
+    $("buildTag").textContent="v1.6 \u00b7 "+(framed?"Claude preview":sa?"home-screen app":"browser");})();
   renderWords();renderStreak();
   rawLoad().then(function(){renderWords();});
 })();
