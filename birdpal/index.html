@@ -337,29 +337,47 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
   function renderStreak(){var n=streak();$("streakChip").textContent=n+" day streak";$("streakBig").textContent=n+" day streak!";}
 
   /* ---------- saying a word: her recorded voice if she added one, else the device voice ---------- */
-  var player=document.createElement("video");player.setAttribute("playsinline","");player.setAttribute("webkit-playsinline","");player.playsInline=true;player.preload="auto";
-  player.setAttribute("aria-hidden","true");player.style.cssText="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;left:0;bottom:0";
-  document.body.appendChild(player);
-  /* Original recordings (like iPhone videos) are kept in the browser's file storage and played as they are. */
-  var rawUrls={},rawAt={},idb=null;
+  /* Recordings are kept as raw sound data in the browser's file store and played with the phone's audio engine.
+     This avoids the iPhone media player, which refuses some recorded files. */
+  var voices={},rawAt={},idb=null,actx=null,cur=null;
+  function ctx(){
+    if(!actx)actx=new (window.AudioContext||window.webkitAudioContext)();
+    try{if(actx.state!=="running")actx.resume();}catch(e){}
+    return actx;
+  }
+  try{if(navigator.audioSession)navigator.audioSession.type="playback";}catch(e){}
+  document.addEventListener("pointerdown",function(){try{ctx();}catch(e){}},{passive:true});
   function openDb(){
     if(idb)return idb;
     idb=new Promise(function(ok,bad){try{var r=indexedDB.open("birdpal",1);r.onupgradeneeded=function(){r.result.createObjectStore("voices");};r.onsuccess=function(){ok(r.result);};r.onerror=function(){bad(r.error);};}catch(e){bad(e);}});
     return idb;
   }
   function idbDo(mode,fn){return openDb().then(function(db){return new Promise(function(ok,bad){var t=db.transaction("voices",mode),st=t.objectStore("voices"),res=fn(st);t.oncomplete=function(){ok(res&&res.result);};t.onerror=function(){bad(t.error);};t.onabort=function(){bad(t.error);};});});}
-  function rawPut(w,blob,at){at=at||Date.now();return idbDo("readwrite",function(st){return st.put({blob:blob,at:at},w);}).then(function(){if(rawUrls[w])URL.revokeObjectURL(rawUrls[w]);rawUrls[w]=URL.createObjectURL(blob);rawAt[w]=at;});}
-  function rawDel(w){if(rawUrls[w]){URL.revokeObjectURL(rawUrls[w]);delete rawUrls[w];}delete rawAt[w];return idbDo("readwrite",function(st){return st.delete(w);}).catch(function(){});}
+  function rawPut(w,blob,at){
+    at=at||Date.now();
+    return readBuf(blob).then(function(buf){
+      var type=blob.type||"audio/wav";
+      return idbDo("readwrite",function(st){return st.put({buf:buf,type:type,at:at},w);})
+        .then(function(){voices[w]={buf:buf,type:type,at:at,decoded:null};rawAt[w]=at;});
+    });
+  }
+  function rawDel(w){delete voices[w];delete rawAt[w];return idbDo("readwrite",function(st){return st.delete(w);}).catch(function(){});}
   function rawLoad(){
+    var redo=[];
     return openDb().then(function(db){return new Promise(function(ok){var t=db.transaction("voices","readonly"),st=t.objectStore("voices"),c=st.openCursor();
-      c.onsuccess=function(){var cur=c.result;if(cur){var v=cur.value,b=(v&&v.blob)||v;if(b instanceof Blob){rawUrls[cur.key]=URL.createObjectURL(b);rawAt[cur.key]=(v&&v.at)||null;}cur.continue();}else ok();};c.onerror=function(){ok();};});})
+      c.onsuccess=function(){var k,v,cr=c.result;if(cr){k=cr.key;v=cr.value;
+          if(v&&v.buf){voices[k]={buf:v.buf,type:v.type,at:v.at,decoded:null};rawAt[k]=v.at||null;}
+          else{var b=(v&&v.blob)||v;if(b instanceof Blob)redo.push({k:k,b:b,at:v&&v.at});}
+          cr.continue();}else ok();};
+      c.onerror=function(){ok();};});})
+      .then(function(){return Promise.all(redo.map(function(r){return rawPut(r.k,r.b,r.at).catch(function(){});}));})
       .then(migrateOld).catch(function(){});
   }
   /* Older versions kept recordings in a smaller store; move them into the file store once. */
   function migrateOld(){
     var jobs=[];
     state.words.forEach(function(w){
-      var d=getVoice(w);if(!d||rawUrls[w])return;
+      var d=getVoice(w);if(!d||voices[w])return;
       try{var parts=d.split(","),mime=(parts[0].match(/data:([^;]+)/)||[])[1]||"audio/wav",bin=atob(parts[1]),arr=new Uint8Array(bin.length);
         for(var i=0;i<bin.length;i++)arr[i]=bin.charCodeAt(i);
         jobs.push(rawPut(w,new Blob([arr],{type:mime})).then(function(){try{localStorage.removeItem(VKEY+w);}catch(e){}}));}catch(e){}
@@ -367,19 +385,23 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
     return Promise.all(jobs).catch(function(){});
   }
   try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist();}catch(e){}
-  function hasVoice(w){return !!(getVoice(w)||rawUrls[w]);}
+  function hasVoice(w){return !!(voices[w]||getVoice(w));}
   function dropVoice(w){try{localStorage.removeItem(VKEY+w);}catch(e){}return rawDel(w);}
-  var clipUrls={};
-  function clipUrl(w){
-    if(rawUrls[w])return rawUrls[w];
-    var d=getVoice(w);if(!d)return null;
-    if(clipUrls[w]&&clipUrls[w].d===d)return clipUrls[w].u;
-    try{
-      var parts=d.split(","),mime=(parts[0].match(/data:([^;]+)/)||[])[1]||"audio/wav",bin=atob(parts[1]),arr=new Uint8Array(bin.length);
-      for(var i=0;i<bin.length;i++)arr[i]=bin.charCodeAt(i);
-      if(clipUrls[w])URL.revokeObjectURL(clipUrls[w].u);
-      var u=URL.createObjectURL(new Blob([arr],{type:mime}));clipUrls[w]={d:d,u:u};return u;
-    }catch(e){return d;}
+  function playVoice(w){
+    return new Promise(function(ok,bad){
+      var v=voices[w];if(!v){bad(new Error("none"));return;}
+      var c=ctx();
+      var go=function(ab){
+        try{if(cur){cur.onended=null;cur.stop();}}catch(e){}
+        var src=c.createBufferSource();src.buffer=ab;src.connect(c.destination);
+        src.onended=function(){if(cur===src)cur=null;ok();};cur=src;src.start(0);
+      };
+      if(v.decoded){go(v.decoded);return;}
+      try{
+        var p=c.decodeAudioData(v.buf.slice(0),function(ab){v.decoded=ab;go(ab);},function(e){bad(e||{name:"DecodeError"});});
+        if(p&&p.catch)p.catch(function(){});
+      }catch(e){bad(e);}
+    });
   }
   function robot(w,fin,done){
     if(!("speechSynthesis" in window)){done(false);return;}
@@ -390,24 +412,21 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
     return new Promise(function(done){
       var finished=false,fin=function(){if(!finished){finished=true;done(true);}};
       setTimeout(fin,8000);
-      var src=clipUrl(w);
-      if(src){
-        player.onended=fin;
-        player.onerror=function(){var code=player.error&&player.error.code;dropVoice(w).then(function(){if(w===state.current)renderWords();});
-          showVoiceProblem("play "+code,true);robot(w,fin,done);};
-        player.src=src;player.currentTime=0;player.volume=1;
-        var p=player.play();
-        if(p&&p.catch)p.catch(function(err){if(err&&err.name==="NotAllowedError"){fin();}else{showVoiceProblem(err&&err.name);robot(w,fin,done);}});
+      if(voices[w]){
+        playVoice(w).then(fin).catch(function(e){
+          dropVoice(w).then(function(){if(w===state.current)renderWords();});
+          showVoiceProblem((e&&e.name)||"decode",true);robot(w,fin,done);
+        });
         return;
       }
       robot(w,fin,done);
     });
   }
   function showVoiceProblem(code,removed){
-    if(removed){$("voiceErr").textContent="That recording can't play here, so it was removed. Record it in the Bird Pal app on your home screen instead. (code: "+(code||"?")+")";$("voiceErr").hidden=false;return;}
-    $("voiceErr").textContent="Your recording didn't play, so the app used its own voice. Try recording again. (code: "+(code||"?")+")";$("voiceErr").hidden=false;
+    $("voiceErr").textContent=(removed?"That recording couldn't play, so it was removed. Please record it again.":"Your recording didn't play, so the app used its own voice. Try recording again.")+" (code: "+(code||"?")+")";
+    $("voiceErr").hidden=false;
   }
-  function hush(){try{speechSynthesis.cancel();}catch(e){}try{player.pause();}catch(e){}}
+  function hush(){try{speechSynthesis.cancel();}catch(e){}try{if(cur){cur.onended=null;cur.stop();cur=null;}}catch(e){}}
   function wait(ms){return new Promise(function(r){setTimeout(r,ms);});}
 
   /* ---------- practice ---------- */
@@ -462,11 +481,11 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
   });
 
   /* Every recording is turned into a small, clear WAV file: quiet parts trimmed, volume evened out, 6 seconds max. WAV plays on every phone. */
-  var decodeCtx=null;
+
   function readBuf(blob){return blob.arrayBuffer?blob.arrayBuffer():new Promise(function(ok,bad){var r=new FileReader();r.onload=function(){ok(r.result);};r.onerror=bad;r.readAsArrayBuffer(blob);});}
   function decode(buf){
-    decodeCtx=decodeCtx||new (window.AudioContext||window.webkitAudioContext)();
-    return new Promise(function(ok,bad){var p=decodeCtx.decodeAudioData(buf,ok,bad);if(p&&p.catch)p.catch(bad);});
+    var c=ctx();
+    return new Promise(function(ok,bad){var p=c.decodeAudioData(buf,ok,bad);if(p&&p.catch)p.catch(bad);});
   }
   function toWav(ab){
     var rate=22050,src=ab.sampleRate,ch=ab.numberOfChannels,len=ab.length,mono=new Float32Array(len);
@@ -641,7 +660,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
   /* ---------- dance party ---------- */
   var raf=null,bits=[],audio=null;
   function tune(){
-    try{audio=audio||new (window.AudioContext||window.webkitAudioContext)();
+    try{audio=ctx();
       var notes=[659,784,880,1047,880,1047,1319],t=audio.currentTime;
       notes.forEach(function(f,i){var o=audio.createOscillator(),g=audio.createGain();o.type="triangle";o.frequency.value=f;
         g.gain.setValueAtTime(0.0001,t+i*.14);g.gain.exponentialRampToValueAtTime(.18,t+i*.14+.02);g.gain.exponentialRampToValueAtTime(.0001,t+i*.14+.13);
