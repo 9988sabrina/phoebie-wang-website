@@ -168,6 +168,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
         <li>Birds learn words best from people. The app helps with practice; it doesn't replace time together.</li>
         <li>Not every bird learns to talk, and that's okay. The streak counts days your child taught, not words learned.</li>
         <li>Recordings and progress stay only on this device. Nothing is uploaded. A new phone starts fresh.</li>
+        <li>On iPhone, always open Bird Pal from its home-screen icon. Safari keeps a separate copy, so recordings made there won't show up in the app.</li>
         <li>Lessons pause if the screen locks. Keep the app open and the phone plugged in.</li>
       </ul>
     </details>
@@ -340,24 +341,38 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
   player.setAttribute("aria-hidden","true");player.style.cssText="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;left:0;bottom:0";
   document.body.appendChild(player);
   /* Original recordings (like iPhone videos) are kept in the browser's file storage and played as they are. */
-  var rawUrls={},idb=null;
+  var rawUrls={},rawAt={},idb=null;
   function openDb(){
     if(idb)return idb;
     idb=new Promise(function(ok,bad){try{var r=indexedDB.open("birdpal",1);r.onupgradeneeded=function(){r.result.createObjectStore("voices");};r.onsuccess=function(){ok(r.result);};r.onerror=function(){bad(r.error);};}catch(e){bad(e);}});
     return idb;
   }
   function idbDo(mode,fn){return openDb().then(function(db){return new Promise(function(ok,bad){var t=db.transaction("voices",mode),st=t.objectStore("voices"),res=fn(st);t.oncomplete=function(){ok(res&&res.result);};t.onerror=function(){bad(t.error);};t.onabort=function(){bad(t.error);};});});}
-  function rawPut(w,blob){return idbDo("readwrite",function(st){return st.put(blob,w);}).then(function(){if(rawUrls[w])URL.revokeObjectURL(rawUrls[w]);rawUrls[w]=URL.createObjectURL(blob);});}
-  function rawDel(w){if(rawUrls[w]){URL.revokeObjectURL(rawUrls[w]);delete rawUrls[w];}return idbDo("readwrite",function(st){return st.delete(w);}).catch(function(){});}
+  function rawPut(w,blob,at){at=at||Date.now();return idbDo("readwrite",function(st){return st.put({blob:blob,at:at},w);}).then(function(){if(rawUrls[w])URL.revokeObjectURL(rawUrls[w]);rawUrls[w]=URL.createObjectURL(blob);rawAt[w]=at;});}
+  function rawDel(w){if(rawUrls[w]){URL.revokeObjectURL(rawUrls[w]);delete rawUrls[w];}delete rawAt[w];return idbDo("readwrite",function(st){return st.delete(w);}).catch(function(){});}
   function rawLoad(){
     return openDb().then(function(db){return new Promise(function(ok){var t=db.transaction("voices","readonly"),st=t.objectStore("voices"),c=st.openCursor();
-      c.onsuccess=function(){var cur=c.result;if(cur){rawUrls[cur.key]=URL.createObjectURL(cur.value);cur.continue();}else ok();};c.onerror=function(){ok();};});}).catch(function(){});
+      c.onsuccess=function(){var cur=c.result;if(cur){var v=cur.value,b=(v&&v.blob)||v;if(b instanceof Blob){rawUrls[cur.key]=URL.createObjectURL(b);rawAt[cur.key]=(v&&v.at)||null;}cur.continue();}else ok();};c.onerror=function(){ok();};});})
+      .then(migrateOld).catch(function(){});
   }
+  /* Older versions kept recordings in a smaller store; move them into the file store once. */
+  function migrateOld(){
+    var jobs=[];
+    state.words.forEach(function(w){
+      var d=getVoice(w);if(!d||rawUrls[w])return;
+      try{var parts=d.split(","),mime=(parts[0].match(/data:([^;]+)/)||[])[1]||"audio/wav",bin=atob(parts[1]),arr=new Uint8Array(bin.length);
+        for(var i=0;i<bin.length;i++)arr[i]=bin.charCodeAt(i);
+        jobs.push(rawPut(w,new Blob([arr],{type:mime})).then(function(){try{localStorage.removeItem(VKEY+w);}catch(e){}}));}catch(e){}
+    });
+    return Promise.all(jobs).catch(function(){});
+  }
+  try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist();}catch(e){}
   function hasVoice(w){return !!(getVoice(w)||rawUrls[w]);}
   function dropVoice(w){try{localStorage.removeItem(VKEY+w);}catch(e){}return rawDel(w);}
   var clipUrls={};
   function clipUrl(w){
-    var d=getVoice(w);if(!d)return rawUrls[w]||null;
+    if(rawUrls[w])return rawUrls[w];
+    var d=getVoice(w);if(!d)return null;
     if(clipUrls[w]&&clipUrls[w].d===d)return clipUrls[w].u;
     try{
       var parts=d.split(","),mime=(parts[0].match(/data:([^;]+)/)||[])[1]||"audio/wav",bin=atob(parts[1]),arr=new Uint8Array(bin.length);
@@ -404,7 +419,8 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
     });
     $("word").textContent=state.current;
     renderDelete();
-    $("voiceState").innerHTML=hasVoice(state.current)?'<span class="ok">Using your voice</span> <button class="ghost" type="button" id="hearVoice">Play my voice</button> <button class="ghost" type="button" id="dropVoice">Remove</button>':'';
+    var at=rawAt[state.current],when=at?new Date(at).toLocaleDateString(undefined,{month:"short",day:"numeric"}):"";
+    $("voiceState").innerHTML=hasVoice(state.current)?'<span class="ok">Your voice is saved'+(when?' ('+when+')':'')+'. It stays until you record again.</span> <button class="ghost" type="button" id="hearVoice">Play my voice</button> <button class="ghost" type="button" id="dropVoice">Remove</button>':'';
     var d=$("dropVoice");if(d)d.addEventListener("click",function(){dropVoice(state.current).then(renderWords);renderWords();});
     var h=$("hearVoice");if(h)h.addEventListener("click",function(){stopPlay();$("voiceErr").hidden=true;sayOnce(state.current);});
   }
@@ -479,10 +495,12 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
     readBuf(blob).then(decode).then(function(ab){
       var res=toWav(ab);
       if(res.peak<0.01){renderWords();$("voiceErr").textContent="That recording is silent. Hold the phone closer and say the word loudly.";$("voiceErr").hidden=false;return;}
-      var r=new FileReader();r.onload=function(){
-        try{localStorage.setItem(VKEY+word,r.result);rawDel(word);saved();}
-        catch(e){keepOriginal("full");}
-      };r.readAsDataURL(res.blob);
+      rawPut(word,res.blob).then(function(){try{localStorage.removeItem(VKEY+word);}catch(e){}saved();}).catch(function(){
+        var r=new FileReader();r.onload=function(){
+          try{localStorage.setItem(VKEY+word,r.result);saved();}
+          catch(e){keepOriginal("full");}
+        };r.readAsDataURL(res.blob);
+      });
     }).catch(function(e){return keepOriginal((e&&e.name)||"decode");});
   }
 
