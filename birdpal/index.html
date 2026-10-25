@@ -393,7 +393,8 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
       var src=clipUrl(w);
       if(src){
         player.onended=fin;
-        player.onerror=function(){showVoiceProblem("play "+(player.error&&player.error.code));robot(w,fin,done);};
+        player.onerror=function(){var code=player.error&&player.error.code;dropVoice(w).then(function(){if(w===state.current)renderWords();});
+          showVoiceProblem("play "+code,true);robot(w,fin,done);};
         player.src=src;player.currentTime=0;player.volume=1;
         var p=player.play();
         if(p&&p.catch)p.catch(function(err){if(err&&err.name==="NotAllowedError"){fin();}else{showVoiceProblem(err&&err.name);robot(w,fin,done);}});
@@ -402,7 +403,8 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
       robot(w,fin,done);
     });
   }
-  function showVoiceProblem(code){
+  function showVoiceProblem(code,removed){
+    if(removed){$("voiceErr").textContent="That recording can't play here, so it was removed. Record it in the Bird Pal app on your home screen instead. (code: "+(code||"?")+")";$("voiceErr").hidden=false;return;}
     $("voiceErr").textContent="Your recording didn't play, so the app used its own voice. Try recording again. (code: "+(code||"?")+")";$("voiceErr").hidden=false;
   }
   function hush(){try{speechSynthesis.cancel();}catch(e){}try{player.pause();}catch(e){}}
@@ -507,7 +509,12 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
   /* Hold-to-record: works when the app runs as its own web page. Inside Claude the microphone is off, so the button opens the phone's recorder instead. */
   var framed=false;try{framed=window.self!==window.top;}catch(e){framed=true;}
   var isIOS=/iPhone|iPad|iPod/.test(navigator.userAgent)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1);
-  if(isIOS)$("recTip").textContent="The camera will open. Point it anywhere, tap the red button, say the word, tap stop, then tap Use Video. The app keeps only your voice.";
+  if(isIOS&&framed){
+    $("pickRec").hidden=true;
+    $("recTip").innerHTML='To record your own voice, open the Bird Pal app from your home screen. If you don\u2019t have it yet, open <a href="https://www.phoebiewang.com/birdpal/">phoebiewang.com/birdpal</a> in Safari and tap Share, then Add to Home Screen.';
+  } else if(isIOS){
+    $("recTip").textContent="The camera will open. Point it anywhere, tap the red button, say the word, tap stop, then tap Use Video. The app keeps only your voice.";
+  }
   var canHold=!framed&&window.MediaRecorder&&navigator.mediaDevices&&navigator.mediaDevices.getUserMedia;
   if(canHold){
     $("holdRec").hidden=false;$("pickRec").hidden=true;
