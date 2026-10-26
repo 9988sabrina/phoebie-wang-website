@@ -121,6 +121,10 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
 .big.bad{background:var(--cherry);animation:shake .35s}
 @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
 .err.tip{color:var(--muted);font-weight:700}
+[hidden]{display:none!important}
+.voicePick{gap:8px}
+.seg3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.seg3 .wordchip{padding:8px 4px;text-align:center;font-size:14px;line-height:1.2}
 .credit{font-size:12px;color:var(--muted);text-align:center;margin:8px 0 0}
 </style>
 </head>
@@ -182,6 +186,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
         <li>Not every bird learns to talk, and that's okay. The streak counts days your child taught, not words learned.</li>
         <li>Recordings and progress stay only on this device. Nothing is uploaded. A new phone starts fresh.</li>
         <li>On iPhone, always open Bird Pal from its home-screen icon. Safari keeps a separate copy, so recordings made there won't show up in the app.</li>
+        <li>The bird-friendly voice is high, happy and slow because many trainers report parrots pay more attention to high, enthusiastic voices. Your own voice is still the best teacher.</li>
         <li>Lessons pause if the screen locks. Keep the app open and the phone plugged in.</li>
       </ul>
     </details>
@@ -208,6 +213,12 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
         <button type="button" class="ghost danger" id="delYes">Yes, delete</button>
         <button type="button" class="ghost" id="delNo">Keep it</button>
       </div>
+    </div>
+    <div class="card voicePick">
+      <h3>Which voice says the words?</h3>
+      <div class="seg3" id="voiceModes" role="radiogroup" aria-label="Voice"></div>
+      <p class="tip" id="voiceModeTip" style="text-align:left;margin:0"></p>
+      <button type="button" class="ghost" id="hearAuto" style="align-self:flex-start">Hear it</button>
     </div>
     <div class="voice">
       <button type="button" class="big blue" id="holdRec" hidden>Hold to record my voice</button>
@@ -309,7 +320,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
     <button class="big blue" id="again">Practice again</button>
   </section>
 
-  <p class="credit">Made by Phoebie &middot; <span id="buildTag">v1.6</span></p>
+  <p class="credit">Made by Phoebie &middot; <span id="buildTag">v1.7</span></p>
 </main>
 
 <script>
@@ -320,7 +331,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
     if(u)svg.replaceChild(g,u);
   });
   var KEY="birdpal-v1", VKEY="birdpal-voice:";
-  var state={words:["Hello!","Nori!","Pretty bird!","I love you","Good morning"],current:"Hello!",days:[],lessonWords:["Hello!","Nori!"],lessonMin:10,v:3};
+  var state={words:["Hello!","Nori!","Pretty bird!","I love you","Good morning"],current:"Hello!",days:[],lessonWords:["Hello!","Nori!"],lessonMin:10,v:3,voiceMode:"mine"};
   try{var s=JSON.parse(localStorage.getItem(KEY)||"null");if(s&&s.words){for(var k in s)state[k]=s[k];}}catch(e){}
   if(state.v!==3){state.v=3;if([5,10,15,30].indexOf(state.lessonMin)<0||state.lessonMin===30)state.lessonMin=10;}
   function save(){try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){}}
@@ -432,23 +443,46 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
       return ab;
     }catch(e){return null;}
   }
-  function robot(w,fin,done){
+  /* Auto voices. "Bird-friendly" follows common talk-training advice: a high, happy, clear voice, the same voice every time. */
+  var VOICE_MODES=[
+    {id:"mine",label:"My voice",tip:"Uses your recording. Words you haven't recorded use the bird-friendly voice."},
+    {id:"bird",label:"Bird-friendly",tip:"A high, happy, slow voice. Many trainers say parrots pay more attention to high, excited voices."},
+    {id:"calm",label:"Calm",tip:"A softer, normal voice for quiet mornings."}];
+  var STYLE={bird:{pitch:1.75,rate:0.72,bang:true},calm:{pitch:1.1,rate:0.85,bang:false}};
+  var autoVoice=null;
+  function pickVoice(){
+    if(!("speechSynthesis" in window))return;
+    var vs=speechSynthesis.getVoices().filter(function(v){return /^en(-|_|$)/i.test(v.lang);});
+    if(!vs.length)return;
+    var fav=["Samantha","Ava","Allison","Susan","Karen","Moira","Tessa","Fiona","Victoria","Aria","Jenny","Zira","Google US English","Serena","Nicky"];
+    var best=null;
+    fav.some(function(n){best=vs.filter(function(v){return v.name.indexOf(n)>=0&&!/compact/i.test(v.voiceURI||"");})[0]||vs.filter(function(v){return v.name.indexOf(n)>=0;})[0];return !!best;});
+    autoVoice=best||vs.filter(function(v){return /en-US/i.test(v.lang);})[0]||vs[0];
+  }
+  try{pickVoice();if("speechSynthesis" in window&&speechSynthesis.addEventListener)speechSynthesis.addEventListener("voiceschanged",pickVoice);}catch(e){}
+  function robot(w,fin,done,mode){
     if(!("speechSynthesis" in window)){done(false);return;}
-    var u=new SpeechSynthesisUtterance(w);u.rate=0.85;u.pitch=1.4;u.onend=fin;u.onerror=fin;
+    var st=STYLE[mode]||STYLE.bird,text=w;
+    if(st.bang)text=w.replace(/[.!?]+$/,"")+"!";
+    var u=new SpeechSynthesisUtterance(text);u.rate=st.rate;u.pitch=st.pitch;u.volume=1;
+    if(!autoVoice)pickVoice();
+    if(autoVoice){u.voice=autoVoice;u.lang=autoVoice.lang;}else u.lang="en-US";
+    u.onend=fin;u.onerror=fin;
     speechSynthesis.cancel();speechSynthesis.speak(u);
   }
   function sayOnce(w){
     return new Promise(function(done){
       var finished=false,fin=function(){if(!finished){finished=true;done(true);}};
       setTimeout(fin,8000);
-      if(voices[w]){
+      var mode=state.voiceMode||"mine";
+      if(mode==="mine"&&voices[w]){
         playVoice(w).then(fin).catch(function(e){
           dropVoice(w).then(function(){if(w===state.current)renderWords();});
-          showVoiceProblem((e&&e.name)||"decode",true);robot(w,fin,done);
+          showVoiceProblem((e&&e.name)||"decode",true);robot(w,fin,done,"bird");
         });
         return;
       }
-      robot(w,fin,done);
+      robot(w,fin,done,mode==="calm"?"calm":"bird");
     });
   }
   function showVoiceProblem(code,removed){
@@ -468,12 +502,25 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
       box.appendChild(b);
     });
     $("word").textContent=state.current;
-    renderDelete();
+    renderDelete();renderVoiceModes();
     var at=rawAt[state.current],when=at?new Date(at).toLocaleDateString(undefined,{month:"short",day:"numeric"}):"";
     $("voiceState").innerHTML=hasVoice(state.current)?'<span class="ok">Your voice is saved'+(when?' ('+when+')':'')+'. It stays until you record again.</span> <button class="ghost" type="button" id="hearVoice">Play my voice</button> <button class="ghost" type="button" id="dropVoice">Remove</button>':'';
     var d=$("dropVoice");if(d)d.addEventListener("click",function(){dropVoice(state.current).then(renderWords);renderWords();});
-    var h=$("hearVoice");if(h)h.addEventListener("click",function(){stopPlay();$("voiceErr").hidden=true;sayOnce(state.current);});
+    var h=$("hearVoice");if(h)h.addEventListener("click",function(){stopPlay();$("voiceErr").hidden=true;var w=state.current;if(voices[w])playVoice(w).catch(function(e){showVoiceProblem((e&&e.name)||"decode",false);});else sayOnce(w);});
   }
+  function renderVoiceModes(){
+    var box=$("voiceModes");box.innerHTML="";var cur=state.voiceMode||"mine";
+    VOICE_MODES.forEach(function(m){
+      var b=document.createElement("button");b.type="button";b.className="wordchip";b.textContent=m.label;
+      b.setAttribute("role","radio");b.setAttribute("aria-checked",String(m.id===cur));b.setAttribute("aria-pressed",String(m.id===cur));
+      b.addEventListener("click",function(){state.voiceMode=m.id;save();stopPlay();renderVoiceModes();});
+      box.appendChild(b);
+    });
+    var m=VOICE_MODES.filter(function(x){return x.id===cur;})[0];
+    var t=m.tip;if(cur==="mine"&&!hasVoice(state.current))t="No recording for this word yet, so the bird-friendly voice will say it. Record your voice below!";
+    $("voiceModeTip").textContent=t;
+  }
+  $("hearAuto").addEventListener("click",function(){stopPlay();$("voiceErr").hidden=true;sayOnce(state.current);});
   function renderDelete(){
     var only=state.words.length<=1;
     $("delWord").hidden=only||!$("delConfirm").hidden;
@@ -832,7 +879,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
   }
 
   (function(){var sa=(window.matchMedia&&matchMedia("(display-mode: standalone)").matches)||navigator.standalone===true;
-    $("buildTag").textContent="v1.6 \u00b7 "+(framed?"Claude preview":sa?"home-screen app":"browser");})();
+    $("buildTag").textContent="v1.7 \u00b7 "+(framed?"Claude preview":sa?"home-screen app":"browser");})();
   renderWords();renderStreak();
   rawLoad().then(function(){renderWords();});
 })();
