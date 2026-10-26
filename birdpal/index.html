@@ -79,7 +79,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
 .big.soft{background:#fff;font-size:20px;padding:14px 16px}
 .card{background:#fff;border:3px solid var(--ink);border-radius:18px;padding:14px;display:flex;flex-direction:column;gap:10px}
 .card h3{font-family:var(--display);font-weight:800;font-size:20px;margin:0}
-.seg{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.seg{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
 .seg .wordchip{padding:8px 4px;text-align:center}
 .clock{font-family:var(--display);font-weight:800;font-size:56px;line-height:1;text-align:center;color:var(--sky);font-variant-numeric:tabular-nums}
 .phase{align-self:center;font-weight:800;font-size:15px;border-radius:999px;padding:4px 14px;background:var(--sky-soft);color:var(--sky)}
@@ -328,7 +328,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
     <button class="big blue" id="again">Practice again</button>
   </section>
 
-  <p class="credit">Made by Phoebie &middot; <span id="buildTag">v2.0</span></p>
+  <p class="credit">Made by Phoebie &middot; <span id="buildTag">v2.1</span></p>
 </main>
 
 <script>
@@ -720,7 +720,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
   });
 
   /* ---------- morning lesson ---------- */
-  var LENGTHS=[5,10,15,30], QUIET=60*1000, REPS=3;
+  var LENGTHS=[5,10,15,30,60], QUIET=60*1000, REPS=3;
   var lesson={running:false,id:0,start:0,end:0,tick:null,lock:null};
   function fmt(ms){var s=Math.max(0,Math.ceil(ms/1000)),h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=s%60;
     return (h?h+":"+String(m).padStart(2,"0"):m)+":"+String(x).padStart(2,"0");}
@@ -904,7 +904,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
   }
 
   (function(){var sa=(window.matchMedia&&matchMedia("(display-mode: standalone)").matches)||navigator.standalone===true;
-    $("buildTag").textContent="v2.0 \u00b7 "+(framed?"Claude preview":sa?"home-screen app":"browser");})();
+    $("buildTag").textContent="v2.1 \u00b7 "+(framed?"Claude preview":sa?"home-screen app":"browser");})();
   if(!HAS_WEBAUDIO||!HAS_TTS||!(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia))if(!framed)showSoundBlocked();
   renderWords();renderStreak();
   rawLoad().then(function(){renderWords();});
