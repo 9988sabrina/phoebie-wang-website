@@ -188,6 +188,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
         <li>Not every bird learns to talk, and that's okay. The streak counts days your child taught, not words learned.</li>
         <li>Recordings and progress stay only on this device. Nothing is uploaded. A new phone starts fresh.</li>
         <li>On iPhone, always open Bird Pal from its home-screen icon. Safari keeps a separate copy, so recordings made there won't show up in the app.</li>
+        <li>"Squeaky" and "My voice, squeaky" make a high cartoon-style voice for birds that love those sounds. The squeaky version of your recording plays it about 40% faster, which raises the pitch.</li>
         <li>The bird-friendly voice is high, happy and slow because many trainers report parrots pay more attention to high, enthusiastic voices. Your own voice is still the best teacher.</li>
         <li>Lessons pause if the screen locks. Keep the app open and the phone plugged in.</li>
       </ul>
@@ -327,7 +328,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
     <button class="big blue" id="again">Practice again</button>
   </section>
 
-  <p class="credit">Made by Phoebie &middot; <span id="buildTag">v1.8</span></p>
+  <p class="credit">Made by Phoebie &middot; <span id="buildTag">v1.9</span></p>
 </main>
 
 <script>
@@ -420,14 +421,15 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
   try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist();}catch(e){}
   function hasVoice(w){return !!(voices[w]||getVoice(w));}
   function dropVoice(w){try{localStorage.removeItem(VKEY+w);}catch(e){}return rawDel(w);}
-  function playVoice(w){
+  function playVoice(w,rate){
+    rate=rate||1;
     return new Promise(function(ok,bad){
       var v=voices[w];if(!v){bad(new Error("none"));return;}
       try{if(navigator.audioSession&&navigator.audioSession.type!=="play-and-record")navigator.audioSession.type="playback";}catch(e){}
       if(!HAS_WEBAUDIO){
         try{
           if(!v.url)v.url=URL.createObjectURL(new Blob([v.buf],{type:v.type||"audio/wav"}));
-          var a=new Audio(v.url);a.onended=function(){ok();};a.onerror=function(){bad({name:"MediaError"});};
+          var a=new Audio(v.url);if(rate!==1){a.preservesPitch=false;a.webkitPreservesPitch=false;a.mozPreservesPitch=false;a.playbackRate=rate;}a.onended=function(){ok();};a.onerror=function(){bad({name:"MediaError"});};
           var pr=a.play();if(pr&&pr.catch)pr.catch(function(e){bad(e);});
         }catch(e){bad(e);}
         return;
@@ -435,7 +437,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
       var c=ctx();
       var go=function(ab){
         try{if(cur){cur.onended=null;cur.stop();}}catch(e){}
-        var src=c.createBufferSource();src.buffer=ab;src.connect(c.destination);
+        var src=c.createBufferSource();src.buffer=ab;src.playbackRate.value=rate;src.connect(c.destination);
         src.onended=function(){if(cur===src)cur=null;ok();};cur=src;src.start(0);
       };
       if(v.decoded){go(v.decoded);return;}
@@ -463,9 +465,12 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
   /* Auto voices. "Bird-friendly" follows common talk-training advice: a high, happy, clear voice, the same voice every time. */
   var VOICE_MODES=[
     {id:"mine",label:"My voice",tip:"Uses your recording. Words you haven't recorded use the bird-friendly voice."},
+    {id:"mine_hi",label:"My voice, squeaky",tip:"Your recording, played higher and faster like a cartoon mouse. Words you haven't recorded use the squeaky voice."},
+    {id:"squeaky",label:"Squeaky",tip:"A very high, bouncy cartoon voice. Try it if your bird loves cartoon voices."},
     {id:"bird",label:"Bird-friendly",tip:"A high, happy, slow voice. Many trainers say parrots pay more attention to high, excited voices."},
     {id:"calm",label:"Calm",tip:"A softer, normal voice for quiet mornings."}];
-  var STYLE={bird:{pitch:1.75,rate:0.72,bang:true},calm:{pitch:1.1,rate:0.85,bang:false}};
+  var SQUEAK_RATE=1.4;
+  var STYLE={squeaky:{pitch:2,rate:0.95,bang:true},bird:{pitch:1.75,rate:0.72,bang:true},calm:{pitch:1.1,rate:0.85,bang:false}};
   var autoVoice=null;
   function pickVoice(){
     if(!("speechSynthesis" in window))return;
@@ -492,14 +497,14 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
       var finished=false,fin=function(){if(!finished){finished=true;done(true);}};
       setTimeout(fin,8000);
       var mode=state.voiceMode||"mine";
-      if(mode==="mine"&&voices[w]){
-        playVoice(w).then(fin).catch(function(e){
+      if((mode==="mine"||mode==="mine_hi")&&voices[w]){
+        playVoice(w,mode==="mine_hi"?SQUEAK_RATE:1).then(fin).catch(function(e){
           dropVoice(w).then(function(){if(w===state.current)renderWords();});
           showVoiceProblem((e&&e.name)||"decode",true);robot(w,fin,done,"bird");
         });
         return;
       }
-      robot(w,fin,done,mode==="calm"?"calm":"bird");
+      robot(w,fin,done,mode==="calm"?"calm":(mode==="squeaky"||mode==="mine_hi")?"squeaky":"bird");
     });
   }
   function showSoundBlocked(){var b=$("soundBlocked");if(b)b.hidden=false;}
@@ -897,7 +902,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
   }
 
   (function(){var sa=(window.matchMedia&&matchMedia("(display-mode: standalone)").matches)||navigator.standalone===true;
-    $("buildTag").textContent="v1.8 \u00b7 "+(framed?"Claude preview":sa?"home-screen app":"browser");})();
+    $("buildTag").textContent="v1.9 \u00b7 "+(framed?"Claude preview":sa?"home-screen app":"browser");})();
   if(!HAS_WEBAUDIO||!HAS_TTS||!(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia))if(!framed)showSoundBlocked();
   renderWords();renderStreak();
   rawLoad().then(function(){renderWords();});
