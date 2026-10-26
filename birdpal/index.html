@@ -283,7 +283,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
       <div class="card">
         <h3>How long?</h3>
         <div class="seg" id="lengths"></div>
-        <p class="tip" style="text-align:left">A listening helper, not a replacement for time together. Every 5 minutes the app says each word 3 times, then stays quiet so Nori can rest.</p>
+        <p class="tip" style="text-align:left">A listening helper, not a replacement for time together. The app says each word 3 times, then stays quiet for 1 minute so Nori can rest and try. Then it starts again.</p>
       </div>
       <div class="card">
         <h3>Before you start</h3>
@@ -328,7 +328,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
     <button class="big blue" id="again">Practice again</button>
   </section>
 
-  <p class="credit">Made by Phoebie &middot; <span id="buildTag">v1.9</span></p>
+  <p class="credit">Made by Phoebie &middot; <span id="buildTag">v2.0</span></p>
 </main>
 
 <script>
@@ -720,7 +720,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
   });
 
   /* ---------- morning lesson ---------- */
-  var LENGTHS=[5,10,15,30], CYCLE=5*60*1000, REPS=3;
+  var LENGTHS=[5,10,15,30], QUIET=60*1000, REPS=3;
   var lesson={running:false,id:0,start:0,end:0,tick:null,lock:null};
   function fmt(ms){var s=Math.max(0,Math.ceil(ms/1000)),h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=s%60;
     return (h?h+":"+String(m).padStart(2,"0"):m)+":"+String(x).padStart(2,"0");}
@@ -774,10 +774,12 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
   }
   async function lessonLoop(id){
     while(id===lesson.id&&Date.now()<lesson.end){
-      var cycleStart=Date.now();
       await talkCycle(id);
-      var next=cycleStart+CYCLE;
-      while(id===lesson.id&&Date.now()<next&&Date.now()<lesson.end){await wait(1000);}
+      var next=Date.now()+QUIET;
+      while(id===lesson.id&&Date.now()<next&&Date.now()<lesson.end){
+        $("lessonStatus").textContent="Shh, Nori is resting. Next round in "+Math.max(1,Math.ceil((next-Date.now())/1000))+" s";
+        await wait(1000);
+      }
     }
   }
   $("startLesson").addEventListener("click",function(){
@@ -902,7 +904,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
   }
 
   (function(){var sa=(window.matchMedia&&matchMedia("(display-mode: standalone)").matches)||navigator.standalone===true;
-    $("buildTag").textContent="v1.9 \u00b7 "+(framed?"Claude preview":sa?"home-screen app":"browser");})();
+    $("buildTag").textContent="v2.0 \u00b7 "+(framed?"Claude preview":sa?"home-screen app":"browser");})();
   if(!HAS_WEBAUDIO||!HAS_TTS||!(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia))if(!framed)showSoundBlocked();
   renderWords();renderStreak();
   rawLoad().then(function(){renderWords();});
