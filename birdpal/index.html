@@ -123,6 +123,8 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
 .err.tip{color:var(--muted);font-weight:700}
 [hidden]{display:none!important}
 .voicePick{gap:8px}
+.blocked{border-color:var(--cherry);background:#FDECEB;gap:6px;font-size:15px}
+.blocked h3{color:var(--cherry)}
 .seg3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
 .seg3 .wordchip{padding:8px 4px;text-align:center;font-size:14px;line-height:1.2}
 .credit{font-size:12px;color:var(--muted);text-align:center;margin:8px 0 0}
@@ -213,6 +215,11 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
         <button type="button" class="ghost danger" id="delYes">Yes, delete</button>
         <button type="button" class="ghost" id="delNo">Keep it</button>
       </div>
+    </div>
+    <div class="card blocked" id="soundBlocked" hidden>
+      <h3>This iPad is blocking sounds</h3>
+      <p style="margin:0">Lockdown Mode is on, so the app can't speak or record here. A grown-up can allow this one website:</p>
+      <ol style="margin:0;padding-left:20px"><li>Open phoebiewang.com/birdpal in Safari.</li><li>Tap the page menu button next to the address.</li><li>Tap Website Settings, then turn off Lockdown Mode.</li><li>Close Bird Pal completely and open it again.</li></ol>
     </div>
     <div class="card voicePick">
       <h3>Which voice says the words?</h3>
@@ -320,7 +327,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
     <button class="big blue" id="again">Practice again</button>
   </section>
 
-  <p class="credit">Made by Phoebie &middot; <span id="buildTag">v1.7</span></p>
+  <p class="credit">Made by Phoebie &middot; <span id="buildTag">v1.8</span></p>
 </main>
 
 <script>
@@ -364,7 +371,9 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
   /* Recordings are kept as raw sound data in the browser's file store and played with the phone's audio engine.
      This avoids the iPhone media player, which refuses some recorded files. */
   var voices={},rawAt={},idb=null,actx=null,cur=null;
+  var HAS_WEBAUDIO=!!(window.AudioContext||window.webkitAudioContext),HAS_TTS=("speechSynthesis" in window)&&("SpeechSynthesisUtterance" in window);
   function ctx(){
+    if(!HAS_WEBAUDIO)throw {name:"NoWebAudio"};
     if(!actx)actx=new (window.AudioContext||window.webkitAudioContext)();
     try{if(actx.state!=="running")actx.resume();}catch(e){}
     return actx;
@@ -415,6 +424,14 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
     return new Promise(function(ok,bad){
       var v=voices[w];if(!v){bad(new Error("none"));return;}
       try{if(navigator.audioSession&&navigator.audioSession.type!=="play-and-record")navigator.audioSession.type="playback";}catch(e){}
+      if(!HAS_WEBAUDIO){
+        try{
+          if(!v.url)v.url=URL.createObjectURL(new Blob([v.buf],{type:v.type||"audio/wav"}));
+          var a=new Audio(v.url);a.onended=function(){ok();};a.onerror=function(){bad({name:"MediaError"});};
+          var pr=a.play();if(pr&&pr.catch)pr.catch(function(e){bad(e);});
+        }catch(e){bad(e);}
+        return;
+      }
       var c=ctx();
       var go=function(ab){
         try{if(cur){cur.onended=null;cur.stop();}}catch(e){}
@@ -461,7 +478,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
   }
   try{pickVoice();if("speechSynthesis" in window&&speechSynthesis.addEventListener)speechSynthesis.addEventListener("voiceschanged",pickVoice);}catch(e){}
   function robot(w,fin,done,mode){
-    if(!("speechSynthesis" in window)){done(false);return;}
+    if(!HAS_TTS){showSoundBlocked();done(false);return;}
     var st=STYLE[mode]||STYLE.bird,text=w;
     if(st.bang)text=w.replace(/[.!?]+$/,"")+"!";
     var u=new SpeechSynthesisUtterance(text);u.rate=st.rate;u.pitch=st.pitch;u.volume=1;
@@ -485,6 +502,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
       robot(w,fin,done,mode==="calm"?"calm":"bird");
     });
   }
+  function showSoundBlocked(){var b=$("soundBlocked");if(b)b.hidden=false;}
   function showVoiceProblem(code,removed){
     $("voiceErr").textContent=(removed?"That recording couldn't play, so it was removed. Please record it again.":"Your recording didn't play, so the app used its own voice. Try recording again.")+" (code: "+(code||"?")+")";
     $("voiceErr").hidden=false;
@@ -879,7 +897,8 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
   }
 
   (function(){var sa=(window.matchMedia&&matchMedia("(display-mode: standalone)").matches)||navigator.standalone===true;
-    $("buildTag").textContent="v1.7 \u00b7 "+(framed?"Claude preview":sa?"home-screen app":"browser");})();
+    $("buildTag").textContent="v1.8 \u00b7 "+(framed?"Claude preview":sa?"home-screen app":"browser");})();
+  if(!HAS_WEBAUDIO||!HAS_TTS||!(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia))if(!framed)showSoundBlocked();
   renderWords();renderStreak();
   rawLoad().then(function(){renderWords();});
 })();
