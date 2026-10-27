@@ -1,0 +1,135 @@
+name: Bird Pal iOS
+
+# Builds the Bird Pal Buddies iPhone/iPad app on a GitHub Mac.
+# - Every push that touches the app: a test build (no signing, nothing uploaded).
+# - Run by hand with "upload" ticked: signs it and sends it to TestFlight.
+#   Needs the three App Store Connect secrets (see apps/birdpal-ios/README.md).
+
+on:
+  push:
+    branches: [main, add-bird-pal-buddies]
+    paths:
+      - 'apps/birdpal-ios/**'
+      - 'birdpal/index.html'
+      - '.github/workflows/birdpal-ios.yml'
+  workflow_dispatch:
+    inputs:
+      upload:
+        description: 'Sign and upload to TestFlight'
+        type: boolean
+        default: true
+
+concurrency:
+  group: birdpal-ios-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+env:
+  TEAM_ID: U9KHHZ49L6
+  BUNDLE_ID: com.sabrina9988.birdpal
+
+jobs:
+  build:
+    name: Build
+    runs-on: macos-26
+    timeout-minutes: 45
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Make the app page from the website version
+        run: python3 apps/birdpal-ios/make_web.py
+
+      - name: Install XcodeGen
+        run: brew install xcodegen
+
+      - name: Generate the Xcode project
+        working-directory: apps/birdpal-ios
+        run: xcodegen generate
+
+      - name: Test build for the simulator (no signing)
+        working-directory: apps/birdpal-ios
+        run: |
+          xcodebuild build \
+            -project BirdPal.xcodeproj \
+            -scheme BirdPal \
+            -configuration Release \
+            -destination 'generic/platform=iOS Simulator' \
+            CODE_SIGNING_ALLOWED=NO | tail -n 40
+          test "${PIPESTATUS[0]}" -eq 0
+
+      - name: Check the three secrets exist
+        if: github.event_name == 'workflow_dispatch' && inputs.upload
+        env:
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+          ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 }}
+        run: |
+          missing=""
+          for name in ASC_KEY_ID ASC_ISSUER_ID ASC_KEY_P8; do
+            if [ -z "${!name}" ]; then missing="$missing $name"; fi
+          done
+          if [ -n "$missing" ]; then
+            echo "::error::Missing:$missing. See apps/birdpal-ios/README.md."
+            exit 1
+          fi
+
+      - name: Save the App Store Connect key
+        if: github.event_name == 'workflow_dispatch' && inputs.upload
+        env:
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 }}
+        run: |
+          mkdir -p "$RUNNER_TEMP/asc"
+          printf '%s\n' "$ASC_KEY_P8" > "$RUNNER_TEMP/asc/AuthKey_${ASC_KEY_ID}.p8"
+          chmod 600 "$RUNNER_TEMP/asc/AuthKey_${ASC_KEY_ID}.p8"
+
+      - name: Archive and sign
+        if: github.event_name == 'workflow_dispatch' && inputs.upload
+        working-directory: apps/birdpal-ios
+        run: |
+          xcodebuild archive \
+            -project BirdPal.xcodeproj \
+            -scheme BirdPal \
+            -configuration Release \
+            -destination 'generic/platform=iOS' \
+            -archivePath "$RUNNER_TEMP/BirdPal.xcarchive" \
+            -allowProvisioningUpdates \
+            -authenticationKeyPath "$RUNNER_TEMP/asc/AuthKey_${{ secrets.ASC_KEY_ID }}.p8" \
+            -authenticationKeyID "${{ secrets.ASC_KEY_ID }}" \
+            -authenticationKeyIssuerID "${{ secrets.ASC_ISSUER_ID }}" \
+            DEVELOPMENT_TEAM="$TEAM_ID" \
+            CODE_SIGN_STYLE=Automatic \
+            CURRENT_PROJECT_VERSION="${{ github.run_number }}"
+
+      - name: Upload to TestFlight
+        if: github.event_name == 'workflow_dispatch' && inputs.upload
+        run: |
+          cat > "$RUNNER_TEMP/ExportOptions.plist" <<PLIST
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+          <dict>
+            <key>method</key><string>app-store-connect</string>
+            <key>destination</key><string>upload</string>
+            <key>teamID</key><string>${TEAM_ID}</string>
+            <key>signingStyle</key><string>automatic</string>
+            <key>uploadSymbols</key><true/>
+            <key>manageAppVersionAndBuildNumber</key><false/>
+          </dict>
+          </plist>
+          PLIST
+          xcodebuild -exportArchive \
+            -archivePath "$RUNNER_TEMP/BirdPal.xcarchive" \
+            -exportOptionsPlist "$RUNNER_TEMP/ExportOptions.plist" \
+            -exportPath "$RUNNER_TEMP/export" \
+            -allowProvisioningUpdates \
+            -authenticationKeyPath "$RUNNER_TEMP/asc/AuthKey_${{ secrets.ASC_KEY_ID }}.p8" \
+            -authenticationKeyID "${{ secrets.ASC_KEY_ID }}" \
+            -authenticationKeyIssuerID "${{ secrets.ASC_ISSUER_ID }}"
+
+      - name: Remove the key
+        if: always()
+        run: rm -rf "$RUNNER_TEMP/asc"

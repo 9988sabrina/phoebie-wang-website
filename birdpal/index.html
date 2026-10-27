@@ -974,7 +974,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
   }
 
   (function(){var sa=(window.matchMedia&&matchMedia("(display-mode: standalone)").matches)||navigator.standalone===true;
-    $("buildTag").textContent="v2.2 \u00b7 "+(framed?"Claude preview":sa?"home-screen app":"browser");})();
+    $("buildTag").textContent="v2.2 \u00b7 "+(framed?"Claude preview":window.BIRDPAL_NATIVE?"iPhone/iPad app":sa?"home-screen app":"browser");})();
   if(!HAS_WEBAUDIO||!HAS_TTS||!(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia))if(!framed)showSoundBlocked();
   renderWords();renderStreak();
   rawLoad().then(function(){renderWords();});

@@ -1,0 +1,51 @@
+# Xcode project for the Bird Pal Buddies iPhone/iPad app.
+# Generate with:  cd apps/birdpal-ios && xcodegen generate
+name: BirdPal
+options:
+  bundleIdPrefix: com.sabrina9988
+  deploymentTarget:
+    iOS: "16.0"
+settings:
+  base:
+    DEVELOPMENT_TEAM: U9KHHZ49L6
+    MARKETING_VERSION: "1.0"
+    CURRENT_PROJECT_VERSION: "1"
+    SWIFT_VERSION: "5.0"
+targets:
+  BirdPal:
+    type: application
+    platform: iOS
+    sources:
+      - path: BirdPal
+    settings:
+      base:
+        PRODUCT_NAME: BirdPal
+        PRODUCT_BUNDLE_IDENTIFIER: com.sabrina9988.birdpal
+        TARGETED_DEVICE_FAMILY: "1,2"
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        CODE_SIGN_STYLE: Automatic
+    info:
+      path: BirdPal/Info.plist
+      properties:
+        CFBundleDisplayName: Bird Pal
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        LSApplicationCategoryType: public.app-category.lifestyle
+        ITSAppUsesNonExemptEncryption: false
+        NSMicrophoneUsageDescription: Bird Pal records you saying a word, so it can repeat the word in your voice for your bird.
+        UIBackgroundModes: [audio]
+        UILaunchScreen: {}
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+        UISupportedInterfaceOrientations~ipad:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationPortraitUpsideDown
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+schemes:
+  BirdPal:
+    build:
+      targets:
+        BirdPal: all
+    archive:
+      config: Release
