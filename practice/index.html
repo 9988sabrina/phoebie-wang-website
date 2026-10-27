@@ -806,6 +806,7 @@ function vToday(){
   <div class="card"><div class="row" style="justify-content:space-between"><div><div class="eyebrow">Paper version</div><h3>Print today's homework</h3>
     <p class="small muted" style="margin:4px 0 0">Makes a PDF with today's math, 中文 (with 田字格 to write in) and Reading+, plus an answer key page for you.</p></div>
     <button class="primary" data-print="1" id="printBtn">Make PDF</button></div><div class="small muted" id="printMsg" style="margin-top:6px"></div></div>
+  ${BONUS[TODAY]?`<div class="card"><div class="row" style="justify-content:space-between"><div><div class="eyebrow">Bonus review</div><h3>${esc(BONUS[TODAY].title)}</h3></div><button class="math" data-go="math">Go</button></div><p class="small muted" style="margin:6px 0 0">At the bottom of the Math page.</p></div>`:""}
   ${vPet()}
   ${vTeach()}
   <div class="card"><div class="eyebrow">This week's focus</div><div class="row" style="margin-top:6px">${focusSkills().map(k=>`<span class="chip math">${SK[k]}</span>`).join("")}</div>
@@ -828,6 +829,25 @@ function vToday(){
     <div><b>5.</b> Reading+: one passage, then reading, vocabulary, science, social studies and a short writing piece.</div>
     <div><b>6.</b> Be the Teacher: teach one problem to a grown-up (2 min). After a right answer, tap 😎 Sure or 🤔 I guessed. Guesses come back in 2 days.</div></div></div>
   </div>`}
+
+const BONUS={"2026-10-27":{title:"🐔🐰 Chickens & Rabbits review (5 problems)",tip:"Pretend every animal is a chicken first (2 legs each). The extra legs belong to rabbits: each rabbit adds 2 more legs.",
+ qs:[
+  {p:"A farm has 8 heads and 20 legs. How many rabbits?",a:2,h:["If all 8 were chickens: 8 × 2 = 16 legs.","Extra legs: 20 − 16 = 4.","Each rabbit adds 2 legs: 4 ÷ 2 = ?"],chk:"2 rabbits, 6 chickens: 6×2 + 2×4 = 12 + 8 = 20 ✓"},
+  {p:"There are 12 heads and 34 legs. How many rabbits?",a:5,h:["All chickens: 12 × 2 = 24 legs.","Extra legs: 34 − 24 = 10.","10 ÷ 2 = ?"],chk:"5 rabbits, 7 chickens: 14 + 20 = 34 ✓"},
+  {p:"There are 20 heads and 56 legs. How many rabbits?",a:8,h:["All chickens: 20 × 2 = 40 legs.","Extra legs: 56 − 40 = 16.","16 ÷ 2 = ?"],chk:"8 rabbits, 12 chickens: 24 + 32 = 56 ✓"},
+  {p:"There are 18 heads and 50 legs. How many CHICKENS? (Careful!)",a:11,h:["All chickens: 18 × 2 = 36 legs. Extra: 50 − 36 = 14.","Rabbits: 14 ÷ 2 = 7.","The question asks for chickens: 18 − 7 = ?"],chk:"11 chickens, 7 rabbits: 22 + 28 = 50 ✓"},
+  {p:"Same idea, new story! A shop has 10 bikes and tricycles with 24 wheels in all. How many tricycles?",a:4,h:["If all 10 were bikes: 10 × 2 = 20 wheels.","Extra wheels: 24 − 20 = 4.","Each tricycle adds 1 more wheel: 4 ÷ 1 = ?"],chk:"4 tricycles, 6 bikes: 12 + 12 = 24 ✓"}]}};
+function vBonus(){const B=BONUS[TODAY];if(!B)return"";const d=day();d.bonus=d.bonus||{};
+ return `<div class="card"><div class="eyebrow">Bonus review</div><h3>${esc(B.title)}</h3><p class="small muted" style="margin:6px 0 10px">${esc(B.tip)}</p>
+ <div class="small" style="margin-bottom:10px">${barHTML({rows:[{name:"if all chickens",segs:[{t:"2 legs each",u:5}]},{name:"real animals",segs:[{t:"2 legs each",u:5},{t:"extra legs",u:3,c:"o"}]}],note:"The extra part is the rabbits' extra legs."})}</div>
+ ${B.qs.map((q,i)=>{const st=d.bonus[i]||{};const tries=st.t||0;
+  return `<div class="q" style="border-top:1px solid var(--line,#e5e5e5);padding-top:10px;margin-top:10px"><div><b>${i+1}.</b> ${esc(q.p)}</div>
+  ${st.ok?`<div class="fb ok">✓ ${q.a}! ${esc(q.chk)}</div>`:`<div class="row" style="margin-top:6px"><input type="text" inputmode="numeric" id="bn-${i}" placeholder="Your answer" autocomplete="off"><button class="math" data-bonus="${i}">Check</button><button class="scr-open" data-scratch="${esc(q.p)}">✏️</button></div>
+  ${tries?`<div class="fb hint">Not yet. Hint ${Math.min(tries,3)}: ${esc(q.h[Math.min(tries,3)-1])}</div>`:""}`}</div>`}).join("")}
+ <p class="small muted" style="margin-top:10px">${B.qs.filter((_,i)=>(d.bonus[i]||{}).ok).length} / ${B.qs.length} done</p></div>`}
+document.addEventListener("click",e=>{const b=e.target.closest("button[data-bonus]");if(!b||!S)return;const i=+b.dataset.bonus;const B=BONUS[TODAY];const d=day();d.bonus=d.bonus||{};
+ const st=d.bonus[i]=d.bonus[i]||{};const v=parseFloat((document.getElementById("bn-"+i)||{}).value);if(isNaN(v))return;
+ if(v===B.qs[i].a){st.ok=st.t?"fix":"ok";if(st.t)markWrong("m:olymp","chickens & rabbits "+TODAY.slice(5));toast("Correct! ★")}else st.t=(st.t||0)+1;save();render()});
 function vMath(){
   const qs=getM(),d=day(),p=mProgress();
   return `<div class="stack">
@@ -835,6 +855,7 @@ function vMath(){
   <span class="chip ${p.done===p.total?"good":"math"}">${p.done}/${p.total} done · ${p.ok} first try</span></div>
   <p class="small muted" style="margin:6px 0 0">You do the thinking. If an answer isn't right yet, the tutor gives one small step, not the answer.</p></div>
   ${qs.map((q,i)=>q.explain?vExplain(q,i):vQ(q,i,d)).join("")}
+  ${vBonus()}
   </div>`}
 function vQ(q,i,d){
   const st=live[q.id]||{};const res=d.m[q.id];
