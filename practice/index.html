@@ -218,9 +218,12 @@ function fresh(){
   return{v:1,days:{},skill:{},rev:seedRev,mastered:[],words:{},zhDay:53,eUnit:0,writing:{},settings:{tueOff:false,tueV2:true},_paper1026:1};
 }
 function setStatus(t){$("#saveStatus").textContent=t}
-function allDone(){return mProgress().done>=mProgress().total&&zProgress().done>=zProgress().total&&eProgress().done>=eProgress().total}
+function allDone(){const pd=S.days[TODAY];if(pd&&pd.paper)return true;return mProgress().done>=mProgress().total&&zProgress().done>=zProgress().total&&eProgress().done>=eProgress().total}
 function migrate(){S.settings=S.settings||{};S.rev=S.rev||[];S.mastered=S.mastered||[];
   if(!S.settings.tueV2){S.settings.tueOff=false;S.settings.tueV2=true}
+  if(!S._paper1027){S._paper1027=1;const pd=S.days["2026-10-27"];if(pd){pd.paper=true;
+    const add={"m:fracAsDiv":"10/27 paper #28 (3/4 is 0.75, not 3.4)","e:u3r3":"10/27 paper (skipped)","e:u3v0":"10/27 paper vocab","e:u3v1":"10/27 paper vocab","e:u3v2":"10/27 paper vocab","e:u3v3":"10/27 paper vocab","e:u3s0":"10/27 paper science","e:u3s1":"10/27 paper science","e:u3s2":"10/27 paper science","e:u3h2":"10/27 paper social studies"};
+    Object.entries(add).forEach(([k,src])=>{const r=S.rev.find(x=>x.k===k);if(r){r.stage=0;r.due="2026-10-28";r.src=src}else S.rev.push({k,stage:0,due:"2026-10-28",src})})}}
   if(false){S._paper1026=1;const add={"m:div2":"10/26 paper #11-12 (round up boxes)","m:decDivW":"10/26 paper #13 (decimal point)","m:pow10":"10/26 paper #18 (÷100 moved wrong way)","m:fracMul":"10/26 paper #25 (simplify 2/14)","m:fracAsDiv":"10/26 paper #28 (5÷7 not 7÷5)"};
     Object.entries(add).forEach(([k,src])=>{const r=S.rev.find(x=>x.k===k);if(r){r.stage=0;if(r.due>"2026-10-27")r.due="2026-10-27";r.src=src}else S.rev.push({k,stage:0,due:"2026-10-27",src});S.mastered=S.mastered.filter(m=>m.k!==k)})}}
 function leftovers(){const d=day(),keys=[];getM().forEach(q=>{if(!d.m[q.id]&&q.k&&q.k!=="explain")keys.push("m:"+q.k)});
@@ -231,7 +234,7 @@ function resolveWorkDay(){migrate();
   TODAY=REAL_TODAY;MSET=null;ZSET=null;ESET=null;
   const w=S.workDay;
   if(w&&w<REAL_TODAY&&S.skipCarry!==REAL_TODAY){TODAY=w;MSET=null;ZSET=null;ESET=null;
-    if(allDone()||leftovers().n<=4){leftovers().keys.forEach(k=>{if(!revOf(k))S.rev.push({k,stage:0,due:REAL_TODAY,src:"unfinished "+w.slice(5)})});{const dw=day();if(!dw.eDone&&typeof dw.eU==="number"&&dw.eU===(S.eUnit||0)%UNITS.length){dw.eDone=dw.eU+1;S.eUnit=(S.eUnit||0)+1}if(!dw.zDone&&zProgress().done>=zProgress().total-2){dw.zDone=S.zhDay;S.zhDay++}}TODAY=REAL_TODAY;MSET=null;ZSET=null;ESET=null}}
+    if(allDone()||leftovers().n<=4){if(!day().paper)leftovers().keys.forEach(k=>{if(!revOf(k))S.rev.push({k,stage:0,due:REAL_TODAY,src:"unfinished "+w.slice(5)})});{const dw=day();if(!dw.eDone&&typeof dw.eU==="number"&&dw.eU===(S.eUnit||0)%UNITS.length){dw.eDone=dw.eU+1;S.eUnit=(S.eUnit||0)+1}if(!dw.zDone&&(dw.paper||zProgress().done>=zProgress().total-2)){dw.zDone=S.zhDay;S.zhDay++}}TODAY=REAL_TODAY;MSET=null;ZSET=null;ESET=null}}
   if(S.skipCarry===REAL_TODAY){}else delete S.skipCarry;
   S.workDay=TODAY;
 }
@@ -805,7 +808,7 @@ function vToday(){
   </div>
   <div class="card"><div class="row" style="justify-content:space-between"><div><div class="eyebrow">Paper version</div><h3>Print today's homework</h3>
     <p class="small muted" style="margin:4px 0 0">Makes a PDF with today's math, 中文 (with 田字格 to write in) and Reading+, plus an answer key page for you.</p></div>
-    <button class="primary" data-print="1" id="printBtn">Make PDF</button></div><div class="small muted" id="printMsg" style="margin-top:6px"></div></div>
+    <button class="primary" data-print="1" id="printBtn">Make PDF</button></div>${day().paper?`<p class="small" style="margin:8px 0 0"><span class="chip good">✓ Done on paper today</span></p>`:`<button style="margin-top:8px" data-paperdone="1">📄 She finished it on paper</button>`}<div class="small muted" id="printMsg" style="margin-top:6px"></div></div>
   ${BONUS[TODAY]?`<div class="card"><div class="row" style="justify-content:space-between"><div><div class="eyebrow">Bonus review</div><h3>${esc(BONUS[TODAY].title)}</h3></div><button class="math" data-go="math">Go</button></div><p class="small muted" style="margin:6px 0 0">At the bottom of the Math page.</p></div>`:""}
   ${vPet()}
   ${vTeach()}
@@ -1405,6 +1408,7 @@ function vClubs(){const d=day();d.c=d.c||{};const c=d.c;const r=rng("clubs"+TODA
  </div></div>`;
  return h}
 document.addEventListener("click",e=>{const b=e.target.closest("button");if(!b||!S)return;const ds=b.dataset;
+ if(ds.paperdone){day().paper=true;save();render();toast("Marked done on paper. Send me a photo to grade it ★");return}
  if(ds.conf){const d=day();d.cf=d.cf||{};d.cf[ds.qid]=ds.conf;if(ds.conf==="guess"){const q=getM().find(x=>x.id===ds.qid);if(q&&q.k){const k="m:"+q.k;const r=revOf(k);if(!r)S.rev.push({k,stage:0,due:addDays(TODAY,2),src:"guessed "+TODAY.slice(5)});else if(r.due>addDays(TODAY,2))r.due=addDays(TODAY,2)}}save();render();return}
  if(ds.teach){const d=day();const t=teachItem();d.tb=ds.teach;if(ds.teach==="no"&&t.k)markWrong(t.k,"teach-back "+TODAY.slice(5));save();render();toast(ds.teach==="yes"?"Great teaching! ★":"OK! It comes back tomorrow.");return}
  if(ds.zwrite){const d=day();const v=(document.getElementById("zw-in")||{}).value||"";if(v.trim().length<4){toast("再多写几个字吧");return}d.zw=v.trim();save();render();toast("写得好！★");return}
