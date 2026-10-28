@@ -221,9 +221,12 @@ function setStatus(t){$("#saveStatus").textContent=t}
 function allDone(){const pd=S.days[TODAY];if(pd&&pd.paper)return true;return mProgress().done>=mProgress().total&&zProgress().done>=zProgress().total&&eProgress().done>=eProgress().total}
 function migrate(){S.settings=S.settings||{};S.rev=S.rev||[];S.mastered=S.mastered||[];
   if(!S.settings.tueV2){S.settings.tueOff=false;S.settings.tueV2=true}
-  if(!S._paper1027){S._paper1027=1;const pd=S.days["2026-10-27"];if(pd){pd.paper=true;
+  if(false){S._paper1027=1;const pd=S.days["2026-10-27"];if(pd){pd.paper=true;
     const add={"m:fracAsDiv":"10/27 paper #28 (3/4 is 0.75, not 3.4)","e:u3r3":"10/27 paper (skipped)","e:u3v0":"10/27 paper vocab","e:u3v1":"10/27 paper vocab","e:u3v2":"10/27 paper vocab","e:u3v3":"10/27 paper vocab","e:u3s0":"10/27 paper science","e:u3s1":"10/27 paper science","e:u3s2":"10/27 paper science","e:u3h2":"10/27 paper social studies"};
     Object.entries(add).forEach(([k,src])=>{const r=S.rev.find(x=>x.k===k);if(r){r.stage=0;r.due="2026-10-28";r.src=src}else S.rev.push({k,stage:0,due:"2026-10-28",src})})}}
+  if(false){S._paper1028=1;day("2026-10-28").paper=true;
+    const add={"m:decDivW":"10/28 paper #14 (2.65÷5 = 0.53, not 5.3)","m:pow10":"10/28 paper #18 (÷10 moves LEFT: 0.2339)","m:volume":"10/28 paper #30 (unit is cm³, not cm)","e:u4h1":"10/28 paper (Legislative makes laws)"};
+    Object.entries(add).forEach(([k,src])=>{const r=S.rev.find(x=>x.k===k);if(r){r.stage=0;r.due="2026-10-29";r.src=src}else S.rev.push({k,stage:0,due:"2026-10-29",src});S.mastered=S.mastered.filter(m=>m.k!==k)})}
   if(false){S._paper1026=1;const add={"m:div2":"10/26 paper #11-12 (round up boxes)","m:decDivW":"10/26 paper #13 (decimal point)","m:pow10":"10/26 paper #18 (÷100 moved wrong way)","m:fracMul":"10/26 paper #25 (simplify 2/14)","m:fracAsDiv":"10/26 paper #28 (5÷7 not 7÷5)"};
     Object.entries(add).forEach(([k,src])=>{const r=S.rev.find(x=>x.k===k);if(r){r.stage=0;if(r.due>"2026-10-27")r.due="2026-10-27";r.src=src}else S.rev.push({k,stage:0,due:"2026-10-27",src});S.mastered=S.mastered.filter(m=>m.k!==k)})}}
 function leftovers(){const d=day(),keys=[];getM().forEach(q=>{if(!d.m[q.id]&&q.k&&q.k!=="explain")keys.push("m:"+q.k)});
