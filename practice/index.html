@@ -227,6 +227,8 @@ function migrate(){S.settings=S.settings||{};S.rev=S.rev||[];S.mastered=S.master
   if(false){S._paper1028=1;day("2026-10-28").paper=true;
     const add={"m:decDivW":"10/28 paper #14 (2.65÷5 = 0.53, not 5.3)","m:pow10":"10/28 paper #18 (÷10 moves LEFT: 0.2339)","m:volume":"10/28 paper #30 (unit is cm³, not cm)","e:u4h1":"10/28 paper (Legislative makes laws)"};
     Object.entries(add).forEach(([k,src])=>{const r=S.rev.find(x=>x.k===k);if(r){r.stage=0;r.due="2026-10-29";r.src=src}else S.rev.push({k,stage:0,due:"2026-10-29",src});S.mastered=S.mastered.filter(m=>m.k!==k)})}
+  if(false){S._paper1028b=1;const add={"z:手心":"10/28 paper (心 written wrong)","z:帮忙":"10/28 paper (忙 = 忄+亡)"};
+    Object.entries(add).forEach(([k,src])=>{const r=S.rev.find(x=>x.k===k);if(r){r.stage=0;r.due="2026-10-29";r.src=src}else S.rev.push({k,stage:0,due:"2026-10-29",src})})}
   if(false){S._paper1026=1;const add={"m:div2":"10/26 paper #11-12 (round up boxes)","m:decDivW":"10/26 paper #13 (decimal point)","m:pow10":"10/26 paper #18 (÷100 moved wrong way)","m:fracMul":"10/26 paper #25 (simplify 2/14)","m:fracAsDiv":"10/26 paper #28 (5÷7 not 7÷5)"};
     Object.entries(add).forEach(([k,src])=>{const r=S.rev.find(x=>x.k===k);if(r){r.stage=0;if(r.due>"2026-10-27")r.due="2026-10-27";r.src=src}else S.rev.push({k,stage:0,due:"2026-10-27",src});S.mastered=S.mastered.filter(m=>m.k!==k)})}}
 function leftovers(){const d=day(),keys=[];getM().forEach(q=>{if(!d.m[q.id]&&q.k&&q.k!=="explain")keys.push("m:"+q.k)});
@@ -538,6 +540,11 @@ const STORIES=[
   q:[["我和朋友去哪里捡南瓜？",["田里","公园","学校"],0],["南瓜是什么样子的？",["黄黄的，圆圆的","红红的，长长的","小小的，绿绿的"],0],["抱不动大南瓜的时候，谁来帮“我”？",["朋友","妈妈","老师"],0]],
   oral:"捡南瓜的时候，你会先做什么，再做什么？用“我先……再……”说一说。"}
 ];
+function extraWords(z){const have=new Set(z.ws),out=[];const push=w=>{if(PY[w]&&!have.has(w)&&!out.includes(w))out.push(w)};
+  dueNow("z:").map(x=>x.k.slice(2)).forEach(push);
+  Object.keys(S.words||{}).reverse().forEach(w=>{if(out.length<20)push(w)});
+  POOL.forEach(([w])=>{if(out.length<20)push(w)});
+  return out.slice(0,20)}
 function zhSet(){
   const r=rng("z"+TODAY);const due=frozen("zRev",()=>dueNow("z:").map(x=>x.k.slice(2)).filter(w=>PY[w]));
   const ws=[];due.slice(0,9).forEach(w=>ws.push(w));
@@ -1048,6 +1055,12 @@ function printPages(){
   B.push(`<div class="pp-box"><div class="pp-bh"><b>六、想一想，写一写</b><span>答案都在故事里，请写完整的句子</span></div>${z.st.q.map((q,i)=>`<div class="pp-zh" style="margin-bottom:14px">${i+1}. ${esc(q[0])}<div class="pp-ln big"></div><div class="pp-ln big"></div></div>`).join("")}</div>`);
   B.push(`<div class="pp-box"><div class="pp-bh"><b>七、说一说</b><span>口头回答，说完整的句子</span></div><div class="pp-zh">${esc(z.st.oral)}</div><div class="pp-zh" style="font-size:13px;color:#555">说完以后，可以把你的话写下来（选做）：</div><div class="pp-ln big"></div><div class="pp-ln big"></div></div>`);
   B.push(`<div class="pp-box dash"><b>家长记录</b>　写错的字：____________________　读故事：□ 流利 □ 有点卡 □ 需要帮助　　说一说：□ 完整句子 □ 需要提示</div>`);
+  // ---- 中文 page 3: 看拼音，写词语（加练）— review words from earlier days ----
+  const XW=extraWords(z);
+  B.push("<!--page-->"+hdr(`ABC中文 · 看拼音，写词语（加练）`,`第${S.zhDay}天 · 复习以前学过的词。先自己写，写完再对答案，写错的在旁边再写两遍。`));
+  B.push(`<div class="pp-box"><div class="pp-bh"><b>八、看拼音，写词语</b><span>一字一格，不会写的先空着</span></div><div class="pp-words">${XW.map(w=>`<div class="pp-w"><div class="pp-py">${esc(PY[w]||"")}</div><div class="pp-boxes">${w.split("").map(()=>`<i></i>`).join("")}</div></div>`).join("")}</div></div>`);
+  B.push(`<div class="pp-box"><div class="pp-bh"><b>九、写错的字，再写两遍</b><span>家长对完答案后填</span></div>${"<div class='pp-ln big'></div>".repeat(3)}</div>`);
+  B.push(`<div class="pp-box dash"><b>自己对一对</b>　□ 全对　□ 错了 ____ 个　　最难的字：________</div>`);
   // ---- Reading+ ----
   B.push("<!--page-->"+hdr(`Reading+ · ${esc(u.t)}`));
   B.push(`<div class="pp-pass">${u.p.map((x,i)=>`<p><sup>${i+1}</sup> ${esc(x)}</p>`).join("")}</div>`);
@@ -1057,7 +1070,7 @@ function printPages(){
   // ---- Answer key ----
   B.push("<!--page-->"+hdr("Answer key (for parents)","Check without telling her the answer first. If one is wrong, ask her for the first small step."));
   M.sec.forEach(sc=>{if(sc.explain)B.push(`<div class="pp-key"><b>${sc.title}:</b> answers vary — look for a clear reason that uses numbers.</div>`);else B.push(`<div class="pp-key"><b>${sc.title}:</b> ${sc.list.map(q=>`${q.n}. ${esc(q.show)}`).join(" &nbsp;·&nbsp; ")}</div>`)});
-  B.push(`<div class="pp-key"><b>中文 一:</b> ${z.ws.map(esc).join("　")} &nbsp; <b>三:</b> ${z.cs.map((c,i)=>`${i+1}. ${esc(c.a)}`).join("　")} &nbsp; <b>六:</b> ${z.st.q.map((q,i)=>`${i+1}. ${esc(q[1][q[2]])}`).join("　")}</div>`);
+  B.push(`<div class="pp-key"><b>中文 一:</b> ${z.ws.map(esc).join("　")} &nbsp; <b>三:</b> ${z.cs.map((c,i)=>`${i+1}. ${esc(c.a)}`).join("　")} &nbsp; <b>六:</b> ${z.st.q.map((q,i)=>`${i+1}. ${esc(q[1][q[2]])}`).join("　")} &nbsp; <b>八（加练）:</b> ${extraWords(z).map(esc).join("　")}</div>`);
   n=0;B.push(`<div class="pp-key"><b>Reading+:</b> ${[...e.r,...e.v,...e.s,...e.h].map(id=>{const q=EQ[id];const o=shuffle(rng(TODAY+id),q.o);return `${++n}. ${"ABC"[o.indexOf(q.o[0])]}`}).join(" &nbsp; ")}</div>`);
   return B;
 }
