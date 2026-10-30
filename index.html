@@ -20,7 +20,7 @@
     <title>Phoebie's Learning Lab | Free Math &amp; Chinese Practice for Kids</title>
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="home.css?v=20261030c">
+    <link rel="stylesheet" href="home.css?v=20261030e">
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Phoebie Wang","url":"https://www.phoebiewang.com/","description":"Free daily math and Chinese practice, visual lessons, printable worksheets and AI tool tests."}</script>
     <!-- ANALYTICS: paste GA4 tag here once SITE_CONFIG.ga4Id is set -->
 </head>
@@ -120,7 +120,23 @@
         </div>
       </section>
 
-      <section class="h-section no-bottom" aria-labelledby="break-title">
+      
+
+      <div class="playband">
+        <aside class="play-app" aria-labelledby="bp-title">
+          <div class="phone">
+            <div class="phone-screen" id="bp-screen">
+              <button class="bp-start" id="bp-start" type="button">
+                <img src="birdpal/icon-192.png" width="96" height="96" alt="">
+                <strong id="bp-title">Teach a bird to talk</strong>
+                <span>Tap to open Bird Pal Buddies</span>
+              </button>
+            </div>
+          </div>
+          <p class="bp-note">Made by Phoebie. The app asks to use your microphone only when you tap its mic button. <a href="birdpal/">Open it full screen</a></p>
+        </aside>
+        <div class="play-main">
+          <section class="h-section no-bottom" aria-labelledby="break-title">
         <h2 id="break-title">Need a break? Pop a bubble.</h2>
         <p class="sub">No score, no timer. Every bubble hides a Chinese character.</p>
         <div class="bubble-wrap">
@@ -133,6 +149,26 @@
           </div>
         </div>
       </section>
+          <section class="h-section flush-top" aria-labelledby="jokes-title">
+        <h2 id="jokes-title">The cold joke corner.</h2>
+        <p class="sub">Fifty terrible jokes. A new one every 15 seconds, and we are not sorry.</p>
+        <div class="jokes" role="region" aria-label="Cold jokes">
+          <svg class="joke-art" id="joke-art" viewBox="0 0 236 240" aria-hidden="true" focusable="false"><use id="joke-use" href="#mascot"/></svg>
+          <div class="joke-bubble">
+            <p class="joke-q" id="joke-q">Why was the math book sad?</p>
+            <p class="joke-a" id="joke-a">It had too many problems.</p>
+          </div>
+          <div class="joke-bar">
+            <span class="joke-count" id="joke-count">Joke 1 of 50</span>
+            <div class="joke-timer" aria-hidden="true"><span id="joke-fill"></span></div>
+            <button class="h-btn ghost" id="joke-next" type="button">Next joke</button>
+            <button class="h-btn ghost" id="joke-pause" type="button" aria-pressed="false">Pause</button>
+          </div>
+          <p id="joke-status" class="sr-only" role="status" aria-live="polite"></p>
+        </div>
+      </section>
+        </div>
+      </div>
 
       <section class="h-section" aria-labelledby="comics-title">
         <h2 id="comics-title">Silly case files.</h2>
@@ -165,24 +201,7 @@
         </div>
       </section>
 
-      <section class="h-section" aria-labelledby="jokes-title">
-        <h2 id="jokes-title">The cold joke corner.</h2>
-        <p class="sub">Fifty terrible jokes. A new one every 15 seconds, and we are not sorry.</p>
-        <div class="jokes" role="region" aria-label="Cold jokes">
-          <svg class="joke-art" id="joke-art" viewBox="0 0 236 240" aria-hidden="true" focusable="false"><use id="joke-use" href="#mascot"/></svg>
-          <div class="joke-bubble">
-            <p class="joke-q" id="joke-q">Why was the math book sad?</p>
-            <p class="joke-a" id="joke-a">It had too many problems.</p>
-          </div>
-          <div class="joke-bar">
-            <span class="joke-count" id="joke-count">Joke 1 of 50</span>
-            <div class="joke-timer" aria-hidden="true"><span id="joke-fill"></span></div>
-            <button class="h-btn ghost" id="joke-next" type="button">Next joke</button>
-            <button class="h-btn ghost" id="joke-pause" type="button" aria-pressed="false">Pause</button>
-          </div>
-          <p id="joke-status" class="sr-only" role="status" aria-live="polite"></p>
-        </div>
-      </section>
+      
 
       <section class="h-section" aria-labelledby="try-title">
         <h2 id="try-title">Pick something to try today.</h2>
@@ -243,6 +262,6 @@
       </section>
     </main>
     <footer class="site-footer"><div class="wrap footer-grid"><div><strong>Phoebie's Learning Lab</strong><span>Learn it. Try it. Explain it.</span></div><nav aria-label="Footer"><a href="disclosure.html">Affiliate Disclosure</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="refunds.html">Digital Product &amp; Refunds</a><button class="link-button" data-clear-progress type="button">Clear local progress</button></nav></div><p class="legal-note">Parent-managed educational project. Legal and business details are draft pending parent review.</p></footer>
-    <script src="content-config.js"></script><script src="common.js"></script><script src="bubbles.js?v=20261030b"></script><script src="jokes.js?v=20261030c"></script><script src="joke-corner.js?v=20261030c"></script>
+    <script src="content-config.js"></script><script src="common.js"></script><script src="bubbles.js?v=20261030b"></script><script src="birdpal-embed.js?v=20261030e"></script><script src="jokes.js?v=20261030c"></script><script src="joke-corner.js?v=20261030c"></script>
   </body>
 </html>
