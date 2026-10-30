@@ -112,6 +112,20 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
   .row .right{text-align:left;display:flex;gap:20px;align-items:baseline}
   .cell{width:58px;height:58px;font-size:1.7rem}
 }
+
+.stage{position:relative;max-width:400px;margin-left:auto}
+.stage .tian{margin-left:0}
+.mascot{display:block;pointer-events:none}
+.hero-m{position:absolute;width:42%;left:-14%;bottom:-6%;filter:drop-shadow(3px 4px 0 rgba(20,33,61,.25))}
+.panel{position:relative}
+.try-m{position:absolute;width:104px;right:20px;top:-82px}
+.detective{display:flex;gap:16px;align-items:flex-start}
+.avatar{flex:none;width:68px;height:68px;margin-top:2px}
+@media (max-width:760px){
+  .stage{margin-left:0;max-width:320px}
+  .hero-m{width:44%;left:-6%}
+  .try-m{width:84px;top:-66px}
+}
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   .tian .ch{animation:none;clip-path:none}
@@ -120,6 +134,48 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="mascot" viewBox="0 0 236 240">
+  <!-- back hair -->
+  <path d="M38 118c-8-52 20-88 72-88s80 36 72 88c-2 22-8 40-14 52H52c-6-12-12-30-14-52z" fill="#2B2D42"/>
+  <!-- body: red detective coat -->
+  <path d="M62 186c0-20 22-30 48-30s48 10 48 30v40H62z" fill="#D62839"/>
+  <path d="M94 158l16 22 16-22z" fill="#fff"/>
+  <circle cx="110" cy="196" r="3.5" fill="#FFD23F"/><circle cx="110" cy="212" r="3.5" fill="#FFD23F"/>
+  <!-- face -->
+  <ellipse cx="110" cy="112" rx="56" ry="50" fill="#FFE3CC"/>
+  <!-- bangs -->
+  <path d="M54 104c6-34 32-52 60-52 30 0 52 20 56 52-14-18-30-26-52-26-24 0-46 8-64 26z" fill="#2B2D42"/>
+  <!-- detective cap -->
+  <path d="M56 78c4-30 28-48 56-48s52 18 54 48c-18-10-36-14-56-14s-38 4-54 14z" fill="#FFD23F"/>
+  <path d="M56 78c16-10 34-14 54-14s40 4 56 14l-2 8c-16-8-34-12-54-12s-38 4-52 12z" fill="#D62839"/>
+  <circle cx="111" cy="30" r="6" fill="#D62839"/>
+  <!-- eyes -->
+  <ellipse cx="86" cy="118" rx="12" ry="15" fill="#fff"/>
+  <ellipse cx="134" cy="118" rx="12" ry="15" fill="#fff"/>
+  <ellipse cx="87" cy="120" rx="9" ry="12" fill="#3A86FF"/>
+  <ellipse cx="133" cy="120" rx="9" ry="12" fill="#3A86FF"/>
+  <ellipse cx="87" cy="121" rx="5" ry="7.5" fill="#14213D"/>
+  <ellipse cx="133" cy="121" rx="5" ry="7.5" fill="#14213D"/>
+  <circle cx="91" cy="114" r="3.6" fill="#fff"/><circle cx="137" cy="114" r="3.6" fill="#fff"/>
+  <circle cx="83" cy="125" r="1.8" fill="#fff"/><circle cx="129" cy="125" r="1.8" fill="#fff"/>
+  <path d="M72 105c5-6 14-8 22-5M122 100c8-3 17-1 22 5" stroke="#2B2D42" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <!-- blush + mouth -->
+  <ellipse cx="72" cy="140" rx="9" ry="5" fill="#FF8FA3" opacity=".55"/>
+  <ellipse cx="148" cy="140" rx="9" ry="5" fill="#FF8FA3" opacity=".55"/>
+  <path d="M100 142q10 10 20 0" stroke="#B5384A" stroke-width="3" fill="#fff" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- side locks -->
+  <path d="M54 110c-6 20-4 40 4 54 6-6 8-20 6-40z" fill="#2B2D42"/>
+  <path d="M166 110c6 20 4 40-4 54-6-6-8-20-6-40z" fill="#2B2D42"/>
+  <!-- arm + magnifying glass -->
+  <path d="M158 184c14 2 24-6 30-20" stroke="#D62839" stroke-width="16" fill="none" stroke-linecap="round"/>
+  <circle cx="190" cy="158" r="8" fill="#FFE3CC"/>
+  <line x1="196" y1="150" x2="206" y2="128" stroke="#7A4E2D" stroke-width="7" stroke-linecap="round"/>
+  <circle cx="190" cy="100" r="30" fill="#D9F1FF" fill-opacity=".75" stroke="#14213D" stroke-width="7"/>
+  <path d="M176 92q6-12 18-12" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <!-- other hand -->
+  <path d="M62 184c-12-2-20-10-22-22" stroke="#D62839" stroke-width="16" fill="none" stroke-linecap="round"/>
+  <circle cx="38" cy="156" r="8" fill="#FFE3CC"/>
+</symbol></svg>
 
 <header>
   <div class="wrap">
@@ -146,6 +202,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
       <p class="price-note">Every printable is $1.99. Instant download on Etsy.</p>
     </div>
     <div class="tian-wrap">
+      <div class="stage">
       <div class="tian" role="img" aria-label="The Chinese character 学, meaning to learn, written in a practice grid">
         <svg viewBox="0 0 100 100" aria-hidden="true">
           <g stroke="#D62839" stroke-width=".7" stroke-dasharray="3 2.2" opacity=".55" fill="none">
@@ -154,6 +211,8 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
           </g>
         </svg>
         <div class="ch" aria-hidden="true">学</div>
+      </div>
+      <svg class="mascot hero-m" viewBox="0 0 236 240" role="img" aria-label="Illustration of a cartoon girl detective with a magnifying glass"><use href="#mascot"/></svg>
       </div>
       <p class="tian-cap"><b>学</b> xué – to learn. Our pages use the same red practice grid teachers use, so kids learn where every stroke goes.</p>
     </div>
@@ -168,6 +227,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
       <p class="cn">快速心算：两位数乘以 11，只要把两个数字拆开，中间放它们的和。</p>
     </div>
     <div class="panel">
+      <svg class="mascot try-m" viewBox="0 0 236 240" aria-hidden="true"><use href="#mascot"/></svg>
       <label for="num">Pick a number from 10 to 99</label>
       <input id="num" type="number" inputmode="numeric" min="10" max="99" value="43" autocomplete="off">
       <div class="sum" aria-live="polite">
@@ -194,9 +254,12 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
         <div class="right"><div class="p">$1.99</div><a class="go" data-etsy href="https://www.etsy.com/shop/PhoebieCreates" rel="noopener">See on Etsy</a></div>
       </div>
       <div class="row">
-        <div>
+        <div class="detective">
+          <svg class="avatar" viewBox="0 0 236 240" aria-hidden="true"><use href="#mascot"/></svg>
+          <div>
           <h3>Miao Sando Hanzi Detective Pack <span class="cn">汉字侦探包</span></h3>
           <p>Follow clues to find the right character, then write it. Practice that feels like a case to solve.</p>
+          </div>
         </div>
         <div class="right"><div class="p">$1.99</div><a class="go" data-etsy href="https://www.etsy.com/shop/PhoebieCreates" rel="noopener">See on Etsy</a></div>
       </div>
