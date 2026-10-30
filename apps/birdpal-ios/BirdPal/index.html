@@ -15,8 +15,8 @@
   --sun:#FFC83D; --sun-deep:#B07A00;
   --cherry:#E2463F; --leaf:#3FA34D; --leaf-deep:#256B30;
   --paper:#FFFBF1; --ink:#1E2A3A; --muted:#5D6878; --line:#E6DFCC;
-  --display:"Baloo 2", "Arial Rounded MT Bold", system-ui, sans-serif;
-  --body:"Nunito", system-ui, -apple-system, sans-serif;
+  --display:"Baloo 2", "Arial Rounded MT Bold", "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", system-ui, sans-serif;
+  --body:"Nunito", system-ui, -apple-system, "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", sans-serif;
   color-scheme: light;
 }
 html,body{background:var(--paper);color:var(--ink)}
@@ -72,7 +72,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
 .card{background:#fff;border:3px solid var(--ink);border-radius:18px;padding:14px;display:flex;flex-direction:column;gap:10px}
 .card h3{font-family:var(--display);font-weight:800;font-size:20px;margin:0}
 .seg{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
-.seg .wordchip{padding:8px 4px;text-align:center}
+.seg .wordchip{padding:8px 2px;text-align:center;white-space:nowrap;font-size:14px}
 .clock{font-family:var(--display);font-weight:800;font-size:56px;line-height:1;text-align:center;color:var(--sky);font-variant-numeric:tabular-nums}
 .phase{align-self:center;font-weight:800;font-size:15px;border-radius:999px;padding:4px 14px;background:var(--sky-soft);color:var(--sky)}
 .phase.talk{background:var(--sun);color:var(--ink)}
@@ -121,6 +121,10 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
 .blocked h3{color:var(--cherry)}
 .seg3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
 .seg3 .wordchip{padding:8px 4px;text-align:center;font-size:14px;line-height:1.2}
+.langs{display:flex;justify-content:flex-end;gap:6px;margin-bottom:-6px}
+.langbtn{appearance:none;border:2px solid var(--line);background:#fff;border-radius:999px;min-height:34px;padding:3px 12px;font:800 14px var(--body);color:var(--ink);cursor:pointer}
+.langbtn[aria-pressed="true"]{border-color:var(--sky);background:var(--sky);color:#fff}
+.langbtn:focus-visible{outline:3px solid var(--cherry);outline-offset:3px}
 .credit{font-size:12px;color:var(--muted);text-align:center;margin:8px 0 0}
 </style>
 </head>
@@ -150,10 +154,15 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
 </svg>
 
 <main class="app">
+  <div class="langs" role="group" aria-label="Language">
+    <button type="button" class="langbtn" data-lang="en" lang="en" aria-pressed="false">EN</button>
+    <button type="button" class="langbtn" data-lang="zh" lang="zh" aria-pressed="false">中文</button>
+    <button type="button" class="langbtn" data-lang="es" lang="es" aria-pressed="false">ES</button>
+  </div>
   <div class="preview" id="previewBanner" hidden>
-    <b>Record in the Bird Pal app</b>
+    <b data-i18n="previewTitle">Record in the Bird Pal app</b>
     <span id="previewLine">The chat one can't hear me. Open the real Bird Pal!</span>
-    <a class="big blue" href="https://www.phoebiewang.com/birdpal/" target="_blank" rel="noopener">Open Bird Pal</a>
+    <a class="big blue" href="https://www.phoebiewang.com/birdpal/" target="_blank" rel="noopener" data-i18n="openBirdPal">Open Bird Pal</a>
   </div>
   <div class="bar">
     <span class="brand">Bird Pal Buddies</span>
@@ -163,67 +172,68 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
   <!-- HOME -->
   <section class="screen" id="home">
     <div class="stage">
-      <div class="bubble">Hello! My name is Nori</div>
-      <svg class="nori" viewBox="0 0 200 222" role="img" aria-label="Nori, a green bird with orange wings and a red crest"><use href="#noriArt"/></svg>
+      <div class="bubble" data-i18n="hello">Hello! My name is Nori</div>
+      <svg class="nori" viewBox="0 0 200 222" role="img" aria-label="Nori, a green bird with orange wings and a red crest" data-i18n-aria="noriAria"><use href="#noriArt"/></svg>
     </div>
-    <h1>Let's help your bird learn to talk!</h1>
-    <button class="big" id="goTeach">Teach Nori with me</button>
-    <button class="big soft" id="goPractice">Tap to help your pet bird</button>
-    <button class="big soft" id="goLesson">Morning lesson by the cage</button>
+    <h1 data-i18n="homeTitle">Let's help your bird learn to talk!</h1>
+    <button class="big" id="goTeach" data-i18n="goTeach">Teach Nori with me</button>
+    <button class="big soft" id="goPractice" data-i18n="goPractice">Tap to help your pet bird</button>
+    <button class="big soft" id="goLesson" data-i18n="goLesson">Morning lesson by the cage</button>
     <div class="card install" id="installCard" hidden>
-      <h3>Put Bird Pal on your home screen</h3>
+      <h3 data-i18n="installTitle">Put Bird Pal on your home screen</h3>
       <p class="tip" id="installHow" style="text-align:left;margin:0"></p>
-      <button class="big blue" type="button" id="installBtn" hidden>Install the app</button>
+      <button class="big blue" type="button" id="installBtn" hidden data-i18n="installBtn">Install the app</button>
     </div>
     <details class="grownups">
-      <summary>For grown-ups</summary>
+      <summary data-i18n="grownups">For grown-ups</summary>
       <ul>
-        <li>Birds learn words best from people. The app helps with practice; it doesn't replace time together.</li>
-        <li>Not every bird learns to talk, and that's okay. The streak counts days your child taught, not words learned.</li>
-        <li>Recordings and progress stay only on this device. Nothing is uploaded. A new phone starts fresh.</li>
-        <li>"Squeaky" and "My voice, squeaky" make a high cartoon-style voice for birds that love those sounds. The squeaky version of your recording plays it about 40% faster, which raises the pitch.</li>
-        <li>The bird-friendly voice is high, happy and slow because many trainers report parrots pay more attention to high, enthusiastic voices. Your own voice is still the best teacher.</li>
-        <li>Lessons pause if the screen locks. Keep the app open and the phone plugged in.</li>
+        <li data-i18n="g1">Birds learn words best from people. The app helps with practice; it doesn't replace time together.</li>
+        <li data-i18n="g2">Not every bird learns to talk, and that's okay. The streak counts days your child taught, not words learned.</li>
+        <li data-i18n="g3">Recordings and progress stay only on this device. Nothing is uploaded. A new phone starts fresh.</li>
+        <li data-i18n="g5">"Squeaky" and "My voice, squeaky" make a high cartoon-style voice for birds that love those sounds. The squeaky version of your recording plays it about 40% faster, which raises the pitch.</li>
+        <li data-i18n="g6">The bird-friendly voice is high, happy and slow because many trainers report parrots pay more attention to high, enthusiastic voices. Your own voice is still the best teacher.</li>
+        <li data-i18n="g7">Lessons pause if the screen locks, unless "Keep playing with the screen off" is on. Keep the app open and the phone plugged in.</li>
+        <li data-i18n="g8">Language: tap EN, 中文 or ES at the top. Your words and recordings stay the same; only the app's text and its voice change.</li>
       </ul>
     </details>
-    <p class="tip">Nori learns best from you! Talk to Nori every day, then let the app help while you are busy.</p>
+    <p class="tip" data-i18n="homeTip">Nori learns best from you! Talk to Nori every day, then let the app help while you are busy.</p>
   </section>
 
   <!-- PRACTICE -->
   <section class="screen" id="practice" hidden>
-    <button class="ghost back" data-go="home">Home</button>
+    <button class="ghost back" data-go="home" data-i18n="home">Home</button>
     <div class="wordbox">
-      <div class="label">Today's word</div>
+      <div class="label" data-i18n="todayWord">Today's word</div>
       <div class="word" id="word">Hello!</div>
     </div>
-    <div class="chips" id="chips" aria-label="Pick a word"></div>
+    <div class="chips" id="chips" aria-label="Pick a word" data-i18n-aria="pickWord"></div>
     <form class="add" id="addForm" autocomplete="off">
-      <input id="newWord" maxlength="24" placeholder="Pretty bird!" aria-label="Add a new word">
-      <button class="ghost" type="submit">Add</button>
+      <input id="newWord" maxlength="24" placeholder="Pretty bird!" aria-label="Add a new word" data-i18n-ph="newWordPh" data-i18n-aria="addWordAria">
+      <button class="ghost" type="submit" data-i18n="add">Add</button>
     </form>
     <p class="err" id="addErr" hidden></p>
     <button type="button" class="ghost del" id="delWord">Delete this word</button>
     <div class="confirm" id="delConfirm" hidden>
       <span id="delAsk"></span>
       <div class="confirmBtns">
-        <button type="button" class="ghost danger" id="delYes">Yes, delete</button>
-        <button type="button" class="ghost" id="delNo">Keep it</button>
+        <button type="button" class="ghost danger" id="delYes" data-i18n="delYes">Yes, delete</button>
+        <button type="button" class="ghost" id="delNo" data-i18n="delNo">Keep it</button>
       </div>
     </div>
     <div class="card blocked" id="soundBlocked" hidden>
-      <h3>This iPad is blocking sounds</h3>
-      <p style="margin:0">Lockdown Mode is on, so the app can't speak or record here. A grown-up can allow this one website:</p>
-      <ol style="margin:0;padding-left:20px"><li>Open phoebiewang.com/birdpal in Safari.</li><li>Tap the page menu button next to the address.</li><li>Tap Website Settings, then turn off Lockdown Mode.</li><li>Close Bird Pal completely and open it again.</li></ol>
+      <h3 data-i18n="blockedTitle">This iPad is blocking sounds</h3>
+      <p style="margin:0" data-i18n="blockedBody">Lockdown Mode is on, so the app can't speak or record here. A grown-up can allow this one website:</p>
+      <ol style="margin:0;padding-left:20px" data-i18n-html="blockedSteps"><li>Open phoebiewang.com/birdpal in Safari.</li><li>Tap the page menu button next to the address.</li><li>Tap Website Settings, then turn off Lockdown Mode.</li><li>Close Bird Pal completely and open it again.</li></ol>
     </div>
     <div class="card voicePick">
-      <h3>Which voice says the words?</h3>
-      <div class="seg3" id="voiceModes" role="radiogroup" aria-label="Voice"></div>
+      <h3 data-i18n="whichVoice">Which voice says the words?</h3>
+      <div class="seg3" id="voiceModes" role="radiogroup" aria-label="Voice" data-i18n-aria="voiceAria"></div>
       <p class="tip" id="voiceModeTip" style="text-align:left;margin:0"></p>
-      <button type="button" class="ghost" id="hearAuto" style="align-self:flex-start">Hear it</button>
+      <button type="button" class="ghost" id="hearAuto" style="align-self:flex-start" data-i18n="hearIt">Hear it</button>
     </div>
     <div class="voice">
       <button type="button" class="big blue" id="holdRec" hidden>Hold to record my voice</button>
-      <label class="big blue" for="voiceFile" id="pickRec" style="text-align:center">Record my voice</label>
+      <label class="big blue" for="voiceFile" id="pickRec" style="text-align:center" data-i18n="pickRec">Record my voice</label>
       <input type="file" id="voiceFile" accept="audio/*" capture>
       <span id="voiceState"></span>
     </div>
@@ -233,63 +243,63 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
     <p class="status" id="status" aria-live="polite"></p>
     <div class="row">
       <svg class="nori" viewBox="0 0 200 222" aria-hidden="true"><use href="#noriArt"/></svg>
-      <span class="cheer">"You can do it!"</span>
+      <span class="cheer" data-i18n="cheer">"You can do it!"</span>
     </div>
-    <button class="big green" id="saidIt">Nori said it!</button>
+    <button class="big green" id="saidIt" data-i18n="saidIt">Nori said it!</button>
   </section>
 
   <!-- TEACH NORI -->
   <section class="screen" id="teach" hidden>
-    <button class="ghost back" data-go="home">Home</button>
-    <h2>Teach Nori with me</h2>
-    <div class="chips" id="teachChips" aria-label="Pick a word"></div>
+    <button class="ghost back" data-go="home" data-i18n="home">Home</button>
+    <h2 data-i18n="goTeach">Teach Nori with me</h2>
+    <div class="chips" id="teachChips" aria-label="Pick a word" data-i18n-aria="pickWord"></div>
     <div class="wordbox">
-      <div class="label">Say this to Nori</div>
+      <div class="label" data-i18n="sayThis">Say this to Nori</div>
       <div class="word" id="teachWord">Hello!</div>
     </div>
     <ol class="steps">
-      <li>Pick a word and teach Nori!</li>
-      <li>Say it clearly, tap the button, then listen quietly.</li>
-      <li>Did Nori try? Tap &ldquo;Good Nori!&rdquo; and give a treat.</li>
+      <li data-i18n="step1">Pick a word and teach Nori!</li>
+      <li data-i18n="step2">Say it clearly, tap the button, then listen quietly.</li>
+      <li data-i18n="step3">Did Nori try? Tap &ldquo;Good Nori!&rdquo; and give a treat.</li>
     </ol>
-    <button class="big" id="iSaid">I said it!</button>
+    <button class="big" id="iSaid" data-i18n="iSaid">I said it!</button>
     <div class="listen" id="listenBox" hidden aria-live="polite">
       <div class="ring"><span id="listenNum">5</span></div>
-      <div><b>Let's listen. Take your time, Nori.</b><br><span class="tip" style="text-align:left">Stay quiet so Nori can try.</span></div>
+      <div><b data-i18n="listenTitle">Let's listen. Take your time, Nori.</b><br><span class="tip" style="text-align:left" data-i18n="listenSub">Stay quiet so Nori can try.</span></div>
     </div>
     <div class="bubble2" id="tryLine" hidden></div>
     <p class="status" id="teachCount">You said it 0 times today</p>
-    <button class="big green" id="goodNori">Good Nori! Nori tried it!</button>
+    <button class="big green" id="goodNori" data-i18n="goodNori">Good Nori! Nori tried it!</button>
   </section>
 
   <!-- MORNING LESSON -->
   <section class="screen" id="lesson" hidden>
-    <button class="ghost back" data-go="home">Home</button>
-    <h2>Morning lesson</h2>
+    <button class="ghost back" data-go="home" data-i18n="home">Home</button>
+    <h2 data-i18n="lessonTitle">Morning lesson</h2>
 
     <div id="lessonSetup" class="screen">
       <div class="card">
-        <h3>Which words?</h3>
-        <div class="chips" id="lessonWords" aria-label="Words for the lesson"></div>
+        <h3 data-i18n="whichWords">Which words?</h3>
+        <div class="chips" id="lessonWords" aria-label="Words for the lesson" data-i18n-aria="lessonWordsAria"></div>
         <p class="err" id="lessonErr" hidden></p>
       </div>
       <div class="card">
-        <h3>How long?</h3>
+        <h3 data-i18n="howLong">How long?</h3>
         <div class="seg" id="lengths"></div>
-        <p class="tip" style="text-align:left">A listening helper, not a replacement for time together. The app says each word 3 times, then stays quiet for 1 minute so Nori can rest and try. Then it starts again.</p>
+        <p class="tip" style="text-align:left" data-i18n="lessonTip">A listening helper, not a replacement for time together. The app says each word 3 times, then stays quiet for 1 minute so Nori can rest and try. Then it starts again.</p>
       </div>
       <div class="card">
-        <label class="switch"><input type="checkbox" id="screenOff"><span><b>Keep playing with the screen off</b><br><span class="tip" style="text-align:left;display:block">Turns your recorded words into one sound track, so you can lock the iPad and Nori still hears the lesson. Only recorded words are used.</span></span></label>
+        <label class="switch"><input type="checkbox" id="screenOff"><span><b data-i18n="screenOffTitle">Keep playing with the screen off</b><br><span class="tip" style="text-align:left;display:block" data-i18n="screenOffSub">Turns your recorded words into one sound track, so you can lock the iPad and Nori still hears the lesson. Only recorded words are used.</span></span></label>
         <p class="err" id="screenOffErr" hidden></p>
       </div>
       <div class="card">
-        <h3>Before you start</h3>
+        <h3 data-i18n="beforeStart">Before you start</h3>
         <ul class="checklist">
-          <li>Plug in the phone or tablet.</li>
-          <li>Start with the volume low, and keep the phone about 2 feet (half a meter) from the cage.</li>
-          <li>Stop the lesson if Nori looks scared or moves away.</li>
-          <li>Keep this app open with the screen on, or turn on "Keep playing with the screen off".</li>
-          <li>Put it near the cage, not inside it.</li>
+          <li data-i18n="c1">Plug in the phone or tablet.</li>
+          <li data-i18n="c2">Start with the volume low, and keep the phone about 2 feet (half a meter) from the cage.</li>
+          <li data-i18n="c3">Stop the lesson if Nori looks scared or moves away.</li>
+          <li data-i18n="c4">Keep this app open with the screen on, or turn on "Keep playing with the screen off".</li>
+          <li data-i18n="c5">Put it near the cage, not inside it.</li>
         </ul>
       </div>
       <button class="big" id="startLesson">Start morning lesson</button>
@@ -301,31 +311,31 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
       <div class="meter" aria-hidden="true"><i id="meter"></i></div>
       <div class="wordbox"><div class="label" id="nowLabel">Next word</div><div class="word" id="nowWord">Hello!</div></div>
       <p class="status" id="lessonStatus" aria-live="polite"></p>
-      <button class="big green" id="saidIt2">Nori said it!</button>
+      <button class="big green" id="saidIt2" data-i18n="saidIt">Nori said it!</button>
       <button class="ghost" id="stopLesson" style="align-self:center">Stop lesson</button>
     </div>
   </section>
 
   <!-- DANCE PARTY -->
   <section class="screen dance" id="dance" hidden>
-    <h2>Good Nori!</h2>
+    <h2 data-i18n="goodNoriTitle">Good Nori!</h2>
     <div class="treat" id="treatBox" aria-live="polite">
       <div class="treatNum" id="treatNum" aria-hidden="true">&#9733;</div>
       <div style="flex:1;min-width:0"><b id="treatText">Reward Nori now!</b><br><span id="treatSub">Say "Good bird!" and give a treat right away.</span></div>
     </div>
-    <button class="big green" type="button" id="treatDone">I gave Nori a treat</button>
+    <button class="big green" type="button" id="treatDone" data-i18n="iGaveTreat">I gave Nori a treat</button>
     <div class="stage" id="danceStage" style="min-height:260px">
       <canvas id="confetti"></canvas>
       <div class="notes" aria-hidden="true"><span style="left:8%;top:20%">&#9835;</span><span style="right:8%;top:40%;animation-delay:.5s">&#9834;</span></div>
-      <svg class="nori" id="danceNori" viewBox="0 0 200 222" role="img" aria-label="Nori dancing"><use href="#noriArt"/></svg>
+      <svg class="nori" id="danceNori" viewBox="0 0 200 222" role="img" aria-label="Nori dancing" data-i18n-aria="noriDance"><use href="#noriArt"/></svg>
     </div>
     <div class="bubble2" id="noriLine"></div>
     <p class="sub" id="learned"></p>
-    <div class="streak"><b id="streakBig">1 day streak!</b><span class="label">days in a row you taught Nori</span></div>
+    <div class="streak"><b id="streakBig">1 day streak!</b><span class="label" data-i18n="streakLabel">days in a row you taught Nori</span></div>
     <button class="big blue" id="again">Practice again</button>
   </section>
 
-  <p class="credit">Made by Phoebie &middot; <span id="buildTag">v2.2</span></p>
+  <p class="credit"><span data-i18n="credit">Made by Phoebie</span> &middot; <span id="buildTag">v2.3</span></p>
 </main>
 
 <script>
@@ -335,10 +345,244 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
     var u=svg.querySelector("use");var g=art.cloneNode(true);g.removeAttribute("id");
     if(u)svg.replaceChild(g,u);
   });
+  /* ---------- languages: English, 中文, Español ---------- */
+  var I18N={
+  en:{
+    previewTitle:"Record in the Bird Pal app",openBirdPal:"Open Bird Pal",hello:"Hello! My name is Nori",
+    noriAria:"Nori, a green bird with orange wings and a red crest",noriDance:"Nori dancing",
+    homeTitle:"Let's help your bird learn to talk!",goTeach:"Teach Nori with me",goPractice:"Tap to help your pet bird",goLesson:"Morning lesson by the cage",
+    installTitle:"Put Bird Pal on your home screen",installBtn:"Install the app",grownups:"For grown-ups",
+    g1:"Birds learn words best from people. The app helps with practice; it doesn't replace time together.",
+    g2:"Not every bird learns to talk, and that's okay. The streak counts days your child taught, not words learned.",
+    g3:"Recordings and progress stay only on this device. Nothing is uploaded. A new phone starts fresh.",
+    g4:"On iPhone, always open Bird Pal from its home-screen icon. Safari keeps a separate copy, so recordings made there won't show up in the app.",
+    g5:"“Squeaky” and “My voice, squeaky” make a high cartoon-style voice for birds that love those sounds. The squeaky version of your recording plays it about 40% faster, which raises the pitch.",
+    g6:"The bird-friendly voice is high, happy and slow because many trainers report parrots pay more attention to high, enthusiastic voices. Your own voice is still the best teacher.",
+    g7:"Lessons pause if the screen locks, unless “Keep playing with the screen off” is on. Keep the app open and the phone plugged in.",
+    g8:"Language: tap EN, 中文 or ES at the top. Your words and recordings stay the same; only the app's text and its voice change.",
+    homeTip:"Nori learns best from you! Talk to Nori every day, then let the app help while you are busy.",
+    home:"Home",todayWord:"Today's word",pickWord:"Pick a word",newWordPh:"Pretty bird!",addWordAria:"Add a new word",add:"Add",
+    delYes:"Yes, delete",delNo:"Keep it",
+    blockedTitle:"This iPad is blocking sounds",
+    blockedBody:"Lockdown Mode is on, so the app can't speak or record here. A grown-up can allow this one website:",
+    blockedSteps:"<li>Open phoebiewang.com/birdpal in Safari.</li><li>Tap the page menu button next to the address.</li><li>Tap Website Settings, then turn off Lockdown Mode.</li><li>Close Bird Pal completely and open it again.</li>",
+    whichVoice:"Which voice says the words?",voiceAria:"Voice",hearIt:"Hear it",holdRec:"Hold to record my voice",pickRec:"Record my voice",
+    recTip:"Tap, say the word once, then save the recording. Nori will use your voice!",
+    cheer:"“You can do it!”",saidIt:"Nori said it!",sayThis:"Say this to Nori",
+    step1:"Pick a word and teach Nori!",step2:"Say it clearly, tap the button, then listen quietly.",step3:"Did Nori try? Tap “Good Nori!” and give a treat.",
+    iSaid:"I said it!",listenTitle:"Let's listen. Take your time, Nori.",listenSub:"Stay quiet so Nori can try.",goodNori:"Good Nori! Nori tried it!",
+    lessonTitle:"Morning lesson",whichWords:"Which words?",lessonWordsAria:"Words for the lesson",howLong:"How long?",
+    lessonTip:"A listening helper, not a replacement for time together. The app says each word 3 times, then stays quiet for 1 minute so Nori can rest and try. Then it starts again.",
+    screenOffTitle:"Keep playing with the screen off",
+    screenOffSub:"Turns your recorded words into one sound track, so you can lock the iPad and Nori still hears the lesson. Only recorded words are used.",
+    beforeStart:"Before you start",c1:"Plug in the phone or tablet.",c2:"Start with the volume low, and keep the phone about 2 feet (half a meter) from the cage.",
+    c3:"Stop the lesson if Nori looks scared or moves away.",c4:"Keep this app open with the screen on, or turn on “Keep playing with the screen off”.",c5:"Put it near the cage, not inside it.",
+    stopLesson:"Stop lesson",goodNoriTitle:"Good Nori!",iGaveTreat:"I gave Nori a treat",streakLabel:"days in a row you taught Nori",credit:"Made by Phoebie",
+    vm_mine:"My voice",vmt_mine:"Uses your recording. Words you haven't recorded use the bird-friendly voice.",
+    vm_mine_hi:"My voice, squeaky",vmt_mine_hi:"Your recording, played higher and faster like a cartoon mouse. Words you haven't recorded use the squeaky voice.",
+    vm_squeaky:"Squeaky",vmt_squeaky:"A very high, bouncy cartoon voice. Try it if your bird loves cartoon voices.",
+    vm_bird:"Bird-friendly",vmt_bird:"A high, happy, slow voice. Many trainers say parrots pay more attention to high, excited voices.",
+    vm_calm:"Calm",vmt_calm:"A softer, normal voice for quiet mornings.",
+    noRecTip:"No recording for this word yet, so the bird-friendly voice will say it. Record your voice below!",
+    streak:function(v){return v.n+" day streak";},streakBig:function(v){return v.n+" day streak!";},
+    voiceProbRemoved:"That recording couldn't play, so it was removed. Please record it again.",
+    voiceProbUsed:"Your recording didn't play, so the app used its own voice. Try recording again.",
+    code:" (code: {c})",whenFmt:" ({d})",
+    voiceSaved:"Your voice is saved{when}. It stays until you record again.",playMine:"Play my voice",remove:"Remove",
+    delWord:"Delete “{w}”",delAsk:"Delete “{w}” from your words?",typeFirst:"Type a word first.",
+    tooLong:"That recording is too long. Record just the word, a few seconds.",savingVoice:"Saving your voice...",
+    savedTap:"Saved! Tap Play my voice to hear it.",cantSave:"The app couldn't save that recording. (code: {c})",
+    silent:"That recording is silent. Hold the phone closer and say the word loudly.",
+    previewLines:["Squawk! Tap the home screen Bird Pal, Phoebie!","The chat one can't hear me. Open the real Bird Pal!","Come record on the home screen app, pretty please!"],
+    recTipFramed:"To record your own voice, open the Bird Pal app from your home screen. If you don’t have it yet, open <a href=\"https://www.phoebiewang.com/birdpal/\">phoebiewang.com/birdpal</a> in Safari and tap Share, then Add to Home Screen.",
+    recTipIOS:"The camera will open. Point it anywhere, tap the red button, say the word, tap stop, then tap Use Video. The app keeps only your voice.",
+    recTipHold:"Press and hold the button, say the word, then let go.",
+    savedLines:["Yay! You saved my words. I'm learning so fast!","Good job, Phoebie! Let's hear it again!","Perfect! That one is saved. Teach me more!"],
+    recListening:"Listening... let go to save",recSaved:"Saved!",recTry:"Try again",
+    keepHolding:"Keep holding while you talk, then let go.",cantHear:"Can't hear it? Turn up the volume and flip the side switch off silent.",
+    micOff:"The microphone is off. Allow the microphone for Bird Pal, then try again.",
+    stop:"Stop",sayingN:"Saying it {i} of {n}",cantTalk:"This device can't talk. Say “{w}” out loud 5 times!",nowListen:"Now listen. Did your bird say it?",
+    min:"{m} min",hour:"1 hour",startLen:"Start {len} lesson",
+    talking:"Talking",quiet:"Quiet time",sayingNow:"Saying now",nextWord:"Next word",repOf:"“{w}” {r} of {n}",
+    listeningNori:"Listening to Nori...",resting:"Shh, Nori is resting and practicing.",nextRound:"Shh, Nori is resting. Next round in {s} s",
+    pickOne:"Pick at least one word.",screenOffNeed:"Screen-off lessons use your recordings. Record {w} on the practice page first.",
+    trackFail:"The sound track couldn't start ({c}). Tap Stop and try again.",screenOffMode:"Screen-off mode",wordsLabel:"Words",
+    lockNow:"You can lock the iPad now. The lesson keeps playing.",skipped:" Skipped (no recording): {w}.",
+    allDone:"All done!",greatJob:"Great job",lessonDone:"Lesson done!",seeTomorrow:"See you tomorrow morning!",backSetup:"Back to setup",
+    rewardNow:"Reward Nori now!",rewardSub:"Say “Good bird!” and give a treat right away.",greatTeaching:"Great teaching!",
+    treatFast:"Nori learns fastest when the treat comes right away.",
+    yesLines:["That's my line! High five... wing five?","Did you hear that? I said it! Snack time!","Nailed it. I'm basically a talking genius now."],
+    tryLines:["Almost! My brain is still loading... try one more?","Hmm, not quite. I'm practicing in my head. Again?","I heard you! My mouth is just being shy today."],
+    learned:"Nori tried “{w}”! Every try counts.",backLesson:"Back to the lesson",teachAnother:"Teach another word",practiceAgain:"Practice again",
+    teachCount:function(v){return "You said it "+v.n+(v.n===1?" time":" times")+" today";},noriSays:"Nori says: ",
+    installIOS:"In Safari, tap the Share button (the square with an arrow), then tap “Add to Home Screen.” Nori's icon will show up with your other apps.",
+    installOther:"Tap the button to add Bird Pal to this device like a real app.",
+    tagPreview:"Claude preview",tagNative:"iPhone/iPad app",tagHome:"home-screen app",tagBrowser:"browser",listSep:", ",
+    words:["Hello!","Nori!","Pretty bird!","I love you","Good morning"]
+  },
+  zh:{
+    previewTitle:"在 Bird Pal 应用里录音",openBirdPal:"打开 Bird Pal",hello:"你好！我叫 Nori",
+    noriAria:"Nori，一只绿色的鸟，有橙色的翅膀和红色的冠毛",noriDance:"Nori 在跳舞",
+    homeTitle:"教你的鸟儿说话吧！",goTeach:"和我一起教 Nori",goPractice:"点一下，帮鸟儿练习",goLesson:"笼子旁的晨间课",
+    installTitle:"把 Bird Pal 放到主屏幕",installBtn:"安装应用",grownups:"给大人看",
+    g1:"鸟儿最好是跟人学说话。这个应用帮忙练习，但不能代替你们相处的时间。",
+    g2:"不是每只鸟都会学说话，这很正常。连续天数记的是孩子教了几天，不是学会了几个词。",
+    g3:"录音和进度只保存在这台设备上，不会上传。换新手机会从头开始。",
+    g4:"在 iPhone 上，请一直从主屏幕图标打开 Bird Pal。Safari 里是另一份数据，在那里录的音不会出现在应用里。",
+    g5:"“尖尖嗓”和“我的尖尖嗓”会发出卡通一样的高音，适合喜欢这种声音的鸟儿。尖尖嗓版的录音会加快约 40% 播放，声音就变高了。",
+    g6:"“鸟儿爱听”的声音又高、又开心、又慢，因为很多训练师发现鹦鹉更注意高亢、兴奋的声音。不过你自己的声音仍然是最好的老师。",
+    g7:"屏幕锁定时课程会暂停，除非打开了“关屏也继续播放”。请让应用保持打开，并给手机插上电。",
+    g8:"语言：点最上面的 EN、中文 或 ES。你的词和录音都不会变，只换应用的文字和说话的声音。",
+    homeTip:"Nori 最喜欢跟你学！每天和 Nori 说说话，你忙的时候再让应用帮忙。",
+    home:"首页",todayWord:"今天的词",pickWord:"选一个词",newWordPh:"漂亮鸟！",addWordAria:"添加新词",add:"添加",
+    delYes:"确定删除",delNo:"留着",
+    blockedTitle:"这台 iPad 屏蔽了声音",
+    blockedBody:"“锁定模式”已开启，所以应用在这里不能说话，也不能录音。大人可以只给这个网站开放：",
+    blockedSteps:"<li>用 Safari 打开 phoebiewang.com/birdpal。</li><li>点地址栏旁边的页面菜单按钮。</li><li>点“网站设置”，然后关闭“锁定模式”。</li><li>完全关掉 Bird Pal，再重新打开。</li>",
+    whichVoice:"用哪个声音说这些词？",voiceAria:"声音",hearIt:"听一听",holdRec:"按住，录我的声音",pickRec:"录我的声音",
+    recTip:"点一下，说一遍这个词，然后保存录音。Nori 会用你的声音！",
+    cheer:"“你一定行！”",saidIt:"Nori 说出来了！",sayThis:"对 Nori 说这个",
+    step1:"选一个词，来教 Nori！",step2:"说清楚，点按钮，然后安静地听。",step3:"Nori 试着说了吗？点“好棒 Nori！”，给它一个零食。",
+    iSaid:"我说了！",listenTitle:"我们来听听。慢慢来，Nori。",listenSub:"保持安静，让 Nori 试一试。",goodNori:"好棒 Nori！它试着说了！",
+    lessonTitle:"晨间课",whichWords:"学哪些词？",lessonWordsAria:"上课用的词",howLong:"上多久？",
+    lessonTip:"这是一个听力小帮手，不能代替你们相处的时间。应用把每个词说 3 遍，然后安静 1 分钟，让 Nori 休息、试着说。然后再从头开始。",
+    screenOffTitle:"关屏也继续播放",
+    screenOffSub:"把你录好的词做成一段音轨，这样锁上 iPad 后 Nori 还能继续听课。只会用录过音的词。",
+    beforeStart:"开始之前",c1:"给手机或平板插上电。",c2:"音量先调小，手机离笼子大约 60 厘米（2 英尺）。",
+    c3:"如果 Nori 看起来害怕或躲开，就停止上课。",c4:"让应用保持打开、屏幕亮着，或者打开“关屏也继续播放”。",c5:"放在笼子旁边，不要放进笼子里。",
+    stopLesson:"停止上课",goodNoriTitle:"好棒 Nori！",iGaveTreat:"我给 Nori 零食了",streakLabel:"你连续教 Nori 的天数",credit:"Phoebie 制作",
+    vm_mine:"我的声音",vmt_mine:"用你的录音。没录过的词会用“鸟儿爱听”的声音。",
+    vm_mine_hi:"我的尖尖嗓",vmt_mine_hi:"把你的录音调高、调快，像卡通小老鼠一样。没录过的词会用尖尖嗓。",
+    vm_squeaky:"尖尖嗓",vmt_squeaky:"非常高、蹦蹦跳跳的卡通声音。如果你的鸟儿喜欢卡通声音，就试试它。",
+    vm_bird:"鸟儿爱听",vmt_bird:"又高、又开心、又慢的声音。很多训练师说鹦鹉更注意高亢、兴奋的声音。",
+    vm_calm:"温柔",vmt_calm:"比较轻柔的普通声音，适合安静的早晨。",
+    noRecTip:"这个词还没有录音，所以会用“鸟儿爱听”的声音来说。在下面录你的声音吧！",
+    streak:"连续 {n} 天",streakBig:"连续 {n} 天！",
+    voiceProbRemoved:"这段录音播放不了，已经删掉了。请重新录一次。",
+    voiceProbUsed:"你的录音没有播出来，所以应用用了自己的声音。再录一次试试。",
+    code:"（代码：{c}）",whenFmt:"（{d}）",
+    voiceSaved:"你的声音已保存{when}。重新录之前会一直保留。",playMine:"播放我的声音",remove:"删除",
+    delWord:"删除“{w}”",delAsk:"要从你的词里删除“{w}”吗？",typeFirst:"先输入一个词。",
+    tooLong:"录音太长了。只录这个词，几秒钟就好。",savingVoice:"正在保存你的声音……",
+    savedTap:"保存好了！点“播放我的声音”听一听。",cantSave:"应用没能保存这段录音。（代码：{c}）",
+    silent:"这段录音没有声音。把手机拿近一点，大声说这个词。",
+    previewLines:["嘎嘎！Phoebie，快点主屏幕上的 Bird Pal！","聊天里的我听不见你。打开真正的 Bird Pal 吧！","来主屏幕上的应用里录音嘛，拜托拜托！"],
+    recTipFramed:"要录你自己的声音，请从主屏幕打开 Bird Pal 应用。如果还没有，用 Safari 打开 <a href=\"https://www.phoebiewang.com/birdpal/\">phoebiewang.com/birdpal</a>，点“分享”，再点“添加到主屏幕”。",
+    recTipIOS:"相机会打开。随便对着哪里，点红色按钮，说这个词，点停止，再点“使用视频”。应用只保留你的声音。",
+    recTipHold:"按住按钮，说这个词，然后松开。",
+    savedLines:["耶！你把我的词存好了。我学得好快！","干得好，Phoebie！再听一遍吧！","太棒了！这个存好了。再教我一个！"],
+    recListening:"正在听……松开就保存",recSaved:"保存好了！",recTry:"再试一次",
+    keepHolding:"说话的时候一直按住，说完再松开。",cantHear:"听不到？把音量调大，再把侧边的静音开关拨回来。",
+    micOff:"麦克风没打开。请允许 Bird Pal 使用麦克风，然后再试一次。",
+    stop:"停止",sayingN:"正在说第 {i} 遍，共 {n} 遍",cantTalk:"这台设备不会说话。请你大声说“{w}”5 遍！",nowListen:"现在听一听。你的鸟儿说了吗？",
+    min:"{m} 分钟",hour:"1 小时",startLen:"开始 {len} 的课",
+    talking:"说话中",quiet:"安静时间",sayingNow:"正在说",nextWord:"下一个词",repOf:"“{w}” 第 {r} 遍，共 {n} 遍",
+    listeningNori:"在听 Nori 说……",resting:"嘘，Nori 在休息、在练习。",nextRound:"嘘，Nori 在休息。{s} 秒后开始下一轮",
+    pickOne:"至少选一个词。",screenOffNeed:"关屏上课要用你的录音。请先在练习页录好：{w}。",
+    trackFail:"音轨没能开始播放（{c}）。点“停止”再试一次。",screenOffMode:"关屏模式",wordsLabel:"词",
+    lockNow:"现在可以锁上 iPad 了，课程会继续播放。",skipped:" 已跳过（没有录音）：{w}。",
+    allDone:"全部完成！",greatJob:"做得好",lessonDone:"课上完了！",seeTomorrow:"明天早上见！",backSetup:"回到设置",
+    rewardNow:"现在奖励 Nori！",rewardSub:"说“好鸟儿！”，马上给它一个零食。",greatTeaching:"教得真好！",
+    treatFast:"零食马上给，Nori 学得最快。",
+    yesLines:["这是我的台词！击个掌……还是击个翅膀？","你听到了吗？我说出来了！零食时间到！","搞定！我现在就是会说话的小天才。"],
+    tryLines:["差一点！我的小脑袋还在加载中……再来一次？","嗯，还不太对。我在心里偷偷练呢。再来？","我听到你了！只是我的嘴巴今天有点害羞。"],
+    learned:"Nori 试着说了“{w}”！每一次尝试都算数。",backLesson:"回到课程",teachAnother:"再教一个词",practiceAgain:"再练一次",
+    teachCount:"你今天说了 {n} 遍",noriSays:"Nori 说：",
+    installIOS:"在 Safari 里点“分享”按钮（带箭头的方框），再点“添加到主屏幕”。Nori 的图标就会出现在你的其他应用旁边。",
+    installOther:"点按钮，把 Bird Pal 像真正的应用一样装到这台设备上。",
+    tagPreview:"Claude 预览",tagNative:"iPhone/iPad 应用",tagHome:"主屏幕应用",tagBrowser:"浏览器",listSep:"、",
+    words:["你好！","Nori！","漂亮鸟！","我爱你","早上好"]
+  },
+  es:{
+    previewTitle:"Graba en la app Bird Pal",openBirdPal:"Abrir Bird Pal",hello:"¡Hola! Me llamo Nori",
+    noriAria:"Nori, un pájaro verde con alas naranjas y una cresta roja",noriDance:"Nori bailando",
+    homeTitle:"¡Ayudemos a tu pájaro a hablar!",goTeach:"Enseña a Nori conmigo",goPractice:"Toca para ayudar a tu pájaro",goLesson:"Clase de la mañana junto a la jaula",
+    installTitle:"Pon Bird Pal en tu pantalla de inicio",installBtn:"Instalar la app",grownups:"Para adultos",
+    g1:"Los pájaros aprenden mejor las palabras de las personas. La app ayuda a practicar; no reemplaza el tiempo juntos.",
+    g2:"No todos los pájaros aprenden a hablar, y está bien. La racha cuenta los días que tu hijo enseñó, no las palabras aprendidas.",
+    g3:"Las grabaciones y el progreso se quedan solo en este dispositivo. No se sube nada. Un teléfono nuevo empieza de cero.",
+    g4:"En iPhone, abre siempre Bird Pal desde su ícono en la pantalla de inicio. Safari guarda una copia aparte, así que lo que grabes allí no aparecerá en la app.",
+    g5:"«Chillona» y «Mi voz, chillona» hacen una voz aguda de caricatura para los pájaros que adoran esos sonidos. La versión chillona de tu grabación suena un 40 % más rápido, y por eso más aguda.",
+    g6:"La voz «Para pájaros» es aguda, alegre y lenta, porque muchos entrenadores dicen que los loros prestan más atención a las voces agudas y entusiastas. Tu propia voz sigue siendo la mejor maestra.",
+    g7:"Las clases se pausan si la pantalla se bloquea, salvo que actives «Seguir sonando con la pantalla apagada». Deja la app abierta y el teléfono enchufado.",
+    g8:"Idioma: toca EN, 中文 o ES arriba. Tus palabras y grabaciones no cambian; solo cambian los textos de la app y su voz.",
+    homeTip:"¡Nori aprende mejor contigo! Habla con Nori todos los días y deja que la app te ayude cuando estés ocupado.",
+    home:"Inicio",todayWord:"Palabra de hoy",pickWord:"Elige una palabra",newWordPh:"¡Pájaro bonito!",addWordAria:"Añadir una palabra nueva",add:"Añadir",
+    delYes:"Sí, borrar",delNo:"Dejarla",
+    blockedTitle:"Este iPad está bloqueando los sonidos",
+    blockedBody:"El Modo de Aislamiento está activado, así que la app no puede hablar ni grabar aquí. Un adulto puede permitir solo este sitio web:",
+    blockedSteps:"<li>Abre phoebiewang.com/birdpal en Safari.</li><li>Toca el botón del menú de la página, junto a la dirección.</li><li>Toca Ajustes del sitio web y desactiva el Modo de Aislamiento.</li><li>Cierra Bird Pal por completo y vuelve a abrirla.</li>",
+    whichVoice:"¿Qué voz dice las palabras?",voiceAria:"Voz",hearIt:"Escuchar",holdRec:"Mantén presionado para grabar mi voz",pickRec:"Grabar mi voz",
+    recTip:"Toca, di la palabra una vez y guarda la grabación. ¡Nori usará tu voz!",
+    cheer:"«¡Tú puedes!»",saidIt:"¡Nori lo dijo!",sayThis:"Dile esto a Nori",
+    step1:"¡Elige una palabra y enséñasela a Nori!",step2:"Dila con claridad, toca el botón y escucha en silencio.",step3:"¿Nori lo intentó? Toca «¡Bien, Nori!» y dale un premio.",
+    iSaid:"¡Ya lo dije!",listenTitle:"Vamos a escuchar. Tómate tu tiempo, Nori.",listenSub:"Quédate en silencio para que Nori lo intente.",goodNori:"¡Bien, Nori! ¡Lo intentó!",
+    lessonTitle:"Clase de la mañana",whichWords:"¿Qué palabras?",lessonWordsAria:"Palabras para la clase",howLong:"¿Cuánto tiempo?",
+    lessonTip:"Es una ayuda para escuchar, no reemplaza el tiempo juntos. La app dice cada palabra 3 veces y luego se queda en silencio 1 minuto para que Nori descanse y lo intente. Después empieza otra vez.",
+    screenOffTitle:"Seguir sonando con la pantalla apagada",
+    screenOffSub:"Convierte tus palabras grabadas en una sola pista de sonido, así puedes bloquear el iPad y Nori sigue escuchando la clase. Solo se usan las palabras grabadas.",
+    beforeStart:"Antes de empezar",c1:"Enchufa el teléfono o la tableta.",c2:"Empieza con el volumen bajo y deja el teléfono a unos 60 cm (2 pies) de la jaula.",
+    c3:"Detén la clase si Nori parece asustado o se aleja.",c4:"Deja esta app abierta con la pantalla encendida, o activa «Seguir sonando con la pantalla apagada».",c5:"Ponlo cerca de la jaula, no dentro.",
+    stopLesson:"Detener la clase",goodNoriTitle:"¡Bien, Nori!",iGaveTreat:"Le di un premio a Nori",streakLabel:"días seguidos que enseñaste a Nori",credit:"Hecho por Phoebie",
+    vm_mine:"Mi voz",vmt_mine:"Usa tu grabación. Las palabras que no grabaste usan la voz para pájaros.",
+    vm_mine_hi:"Mi voz, chillona",vmt_mine_hi:"Tu grabación, más aguda y rápida, como un ratón de caricatura. Las palabras que no grabaste usan la voz chillona.",
+    vm_squeaky:"Chillona",vmt_squeaky:"Una voz de caricatura muy aguda y saltarina. Pruébala si a tu pájaro le encantan las voces de caricatura.",
+    vm_bird:"Para pájaros",vmt_bird:"Una voz aguda, alegre y lenta. Muchos entrenadores dicen que los loros prestan más atención a las voces agudas y emocionadas.",
+    vm_calm:"Tranquila",vmt_calm:"Una voz normal y más suave para mañanas tranquilas.",
+    noRecTip:"Esta palabra aún no tiene grabación, así que la dirá la voz para pájaros. ¡Graba tu voz abajo!",
+    streak:function(v){return v.n+(v.n===1?" día seguido":" días seguidos");},streakBig:function(v){return "¡"+v.n+(v.n===1?" día seguido!":" días seguidos!");},
+    voiceProbRemoved:"Esa grabación no se pudo reproducir, así que se borró. Grábala otra vez.",
+    voiceProbUsed:"Tu grabación no sonó, así que la app usó su propia voz. Intenta grabar otra vez.",
+    code:" (código: {c})",whenFmt:" ({d})",
+    voiceSaved:"Tu voz está guardada{when}. Se queda hasta que grabes otra vez.",playMine:"Escuchar mi voz",remove:"Quitar",
+    delWord:"Borrar «{w}»",delAsk:"¿Borrar «{w}» de tus palabras?",typeFirst:"Primero escribe una palabra.",
+    tooLong:"Esa grabación es muy larga. Graba solo la palabra, unos segundos.",savingVoice:"Guardando tu voz...",
+    savedTap:"¡Guardado! Toca Escuchar mi voz para oírla.",cantSave:"La app no pudo guardar esa grabación. (código: {c})",
+    silent:"Esa grabación no tiene sonido. Acerca el teléfono y di la palabra bien fuerte.",
+    previewLines:["¡Cuac! ¡Toca Bird Pal en la pantalla de inicio, Phoebie!","El del chat no me oye. ¡Abre el Bird Pal de verdad!","¡Ven a grabar en la app de la pantalla de inicio, porfa!"],
+    recTipFramed:"Para grabar tu propia voz, abre la app Bird Pal desde tu pantalla de inicio. Si aún no la tienes, abre <a href=\"https://www.phoebiewang.com/birdpal/\">phoebiewang.com/birdpal</a> en Safari y toca Compartir, luego Agregar a inicio.",
+    recTipIOS:"Se abrirá la cámara. Apunta a cualquier lado, toca el botón rojo, di la palabra, toca detener y luego Usar video. La app guarda solo tu voz.",
+    recTipHold:"Mantén presionado el botón, di la palabra y suelta.",
+    savedLines:["¡Bien! Guardaste mis palabras. ¡Aprendo rapidísimo!","¡Buen trabajo, Phoebie! ¡Vamos a oírla otra vez!","¡Perfecto! Esa ya está guardada. ¡Enséñame más!"],
+    recListening:"Escuchando... suelta para guardar",recSaved:"¡Guardado!",recTry:"Inténtalo otra vez",
+    keepHolding:"Mantén presionado mientras hablas y luego suelta.",cantHear:"¿No se oye? Sube el volumen y quita el modo silencio con el interruptor lateral.",
+    micOff:"El micrófono está apagado. Permite el micrófono para Bird Pal y vuelve a intentarlo.",
+    stop:"Detener",sayingN:"Diciéndola {i} de {n}",cantTalk:"Este dispositivo no puede hablar. ¡Di «{w}» en voz alta 5 veces!",nowListen:"Ahora escucha. ¿Lo dijo tu pájaro?",
+    min:"{m} min",hour:"1 hora",startLen:"Empezar clase de {len}",
+    talking:"Hablando",quiet:"Tiempo de silencio",sayingNow:"Diciendo ahora",nextWord:"Siguiente palabra",repOf:"«{w}» {r} de {n}",
+    listeningNori:"Escuchando a Nori...",resting:"Shh, Nori está descansando y practicando.",nextRound:"Shh, Nori está descansando. Siguiente ronda en {s} s",
+    pickOne:"Elige al menos una palabra.",screenOffNeed:"Las clases con la pantalla apagada usan tus grabaciones. Primero graba {w} en la página de práctica.",
+    trackFail:"La pista de sonido no pudo empezar ({c}). Toca Detener e inténtalo otra vez.",screenOffMode:"Pantalla apagada",wordsLabel:"Palabras",
+    lockNow:"Ya puedes bloquear el iPad. La clase sigue sonando.",skipped:" Omitidas (sin grabación): {w}.",
+    allDone:"¡Terminamos!",greatJob:"¡Muy bien!",lessonDone:"¡Clase terminada!",seeTomorrow:"¡Hasta mañana por la mañana!",backSetup:"Volver a la configuración",
+    rewardNow:"¡Premia a Nori ahora!",rewardSub:"Di «¡Buen pájaro!» y dale un premio enseguida.",greatTeaching:"¡Qué buena enseñanza!",
+    treatFast:"Nori aprende más rápido cuando el premio llega enseguida.",
+    yesLines:["¡Esa es mi frase! ¡Choca esos cinco... o esas plumas!","¿Oíste eso? ¡Lo dije! ¡Hora de la merienda!","¡Lo logré! Ya soy un genio que habla."],
+    tryLines:["¡Casi! Mi cerebro todavía está cargando... ¿otra vez?","Mmm, todavía no. Estoy practicando en mi cabeza. ¿Otra vez?","¡Te oí! Es que hoy mi pico está tímido."],
+    learned:"¡Nori intentó decir «{w}»! Cada intento cuenta.",backLesson:"Volver a la clase",teachAnother:"Enseñar otra palabra",practiceAgain:"Practicar otra vez",
+    teachCount:function(v){return "Hoy lo dijiste "+v.n+(v.n===1?" vez":" veces");},noriSays:"Nori dice: ",
+    installIOS:"En Safari, toca el botón Compartir (el cuadrado con una flecha) y luego «Agregar a inicio». El ícono de Nori aparecerá con tus otras apps.",
+    installOther:"Toca el botón para agregar Bird Pal a este dispositivo como una app de verdad.",
+    tagPreview:"vista previa en Claude",tagNative:"app de iPhone/iPad",tagHome:"app en pantalla de inicio",tagBrowser:"navegador",listSep:", ",
+    words:["¡Hola!","¡Nori!","¡Pájaro bonito!","Te quiero","Buenos días"]
+  }};
+  var LANGS=["en","zh","es"],LOCALE={en:"en-US",zh:"zh-CN",es:"es-US"},TTS_LANG={en:"en-US",zh:"zh-CN",es:"es-MX"};
+  function detectLang(){var l=((navigator.languages&&navigator.languages[0])||navigator.language||"en").toLowerCase();return l.indexOf("zh")===0?"zh":l.indexOf("es")===0?"es":"en";}
+  var LANG="en";
+  function T(k,v){
+    var d=I18N[LANG][k];if(d===undefined)d=I18N.en[k];
+    if(typeof d==="function")return d(v||{});
+    if(typeof d==="string")return d.replace(/\{(\w+)\}/g,function(m,x){return v&&(x in v)?v[x]:m;});
+    return d;
+  }
   var KEY="birdpal-v1", VKEY="birdpal-voice:";
-  var state={words:["Hello!","Nori!","Pretty bird!","I love you","Good morning"],current:"Hello!",days:[],lessonWords:["Hello!","Nori!"],lessonMin:10,v:3,voiceMode:"mine"};
+  var state={words:null,current:"",days:[],lessonWords:[],lessonMin:10,v:3,voiceMode:"mine"};
   try{var s=JSON.parse(localStorage.getItem(KEY)||"null");if(s&&s.words){for(var k in s)state[k]=s[k];}}catch(e){}
   if(state.v!==3){state.v=3;if([5,10,15,30].indexOf(state.lessonMin)<0||state.lessonMin===30)state.lessonMin=10;}
+  if(LANGS.indexOf(state.lang)<0)state.lang=detectLang();
+  LANG=state.lang;
+  if(!state.words||!state.words.length){var dw=I18N[LANG].words;state.words=dw.slice();state.current=dw[0];state.lessonWords=dw.slice(0,2);}
+  if(state.words.indexOf(state.current)<0)state.current=state.words[0];
   function save(){try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){}}
   function getVoice(w){try{return localStorage.getItem(VKEY+w);}catch(e){return null;}}
   try{state.words.forEach(function(w){var v=localStorage.getItem(VKEY+w);if(v&&v.indexOf("data:audio/wav")!==0)localStorage.removeItem(VKEY+w);});}catch(e){}
@@ -363,7 +607,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
     while(set[today(d)]){n++;d.setDate(d.getDate()-1);}
     return n;
   }
-  function renderStreak(){var n=streak();$("streakChip").textContent=n+" day streak";$("streakBig").textContent=n+" day streak!";}
+  function renderStreak(){var n=streak();$("streakChip").textContent=T("streak",{n:n});$("streakBig").textContent=T("streakBig",{n:n});}
 
   /* ---------- saying a word: her recorded voice if she added one, else the device voice ---------- */
   /* Recordings are kept as raw sound data in the browser's file store and played with the phone's audio engine.
@@ -469,23 +713,28 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
   var SQUEAK_RATE=1.4;
   var STYLE={squeaky:{pitch:2,rate:0.95,bang:true},bird:{pitch:1.75,rate:0.72,bang:true},calm:{pitch:1.1,rate:0.85,bang:false}};
   var autoVoice=null;
+  var FAV={
+    en:["Samantha","Ava","Allison","Susan","Karen","Moira","Tessa","Fiona","Victoria","Aria","Jenny","Zira","Google US English","Serena","Nicky"],
+    zh:["Tingting","Ting-Ting","Lili","Meijia","Mei-Jia","Xiaoxiao","Huihui","Yaoyao","Google \u666e\u901a\u8bdd","Sinji"],
+    es:["Paulina","Marisol","Monica","M\u00f3nica","Sabina","Dalia","Helena","Elvira","Google espa\u00f1ol de Estados Unidos","Google espa\u00f1ol"]};
+  var LANG_RE={en:/^en(-|_|$)/i,zh:/^(zh|cmn)(-|_|$)/i,es:/^es(-|_|$)/i},MAIN_RE={en:/en-US/i,zh:/zh.(CN|Hans)/i,es:/es.(MX|US|419)/i};
   function pickVoice(){
+    autoVoice=null;
     if(!("speechSynthesis" in window))return;
-    var vs=speechSynthesis.getVoices().filter(function(v){return /^en(-|_|$)/i.test(v.lang);});
+    var vs=speechSynthesis.getVoices().filter(function(v){return LANG_RE[LANG].test(v.lang);});
     if(!vs.length)return;
-    var fav=["Samantha","Ava","Allison","Susan","Karen","Moira","Tessa","Fiona","Victoria","Aria","Jenny","Zira","Google US English","Serena","Nicky"];
     var best=null;
-    fav.some(function(n){best=vs.filter(function(v){return v.name.indexOf(n)>=0&&!/compact/i.test(v.voiceURI||"");})[0]||vs.filter(function(v){return v.name.indexOf(n)>=0;})[0];return !!best;});
-    autoVoice=best||vs.filter(function(v){return /en-US/i.test(v.lang);})[0]||vs[0];
+    FAV[LANG].some(function(n){best=vs.filter(function(v){return v.name.indexOf(n)>=0&&!/compact/i.test(v.voiceURI||"");})[0]||vs.filter(function(v){return v.name.indexOf(n)>=0;})[0];return !!best;});
+    autoVoice=best||vs.filter(function(v){return MAIN_RE[LANG].test(v.lang);})[0]||vs[0];
   }
   try{pickVoice();if("speechSynthesis" in window&&speechSynthesis.addEventListener)speechSynthesis.addEventListener("voiceschanged",pickVoice);}catch(e){}
   function robot(w,fin,done,mode){
     if(!HAS_TTS){showSoundBlocked();done(false);return;}
     var st=STYLE[mode]||STYLE.bird,text=w;
-    if(st.bang)text=w.replace(/[.!?]+$/,"")+"!";
+    if(st.bang)text=w.replace(/[.!?\u3002\uff01\uff1f]+$/,"")+(LANG==="zh"?"\uff01":"!");
     var u=new SpeechSynthesisUtterance(text);u.rate=st.rate;u.pitch=st.pitch;u.volume=1;
     if(!autoVoice)pickVoice();
-    if(autoVoice){u.voice=autoVoice;u.lang=autoVoice.lang;}else u.lang="en-US";
+    if(autoVoice){u.voice=autoVoice;u.lang=autoVoice.lang;}else u.lang=TTS_LANG[LANG];
     u.onend=fin;u.onerror=fin;
     speechSynthesis.cancel();speechSynthesis.speak(u);
   }
@@ -506,7 +755,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
   }
   function showSoundBlocked(){var b=$("soundBlocked");if(b)b.hidden=false;}
   function showVoiceProblem(code,removed){
-    $("voiceErr").textContent=(removed?"That recording couldn't play, so it was removed. Please record it again.":"Your recording didn't play, so the app used its own voice. Try recording again.")+" (code: "+(code||"?")+")";
+    $("voiceErr").textContent=T(removed?"voiceProbRemoved":"voiceProbUsed")+T("code",{c:code||"?"});
     $("voiceErr").hidden=false;
   }
   function hush(){try{speechSynthesis.cancel();}catch(e){}try{if(cur){cur.onended=null;cur.stop();cur=null;}}catch(e){}}
@@ -523,32 +772,32 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
     });
     $("word").textContent=state.current;
     renderDelete();renderVoiceModes();
-    var at=rawAt[state.current],when=at?new Date(at).toLocaleDateString(undefined,{month:"short",day:"numeric"}):"";
-    $("voiceState").innerHTML=hasVoice(state.current)?'<span class="ok">Your voice is saved'+(when?' ('+when+')':'')+'. It stays until you record again.</span> <button class="ghost" type="button" id="hearVoice">Play my voice</button> <button class="ghost" type="button" id="dropVoice">Remove</button>':'';
+    var at=rawAt[state.current],when=at?T("whenFmt",{d:new Date(at).toLocaleDateString(LOCALE[LANG],{month:"short",day:"numeric"})}):"";
+    $("voiceState").innerHTML=hasVoice(state.current)?'<span class="ok">'+esc(T("voiceSaved",{when:when}))+'</span> <button class="ghost" type="button" id="hearVoice">'+esc(T("playMine"))+'</button> <button class="ghost" type="button" id="dropVoice">'+esc(T("remove"))+'</button>':'';
     var d=$("dropVoice");if(d)d.addEventListener("click",function(){dropVoice(state.current).then(renderWords);renderWords();});
     var h=$("hearVoice");if(h)h.addEventListener("click",function(){stopPlay();$("voiceErr").hidden=true;var w=state.current;if(voices[w])playVoice(w).catch(function(e){showVoiceProblem((e&&e.name)||"decode",false);});else sayOnce(w);});
   }
   function renderVoiceModes(){
     var box=$("voiceModes");box.innerHTML="";var cur=state.voiceMode||"mine";
     VOICE_MODES.forEach(function(m){
-      var b=document.createElement("button");b.type="button";b.className="wordchip";b.textContent=m.label;
+      var b=document.createElement("button");b.type="button";b.className="wordchip";b.textContent=T("vm_"+m.id);
       b.setAttribute("role","radio");b.setAttribute("aria-checked",String(m.id===cur));b.setAttribute("aria-pressed",String(m.id===cur));
       b.addEventListener("click",function(){state.voiceMode=m.id;save();stopPlay();renderVoiceModes();});
       box.appendChild(b);
     });
     var m=VOICE_MODES.filter(function(x){return x.id===cur;})[0];
-    var t=m.tip;if(cur==="mine"&&!hasVoice(state.current))t="No recording for this word yet, so the bird-friendly voice will say it. Record your voice below!";
-    $("voiceModeTip").textContent=t;
+    var tip=T("vmt_"+m.id);if(cur==="mine"&&!hasVoice(state.current))tip=T("noRecTip");
+    $("voiceModeTip").textContent=tip;
   }
   $("hearAuto").addEventListener("click",function(){stopPlay();$("voiceErr").hidden=true;sayOnce(state.current);});
   function renderDelete(){
     var only=state.words.length<=1;
     $("delWord").hidden=only||!$("delConfirm").hidden;
-    $("delWord").textContent="Delete \""+state.current+"\"";
+    $("delWord").textContent=T("delWord",{w:state.current});
   }
   $("delWord").addEventListener("click",function(){
     stopPlay();
-    $("delAsk").textContent="Delete \""+state.current+"\" from your words?";
+    $("delAsk").textContent=T("delAsk",{w:state.current});
     $("delConfirm").hidden=false;renderDelete();$("delNo").focus();
   });
   $("delNo").addEventListener("click",function(){$("delConfirm").hidden=true;renderDelete();});
@@ -565,14 +814,14 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
   $("addForm").addEventListener("submit",function(e){
     e.preventDefault();
     var v=$("newWord").value.trim();
-    if(!v){$("addErr").textContent="Type a word first.";$("addErr").hidden=false;return;}
+    if(!v){$("addErr").textContent=T("typeFirst");$("addErr").hidden=false;return;}
     if(state.words.indexOf(v)<0)state.words.push(v);
     state.current=v;$("newWord").value="";$("addErr").hidden=true;save();renderWords();
   });
   $("newWord").addEventListener("input",function(){$("addErr").hidden=true;});
   $("voiceFile").addEventListener("change",function(){
     var f=this.files&&this.files[0];this.value="";$("voiceErr").hidden=true;if(!f)return;
-    if(f.size>80000000){$("voiceErr").textContent="That recording is too long. Record just the word, a few seconds.";$("voiceErr").hidden=false;return;}
+    if(f.size>80000000){$("voiceErr").textContent=T("tooLong");$("voiceErr").hidden=false;return;}
     saveClip(f);
   });
 
@@ -603,15 +852,15 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
   function saveClip(blob){
     var word=state.current;
     $("voiceErr").hidden=true;
-    $("voiceState").innerHTML='<span class="ok">Saving your voice...</span>';
-    var saved=function(){renderWords();$("voiceState").insertAdjacentHTML("afterbegin",'<span class="ok">Saved! Tap Play my voice to hear it. </span>');};
+    $("voiceState").innerHTML='<span class="ok">'+esc(T("savingVoice"))+'</span>';
+    var saved=function(){renderWords();$("voiceState").insertAdjacentHTML("afterbegin",'<span class="ok">'+esc(T("savedTap"))+' </span>');};
     var keepOriginal=function(reason){
       return rawPut(word,blob).then(function(){try{localStorage.removeItem(VKEY+word);}catch(e){}saved();})
-        .catch(function(e){renderWords();$("voiceErr").textContent="The app couldn't save that recording. (code: "+(reason||"")+"/"+((e&&e.name)||"store")+")";$("voiceErr").hidden=false;});
+        .catch(function(e){renderWords();$("voiceErr").textContent=T("cantSave",{c:(reason||"")+"/"+((e&&e.name)||"store")});$("voiceErr").hidden=false;});
     };
     readBuf(blob).then(decode).then(function(ab){
       var res=toWav(ab);
-      if(res.peak<0.01){renderWords();$("voiceErr").textContent="That recording is silent. Hold the phone closer and say the word loudly.";$("voiceErr").hidden=false;return;}
+      if(res.peak<0.01){renderWords();$("voiceErr").textContent=T("silent");$("voiceErr").hidden=false;return;}
       rawPut(word,res.blob).then(function(){try{localStorage.removeItem(VKEY+word);}catch(e){}saved();}).catch(function(){
         var r=new FileReader();r.onload=function(){
           try{localStorage.setItem(VKEY+word,r.result);saved();}
@@ -626,27 +875,26 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
   var isIOS=/iPhone|iPad|iPod/.test(navigator.userAgent)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1);
   if(framed){
     $("previewBanner").hidden=false;
-    $("previewLine").textContent=pick(["Squawk! Tap the home screen Bird Pal, Phoebie!","The chat one can't hear me. Open the real Bird Pal!","Come record on the home screen app, pretty please!"]);
+    $("previewLine").textContent=pick(T("previewLines"));
   }
-  if(framed){
-    $("pickRec").hidden=true;
-    $("recTip").innerHTML='To record your own voice, open the Bird Pal app from your home screen. If you don\u2019t have it yet, open <a href="https://www.phoebiewang.com/birdpal/">phoebiewang.com/birdpal</a> in Safari and tap Share, then Add to Home Screen.';
-  } else if(isIOS){
-    $("recTip").textContent="The camera will open. Point it anywhere, tap the red button, say the word, tap stop, then tap Use Video. The app keeps only your voice.";
+  if(framed)$("pickRec").hidden=true;
+  function setRecTip(){
+    if(framed)$("recTip").innerHTML=T("recTipFramed");
+    else if(canHold)$("recTip").textContent=T("recTipHold");
+    else if(isIOS)$("recTip").textContent=T("recTipIOS");
+    else $("recTip").textContent=T("recTip");
   }
-  var canHold=!framed&&navigator.mediaDevices&&navigator.mediaDevices.getUserMedia;
-  var SAVED_LINES=["Yay! You saved my words. I'm learning so fast!","Good job, Phoebie! Let's hear it again!","Perfect! That one is saved. Teach me more!"];
+  var canHold=!framed&&navigator.mediaDevices&&navigator.mediaDevices.getUserMedia,recState=null,setBtn=function(){};
   if(canHold){
     $("holdRec").hidden=false;$("pickRec").hidden=true;
-    $("recTip").textContent="Press and hold the button, say the word, then let go.";
-    var hb=$("holdRec"),recState=null;
+    var hb=$("holdRec");
     var setSession=function(t){try{if(navigator.audioSession)navigator.audioSession.type=t;}catch(e){}};
-    var setBtn=function(mode){
+    setBtn=function(mode){
       hb.classList.remove("rec","ok","bad");
-      if(mode==="rec"){hb.classList.add("rec");hb.textContent="Listening... let go to save";}
-      else if(mode==="ok"){hb.classList.add("ok");hb.textContent="Saved!";setTimeout(function(){if(hb.classList.contains("ok")){hb.classList.remove("ok");hb.textContent="Hold to record my voice";}},1800);}
-      else if(mode==="bad"){hb.classList.add("bad");hb.textContent="Try again";setTimeout(function(){hb.classList.remove("bad");hb.textContent="Hold to record my voice";},1800);}
-      else hb.textContent="Hold to record my voice";
+      if(mode==="rec"){hb.classList.add("rec");hb.textContent=T("recListening");}
+      else if(mode==="ok"){hb.classList.add("ok");hb.textContent=T("recSaved");setTimeout(function(){if(hb.classList.contains("ok")){hb.classList.remove("ok");hb.textContent=T("holdRec");}},1800);}
+      else if(mode==="bad"){hb.classList.add("bad");hb.textContent=T("recTry");setTimeout(function(){hb.classList.remove("bad");hb.textContent=T("holdRec");},1800);}
+      else hb.textContent=T("holdRec");
     };
     var showErr=function(t){$("voiceErr").classList.remove("tip");$("voiceErr").textContent=t;$("voiceErr").hidden=false;};
     var finishRec=function(r){
@@ -654,19 +902,19 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
       if(r.stream)r.stream.getTracks().forEach(function(t){t.stop();});
       if(recState===r)recState=null;
       setSession("playback");
-      if(Date.now()-r.start<500||(!r.mr&&!r.len)){setBtn();showErr("Keep holding while you talk, then let go.");return;}
+      if(Date.now()-r.start<500||(!r.mr&&!r.len)){setBtn();showErr(T("keepHolding"));return;}
       if(r.mr){setBtn();saveClip(new Blob(r.blobs,{type:r.mr.mimeType||"audio/mp4"}));return;}
       var all=new Float32Array(r.len),o=0;r.chunks.forEach(function(ch){all.set(ch,o);o+=ch.length;});
       var res=toWav({sampleRate:r.rate,numberOfChannels:1,length:r.len,getChannelData:function(){return all;}});
-      if(res.peak<0.01){setBtn("bad");showErr("That recording is silent. Hold the phone closer and say the word loudly.");return;}
+      if(res.peak<0.01){setBtn("bad");showErr(T("silent"));return;}
       var word=state.current;
       rawPut(word,res.blob).then(function(){
         try{localStorage.removeItem(VKEY+word);}catch(e){}
         renderWords();setBtn("ok");
-        $("voiceState").insertAdjacentHTML("afterbegin",'<span class="ok">'+pick(SAVED_LINES)+' </span>');
-        $("voiceErr").textContent="Can't hear it? Turn up the volume and flip the side switch off silent.";$("voiceErr").hidden=false;$("voiceErr").classList.add("tip");
+        $("voiceState").insertAdjacentHTML("afterbegin",'<span class="ok">'+esc(pick(T("savedLines")))+' </span>');
+        $("voiceErr").textContent=T("cantHear");$("voiceErr").hidden=false;$("voiceErr").classList.add("tip");
         sayOnce(word);
-      }).catch(function(e){setBtn("bad");showErr("The app couldn't save that recording. (code: "+((e&&e.name)||"store")+")");});
+      }).catch(function(e){setBtn("bad");showErr(T("cantSave",{c:(e&&e.name)||"store"}));});
     };
     var stopRec=function(){
       var r=recState;if(!r||r.stopped)return;r.stopped=true;
@@ -679,7 +927,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
       setSession("play-and-record");
       var c=ctx(),r={chunks:[],len:0,stopped:false,start:Date.now()};recState=r;
       try{r.stream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false}});}
-      catch(err){recState=null;setSession("playback");setBtn("bad");showErr("The microphone is off. Allow the microphone for Bird Pal, then try again.");return;}
+      catch(err){recState=null;setSession("playback");setBtn("bad");showErr(T("micOff"));return;}
       if(r.stopped){finishRec(r);return;}
       try{await c.resume();}catch(e2){}
       if(c.createScriptProcessor){
@@ -699,20 +947,20 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
   }
 
   var TIMES=5,playing=false,runId=0;
-  function stopPlay(){playing=false;runId++;hush();$("play").textContent="Tap to help your pet bird";$("status").textContent="";}
+  function stopPlay(){playing=false;runId++;hush();$("play").textContent=T("goPractice");$("status").textContent="";}
   $("play").addEventListener("click",function(){
     if(playing){stopPlay();return;}
-    playing=true;var id=++runId;$("play").textContent="Stop";
+    playing=true;var id=++runId;$("play").textContent=T("stop");
     (async function(){
       for(var i=1;i<=TIMES;i++){
         if(id!==runId)return;
-        $("status").textContent="Saying it "+i+" of "+TIMES;
+        $("status").textContent=T("sayingN",{i:i,n:TIMES});
         var ok=await sayOnce(state.current);
-        if(!ok){$("status").textContent="This device can't talk. Say \""+state.current+"\" out loud 5 times!";playing=false;$("play").textContent="Tap to help your pet bird";return;}
+        if(!ok){$("status").textContent=T("cantTalk",{w:state.current});playing=false;$("play").textContent=T("goPractice");return;}
         await wait(2200);
       }
       if(id!==runId)return;
-      playing=false;$("play").textContent="Tap to help your pet bird";$("status").textContent="Now listen. Did your bird say it?";
+      playing=false;$("play").textContent=T("goPractice");$("status").textContent=T("nowListen");
     })();
   });
 
@@ -721,7 +969,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
   var lesson={running:false,id:0,start:0,end:0,tick:null,lock:null};
   function fmt(ms){var s=Math.max(0,Math.ceil(ms/1000)),h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=s%60;
     return (h?h+":"+String(m).padStart(2,"0"):m)+":"+String(x).padStart(2,"0");}
-  function lenLabel(m){return m<60?m+" min":(m/60)+(m===60?" hour":" hours");}
+  function lenLabel(m){return m<60?T("min",{m:m}):T("hour");}
   function renderLessonSetup(){
     if(lesson.running)return;
     state.lessonWords=state.lessonWords.filter(function(w){return state.words.indexOf(w)>=0;});
@@ -739,7 +987,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
       b.addEventListener("click",function(){state.lessonMin=m;save();renderLessonSetup();});
       seg.appendChild(b);
     });
-    $("startLesson").textContent="Start "+lenLabel(state.lessonMin)+" lesson";
+    $("startLesson").textContent=T("startLen",{len:lenLabel(state.lessonMin)});
     $("screenOff").checked=!!state.screenOff;
   }
   async function wake(){try{if(navigator.wakeLock)lesson.lock=await navigator.wakeLock.request("screen");}catch(e){lesson.lock=null;}}
@@ -754,28 +1002,28 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
   }
   async function talkCycle(id){
     var words=state.lessonWords.slice();
-    setPhase("talk","Talking");$("nowLabel").textContent="Saying now";
+    setPhase("talk",T("talking"));$("nowLabel").textContent=T("sayingNow");
     for(var i=0;i<words.length;i++){
       $("nowWord").textContent=words[i];
       for(var r=1;r<=REPS;r++){
         if(id!==lesson.id)return;
-        $("lessonStatus").textContent="\""+words[i]+"\" "+r+" of "+REPS;
+        $("lessonStatus").textContent=T("repOf",{w:words[i],r:r,n:REPS});
         await sayOnce(words[i]);await wait(2500);
       }
       if(id!==lesson.id)return;
-      $("lessonStatus").textContent="Listening to Nori...";
+      $("lessonStatus").textContent=T("listeningNori");
       await wait(5000);
     }
     if(id!==lesson.id)return;
-    setPhase("","Quiet time");$("nowLabel").textContent="Next word";$("nowWord").textContent=words[0];
-    $("lessonStatus").textContent="Shh, Nori is resting and practicing.";
+    setPhase("",T("quiet"));$("nowLabel").textContent=T("nextWord");$("nowWord").textContent=words[0];
+    $("lessonStatus").textContent=T("resting");
   }
   async function lessonLoop(id){
     while(id===lesson.id&&Date.now()<lesson.end){
       await talkCycle(id);
       var next=Date.now()+QUIET;
       while(id===lesson.id&&Date.now()<next&&Date.now()<lesson.end){
-        $("lessonStatus").textContent="Shh, Nori is resting. Next round in "+Math.max(1,Math.ceil((next-Date.now())/1000))+" s";
+        $("lessonStatus").textContent=T("nextRound",{s:Math.max(1,Math.ceil((next-Date.now())/1000))});
         await wait(1000);
       }
     }
@@ -827,26 +1075,26 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
   }
   $("screenOff").addEventListener("change",function(){state.screenOff=this.checked;save();$("screenOffErr").hidden=true;});
   $("startLesson").addEventListener("click",function(){
-    if(!state.lessonWords.length){$("lessonErr").textContent="Pick at least one word.";$("lessonErr").hidden=false;return;}
+    if(!state.lessonWords.length){$("lessonErr").textContent=T("pickOne");$("lessonErr").hidden=false;return;}
     if(state.screenOff){
       var speed=(state.voiceMode==="mine_hi"||state.voiceMode==="squeaky")?SQUEAK_RATE:1;
       var tr=buildLessonTrack(state.lessonWords,state.lessonMin,speed);
-      if(!tr.blob){$("screenOffErr").textContent="Screen-off lessons use your recordings. Record "+state.lessonWords.join(", ")+" on the practice page first.";$("screenOffErr").hidden=false;return;}
+      if(!tr.blob){$("screenOffErr").textContent=T("screenOffNeed",{w:state.lessonWords.join(T("listSep"))});$("screenOffErr").hidden=false;return;}
       stopTrack();hush();
       lessonUrl=URL.createObjectURL(tr.blob);lessonAudio=new Audio(lessonUrl);lessonAudio.setAttribute("playsinline","");
       try{if(navigator.audioSession)navigator.audioSession.type="playback";}catch(e){}
-      var pr=lessonAudio.play();if(pr&&pr.catch)pr.catch(function(e){$("lessonStatus").textContent="The sound track couldn't start ("+((e&&e.name)||"?")+"). Tap Stop and try again.";});
-      try{if("mediaSession" in navigator&&window.MediaMetadata)navigator.mediaSession.metadata=new MediaMetadata({title:"Morning lesson",artist:"Bird Pal Buddies"});}catch(e){}
+      var pr=lessonAudio.play();if(pr&&pr.catch)pr.catch(function(e){$("lessonStatus").textContent=T("trackFail",{c:(e&&e.name)||"?"});});
+      try{if("mediaSession" in navigator&&window.MediaMetadata)navigator.mediaSession.metadata=new MediaMetadata({title:T("lessonTitle"),artist:"Bird Pal Buddies"});}catch(e){}
       lesson.running=true;lesson.id++;lesson.start=Date.now();lesson.end=lesson.start+state.lessonMin*60000;lesson.track=true;
-      $("lessonSetup").hidden=true;$("lessonRun").hidden=false;$("stopLesson").textContent="Stop lesson";
-      setPhase("talk","Screen-off mode");$("nowLabel").textContent="Words";$("nowWord").textContent=state.lessonWords.filter(function(w){return tr.missing.indexOf(w)<0;}).join(" · ");
-      $("lessonStatus").textContent="You can lock the iPad now. The lesson keeps playing."+(tr.missing.length?" Skipped (no recording): "+tr.missing.join(", ")+".":"");
+      $("lessonSetup").hidden=true;$("lessonRun").hidden=false;$("stopLesson").textContent=T("stopLesson");
+      setPhase("talk",T("screenOffMode"));$("nowLabel").textContent=T("wordsLabel");$("nowWord").textContent=state.lessonWords.filter(function(w){return tr.missing.indexOf(w)<0;}).join(" · ");
+      $("lessonStatus").textContent=T("lockNow")+(tr.missing.length?T("skipped",{w:tr.missing.join(T("listSep"))}):"");
       updateClock();lesson.tick=setInterval(updateClock,1000);
       return;
     }
     lesson.track=false;
     lesson.running=true;lesson.id++;lesson.start=Date.now();lesson.end=lesson.start+state.lessonMin*60000;
-    $("lessonSetup").hidden=true;$("lessonRun").hidden=false;$("stopLesson").textContent="Stop lesson";
+    $("lessonSetup").hidden=true;$("lessonRun").hidden=false;$("stopLesson").textContent=T("stopLesson");
     wake();updateClock();lesson.tick=setInterval(updateClock,1000);
     lessonLoop(lesson.id);
   });
@@ -854,11 +1102,13 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
     lesson.running=false;lesson.id++;clearInterval(lesson.tick);hush();stopTrack();
     try{if(lesson.lock)lesson.lock.release();}catch(e){}lesson.lock=null;
   }
+  function finishTexts(){
+    setPhase("done",T("allDone"));$("nowLabel").textContent=T("greatJob");$("nowWord").textContent=T("lessonDone");
+    $("lessonStatus").textContent=T("seeTomorrow");$("stopLesson").textContent=T("backSetup");
+  }
   function finishLesson(){
     if(!lesson.running)return;stopLesson();
-    setPhase("done","All done!");$("clock").textContent="0:00";$("meter").style.width="100%";
-    $("nowLabel").textContent="Great job";$("nowWord").textContent="Lesson done!";
-    $("lessonStatus").textContent="See you tomorrow morning!";$("stopLesson").textContent="Back to setup";
+    $("clock").textContent="0:00";$("meter").style.width="100%";finishTexts();
   }
   $("stopLesson").addEventListener("click",function(){stopLesson();$("lessonRun").hidden=true;$("lessonSetup").hidden=false;renderLessonSetup();});
 
@@ -887,18 +1137,17 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
     $("danceNori").classList.add("dancing");
   }
   var treatTimer=null;
-  var YES_LINES=["That's my line! High five... wing five?","Did you hear that? I said it! Snack time!","Nailed it. I'm basically a talking genius now."];
-  var TRY_LINES=["Almost! My brain is still loading... try one more?","Hmm, not quite. I'm practicing in my head. Again?","I heard you! My mouth is just being shy today."];
   function pick(a){return a[Math.floor(Math.random()*a.length)];}
+  function esc(x){return String(x).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c];});}
   function startTreat(){
     var box=$("treatBox");box.classList.remove("done");
-    $("treatNum").innerHTML="&#9733;";$("treatText").textContent="Reward Nori now!";
-    $("treatSub").textContent="Say \u201cGood bird!\u201d and give a treat right away.";
+    $("treatNum").innerHTML="&#9733;";$("treatText").textContent=T("rewardNow");
+    $("treatSub").textContent=T("rewardSub");
     $("treatDone").hidden=false;
   }
   $("treatDone").addEventListener("click",function(){
     var box=$("treatBox");box.classList.add("done");$("treatNum").textContent="\u2713";
-    $("treatText").textContent="Great teaching!";$("treatSub").textContent="Nori learns fastest when the treat comes right away.";
+    $("treatText").textContent=T("greatTeaching");$("treatSub").textContent=T("treatFast");
     $("treatDone").hidden=true;
   });
   function stopParty(){clearInterval(treatTimer);cancelAnimationFrame(raf);var n=$("danceNori");if(n)n.classList.remove("dancing");}
@@ -906,9 +1155,9 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
   function celebrate(word,from){
     returnTo=from;
     var t=today();if(state.days.indexOf(t)<0)state.days.push(t);save();renderStreak();
-    $("learned").textContent="Nori tried \u201c"+word+"\u201d! Every try counts.";
-    $("noriLine").textContent=pick(YES_LINES);
-    $("again").textContent=from==="lesson"?"Back to the lesson":from==="teach"?"Teach another word":"Practice again";
+    $("learned").textContent=T("learned",{w:word});
+    $("noriLine").textContent=pick(T("yesLines"));
+    $("again").textContent=T(from==="lesson"?"backLesson":from==="teach"?"teachAnother":"practiceAgain");
     startTreat();
     screens.forEach(function(s){$(s).hidden=(s!=="dance");});window.scrollTo(0,0);
     party();tune();
@@ -928,7 +1177,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
       box.appendChild(b);
     });
     $("teachWord").textContent=state.current;
-    $("teachCount").textContent="You said it "+teach.count+(teach.count===1?" time":" times")+" today";
+    $("teachCount").textContent=T("teachCount",{n:teach.count});
   }
   function stopListen(){clearInterval(teach.timer);$("listenBox").hidden=true;$("iSaid").hidden=false;}
   $("iSaid").addEventListener("click",function(){
@@ -939,38 +1188,64 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
     renderTeach();
     var n=5;$("listenNum").textContent=n;$("listenBox").hidden=false;$("iSaid").hidden=true;
     clearInterval(teach.timer);
-    teach.timer=setInterval(function(){n--;$("listenNum").textContent=n;if(n<=0){stopListen();$("tryLine").textContent="Nori says: "+pick(TRY_LINES);$("tryLine").hidden=false;}},1000);
+    teach.timer=setInterval(function(){n--;$("listenNum").textContent=n;if(n<=0){stopListen();$("tryLine").textContent=T("noriSays")+pick(T("tryLines"));$("tryLine").hidden=false;}},1000);
   });
   $("goodNori").addEventListener("click",function(){stopListen();$("tryLine").hidden=true;celebrate(state.current,"teach");});
   $("goTeach").addEventListener("click",function(){stopListen();renderTeach();show("teach");});
   $("goPractice").addEventListener("click",function(){show("practice");});
   $("goLesson").addEventListener("click",function(){show("lesson");});
 
+  var installMode="";
   /* ---------- real app: install + offline (only on the website, never inside Claude) ---------- */
   if(document.querySelector('link[rel="manifest"]')&&!framed){
     if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){});});}
     var standalone=(window.matchMedia&&matchMedia("(display-mode: standalone)").matches)||navigator.standalone===true;
     if(!standalone){
       if(isIOS){
-        $("installHow").textContent="In Safari, tap the Share button (the square with an arrow), then tap \u201cAdd to Home Screen.\u201d Nori's icon will show up with your other apps.";
+        installMode="ios";$("installHow").textContent=T("installIOS");
         $("installCard").hidden=false;
       }
       var deferred=null;
       window.addEventListener("beforeinstallprompt",function(e){e.preventDefault();deferred=e;
-        $("installHow").textContent="Tap the button to add Bird Pal to this device like a real app.";
+        installMode="other";$("installHow").textContent=T("installOther");
         $("installBtn").hidden=false;$("installCard").hidden=false;});
       $("installBtn").addEventListener("click",function(){if(!deferred)return;deferred.prompt();deferred.userChoice.then(function(){deferred=null;$("installCard").hidden=true;});});
       window.addEventListener("appinstalled",function(){$("installCard").hidden=true;});
     }
   }
 
-  (function(){var sa=(window.matchMedia&&matchMedia("(display-mode: standalone)").matches)||navigator.standalone===true;
-    $("buildTag").textContent="v2.2 \u00b7 "+(framed?"Claude preview":window.BIRDPAL_NATIVE?"iPhone/iPad app":sa?"home-screen app":"browser");})();
+  function setBuildTag(){var sa=(window.matchMedia&&matchMedia("(display-mode: standalone)").matches)||navigator.standalone===true;
+    $("buildTag").textContent="v2.3 \u00b7 "+T(framed?"tagPreview":window.BIRDPAL_NATIVE?"tagNative":sa?"tagHome":"tagBrowser");}
+
+  /* ---------- switching language ---------- */
+  function sameList(a,b){return a.length===b.length&&a.every(function(x){return b.indexOf(x)>=0;});}
+  function applyLang(){
+    document.documentElement.lang=LANG==="zh"?"zh-CN":LANG;
+    document.querySelectorAll("[data-i18n]").forEach(function(el){el.textContent=T(el.getAttribute("data-i18n"));});
+    document.querySelectorAll("[data-i18n-html]").forEach(function(el){el.innerHTML=T(el.getAttribute("data-i18n-html"));});
+    document.querySelectorAll("[data-i18n-ph]").forEach(function(el){el.placeholder=T(el.getAttribute("data-i18n-ph"));});
+    document.querySelectorAll("[data-i18n-aria]").forEach(function(el){el.setAttribute("aria-label",T(el.getAttribute("data-i18n-aria")));});
+    document.querySelectorAll(".langbtn").forEach(function(b){b.setAttribute("aria-pressed",String(b.dataset.lang===LANG));});
+    if(framed)$("previewLine").textContent=pick(T("previewLines"));
+    setRecTip();if(canHold&&!recState)setBtn();
+    if(installMode)$("installHow").textContent=T(installMode==="ios"?"installIOS":"installOther");
+    if(!playing)$("play").textContent=T("goPractice");
+    setBuildTag();renderStreak();renderWords();renderTeach();renderLessonSetup();
+    if(!lesson.running&&!$("lessonRun").hidden&&$("phase").classList.contains("done"))finishTexts();
+    $("addErr").hidden=true;$("voiceErr").hidden=true;$("lessonErr").hidden=true;$("screenOffErr").hidden=true;
+  }
+  function setLang(l){
+    if(l===LANG||LANGS.indexOf(l)<0)return;
+    var oldDefaults=I18N[LANG].words,fresh=sameList(state.words,oldDefaults)&&!state.words.some(hasVoice);
+    LANG=l;state.lang=l;
+    if(fresh){var dw=I18N[l].words;state.words=dw.slice();state.current=dw[0];state.lessonWords=dw.slice(0,2);}
+    save();stopPlay();hush();pickVoice();applyLang();
+  }
+  document.querySelectorAll(".langbtn").forEach(function(b){b.addEventListener("click",function(){setLang(b.dataset.lang);});});
   if(!HAS_WEBAUDIO||!HAS_TTS||!(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia))if(!framed)showSoundBlocked();
-  renderWords();renderStreak();
+  pickVoice();applyLang();
   rawLoad().then(function(){renderWords();});
 })();
 </script>
-
 </body>
 </html>

@@ -1,5 +1,5 @@
 /* Bird Pal Buddies offline support: the app keeps working by the cage even if Wi-Fi drops. */
-const CACHE = "birdpal-v13";
+const CACHE = "birdpal-v14";
 const SHELL = ["./", "index.html", "manifest.webmanifest", "icon.svg", "icon-180.png", "icon-192.png", "icon-512.png"];
 
 self.addEventListener("install", (e) => {

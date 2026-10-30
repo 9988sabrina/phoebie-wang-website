@@ -38,7 +38,7 @@ bridge = (
 )
 src = src.replace("<title>", faces + bridge + "\n<title>", 1)
 # Web-only advice that does not apply inside the app.
-src = re.sub(r"<li>On iPhone, always open Bird Pal[^<]*</li>\s*", "", src)
+src = re.sub(r"<li[^>]*>On iPhone, always open Bird Pal[^<]*</li>\s*", "", src)
 if "fonts.googleapis" in src or '<link rel="manifest"' in src:
     raise SystemExit("web-only tags still present")
 
