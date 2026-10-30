@@ -232,3 +232,5 @@ body[data-page="home"] .footer-grid nav{gap:4px 18px}
 .playband{padding-top:clamp(4px,1vw,12px)}
 @media(max-width:560px){.intro .h-cta{width:100%}.intro .h-cta .h-btn{flex:1 1 100%;justify-content:center}}
 .bp-note a{min-height:44px;display:inline-flex;align-items:center}
+
+.grade.grown{margin-top:6px;color:var(--sun)}
