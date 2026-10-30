@@ -234,11 +234,11 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
 
 <script>
 /* Optional: paste your free-sample link here (e.g. a Gumroad page). When set, the main button points to it. */
-var FREE_SAMPLE_URL = "";
+var FREE_SAMPLE_URL = "downloads/Phoebie-Free-Sample-Page.pdf";
 
 (function(){
   var cta = document.getElementById('cta-sample');
-  if (FREE_SAMPLE_URL) { cta.href = FREE_SAMPLE_URL; cta.textContent = "Get the free sample page"; cta.rel = "noopener"; }
+  if (FREE_SAMPLE_URL) { cta.href = FREE_SAMPLE_URL; cta.textContent = "Get the free sample page"; cta.setAttribute("download", ""); }
 
   var inp = document.getElementById('num'),
       c1 = document.getElementById('c1'), c2 = document.getElementById('c2'), c3 = document.getElementById('c3'),
