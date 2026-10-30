@@ -133,6 +133,16 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
 .langbtn{appearance:none;border:2px solid var(--line);background:#fff;border-radius:999px;min-height:34px;padding:3px 12px;font:800 14px var(--body);color:var(--ink);cursor:pointer}
 .langbtn[aria-pressed="true"]{border-color:var(--sky);background:var(--sky);color:#fff}
 .langbtn:focus-visible{outline:3px solid var(--cherry);outline-offset:3px}
+.hearBtn{align-self:center;display:inline-flex;align-items:center;gap:10px;appearance:none;border:3px solid var(--ink);border-radius:999px;background:var(--sun);color:var(--ink);font-family:var(--display);font-weight:800;font-size:22px;line-height:1;padding:8px 26px 8px 8px;margin:4px 0 6px;box-shadow:0 5px 0 var(--ink);cursor:pointer;transition:transform .08s,box-shadow .08s}
+.hearBtn:active{transform:translateY(4px);box-shadow:0 1px 0 var(--ink)}
+.hearBtn:focus-visible{outline:3px solid var(--cherry);outline-offset:3px}
+.hearBtn .spk{width:44px;height:44px;flex:none;border-radius:50%;background:var(--sky);border:2.5px solid var(--ink);display:flex;align-items:center;justify-content:center}
+.hearBtn.talking .w1{animation:wave .6s ease-in-out infinite alternate}
+.hearBtn.talking .w2{animation:wave .6s ease-in-out .3s infinite alternate}
+.hearBtn.talking{animation:hop .5s ease-in-out infinite alternate}
+@keyframes wave{from{opacity:.2}to{opacity:1}}
+@keyframes hop{from{transform:translateY(0)}to{transform:translateY(-3px)}}
+@media (prefers-reduced-motion:reduce){.hearBtn.talking,.hearBtn.talking .w1,.hearBtn.talking .w2{animation:none}}
 .credit{font-size:12px;color:var(--muted);text-align:center;margin:8px 0 0}
 </style>
 </head>
@@ -238,7 +248,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
       <h3 data-i18n="whichVoice">Which voice says the words?</h3>
       <div class="seg3" id="voiceModes" role="radiogroup" aria-label="Voice" data-i18n-aria="voiceAria"></div>
       <p class="tip" id="voiceModeTip" style="text-align:left;margin:0"></p>
-      <button type="button" class="ghost" id="hearAuto" style="align-self:flex-start" data-i18n="hearIt">Hear it</button>
+      <button type="button" class="hearBtn" id="hearAuto"><span class="spk" aria-hidden="true"><svg viewBox="0 0 24 24" width="24" height="24"><path d="M4 9h4l5-4v14l-5-4H4z" fill="#fff" stroke="#1E2A3A" stroke-width="1.6" stroke-linejoin="round"/><path class="w1" d="M16 9.5q1.6 2.5 0 5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/><path class="w2" d="M18.6 7.5q3 4.5 0 9" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg></span><span data-i18n="hearIt">Hear it</span></button>
     </div>
     <div class="voice">
       <button type="button" class="big blue" id="holdRec" hidden>Hold to record my voice</button>
@@ -344,7 +354,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
     <button class="big blue" id="again">Practice again</button>
   </section>
 
-  <p class="credit"><span data-i18n="credit">Made by Phoebie</span> &middot; <span id="buildTag">v2.3</span></p>
+  <p class="credit"><span data-i18n="credit">Made by Phoebie</span> &middot; <span id="buildTag">v2.3.1</span></p>
 </main>
 
 <script>
@@ -798,7 +808,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
     var tip=T("vmt_"+m.id);if(cur==="mine"&&!hasVoice(state.current))tip=T("noRecTip");
     $("voiceModeTip").textContent=tip;
   }
-  $("hearAuto").addEventListener("click",function(){stopPlay();$("voiceErr").hidden=true;sayOnce(state.current);});
+  $("hearAuto").addEventListener("click",function(){stopPlay();$("voiceErr").hidden=true;var hb2=$("hearAuto");hb2.classList.add("talking");sayOnce(state.current).then(function(){hb2.classList.remove("talking");});});
   function renderDelete(){
     var only=state.words.length<=1;
     $("delWord").hidden=only||!$("delConfirm").hidden;
@@ -1224,7 +1234,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
   }
 
   function setBuildTag(){var sa=(window.matchMedia&&matchMedia("(display-mode: standalone)").matches)||navigator.standalone===true;
-    $("buildTag").textContent="v2.3 \u00b7 "+T(framed?"tagPreview":window.BIRDPAL_NATIVE?"tagNative":sa?"tagHome":"tagBrowser");}
+    $("buildTag").textContent="v2.3.1 \u00b7 "+T(framed?"tagPreview":window.BIRDPAL_NATIVE?"tagNative":sa?"tagHome":"tagBrowser");}
 
   /* ---------- switching language ---------- */
   function sameList(a,b){return a.length===b.length&&a.every(function(x){return b.indexOf(x)>=0;});}
