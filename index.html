@@ -11,6 +11,12 @@
     <meta property="og:description" content="Daily practice, visual lessons and printable pages in English and 中文. Try one today, no sign-up.">
     <meta property="og:url" content="https://www.phoebiewang.com/">
     <meta property="og:type" content="website">
+    <meta property="og:image" content="https://www.phoebiewang.com/assets/og-home.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="The Chinese character 学 in a practice grid next to a cartoon girl detective">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; media-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
     <title>Phoebie's Learning Lab | Free Math &amp; Chinese Practice for Kids</title>
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="styles.css">
@@ -19,7 +25,7 @@
     <!-- ANALYTICS: paste GA4 tag here once SITE_CONFIG.ga4Id is set -->
 </head>
   <body data-page="home">
-    <svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="mascot" viewBox="0 0 236 240">
+    <svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false"><symbol id="mascot" viewBox="0 0 236 240">
   <!-- back hair -->
   <path d="M38 118c-8-52 20-88 72-88s80 36 72 88c-2 22-8 40-14 52H52c-6-12-12-30-14-52z" fill="#2B2D42"/>
   <!-- body: red detective coat -->
@@ -90,10 +96,11 @@
             <div class="ch" aria-hidden="true">学</div>
           </div>
           <svg class="h-mascot" viewBox="0 0 236 240" role="img" aria-label="Illustration of a cartoon girl detective with a magnifying glass"><use href="#mascot"/></svg>
+          <p class="h-cap"><b lang="zh-CN">学</b>xué · to learn</p>
         </div>
       </section>
 
-      <section class="h-section" aria-labelledby="break-title" style="padding-bottom:0">
+      <section class="h-section no-bottom" aria-labelledby="break-title">
         <h2 id="break-title">Need a break? Pop a bubble.</h2>
         <p class="sub">No score, no timer. Every bubble hides a Chinese character.</p>
         <div class="bubble-wrap">
@@ -123,11 +130,11 @@
             <span class="go">Watch the puzzle</span>
           </a>
           <a class="tile t-lesson" href="lesson.html">
-            <div><div class="sums" aria-hidden="true" style="color:#14213D"><span style="border-color:#14213D">×2</span><span style="border-color:#14213D">÷2</span></div><h3>Double and half multiplication</h3><p>Step-by-step visuals with private, in-browser practice and hints.</p></div>
+            <div><div class="eqn" aria-hidden="true">12×5 = 6×10</div><h3>Double and half multiplication</h3><p>Step-by-step visuals with private, in-browser practice and hints.</p></div>
             <span class="go">Start the lesson</span>
           </a>
           <a class="tile t-skill" href="chickens-rabbits.html#cr-skill-title">
-            <div><h3>Make your own math animation</h3><p>The free Skill behind the puzzle: give your AI agent a problem, get a voiced bilingual lesson.</p></div>
+            <div><div class="play" aria-hidden="true">▶</div><h3>Make your own math animation</h3><p>The free Skill behind the puzzle: give your AI agent a problem, get a voiced bilingual lesson.</p></div>
             <span class="go">Get the Skill</span>
           </a>
         </div>
@@ -157,7 +164,7 @@
         </div>
       </section>
 
-      <section class="h-section" aria-labelledby="newsletter-title" style="padding-top:0">
+      <section class="h-section flush-top" aria-labelledby="newsletter-title">
         <div class="h-kit">
           <div><h2 id="newsletter-title">Free AI Tools Starter Kit</h2><p>One page to build your first AI tool stack, plus a weekly note about new tests.</p><!-- EMAIL_EMBED: paste Kit/Beehiiv form here --></div>
           <a class="h-btn ghost" href="newsletter.html">See what's included</a>
