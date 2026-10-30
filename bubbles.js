@@ -14,9 +14,9 @@
     ["水", "shuǐ", "water"], ["火", "huǒ", "fire"], ["月", "yuè", "moon"], ["日", "rì", "sun"],
     ["木", "mù", "tree"], ["口", "kǒu", "mouth"], ["好", "hǎo", "good"], ["学", "xué", "to learn"]
   ];
-  var COLORS = ["#FFD23F", "#9AD9CF", "#BFE3F5", "#FFB3BA", "#D9C8F5"];
+  var COLORS = ["#FFD23F", "#9AD9CF", "#BFE3F5", "#FFB3BA", "#C9D3E8"];
   var SCALE = [523.25, 587.33, 659.25, 783.99, 880.0];
-  var FONT = '"Songti SC","STSong","Noto Serif CJK SC","SimSun",serif';
+  var FONT = '"Kaiti SC","STKaiti","KaiTi","BiauKai","Noto Serif CJK SC",serif';
 
   var w = 0, h = 0, bubbles = [], parts = [], running = false, last = 0, audio = null, soundOn = false, visible = true;
 

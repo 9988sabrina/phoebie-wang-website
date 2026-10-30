@@ -6,7 +6,7 @@ body[data-page="home"] .brand-mark{background:var(--sun);border-radius:6px;trans
 body[data-page="home"] .site-nav a:hover,body[data-page="home"] .site-nav a[aria-current=page]{border-color:var(--coral)}
 
 /* hero */
-.h-hero{width:var(--wrap);margin:0 auto;padding:34px 0 84px;display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(30px,6vw,84px);align-items:center}
+.h-hero{width:var(--wrap);margin:0 auto;padding:34px 0 40px;display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(30px,6vw,84px);align-items:center}
 .h-hero h1{font-size:clamp(2.5rem,6.4vw,4.9rem);line-height:1;max-width:13ch}
 .h-hero .lede{margin:22px 0 0;max-width:46ch;font-size:1.15rem;color:var(--muted)}
 .h-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
@@ -18,12 +18,14 @@ body[data-page="home"] .site-nav a:hover,body[data-page="home"] .site-nav a[aria
 .h-stage{position:relative;width:100%;max-width:420px;margin-left:auto;container-type:inline-size}
 .h-tian{position:relative;aspect-ratio:1;background:#fff;border:4px solid var(--coral);box-shadow:10px 10px 0 var(--sun)}
 .h-tian svg.grid{position:absolute;inset:0;width:100%;height:100%}
-.h-tian .ch{position:absolute;inset:0;display:grid;place-items:center;font-family:"Songti SC","STSong","Noto Serif CJK SC","SimSun",serif;font-weight:900;font-size:68cqw;line-height:1;color:var(--navy);clip-path:inset(0 100% 0 0);animation:h-write 1.4s .3s cubic-bezier(.6,.1,.2,1) forwards}
+.h-tian .ch{position:absolute;inset:0;display:grid;place-items:center;font-family:"Kaiti SC","STKaiti","KaiTi","BiauKai","Noto Serif CJK SC",serif;font-weight:700;font-size:70cqw;line-height:1;color:var(--navy);clip-path:inset(0 100% 0 0);animation:h-write 1.4s .3s cubic-bezier(.6,.1,.2,1) forwards}
 @keyframes h-write{to{clip-path:inset(0 0 0 0)}}
+.h-cap{margin:22px 0 0;font-size:1rem;color:var(--muted);text-align:right}
+.h-cap b{font-family:"Kaiti SC","STKaiti","KaiTi","BiauKai","Noto Serif CJK SC",serif;font-size:1.4rem;color:var(--navy);margin-right:6px}
 .h-mascot{position:absolute;display:block;width:42%;left:-14%;bottom:-6%;filter:drop-shadow(3px 4px 0 rgba(20,33,61,.25));pointer-events:none}
 
 /* bento: today's tools */
-.h-section{width:var(--wrap);margin:0 auto;padding:clamp(56px,8vw,96px) 0}
+.h-section{width:var(--wrap);margin:0 auto;padding:clamp(44px,6vw,80px) 0}
 .h-section>h2{font-size:clamp(1.9rem,4.4vw,3rem);line-height:1.04;max-width:20ch}
 .h-section>.sub{margin:14px 0 0;max-width:52ch;color:var(--muted);font-size:1.08rem}
 .bento{display:grid;grid-template-columns:repeat(6,1fr);gap:16px;margin-top:38px}
@@ -40,13 +42,15 @@ body[data-page="home"] .site-nav a:hover,body[data-page="home"] .site-nav a[aria
 .t-puzzle{grid-column:span 2;background:var(--sun)}
 .t-lesson{grid-column:span 2;background:#fff}
 .t-skill{grid-column:span 2;background:#D9F1EE}
-.cn-big{font-family:"Songti SC","STSong","Noto Serif CJK SC","SimSun",serif;font-weight:900;font-size:3.6rem;line-height:1;color:var(--sun)}
+.eqn{font-size:clamp(1.8rem,3.4vw,2.5rem);font-weight:900;letter-spacing:-.03em;line-height:1;color:var(--navy)}
+.play{width:60px;height:60px;border-radius:50%;background:var(--navy);color:var(--sun);display:grid;place-items:center;padding-left:5px;font-size:1.4rem;box-shadow:3px 3px 0 var(--sun)}
+.cn-big{font-family:"Kaiti SC","STKaiti","KaiTi","BiauKai","Noto Serif CJK SC",serif;font-weight:700;font-size:3.6rem;line-height:1;color:var(--sun)}
 .sums{display:flex;gap:8px;flex-wrap:wrap}
 .sums span{padding:6px 12px;border:2px solid rgba(255,255,255,.85);border-radius:6px;font-weight:800;font-size:1.05rem}
 
 /* bubble game */
-.bubble-wrap{margin-top:30px;max-width:860px}
-.bubble-stage{height:340px;border:2.5px solid var(--navy);border-radius:10px;background:linear-gradient(#DDF2FA,#F3FAFD);box-shadow:6px 6px 0 var(--sun);overflow:hidden;touch-action:manipulation;cursor:pointer}
+.bubble-wrap{margin-top:30px}
+.bubble-stage{height:340px;border:2.5px solid var(--navy);border-radius:10px;background:linear-gradient(#E4F4F1,#FFFFFF);box-shadow:6px 6px 0 var(--sun);overflow:hidden;touch-action:manipulation;cursor:pointer}
 .bubble-stage canvas{display:block;width:100%;height:100%}
 .bubble-bar{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:20px}
 .bubble-word{flex:1 1 220px;min-height:1.6em;margin:0;font-size:1.45rem;font-weight:800;color:var(--navy);letter-spacing:-.01em}
@@ -54,7 +58,7 @@ body[data-page="home"] .site-nav a:hover,body[data-page="home"] .site-nav a[aria
 /* printables band */
 .h-band{background:var(--navy);color:#fff}
 .h-band .inner{width:var(--wrap);margin:0 auto;padding:clamp(56px,8vw,92px) 0;display:grid;grid-template-columns:260px 1fr;gap:clamp(28px,6vw,72px);align-items:center}
-.h-band img{display:block;width:100%;height:auto;border:2.5px solid #fff;background:#fff;box-shadow:8px 8px 0 var(--sun)}
+.h-band img{display:block;width:100%;height:auto;transform:rotate(-2deg);border:2.5px solid #fff;background:#fff;box-shadow:8px 8px 0 var(--sun)}
 .h-band h2{color:#fff;font-size:clamp(1.8rem,4vw,2.8rem);line-height:1.05;max-width:18ch}
 .h-band p{margin:14px 0 0;max-width:50ch;opacity:.9}
 .h-band .h-cta{margin-top:26px}
@@ -78,14 +82,17 @@ body[data-page="home"] .t-practice p,body[data-page="home"] .t-chinese p{color:#
 .h-kit p{margin:6px 0 0;color:var(--muted);max-width:50ch}
 
 @media(max-width:900px){
-  .h-hero{grid-template-columns:1fr;padding-top:18px}
-  .h-stage{margin-left:0;max-width:320px}
   .bento{grid-template-columns:1fr 1fr}
   .t-practice{grid-column:span 2}.t-chinese,.t-puzzle,.t-lesson,.t-skill{grid-column:span 1}
   .t-skill{grid-column:span 2}
   .h-band .inner{grid-template-columns:1fr}
   .h-band img{max-width:230px}
   .tools-row{grid-template-columns:1fr}.tools-row a{border-right:0}
+}
+@media(max-width:720px){
+  .h-hero{grid-template-columns:1fr;padding-top:18px}
+  .h-stage{margin-left:0;max-width:320px}
+  .h-mascot{left:-3%}
 }
 @media(max-width:560px){
   .bubble-stage{height:300px}
@@ -94,7 +101,7 @@ body[data-page="home"] .t-practice p,body[data-page="home"] .t-chinese p{color:#
   .tile{box-shadow:4px 4px 0 var(--navy)}
   .h-mascot{width:44%;left:-6%}
 }
-@media(prefers-reduced-motion:reduce){.h-tian .ch{animation:none;clip-path:none}.tile,.h-btn{transition:none}.tile:hover,.h-btn.primary:hover{transform:none}}
+@media(prefers-reduced-motion:reduce){.h-band img{transform:none}.h-tian .ch{animation:none;clip-path:none}.tile,.h-btn{transition:none}.tile:hover,.h-btn.primary:hover{transform:none}}
 
 /* engineering pass: contrast, target sizes, no inline styles */
 .sprite{position:absolute;width:0;height:0;overflow:hidden}
@@ -109,3 +116,8 @@ body[data-page="home"] .site-nav a{display:inline-flex;align-items:center;min-he
 body[data-page="home"] .footer-grid nav a,body[data-page="home"] .footer-grid .link-button{display:inline-flex;align-items:center;min-height:44px}
 body[data-page="home"] .footer-grid nav{gap:4px 18px}
 @media(max-width:900px){body[data-page="home"] .site-nav a{min-height:48px}}
+
+/* aesthetic pass: rhythm inside tiles, a quiet motif on the big tile */
+.tile .big,.tile .cn-big,.tile .eqn,.tile .play{margin-bottom:12px}
+.t-practice{overflow:hidden}
+.t-practice::after{content:"+ \2212 \00D7 \00F7";position:absolute;right:20px;bottom:-14px;font-size:clamp(4.5rem,9vw,8rem);font-weight:900;letter-spacing:.08em;color:#fff;opacity:.16;pointer-events:none;white-space:nowrap}
