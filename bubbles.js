@@ -6,6 +6,8 @@
   var ctx = canvas.getContext("2d");
   var wordEl = document.getElementById("bubble-word");
   var statusEl = document.getElementById("bubble-status");
+  var pauseBtn = document.getElementById("bubble-pause");
+  var userPaused = false;
   var soundBtn = document.getElementById("bubble-sound");
   var popBtn = document.getElementById("bubble-pop");
   var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -75,7 +77,7 @@
   }
 
   function tick() {
-    if (held || document.hidden || !visible) return;
+    if (held || userPaused || document.hidden || !visible) return;
     show(nextWord(), false);
   }
   function restartAuto() {
@@ -191,6 +193,14 @@
     new IntersectionObserver(function (en) { visible = en[0].isIntersecting; if (visible) start(); }).observe(stage);
   }
 
+  if (pauseBtn) {
+    if (reduce) pauseBtn.hidden = true;
+    pauseBtn.addEventListener("click", function () {
+      userPaused = !userPaused;
+      pauseBtn.setAttribute("aria-pressed", String(userPaused));
+      pauseBtn.textContent = userPaused ? "Play words" : "Pause words";
+    });
+  }
   var wrap = stage.parentNode;
   wrap.addEventListener("mouseenter", function () { held = true; });
   wrap.addEventListener("mouseleave", function () { held = false; });
