@@ -5,6 +5,7 @@
   var canvas = stage.querySelector("canvas");
   var ctx = canvas.getContext("2d");
   var wordEl = document.getElementById("bubble-word");
+  var statusEl = document.getElementById("bubble-status");
   var soundBtn = document.getElementById("bubble-sound");
   var popBtn = document.getElementById("bubble-pop");
   var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -18,6 +19,8 @@
   var SCALE = [523.25, 587.33, 659.25, 783.99, 880.0];
   var FONT = '"Kaiti SC","STKaiti","KaiTi","BiauKai","Noto Serif CJK SC",serif';
 
+  var spot = null, spotUntil = 0, autoTimer = null, held = false, lastIdx = -1;
+  var ROTATE_MS = 10000;
   var w = 0, h = 0, bubbles = [], parts = [], running = false, last = 0, audio = null, soundOn = false, visible = true;
 
   function rnd(a, b) { return a + Math.random() * (b - a); }
@@ -51,6 +54,35 @@
     for (var i = 0; i < n; i++) bubbles.push(make(false));
   }
 
+
+  /* Show one word under the stage. announce=true only for the child's own pops, so screen readers are not interrupted every 10 s. */
+  function show(wd, announce) {
+    wordEl.textContent = "";
+    var zh = document.createElement("span");
+    zh.lang = "zh-CN"; zh.textContent = wd[0];
+    wordEl.appendChild(zh);
+    wordEl.appendChild(document.createTextNode(" " + wd[1] + " \u00B7 " + wd[2]));
+    wordEl.classList.remove("swap"); void wordEl.offsetWidth; wordEl.classList.add("swap");
+    if (announce && statusEl) statusEl.textContent = wd[0] + " " + wd[1] + ", " + wd[2];
+    spot = wd; spotUntil = performance.now() + 3500;
+    draw();
+    setTimeout(draw, 3600); /* repaint once the highlight has expired (also covers reduced-motion, where the loop is idle) */
+  }
+
+  function nextWord() {
+    var i; do { i = Math.floor(Math.random() * WORDS.length); } while (i === lastIdx && WORDS.length > 1);
+    lastIdx = i; return WORDS[i];
+  }
+
+  function tick() {
+    if (held || document.hidden || !visible) return;
+    show(nextWord(), false);
+  }
+  function restartAuto() {
+    clearInterval(autoTimer);
+    autoTimer = setInterval(tick, ROTATE_MS);
+  }
+
   function bx(b) { return b.x + Math.sin(b.t * 0.9 + b.ph) * b.sway; }
 
   function note() {
@@ -77,11 +109,8 @@
         parts.push({ x: x, y: b.y, vx: Math.cos(a) * s, vy: Math.sin(a) * s, life: 0, c: b.c });
       }
     }
-    wordEl.textContent = "";
-    var zh = document.createElement("span");
-    zh.lang = "zh-CN"; zh.textContent = b.wd[0];
-    wordEl.appendChild(zh);
-    wordEl.appendChild(document.createTextNode(" " + b.wd[1] + " · " + b.wd[2]));
+    show(b.wd, true);
+    restartAuto();
     note();
     bubbles[i] = make(!reduce);
     if (!running) frame(performance.now());
@@ -100,6 +129,16 @@
       ctx.beginPath(); ctx.arc(x, y, r * .78, 3.5, 4.5); ctx.lineWidth = 4; ctx.strokeStyle = "rgba(255,255,255,.9)"; ctx.lineCap = "round"; ctx.stroke();
       ctx.fillStyle = "#14213D"; ctx.font = "900 " + Math.round(r * .95) + "px " + FONT;
       ctx.textAlign = "center"; ctx.textBaseline = "middle"; ctx.fillText(b.wd[0], x, y + r * .06);
+    }
+    if (spot && performance.now() < spotUntil) {
+      for (var k = 0; k < bubbles.length; k++) {
+        var sb = bubbles[k];
+        if (sb.wd[0] === spot[0]) {
+          ctx.beginPath(); ctx.arc(bx(sb), sb.y, sb.r + 7, 0, 6.283);
+          ctx.lineWidth = 6; ctx.strokeStyle = "#FFD23F"; ctx.stroke();
+          ctx.lineWidth = 2.5; ctx.strokeStyle = "#14213D"; ctx.beginPath(); ctx.arc(bx(sb), sb.y, sb.r + 11, 0, 6.283); ctx.stroke();
+        }
+      }
     }
     for (var j = 0; j < parts.length; j++) {
       var p = parts[j], f = 1 - p.life / .55;
@@ -152,6 +191,14 @@
     new IntersectionObserver(function (en) { visible = en[0].isIntersecting; if (visible) start(); }).observe(stage);
   }
 
+  var wrap = stage.parentNode;
+  wrap.addEventListener("mouseenter", function () { held = true; });
+  wrap.addEventListener("mouseleave", function () { held = false; });
+  wrap.addEventListener("focusin", function () { held = true; });
+  wrap.addEventListener("focusout", function () { held = false; });
+
   resize(); init(); draw();
+  show(nextWord(), false);
+  if (!reduce) restartAuto();
   if (reduce) { draw(); } else { start(); }
 })();

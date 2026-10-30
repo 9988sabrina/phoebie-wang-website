@@ -160,3 +160,8 @@ body[data-page="home"] .footer-grid nav{gap:4px 18px}
 @media(max-width:900px){.h-say{left:-15%;width:33%;bottom:45%;font-size:.86rem;padding:8px 10px}}
 @media(max-width:720px){.h-hero{min-height:0}.h-stage{max-width:330px}.h-chicken{right:-3%}.h-say{left:0;bottom:calc(100% + 20px);width:58%;font-size:.92rem;padding:9px 13px}.h-say::before,.h-say::after{left:62%}.h-say::after{left:calc(62% + 3px)}}
 @media(prefers-reduced-motion:reduce){.h-say,.h-dumpling,.h-chicken{animation:none;opacity:1}}
+
+/* rotating word */
+.bubble-word.swap{animation:h-word .45s ease-out}
+@keyframes h-word{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.bubble-word.swap{animation:none}}
