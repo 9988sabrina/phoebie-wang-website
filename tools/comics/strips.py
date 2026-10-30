@@ -39,3 +39,44 @@ C=[
 (LM,  bubblechar(192,262,86,"学","huh")+bubble(24,18,337,["Wait... where","did 好 go?"],178,170,size=33)),
 ]
 comic("Case file: Please don't pop",C,'../../assets/comics/strip-dont-pop.svg')
+
+# ---------------- batch 2 ----------------
+def pizza(x,y,r,slices,mood="smug"):
+    cuts=''
+    for i in range(slices):
+        a=math.pi*2*i/slices - math.pi/2
+        cuts+=f'<line x1="0" y1="0" x2="{r*math.cos(a):.1f}" y2="{r*math.sin(a):.1f}" stroke="#14213D" stroke-width="5"/>'
+    if slices==2: cuts='<line x1="0" y1="%d" x2="0" y2="%d" stroke="#14213D" stroke-width="5"/>'%(-r,r)
+    pep=''.join(f'<circle cx="{px}" cy="{py}" r="{r*.1:.0f}" fill="{RED}" stroke="#14213D" stroke-width="3"/>' for px,py in [(-.55*r,-.35*r),(.5*r,-.5*r),(-.4*r,.55*r),(.55*r,.4*r)])
+    mouth={"smug":'<path d="M-16 %d q16 12 32 0" stroke="#14213D" stroke-width="5" fill="none" stroke-linecap="round"/>'%(r*.28),
+           "huff":'<path d="M-16 %d q16 -12 32 0" stroke="#14213D" stroke-width="5" fill="none" stroke-linecap="round"/>'%(r*.34),
+           "hungry":'<ellipse cx="0" cy="%d" rx="12" ry="9" fill="#B5384A" stroke="#14213D" stroke-width="3"/>'%(r*.3)}[mood]
+    return f'''<g transform="translate({x},{y})"><circle r="{r+10}" fill="#E8B04A" stroke="#14213D" stroke-width="6"/><circle r="{r-4}" fill="#FFD27A"/>{pep}{cuts}
+<circle cx="-24" cy="{-r*.08}" r="7" fill="#14213D"/><circle cx="24" cy="{-r*.08}" r="7" fill="#14213D"/>{mouth}</g>'''
+
+# ---- D: pizza fight (1/2 = 2/4)
+D=[
+(YEL, cap(14,12,357,"Who has more pizza?")+pizza(100,222,70,2)+pizza(280,222,70,4)+big(100,348,"1/2",44)+big(280,348,"2/4",44)),
+(SKY, pizza(100,246,72,2,"huff")+pizza(284,246,72,4,"smug")+bubble(14,14,190,["I have a","BIG half!"],100,150,size=29)+bubble(206,14,170,["I have TWO","pieces!"],284,150,size=27)),
+(LP,  det(14,176,.9)+bubble(14,16,357,["Cut the half in two...","and look!"],120,174,size=31)+f'<g transform="translate(298,262)"><circle r="74" fill="#FFD27A" stroke="{NAVY}" stroke-width="6"/><path d="M0 -70A70 70 0 0 1 0 70z" fill="#8FD6C8" opacity=".9"/><path d="M0 -74v148" stroke="{NAVY}" stroke-width="6"/><path d="M-74 0h148" stroke="{NAVY}" stroke-width="5" stroke-dasharray="10 8"/></g>'+big(292,372,"half = 2 quarters",21)),
+(LM,  cap(14,12,357,"1/2 = 2/4")+pizza(100,278,70,2,"hungry")+pizza(280,278,70,4,"hungry")+bubble(34,80,317,["Same size!","...why am I hungry?"],190,176,size=28)),
+]
+comic("Case file: The pizza argument",D,'../../assets/comics/strip-pizza-argument.svg')
+
+# ---- E: double and half (12 x 5 = 6 x 10)
+E=[
+(YEL, cap(14,12,357,"12 × 5 = ?")+dumpling(192,250,1.2,"sweat")+bubble(70,78,250,["Too hard!"],192,170,size=34)),
+(SKY, det(10,150,.95)+bubble(14,16,357,["Halve the 12.","Double the 5."],120,168,size=32)+big(310,200,"6",110,RED)+big(318,330,"10",90,MINT)),
+(LP,  cap(14,12,357,"6 × 10 = 60")+dumpling(192,262,1.15,"smug")+bubble(26,84,333,["That's easy: 60!"],192,170,size=34)),
+(LM,  det(6,196,.85)+dumpling(324,186,.68,"smug")+bubble(14,14,357,["Can I double my lunch too?"],324,140,size=26)+bubble(184,262,196,["Only if you halve","your appetite."],168,330,size=22)),
+]
+comic("Case file: The double-and-half machine",E,'../../assets/comics/strip-double-half.svg')
+
+# ---- F: 女 + 子 = 好
+F=[
+(SKY, bubblechar(100,250,76,"女","huh")+bubblechar(284,250,76,"子","huh")+bubble(10,16,180,["I'm just 女."],100,160,size=26)+bubble(200,16,178,["I'm just 子."],284,160,size=26)),
+(YEL, bubblechar(150,250,76,"女","scared")+bubblechar(240,250,76,"子","scared")+big(192,100,"bump!",60,RED,extra='transform="rotate(-6 192 100)"')),
+(LP,  star(192,200,150,100,n=14,fill=YEL)+bubblechar(192,220,100,"好","happy")),
+(LM,  cap(14,12,357,"女 + 子 = 好 (hǎo)")+bubblechar(192,250,92,"好","happy")+bubble(24,86,337,["Together we're good."],192,170,size=28)),
+]
+comic("Case file: Better together",F,'../../assets/comics/strip-better-together.svg')
