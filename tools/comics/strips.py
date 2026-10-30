@@ -41,19 +41,6 @@ C=[
 comic("Case file: Please don't pop",C,'../../assets/comics/strip-dont-pop.svg')
 
 # ---------------- batch 2 ----------------
-def pizza(x,y,r,slices,mood="smug"):
-    cuts=''
-    for i in range(slices):
-        a=math.pi*2*i/slices - math.pi/2
-        cuts+=f'<line x1="0" y1="0" x2="{r*math.cos(a):.1f}" y2="{r*math.sin(a):.1f}" stroke="#14213D" stroke-width="5"/>'
-    if slices==2: cuts='<line x1="0" y1="%d" x2="0" y2="%d" stroke="#14213D" stroke-width="5"/>'%(-r,r)
-    pep=''.join(f'<circle cx="{px}" cy="{py}" r="{r*.1:.0f}" fill="{RED}" stroke="#14213D" stroke-width="3"/>' for px,py in [(-.55*r,-.35*r),(.5*r,-.5*r),(-.4*r,.55*r),(.55*r,.4*r)])
-    mouth={"smug":'<path d="M-16 %d q16 12 32 0" stroke="#14213D" stroke-width="5" fill="none" stroke-linecap="round"/>'%(r*.28),
-           "huff":'<path d="M-16 %d q16 -12 32 0" stroke="#14213D" stroke-width="5" fill="none" stroke-linecap="round"/>'%(r*.34),
-           "hungry":'<ellipse cx="0" cy="%d" rx="12" ry="9" fill="#B5384A" stroke="#14213D" stroke-width="3"/>'%(r*.3)}[mood]
-    return f'''<g transform="translate({x},{y})"><circle r="{r+10}" fill="#E8B04A" stroke="#14213D" stroke-width="6"/><circle r="{r-4}" fill="#FFD27A"/>{pep}{cuts}
-<circle cx="-24" cy="{-r*.08}" r="7" fill="#14213D"/><circle cx="24" cy="{-r*.08}" r="7" fill="#14213D"/>{mouth}</g>'''
-
 # ---- D: pizza fight (1/2 = 2/4)
 D=[
 (YEL, cap(14,12,357,"Who has more pizza?")+pizza(100,222,70,2)+pizza(280,222,70,4)+big(100,348,"1/2",44)+big(280,348,"2/4",44)),
