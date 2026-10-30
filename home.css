@@ -138,3 +138,25 @@ body[data-page="home"] .footer-grid nav{gap:4px 18px}
   .comics figure{flex:0 0 min(82%,420px);scroll-snap-align:center}
 }
 @media(prefers-reduced-motion:reduce){.comics img{transform:none}}
+
+/* hero redesign: the comic cast joins the practice grid */
+.h-hero{min-height:min(78vh,720px);padding-top:20px;padding-bottom:20px}
+.h-hero h1{font-size:clamp(2.7rem,6.8vw,5.3rem)}
+.h-chips{display:flex;flex-wrap:wrap;gap:10px;margin:20px 0 0;padding:0;list-style:none}
+.h-chips li{padding:8px 14px;border:2px solid var(--navy);border-radius:999px;background:#fff;font-weight:800;font-size:.9rem;color:var(--navy)}
+.h-stage{max-width:440px}
+.h-tian{position:relative;z-index:1}
+.h-pal{position:absolute;display:block;pointer-events:none;filter:drop-shadow(3px 4px 0 rgba(20,33,61,.22))}
+.h-dumpling{width:34%;right:6%;top:-15%;z-index:0}
+.h-chicken{width:27%;right:-2%;bottom:-8%;z-index:2}
+.h-mascot{z-index:2}
+.h-say{position:absolute;z-index:3;left:-31%;bottom:47%;width:43%;margin:0;padding:10px 14px;background:#fff;border:3px solid var(--navy);border-radius:16px;font-weight:800;font-size:.98rem;line-height:1.2;color:var(--navy);box-shadow:4px 4px 0 var(--sun)}
+.h-say::before{content:"";position:absolute;left:32%;bottom:-17px;border:10px solid transparent;border-top:15px solid var(--navy);border-bottom:0}
+.h-say::after{content:"";position:absolute;left:calc(32% + 3px);bottom:-10px;border:7px solid transparent;border-top:11px solid #fff;border-bottom:0}
+.h-cap{text-align:center}
+.h-say,.h-dumpling,.h-chicken{opacity:0;animation:h-pop .5s cubic-bezier(.3,1.5,.5,1) forwards}
+.h-say{animation-delay:1.9s}.h-dumpling{animation-delay:2.1s}.h-chicken{animation-delay:2.3s}
+@keyframes h-pop{from{opacity:0;transform:translateY(14px) scale(.85)}to{opacity:1;transform:none}}
+@media(max-width:900px){.h-say{left:-15%;width:33%;bottom:45%;font-size:.86rem;padding:8px 10px}}
+@media(max-width:720px){.h-hero{min-height:0}.h-stage{max-width:330px}.h-chicken{right:-3%}.h-say{left:0;bottom:calc(100% + 20px);width:58%;font-size:.92rem;padding:9px 13px}.h-say::before,.h-say::after{left:62%}.h-say::after{left:calc(62% + 3px)}}
+@media(prefers-reduced-motion:reduce){.h-say,.h-dumpling,.h-chicken{animation:none;opacity:1}}
