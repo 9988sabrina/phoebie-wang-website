@@ -4,3 +4,4 @@ test-results/
 screenshots/
 private-delivery/
 *practice-pack*.pdf
+__pycache__/
