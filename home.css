@@ -213,3 +213,7 @@ body[data-page="home"] .footer-grid nav{gap:4px 18px}
   .phone-screen{height:560px;min-height:0}
 }
 @media(prefers-reduced-motion:reduce){.bp-start:hover span{transform:none}}
+
+/* order swap: play band is first, hero follows */
+.playband{padding-top:clamp(8px,2vw,24px)}
+.h-hero{margin-top:clamp(8px,3vw,32px)}
