@@ -227,6 +227,9 @@ function migrate(){S.settings=S.settings||{};S.rev=S.rev||[];S.mastered=S.master
   if(false){S._paper1028=1;day("2026-10-28").paper=true;
     const add={"m:decDivW":"10/28 paper #14 (2.65÷5 = 0.53, not 5.3)","m:pow10":"10/28 paper #18 (÷10 moves LEFT: 0.2339)","m:volume":"10/28 paper #30 (unit is cm³, not cm)","e:u4h1":"10/28 paper (Legislative makes laws)"};
     Object.entries(add).forEach(([k,src])=>{const r=S.rev.find(x=>x.k===k);if(r){r.stage=0;r.due="2026-10-29";r.src=src}else S.rev.push({k,stage:0,due:"2026-10-29",src});S.mastered=S.mastered.filter(m=>m.k!==k)})}
+  if(false){S._paper1029b=1;
+    const add={"z:找到":"10/29 加练 (找 written as 我)","z:大树":"10/29 加练 (树 written as 书)","z:中午":"10/29 加练 (午 written as 牛)","z:谢谢":"10/29 加练","z:每天":"10/29 加练","z:手心":"10/29 paper (心 still wrong)","e:u5r3":"10/29 paper (left blank)","e:u5s0":"10/29 paper (mixing probably made a new substance)"};
+    Object.entries(add).forEach(([k,src])=>{const r=S.rev.find(x=>x.k===k);if(r){r.stage=0;r.due="2026-10-30";r.src=src}else S.rev.push({k,stage:0,due:"2026-10-30",src});S.mastered=S.mastered.filter(m=>m.k!==k)})}
   if(false){S._paper1029=1;day("2026-10-29").paper=true;
     const add={"m:fracAsDiv":"10/29 paper #28 (5÷3 = 1 2/3, not 1 3/5)","m:decOrder":"10/29 paper #31 (0.4 < 0.404 < 0.46)","m:scaling":"10/29 paper #32 (5/4 > 1 so the product is greater)"};
     Object.entries(add).forEach(([k,src])=>{const r=S.rev.find(x=>x.k===k);if(r){r.stage=0;r.due="2026-10-30";r.src=src}else S.rev.push({k,stage:0,due:"2026-10-30",src});S.mastered=S.mastered.filter(m=>m.k!==k)})}
