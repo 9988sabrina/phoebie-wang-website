@@ -12,6 +12,11 @@
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://www.phoebiewang.com/printables.html">
 <meta property="og:url" content="https://www.phoebiewang.com/printables.html">
+<meta property="og:image" content="https://www.phoebiewang.com/assets/og-home.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="The Chinese character 学 in a practice grid next to a cartoon girl detective">
+<meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebSite","name":"Phoebie","url":"https://www.phoebiewang.com/printables.html","description":"Printable bilingual worksheets for kids: Chinese character practice and speed math."}
 </script>
@@ -33,10 +38,10 @@ a{color:inherit}
 .wrap{max-width:1040px;margin:0 auto;padding:0 22px}
 
 header{padding:20px 0}
-header .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px}
-.mark{font-weight:800;font-size:1.35rem;letter-spacing:-.02em;text-decoration:none}
-nav{display:flex;gap:20px;font-size:.95rem}
-nav a{text-decoration:none;font-weight:600;border-bottom:2px solid transparent}
+header .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:0 16px}
+.mark{display:inline-flex;align-items:center;min-height:44px;font-weight:800;font-size:1.35rem;letter-spacing:-.02em;text-decoration:none}
+nav{display:flex;flex-wrap:wrap;gap:0 10px;font-size:.95rem}
+nav a{display:inline-flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;padding:0 4px;text-decoration:none;font-weight:600;border-bottom:2px solid transparent}
 nav a:hover{border-color:var(--red)}
 
 /* hero */
@@ -90,7 +95,7 @@ h1{font-size:clamp(2.3rem,6.2vw,4.2rem);line-height:1.02;letter-spacing:-.035em;
 .row h3{font-size:1.35rem;letter-spacing:-.02em;font-weight:800}
 .row p{max-width:52ch;margin-top:4px}
 .row .p{font-size:1.7rem;font-weight:800}
-.row a.go{font-weight:800;text-decoration-thickness:3px;text-decoration-color:var(--red);text-underline-offset:4px}
+.row a.go{display:inline-block;padding:10px 0;font-weight:800;text-decoration-thickness:3px;text-decoration-color:var(--red);text-underline-offset:4px}
 .row .right{text-align:right}
 .shopcta{margin-top:30px}
 .sample{display:grid;grid-template-columns:200px 1fr;gap:28px;align-items:center;margin-top:30px}
@@ -105,7 +110,8 @@ h1{font-size:clamp(2.3rem,6.2vw,4.2rem);line-height:1.02;letter-spacing:-.035em;
 .watch .btn{margin-top:22px}
 
 footer{border-top:3px solid var(--ink);padding:26px 0 40px;font-size:.92rem;background:var(--paper)}
-footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:4px 12px}
+footer a{display:inline-block;padding:13px 4px}
 
 @media (max-width:760px){
   .hero .wrap,.try .wrap,.watch .wrap{grid-template-columns:1fr;gap:34px}

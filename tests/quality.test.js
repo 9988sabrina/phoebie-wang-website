@@ -1,0 +1,10 @@
+const test=require("node:test"),assert=require("node:assert/strict"),fs=require("node:fs"),path=require("node:path");
+const root=path.resolve(__dirname,"..");
+const read=f=>fs.readFileSync(path.join(root,f),"utf8");
+const pages=["index.html","printables.html"];
+test("key pages have one h1, a title, a sensible description and a canonical URL",()=>{for(const f of pages){const h=read(f);assert.equal((h.match(/<h1[\s>]/g)||[]).length,1,f+" h1 count");assert.match(h,/<title>[^<]{10,70}<\/title>/,f+" title");const d=h.match(/<meta name="description" content="([^"]+)"/);assert.ok(d&&d[1].length>=70&&d[1].length<=165,f+" description length");assert.match(h,/<link rel="canonical" href="https:\/\/www\.phoebiewang\.com\//,f+" canonical")}});
+test("every img has alt text and explicit dimensions",()=>{for(const f of pages){for(const m of read(f).matchAll(/<img\b[^>]*>/g)){assert.match(m[0],/\balt="[^"]+"/,f+": "+m[0]);assert.match(m[0],/\bwidth="\d+"/,f+": "+m[0]);assert.match(m[0],/\bheight="\d+"/,f+": "+m[0])}}});
+test("social preview image exists and is declared on key pages",()=>{assert.ok(fs.existsSync(path.join(root,"assets/og-home.jpg")));for(const f of pages){const h=read(f);assert.match(h,/property="og:image" content="https:\/\/www\.phoebiewang\.com\/assets\/og-home\.jpg"/,f);assert.match(h,/name="twitter:card"/,f)}});
+test("homepage has no inline style attributes and ships a strict CSP",()=>{const h=read("index.html");assert.doesNotMatch(h,/\sstyle="/);assert.match(h,/http-equiv="Content-Security-Policy"[^>]*script-src 'self'/)});
+test("external links open safely",()=>{for(const f of pages){for(const m of read(f).matchAll(/<a\b[^>]*href="https?:\/\/[^"]+"[^>]*>/g)){assert.match(m[0],/rel="[^"]*noopener/,f+": "+m[0])}}});
+test("new pages are in the sitemap",()=>{const s=read("sitemap.xml");for(const u of ["https://www.phoebiewang.com/","https://www.phoebiewang.com/printables.html"])assert.ok(s.includes("<loc>"+u+"</loc>"),u)});

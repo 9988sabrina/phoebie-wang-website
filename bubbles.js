@@ -26,6 +26,7 @@
   function resize() {
     var r = stage.getBoundingClientRect();
     var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    if (r.width === w && r.height === h && canvas.width) return; /* mobile bars fire resize constantly; skip no-ops */
     w = r.width; h = r.height;
     canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -76,7 +77,11 @@
         parts.push({ x: x, y: b.y, vx: Math.cos(a) * s, vy: Math.sin(a) * s, life: 0, c: b.c });
       }
     }
-    wordEl.textContent = b.wd[0] + "  " + b.wd[1] + " · " + b.wd[2];
+    wordEl.textContent = "";
+    var zh = document.createElement("span");
+    zh.lang = "zh-CN"; zh.textContent = b.wd[0];
+    wordEl.appendChild(zh);
+    wordEl.appendChild(document.createTextNode(" " + b.wd[1] + " · " + b.wd[2]));
     note();
     bubbles[i] = make(!reduce);
     if (!running) frame(performance.now());
@@ -120,7 +125,8 @@
 
   function start() { if (!running && visible && !document.hidden) { running = true; last = performance.now(); requestAnimationFrame(frame); } }
 
-  canvas.addEventListener("pointerdown", function (e) {
+  /* click (not pointerdown) so a scrolling finger never pops a bubble by accident */
+  canvas.addEventListener("click", function (e) {
     var r = canvas.getBoundingClientRect(), px = e.clientX - r.left, py = e.clientY - r.top;
     for (var i = bubbles.length - 1; i >= 0; i--) {
       var b = bubbles[i], dx = px - bx(b), dy = py - b.y;
@@ -140,7 +146,7 @@
     if (soundOn) note();
   });
 
-  window.addEventListener("resize", function () { resize(); if (reduce) draw(); });
+  window.addEventListener("resize", function () { resize(); draw(); }); /* resizing clears the canvas, so always repaint */
   document.addEventListener("visibilitychange", start);
   if ("IntersectionObserver" in window) {
     new IntersectionObserver(function (en) { visible = en[0].isIntersecting; if (visible) start(); }).observe(stage);
