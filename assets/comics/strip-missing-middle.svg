@@ -1,0 +1,144 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 860" width="800" height="860"><defs><clipPath id="c0"><rect x="10" y="70" width="385" height="385"/></clipPath><clipPath id="c1"><rect x="405" y="70" width="385" height="385"/></clipPath><clipPath id="c2"><rect x="10" y="465" width="385" height="385"/></clipPath><clipPath id="c3"><rect x="405" y="465" width="385" height="385"/></clipPath></defs>
+<rect width="800" height="860" fill="#fff"/><rect x="0" y="0" width="800" height="62" fill="#14213D"/>
+<text x="400" y="42" text-anchor="middle" font-family='"Avenir Next","Trebuchet MS",system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif' font-weight="800" font-size="30" fill="#fff">Case file: The missing middle</text><g clip-path="url(#c0)"><rect x="10" y="70" width="385" height="385" fill="#FFD23F"/><g transform="translate(10,70)"><rect x="14" y="12" width="357" height="48" fill="#FFD23F" stroke="#14213D" stroke-width="4"/><text x="192.5" y="42" text-anchor="middle" font-family='"Avenir Next","Trebuchet MS",system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif' font-weight="800" font-size="26" fill="#14213D">43 × 11 = 4 _ 3</text><g transform="translate(20,140) scale(1.0,1.0) translate(0,0)">
+  <!-- back hair -->
+  <path d="M38 118c-8-52 20-88 72-88s80 36 72 88c-2 22-8 40-14 52H52c-6-12-12-30-14-52z" fill="#2B2D42"/>
+  <!-- body: red detective coat -->
+  <path d="M62 186c0-20 22-30 48-30s48 10 48 30v40H62z" fill="#D62839"/>
+  <path d="M94 158l16 22 16-22z" fill="#fff"/>
+  <circle cx="110" cy="196" r="3.5" fill="#FFD23F"/><circle cx="110" cy="212" r="3.5" fill="#FFD23F"/>
+  <!-- face -->
+  <ellipse cx="110" cy="112" rx="56" ry="50" fill="#FFE3CC"/>
+  <!-- bangs -->
+  <path d="M54 104c6-34 32-52 60-52 30 0 52 20 56 52-14-18-30-26-52-26-24 0-46 8-64 26z" fill="#2B2D42"/>
+  <!-- detective cap -->
+  <path d="M56 78c4-30 28-48 56-48s52 18 54 48c-18-10-36-14-56-14s-38 4-54 14z" fill="#FFD23F"/>
+  <path d="M56 78c16-10 34-14 54-14s40 4 56 14l-2 8c-16-8-34-12-54-12s-38 4-52 12z" fill="#D62839"/>
+  <circle cx="111" cy="30" r="6" fill="#D62839"/>
+  <!-- eyes -->
+  <ellipse cx="86" cy="118" rx="12" ry="15" fill="#fff"/>
+  <ellipse cx="134" cy="118" rx="12" ry="15" fill="#fff"/>
+  <ellipse cx="87" cy="120" rx="9" ry="12" fill="#3A86FF"/>
+  <ellipse cx="133" cy="120" rx="9" ry="12" fill="#3A86FF"/>
+  <ellipse cx="87" cy="121" rx="5" ry="7.5" fill="#14213D"/>
+  <ellipse cx="133" cy="121" rx="5" ry="7.5" fill="#14213D"/>
+  <circle cx="91" cy="114" r="3.6" fill="#fff"/><circle cx="137" cy="114" r="3.6" fill="#fff"/>
+  <circle cx="83" cy="125" r="1.8" fill="#fff"/><circle cx="129" cy="125" r="1.8" fill="#fff"/>
+  <path d="M72 105c5-6 14-8 22-5M122 100c8-3 17-1 22 5" stroke="#2B2D42" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <!-- blush + mouth -->
+  <ellipse cx="72" cy="140" rx="9" ry="5" fill="#FF8FA3" opacity=".55"/>
+  <ellipse cx="148" cy="140" rx="9" ry="5" fill="#FF8FA3" opacity=".55"/>
+  <path d="M100 142q10 10 20 0" stroke="#B5384A" stroke-width="3" fill="#fff" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- side locks -->
+  <path d="M54 110c-6 20-4 40 4 54 6-6 8-20 6-40z" fill="#2B2D42"/>
+  <path d="M166 110c6 20 4 40-4 54-6-6-8-20-6-40z" fill="#2B2D42"/>
+  <!-- arm + magnifying glass -->
+  <path d="M158 184c14 2 24-6 30-20" stroke="#D62839" stroke-width="16" fill="none" stroke-linecap="round"/>
+  <circle cx="190" cy="158" r="8" fill="#FFE3CC"/>
+  <line x1="196" y1="150" x2="206" y2="128" stroke="#7A4E2D" stroke-width="7" stroke-linecap="round"/>
+  <circle cx="190" cy="100" r="30" fill="#D9F1FF" fill-opacity=".75" stroke="#14213D" stroke-width="7"/>
+  <path d="M176 92q6-12 18-12" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <!-- other hand -->
+  <path d="M62 184c-12-2-20-10-22-22" stroke="#D62839" stroke-width="16" fill="none" stroke-linecap="round"/>
+  <circle cx="38" cy="156" r="8" fill="#FFE3CC"/>
+</g><path d="M138 173 L156.5 176 L180 173z" fill="#fff" stroke="#14213D" stroke-width="4" stroke-linejoin="round"/><rect x="120" y="74" width="255" height="102" rx="18" fill="#fff" stroke="#14213D" stroke-width="4"/><path d="M142 174 L176 174" stroke="#fff" stroke-width="6"/><text x="247.5" y="120.0" text-anchor="middle" font-family='"Avenir Next","Trebuchet MS",system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif' font-weight="800" font-size="30" fill="#14213D">Who stole the</text><text x="247.5" y="158.0" text-anchor="middle" font-family='"Avenir Next","Trebuchet MS",system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif' font-weight="800" font-size="30" fill="#14213D">middle digit?!</text></g></g><rect x="10" y="70" width="385" height="385" fill="none" stroke="#14213D" stroke-width="6"/><g clip-path="url(#c1)"><rect x="405" y="70" width="385" height="385" fill="#BFE3F5"/><g transform="translate(405,70)"><g transform="translate(-22,160) scale(0.9,0.9) translate(0,0)">
+  <!-- back hair -->
+  <path d="M38 118c-8-52 20-88 72-88s80 36 72 88c-2 22-8 40-14 52H52c-6-12-12-30-14-52z" fill="#2B2D42"/>
+  <!-- body: red detective coat -->
+  <path d="M62 186c0-20 22-30 48-30s48 10 48 30v40H62z" fill="#D62839"/>
+  <path d="M94 158l16 22 16-22z" fill="#fff"/>
+  <circle cx="110" cy="196" r="3.5" fill="#FFD23F"/><circle cx="110" cy="212" r="3.5" fill="#FFD23F"/>
+  <!-- face -->
+  <ellipse cx="110" cy="112" rx="56" ry="50" fill="#FFE3CC"/>
+  <!-- bangs -->
+  <path d="M54 104c6-34 32-52 60-52 30 0 52 20 56 52-14-18-30-26-52-26-24 0-46 8-64 26z" fill="#2B2D42"/>
+  <!-- detective cap -->
+  <path d="M56 78c4-30 28-48 56-48s52 18 54 48c-18-10-36-14-56-14s-38 4-54 14z" fill="#FFD23F"/>
+  <path d="M56 78c16-10 34-14 54-14s40 4 56 14l-2 8c-16-8-34-12-54-12s-38 4-52 12z" fill="#D62839"/>
+  <circle cx="111" cy="30" r="6" fill="#D62839"/>
+  <!-- eyes -->
+  <ellipse cx="86" cy="118" rx="12" ry="15" fill="#fff"/>
+  <ellipse cx="134" cy="118" rx="12" ry="15" fill="#fff"/>
+  <ellipse cx="87" cy="120" rx="9" ry="12" fill="#3A86FF"/>
+  <ellipse cx="133" cy="120" rx="9" ry="12" fill="#3A86FF"/>
+  <ellipse cx="87" cy="121" rx="5" ry="7.5" fill="#14213D"/>
+  <ellipse cx="133" cy="121" rx="5" ry="7.5" fill="#14213D"/>
+  <circle cx="91" cy="114" r="3.6" fill="#fff"/><circle cx="137" cy="114" r="3.6" fill="#fff"/>
+  <circle cx="83" cy="125" r="1.8" fill="#fff"/><circle cx="129" cy="125" r="1.8" fill="#fff"/>
+  <path d="M72 105c5-6 14-8 22-5M122 100c8-3 17-1 22 5" stroke="#2B2D42" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <!-- blush + mouth -->
+  <ellipse cx="72" cy="140" rx="9" ry="5" fill="#FF8FA3" opacity=".55"/>
+  <ellipse cx="148" cy="140" rx="9" ry="5" fill="#FF8FA3" opacity=".55"/>
+  <path d="M100 142q10 10 20 0" stroke="#B5384A" stroke-width="3" fill="#fff" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- side locks -->
+  <path d="M54 110c-6 20-4 40 4 54 6-6 8-20 6-40z" fill="#2B2D42"/>
+  <path d="M166 110c6 20 4 40-4 54-6-6-8-20-6-40z" fill="#2B2D42"/>
+  <!-- arm + magnifying glass -->
+  <path d="M158 184c14 2 24-6 30-20" stroke="#D62839" stroke-width="16" fill="none" stroke-linecap="round"/>
+  <circle cx="190" cy="158" r="8" fill="#FFE3CC"/>
+  <line x1="196" y1="150" x2="206" y2="128" stroke="#7A4E2D" stroke-width="7" stroke-linecap="round"/>
+  <circle cx="190" cy="100" r="30" fill="#D9F1FF" fill-opacity=".75" stroke="#14213D" stroke-width="7"/>
+  <path d="M176 92q6-12 18-12" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <!-- other hand -->
+  <path d="M62 184c-12-2-20-10-22-22" stroke="#D62839" stroke-width="16" fill="none" stroke-linecap="round"/>
+  <circle cx="38" cy="156" r="8" fill="#FFE3CC"/>
+<ellipse cx="110" cy="146" rx="13" ry="14" fill="#B5384A" stroke="#14213D" stroke-width="3"/><ellipse cx="86" cy="118" rx="14" ry="17" fill="#fff" stroke="#14213D" stroke-width="3"/><ellipse cx="134" cy="118" rx="14" ry="17" fill="#fff" stroke="#14213D" stroke-width="3"/><circle cx="86" cy="119" r="4" fill="#14213D"/><circle cx="134" cy="119" r="4" fill="#14213D"/></g><text x="338" y="232" text-anchor="middle" font-family='"Avenir Next","Trebuchet MS",system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif' font-weight="900" font-size="120" fill="#D62839" transform="rotate(12 338 232)">7</text><g transform="translate(272,262) scale(1.0)">
+<ellipse cx="0" cy="62" rx="76" ry="14" fill="#14213D" opacity=".15"/>
+<path d="M-78 52c-12-62 28-112 78-112s90 50 78 112c-30 16-126 16-156 0z" fill="#fff" stroke="#14213D" stroke-width="6" stroke-linejoin="round"/>
+<path d="M-40 -42q10-18 20-2M-10 -52q10-16 20 0M20 -44q10-16 22 2" stroke="#14213D" stroke-width="5" fill="none" stroke-linecap="round"/>
+<circle cx="-30" cy="-6" r="7" fill="#14213D"/><circle cx="30" cy="-6" r="7" fill="#14213D"/>
+<ellipse cx="-50" cy="12" rx="12" ry="7" fill="#FFB3BA"/><ellipse cx="50" cy="12" rx="12" ry="7" fill="#FFB3BA"/>
+<path d="M-18 8q18 12 36 0" stroke="#14213D" stroke-width="5" fill="none" stroke-linecap="round"/></g><path d="M88 77 L110.0 132 L130 77z" fill="#fff" stroke="#14213D" stroke-width="4" stroke-linejoin="round"/><rect x="14" y="16" width="230" height="64" rx="18" fill="#fff" stroke="#14213D" stroke-width="4"/><path d="M92 78 L126 78" stroke="#fff" stroke-width="6"/><text x="129.0" y="62.0" text-anchor="middle" font-family='"Avenir Next","Trebuchet MS",system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif' font-weight="800" font-size="30" fill="#14213D">You! Dumpling!</text><path d="M280 145 L297.8 196 L322 145z" fill="#fff" stroke="#14213D" stroke-width="4" stroke-linejoin="round"/><rect x="262" y="84" width="112" height="64" rx="18" fill="#fff" stroke="#14213D" stroke-width="4"/><path d="M284 146 L318 146" stroke="#fff" stroke-width="6"/><text x="318.0" y="130.0" text-anchor="middle" font-family='"Avenir Next","Trebuchet MS",system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif' font-weight="800" font-size="30" fill="#14213D">...No.</text></g></g><rect x="405" y="70" width="385" height="385" fill="none" stroke="#14213D" stroke-width="6"/><g clip-path="url(#c2)"><rect x="10" y="465" width="385" height="385" fill="#FFE3E6"/><g transform="translate(10,465)"><g transform="translate(192,236) scale(1.25)">
+<ellipse cx="0" cy="62" rx="76" ry="14" fill="#14213D" opacity=".15"/>
+<path d="M-78 52c-12-62 28-112 78-112s90 50 78 112c-30 16-126 16-156 0z" fill="#fff" stroke="#14213D" stroke-width="6" stroke-linejoin="round"/>
+<path d="M-40 -42q10-18 20-2M-10 -52q10-16 20 0M20 -44q10-16 22 2" stroke="#14213D" stroke-width="5" fill="none" stroke-linecap="round"/>
+<circle cx="-30" cy="-6" r="7" fill="#14213D"/><circle cx="30" cy="-6" r="7" fill="#14213D"/>
+<ellipse cx="-50" cy="12" rx="12" ry="7" fill="#FFB3BA"/><ellipse cx="50" cy="12" rx="12" ry="7" fill="#FFB3BA"/>
+<ellipse cx="0" cy="12" rx="9" ry="6" fill="#14213D"/><path d="M52 -20q9 16 0 24q-9-8 0-24z" fill="#7FD1F5" stroke="#14213D" stroke-width="3"/></g><path d="M170 117 L192.0 130 L212 117z" fill="#fff" stroke="#14213D" stroke-width="4" stroke-linejoin="round"/><rect x="24" y="14" width="337" height="106" rx="18" fill="#fff" stroke="#14213D" stroke-width="4"/><path d="M174 118 L208 118" stroke="#fff" stroke-width="6"/><text x="192.5" y="61.6" text-anchor="middle" font-family='"Avenir Next","Trebuchet MS",system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif' font-weight="800" font-size="32" fill="#14213D">I was just keeping</text><text x="192.5" y="101.6" text-anchor="middle" font-family='"Avenir Next","Trebuchet MS",system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif' font-weight="800" font-size="32" fill="#14213D">it warm!</text><polygon points="192.0,256.0 205.5,279.8 229.0,265.9 228.8,293.2 256.1,293.0 242.2,316.5 266.0,330.0 242.2,343.5 256.1,367.0 228.8,366.8 229.0,394.1 205.5,380.2 192.0,404.0 178.5,380.2 155.0,394.1 155.2,366.8 127.9,367.0 141.8,343.5 118.0,330.0 141.8,316.5 127.9,293.0 155.2,293.2 155.0,265.9 178.5,279.8" fill="#FFD23F" stroke="#14213D" stroke-width="6" stroke-linejoin="round"/><text x="192" y="368" text-anchor="middle" font-family='"Avenir Next","Trebuchet MS",system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif' font-weight="900" font-size="116" fill="#D62839" stroke="#14213D" stroke-width="6" paint-order="stroke">7</text></g></g><rect x="10" y="465" width="385" height="385" fill="none" stroke="#14213D" stroke-width="6"/><g clip-path="url(#c3)"><rect x="405" y="465" width="385" height="385" fill="#D9F1EE"/><g transform="translate(405,465)"><rect x="14" y="12" width="357" height="48" fill="#FFD23F" stroke="#14213D" stroke-width="4"/><text x="192.5" y="42" text-anchor="middle" font-family='"Avenir Next","Trebuchet MS",system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif' font-weight="800" font-size="26" fill="#14213D">4 + 3 = 7</text><text x="192" y="160" text-anchor="middle" font-family='"Avenir Next","Trebuchet MS",system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif' font-weight="900" font-size="100" fill="#14213D" >4 7 3</text><g transform="translate(6,182) scale(0.72,0.72) translate(0,0)">
+  <!-- back hair -->
+  <path d="M38 118c-8-52 20-88 72-88s80 36 72 88c-2 22-8 40-14 52H52c-6-12-12-30-14-52z" fill="#2B2D42"/>
+  <!-- body: red detective coat -->
+  <path d="M62 186c0-20 22-30 48-30s48 10 48 30v40H62z" fill="#D62839"/>
+  <path d="M94 158l16 22 16-22z" fill="#fff"/>
+  <circle cx="110" cy="196" r="3.5" fill="#FFD23F"/><circle cx="110" cy="212" r="3.5" fill="#FFD23F"/>
+  <!-- face -->
+  <ellipse cx="110" cy="112" rx="56" ry="50" fill="#FFE3CC"/>
+  <!-- bangs -->
+  <path d="M54 104c6-34 32-52 60-52 30 0 52 20 56 52-14-18-30-26-52-26-24 0-46 8-64 26z" fill="#2B2D42"/>
+  <!-- detective cap -->
+  <path d="M56 78c4-30 28-48 56-48s52 18 54 48c-18-10-36-14-56-14s-38 4-54 14z" fill="#FFD23F"/>
+  <path d="M56 78c16-10 34-14 54-14s40 4 56 14l-2 8c-16-8-34-12-54-12s-38 4-52 12z" fill="#D62839"/>
+  <circle cx="111" cy="30" r="6" fill="#D62839"/>
+  <!-- eyes -->
+  <ellipse cx="86" cy="118" rx="12" ry="15" fill="#fff"/>
+  <ellipse cx="134" cy="118" rx="12" ry="15" fill="#fff"/>
+  <ellipse cx="87" cy="120" rx="9" ry="12" fill="#3A86FF"/>
+  <ellipse cx="133" cy="120" rx="9" ry="12" fill="#3A86FF"/>
+  <ellipse cx="87" cy="121" rx="5" ry="7.5" fill="#14213D"/>
+  <ellipse cx="133" cy="121" rx="5" ry="7.5" fill="#14213D"/>
+  <circle cx="91" cy="114" r="3.6" fill="#fff"/><circle cx="137" cy="114" r="3.6" fill="#fff"/>
+  <circle cx="83" cy="125" r="1.8" fill="#fff"/><circle cx="129" cy="125" r="1.8" fill="#fff"/>
+  <path d="M72 105c5-6 14-8 22-5M122 100c8-3 17-1 22 5" stroke="#2B2D42" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <!-- blush + mouth -->
+  <ellipse cx="72" cy="140" rx="9" ry="5" fill="#FF8FA3" opacity=".55"/>
+  <ellipse cx="148" cy="140" rx="9" ry="5" fill="#FF8FA3" opacity=".55"/>
+  <path d="M100 142q10 10 20 0" stroke="#B5384A" stroke-width="3" fill="#fff" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- side locks -->
+  <path d="M54 110c-6 20-4 40 4 54 6-6 8-20 6-40z" fill="#2B2D42"/>
+  <path d="M166 110c6 20 4 40-4 54-6-6-8-20-6-40z" fill="#2B2D42"/>
+  <!-- arm + magnifying glass -->
+  <path d="M158 184c14 2 24-6 30-20" stroke="#D62839" stroke-width="16" fill="none" stroke-linecap="round"/>
+  <circle cx="190" cy="158" r="8" fill="#FFE3CC"/>
+  <line x1="196" y1="150" x2="206" y2="128" stroke="#7A4E2D" stroke-width="7" stroke-linecap="round"/>
+  <circle cx="190" cy="100" r="30" fill="#D9F1FF" fill-opacity=".75" stroke="#14213D" stroke-width="7"/>
+  <path d="M176 92q6-12 18-12" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <!-- other hand -->
+  <path d="M62 184c-12-2-20-10-22-22" stroke="#D62839" stroke-width="16" fill="none" stroke-linecap="round"/>
+  <circle cx="38" cy="156" r="8" fill="#FFE3CC"/>
+</g><path d="M170 241 L172.4 262 L212 241z" fill="#fff" stroke="#14213D" stroke-width="4" stroke-linejoin="round"/><rect x="152" y="178" width="222" height="66" rx="18" fill="#fff" stroke="#14213D" stroke-width="4"/><path d="M174 242 L208 242" stroke="#fff" stroke-width="6"/><text x="263.0" y="225.6" text-anchor="middle" font-family='"Avenir Next","Trebuchet MS",system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif' font-weight="800" font-size="32" fill="#14213D">Case closed!</text><g transform="translate(334,360) scale(0.4)">
+<ellipse cx="0" cy="62" rx="76" ry="14" fill="#14213D" opacity=".15"/>
+<path d="M-78 52c-12-62 28-112 78-112s90 50 78 112c-30 16-126 16-156 0z" fill="#fff" stroke="#14213D" stroke-width="6" stroke-linejoin="round"/>
+<path d="M-40 -42q10-18 20-2M-10 -52q10-16 20 0M20 -44q10-16 22 2" stroke="#14213D" stroke-width="5" fill="none" stroke-linecap="round"/>
+<circle cx="-30" cy="-6" r="7" fill="#14213D"/><circle cx="30" cy="-6" r="7" fill="#14213D"/>
+<ellipse cx="-50" cy="12" rx="12" ry="7" fill="#FFB3BA"/><ellipse cx="50" cy="12" rx="12" ry="7" fill="#FFB3BA"/>
+<path d="M-14 12h28" stroke="#14213D" stroke-width="5" stroke-linecap="round"/></g><path d="M300 323 L322.0 338 L342 323z" fill="#fff" stroke="#14213D" stroke-width="4" stroke-linejoin="round"/><rect x="232" y="268" width="140" height="58" rx="18" fill="#fff" stroke="#14213D" stroke-width="4"/><path d="M304 324 L338 324" stroke="#fff" stroke-width="6"/><text x="302.0" y="309.2" text-anchor="middle" font-family='"Avenir Next","Trebuchet MS",system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif' font-weight="800" font-size="24" fill="#14213D">Can I go?</text></g></g><rect x="405" y="465" width="385" height="385" fill="none" stroke="#14213D" stroke-width="6"/></svg>
