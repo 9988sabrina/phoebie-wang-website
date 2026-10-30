@@ -123,14 +123,18 @@ body[data-page="home"] .footer-grid nav{gap:4px 18px}
 .t-practice::after{content:"+ \2212 \00D7 \00F7";position:absolute;right:20px;bottom:-14px;font-size:clamp(4.5rem,9vw,8rem);font-weight:900;letter-spacing:.08em;color:#fff;opacity:.16;pointer-events:none;white-space:nowrap}
 
 /* comics */
-.comics{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:36px}
+.comics{display:grid;grid-template-columns:repeat(3,1fr);gap:34px 28px;margin-top:36px}
+.comics:focus-visible{outline-offset:8px}
 .comics figure{margin:0}
 .comics img{display:block;width:100%;height:auto;border:2.5px solid var(--navy);background:#fff;box-shadow:6px 6px 0 var(--sun)}
 .comics figure:nth-child(1) img{transform:rotate(-1deg)}
 .comics figure:nth-child(2) img{transform:rotate(.8deg)}
-.comics figure:nth-child(3) img{transform:rotate(-.6deg)}
+.comics figure:nth-child(3n) img{transform:rotate(-.6deg)}
 .comics figcaption{margin-top:18px;font-size:.98rem;color:var(--muted)}
 .comics figcaption strong{color:var(--navy)}
 .comics figcaption a{font-weight:800;color:var(--navy);text-underline-offset:4px;text-decoration-thickness:2px;display:inline-block;padding:10px 0}
-@media(max-width:900px){.comics{grid-template-columns:1fr;max-width:520px}}
+@media(max-width:900px){
+  .comics{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;padding:6px 6px 18px;margin-inline:-6px;-webkit-overflow-scrolling:touch}
+  .comics figure{flex:0 0 min(82%,420px);scroll-snap-align:center}
+}
 @media(prefers-reduced-motion:reduce){.comics img{transform:none}}
