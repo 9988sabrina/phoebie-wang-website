@@ -20,7 +20,7 @@
     <title>Phoebie's Learning Lab | Free Math &amp; Chinese Practice for Kids</title>
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="home.css?v=20261030f">
+    <link rel="stylesheet" href="home.css?v=20261030g">
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Phoebie Wang","url":"https://www.phoebiewang.com/","description":"Free daily math and Chinese practice, visual lessons, printable worksheets and AI tool tests."}</script>
     <!-- ANALYTICS: paste GA4 tag here once SITE_CONFIG.ga4Id is set -->
 </head>
@@ -88,15 +88,20 @@
     <header class="site-header">
       <a class="brand" href="index.html" aria-label="Phoebie's Learning Lab home"><span class="brand-mark" aria-hidden="true">P</span><span>Phoebie's Learning Lab<small>Learn it. Try it. Explain it.</small></span></a>
       <button class="menu-button" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
-      <nav id="site-nav" class="site-nav" aria-label="Main navigation">
-        <a href="tools.html">AI Tools</a>
-        <a href="reviews/index.html">Reviews</a>
-        <a href="best-ai-tools.html">Best Picks</a>
-        <a href="lesson.html">Learning Lab</a>
-        <a href="about.html">About</a>
-      </nav>
+      <nav id="site-nav" class="site-nav" aria-label="Main navigation"><a href="practice/">Practice</a><a href="lesson.html">Learning Lab</a><a href="printables.html">Printables</a><a href="tools.html">AI Tools</a><a href="reviews/index.html">Reviews</a><a href="best-ai-tools.html">Best Picks</a><a href="about.html">About</a></nav>
     </header>
     <main id="main">
+      <section class="intro" aria-labelledby="home-title">
+        <div class="intro-text">
+          <h1 id="home-title">Learn it. Try it. Explain it.</h1>
+          <p class="intro-lede">Free math and Chinese practice for kids ages 4 to 11, in English and <span lang="zh-CN" class="zh">中文</span>. Made by a family, for families.</p>
+          <ul class="h-chips" aria-label="Good to know"><li>Free</li><li>No sign-up</li><li>Stays in your browser</li></ul>
+        </div>
+        <div class="h-cta">
+          <a class="h-btn primary" href="practice/">Start today's practice</a>
+          <a class="h-btn ghost" href="downloads/Phoebie-Free-Sample-Page.pdf" download>Free sample page</a>
+        </div>
+      </section>
       <div class="playband">
         <aside class="play-app" aria-labelledby="bp-title">
           <div class="phone">
@@ -120,6 +125,7 @@
             <p id="bubble-word" class="bubble-word">Tap a bubble.</p>
             <p id="bubble-status" class="sr-only" role="status" aria-live="polite"></p>
             <button id="bubble-pop" class="h-btn ghost" type="button">Pop one</button>
+            <button id="bubble-pause" class="h-btn ghost" type="button" aria-pressed="false">Pause words</button>
             <button id="bubble-sound" class="h-btn ghost" type="button" aria-pressed="false">Sound: off</button>
           </div>
         </div>
@@ -145,15 +151,14 @@
         </div>
       </div>
 
-      <section class="h-hero" aria-labelledby="home-title">
+      <section class="h-hero" aria-labelledby="crew-title">
         <div>
-          <h1 id="home-title">Learn it. Try it. Explain it.</h1>
-          <p class="lede">Free daily practice, visual math lessons and printable pages in English and 中文, made for curious kids and the grown-ups beside them.</p>
+          <h2 id="crew-title">Say hi to the Learning Lab crew.</h2>
+          <p class="lede">A detective, a dumpling and a very sleepy chicken explain the tricky bits, one silly case at a time. Read a comic, then try the real thing.</p>
           <div class="h-cta">
-            <a class="h-btn primary" href="practice/">Start today's practice</a>
-            <a class="h-btn ghost" href="downloads/Phoebie-Free-Sample-Page.pdf" download>Free sample page</a>
+            <a class="h-btn primary" href="#comics-title">Read the case files</a>
+            <a class="h-btn ghost" href="#try-title">Pick an activity</a>
           </div>
-          <ul class="h-chips" aria-label="Good to know"><li>Free</li><li>No sign-up</li><li>Stays in your browser</li></ul>
         </div>
         <div class="h-stage">
           <svg class="h-pal h-dumpling" viewBox="0 0 172 150" aria-hidden="true" focusable="false"><use href="#dumpling"/></svg>
@@ -214,11 +219,11 @@
             <span class="go">Start Day 1</span>
           </a>
           <a class="tile t-puzzle" href="chickens-rabbits.html">
-            <div><div class="big" aria-hidden="true">10 · 28</div><h3>Chickens and rabbits</h3><p>10 heads, 28 legs. Watch two kids solve it, then try the challenge.</p></div>
+            <div><div class="big" aria-hidden="true">10 · 28</div><h3>Chickens and rabbits</h3><span class="grade">Grades 4 to 6</span><p>10 heads, 28 legs. Watch two kids solve it, then try the challenge.</p></div>
             <span class="go">Watch the puzzle</span>
           </a>
           <a class="tile t-lesson" href="lesson.html">
-            <div><div class="eqn" aria-hidden="true">12×5 = 6×10</div><h3>Double and half multiplication</h3><p>Step-by-step visuals with private, in-browser practice and hints.</p></div>
+            <div><div class="eqn" aria-hidden="true">12×5 = 6×10</div><h3>Double and half multiplication</h3><span class="grade">Grades 4 to 6</span><p>Step-by-step visuals with private, in-browser practice and hints.</p></div>
             <span class="go">Start the lesson</span>
           </a>
           <a class="tile t-skill" href="chickens-rabbits.html#cr-skill-title">
@@ -233,10 +238,11 @@
           <a href="downloads/Phoebie-Free-Sample-Page.pdf" download><img src="downloads/sample-preview.jpg" width="320" height="414" loading="lazy" alt="Free sample page: multiply-by-11 practice and a tracing grid for the character 学"></a>
           <div>
             <h2 id="print-title">Print a page. Sit down for ten minutes.</h2>
-            <p>Chinese character tracing and bilingual mental-math worksheets for ages 4 to 11. Download one page free, then pick full packs for $1.99 on Etsy.</p>
+            <p>Chinese character tracing and bilingual mental-math worksheets for ages 4 to 11. Download one page free (a 1-page PDF, no email needed). Like it? Full packs are $1.99 each on Etsy, instant download.</p>
             <div class="h-cta">
               <a class="h-btn primary" href="downloads/Phoebie-Free-Sample-Page.pdf" download>Download the free page</a>
-              <a class="h-btn ghost" href="printables.html">See the printables</a>
+              <a class="h-btn ghost" href="https://www.etsy.com/shop/PhoebieCreates" rel="noopener">Full packs: $1.99 on Etsy</a>
+              <a class="h-textlink" href="printables.html">See the printables</a>
             </div>
           </div>
         </div>
@@ -260,6 +266,6 @@
       </section>
     </main>
     <footer class="site-footer"><div class="wrap footer-grid"><div><strong>Phoebie's Learning Lab</strong><span>Learn it. Try it. Explain it.</span></div><nav aria-label="Footer"><a href="disclosure.html">Affiliate Disclosure</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="refunds.html">Digital Product &amp; Refunds</a><button class="link-button" data-clear-progress type="button">Clear local progress</button></nav></div><p class="legal-note">Parent-managed educational project. Legal and business details are draft pending parent review.</p></footer>
-    <script src="content-config.js"></script><script src="common.js"></script><script src="bubbles.js?v=20261030b"></script><script src="birdpal-embed.js?v=20261030e"></script><script src="jokes.js?v=20261030c"></script><script src="joke-corner.js?v=20261030c"></script>
+    <script src="content-config.js"></script><script src="common.js"></script><script src="bubbles.js?v=20261030g"></script><script src="birdpal-embed.js?v=20261030e"></script><script src="jokes.js?v=20261030c"></script><script src="joke-corner.js?v=20261030c"></script>
   </body>
 </html>
