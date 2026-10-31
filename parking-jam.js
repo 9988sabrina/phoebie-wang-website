@@ -48,10 +48,12 @@
       skip: "Skip this level", skipped: "Skipped. The next level is open.",
       mapTitle: "Level map", mapSum: (c, st) => c + "/" + MAX_LEVEL + " levels · " + st + " stars",
       bonusQ: (n) => "Bonus! The driver asks: " + n + " × 11 = ?",
+      bonusQdh: (a, b) => "Bonus! The driver asks: " + a + " × " + b + " = ?",
+      trickDh: (q) => "Double and half: halve " + q.a + " → " + q.half + ", double " + q.b + " → " + q.dbl + ". Now " + q.half + " × " + q.dbl + " = " + q.answer + ".",
       bonusRight: (a) => "Yes! " + a + ". +1 math star ★",
       bonusWrong: (a) => "Not quite. It is " + a + ". Here is the trick:",
       trick: (q) => trickText(q, "en"),
-      bonusSkip: "Skip the question", mathOn: "×11 questions on", mathOff: "×11 questions off", mathStars: (n) => n + " math " + (n === 1 ? "star" : "stars"),
+      bonusSkip: "Skip the question", mathOn: "Math questions on", mathOff: "Math questions off", mathStars: (n) => n + " math " + (n === 1 ? "star" : "stars"),
       codeTitle: "Progress code", codeHelp: "Copy this code to keep your progress, or paste one here to restore it on another device.", codeBad: "That code did not work.", codeOk: "Progress restored!",
       rules: ["<strong>Tap a car</strong> and it drives the way its arrow points. If another car is in the way it just wiggles.", "<strong>Parked cars fill up.</strong> Passengers join the car with the same colour and shape. A full car drives away.", "<strong>Keep a bay free.</strong> If all five bays hold cars that nobody can board, the lot is jammed. Undo and think ahead!"],
       starsRule: "Stars: 3 for no hints and no undos, 2 for one or two, 1 otherwise. Bumping into a car is free, so explore!",
@@ -95,10 +97,12 @@
       skip: "跳过这一关", skipped: "已跳过，下一关打开了。",
       mapTitle: "关卡地图", mapSum: (c, st) => "已过 " + c + "/" + MAX_LEVEL + " 关 · " + st + " 颗星",
       bonusQ: (n) => "加分题！司机问：" + n + " × 11 = ?",
+      bonusQdh: (a, b) => "加分题！司机问：" + a + " × " + b + " = ?",
+      trickDh: (q) => "一半加倍：" + q.a + " 减半变 " + q.half + "，" + q.b + " 加倍变 " + q.dbl + "，" + q.half + " × " + q.dbl + " = " + q.answer + "。",
       bonusRight: (a) => "对！" + a + "。+1 数学星 ★",
       bonusWrong: (a) => "不对哦，答案是 " + a + "。看窍门：",
       trick: (q) => trickText(q, "zh"),
-      bonusSkip: "跳过这题", mathOn: "×11 加分题：开", mathOff: "×11 加分题：关", mathStars: (n) => n + " 颗数学星",
+      bonusSkip: "跳过这题", mathOn: "数学加分题：开", mathOff: "数学加分题：关", mathStars: (n) => n + " 颗数学星",
       codeTitle: "进度码", codeHelp: "复制这串码就能保存进度，在别的设备粘贴即可恢复。", codeBad: "这串码不对。", codeOk: "进度已恢复！",
       rules: ["<strong>点一辆车</strong>，它会朝箭头方向开。前面有车挡着，它只会晃一下。", "<strong>停好的车会上人。</strong>乘客只上同颜色、同形状的车，坐满就开走。", "<strong>留一个空车位。</strong>五个车位都停着没人要上的车，就堵死了。撤销一步，想好再点！"],
       starsRule: "星星：不用提示不撤销 3 星，用一两次 2 星，其余 1 星。撞车不扣分，放心试！",
@@ -417,9 +421,9 @@
 
   /* ---------- ×11 bonus question ---------- */
   function bonusAsk() {
-    const q = J.x11Question(level, (mode === "daily" ? state.daily : level) * 977 + mathStars * 13 + state.moves);
+    const q = J.bonusQuestion(level, (mode === "daily" ? state.daily : level) * 977 + mathStars * 13 + state.moves);
     el.bonus.hidden = false; el.overActions.hidden = true; el.bonusSkip.hidden = false;
-    el.bonusQ.textContent = t().bonusQ(q.n);
+    el.bonusQ.textContent = q.kind === "dh" ? t().bonusQdh(q.a, q.b) : t().bonusQ(q.n);
     el.bonusFb.textContent = ""; el.bonusFb.className = "jam-bonus-fb";
     el.bonusChoices.textContent = "";
     q.choices.forEach((c) => {
@@ -428,7 +432,7 @@
       b.addEventListener("click", () => {
         el.bonusChoices.querySelectorAll("button").forEach((x) => { x.disabled = true; });
         if (c === q.answer) { b.classList.add("right"); mathStars++; save(); SFX.full(); el.bonusFb.textContent = t().bonusRight(q.answer); el.bonusFb.className = "jam-bonus-fb right"; }
-        else { b.classList.add("wrong"); SFX.bump(); el.bonusFb.innerHTML = ""; const p1 = document.createElement("strong"); p1.textContent = t().bonusWrong(q.answer); const p2 = document.createElement("span"); p2.textContent = t().trick(q); el.bonusFb.append(p1, p2); el.bonusFb.className = "jam-bonus-fb wrong"; }
+        else { b.classList.add("wrong"); SFX.bump(); el.bonusFb.innerHTML = ""; const p1 = document.createElement("strong"); p1.textContent = t().bonusWrong(q.answer); const p2 = document.createElement("span"); p2.textContent = q.kind === "dh" ? t().trickDh(q) : t().trick(q); el.bonusFb.append(p1, p2); el.bonusFb.className = "jam-bonus-fb wrong"; }
         el.mathCount.textContent = t().mathStars(mathStars); el.bonusSkip.hidden = true;
         el.overActions.hidden = false; renderMap(); el.overMain.focus();
       });

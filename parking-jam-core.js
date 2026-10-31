@@ -293,7 +293,31 @@
     return { n, answer, choices, digits: d, sums };
   }
 
-  const api = { x11Question, COLORS, SLOT_COUNT, FIXED, rng, cellsOf, frontCells, levelSpec, generate, newGame, newDaily, dailySeed, easeOf, easeBand, save, restore, tap, hint, isFree, blockerOf, snapshot };
+  /* Double-and-half question: a × b where halving a and doubling b makes it easy (12 × 5 → 6 × 10 = 60). */
+  function dhQuestion(level, seed) {
+    const rand = rng((seed === undefined ? level * 171 + 3 : seed) >>> 0);
+    const stage = level <= 5 ? 0 : level <= 15 ? 1 : level <= 30 ? 2 : 3;
+    const bs = [[5], [5, 15, 25], [5, 15, 25, 35, 45], [15, 25, 35, 45, 55, 75]][stage];
+    const maxA = [20, 30, 60, 98][stage];
+    const b = bs[Math.floor(rand() * bs.length)];
+    const a = 2 * (2 + Math.floor(rand() * (maxA / 2 - 1)));
+    const answer = a * b;
+    const pool = [answer + 10, answer - 10, answer + b, answer - b, (a / 2) * b, answer * 2];
+    const wrong = [];
+    for (const w of pool) if (w > 0 && w !== answer && !wrong.includes(w)) { wrong.push(w); if (wrong.length === 2) break; }
+    const choices = [answer, wrong[0], wrong[1]];
+    for (let k = choices.length - 1; k > 0; k--) { const j = Math.floor(rand() * (k + 1)); [choices[k], choices[j]] = [choices[j], choices[k]]; }
+    return { kind: "dh", a, b, half: a / 2, dbl: b * 2, answer, choices };
+  }
+
+  /* The bonus round alternates between the two tricks. */
+  function bonusQuestion(level, seed) {
+    const s = (seed === undefined ? level : seed) >>> 0;
+    if (s % 2 === 0) return Object.assign({ kind: "x11" }, x11Question(level, s));
+    return dhQuestion(level, s);
+  }
+
+  const api = { x11Question, dhQuestion, bonusQuestion, COLORS, SLOT_COUNT, FIXED, rng, cellsOf, frontCells, levelSpec, generate, newGame, newDaily, dailySeed, easeOf, easeBand, save, restore, tap, hint, isFree, blockerOf, snapshot };
   if (typeof module !== "undefined" && module.exports) module.exports = api;
   else root.JamCore = api;
 })(typeof window !== "undefined" ? window : globalThis);
