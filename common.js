@@ -25,6 +25,7 @@
   document.querySelectorAll("[data-clear-progress]").forEach((button) => button.addEventListener("click", () => {
     localStorage.removeItem("phoebieplays-state-v2");
     localStorage.removeItem("phoebie-learning-progress-v1");
+    localStorage.removeItem("phoebie-jam-level-v1");
     button.textContent = "Local progress cleared";
   }));
   const config = window.LEARNING_LAB_CONFIG;
