@@ -55,10 +55,28 @@
     };
   }
 
-  function generate(level) {
-    const spec = levelSpec(level);
+  /* Hand-made opening levels (the tutorial). Coordinates are grid cells. */
+  const FIXED = {
+    1: { w: 4, h: 4, cars: [
+      { color: "blue", x: 0, y: 1, len: 2, horiz: true, dir: 1 },
+      { color: "red", x: 2, y: 0, len: 2, horiz: false, dir: 1 }
+    ], order: [1, 0], queue: ["red", "red", "blue", "blue"] },
+    2: { w: 5, h: 5, cars: [
+      { color: "green", x: 0, y: 0, len: 2, horiz: true, dir: -1 },
+      { color: "blue", x: 3, y: 3, len: 2, horiz: false, dir: 1 },
+      { color: "red", x: 1, y: 2, len: 3, horiz: true, dir: 1 },
+      { color: "blue", x: 0, y: 3, len: 2, horiz: true, dir: -1 }
+    ], order: [1, 2, 0, 3], queue: ["blue", "blue", "red", "red", "red", "green", "green", "blue", "blue"] }
+  };
+
+  function fromFixed(level, f) {
+    const vehicles = f.cars.map((c, i) => Object.assign({ id: i, cap: c.len }, c));
+    return { level, w: f.w, h: f.h, vehicles, order: f.order.slice(), queue: f.queue.slice(), fixed: true };
+  }
+
+  function generateOnce(level, seed, spec) {
     for (let attempt = 0; attempt < 60; attempt++) {
-      const rand = rng(level * 7919 + attempt * 104729 + 17);
+      const rand = rng(seed + attempt * 104729 + 17);
       const w = spec.size, h = spec.size;
       const occupied = new Set();
       const placed = [];
@@ -97,8 +115,51 @@
     throw new Error("could not generate level " + level);
   }
 
-  function newGame(level) {
-    const g = generate(level);
+  /* How often a child-like strategy wins: pick a free vehicle whose colour is wanted next,
+   * otherwise any free vehicle. 0 = every try jams, 1 = cannot lose. Used to shape the curve. */
+  function easeOf(g, runs) {
+    let wins = 0;
+    for (let r = 0; r < runs; r++) {
+      const rand = rng(r * 7777 + 1);
+      const s = fromGenerated(g);
+      let n = 0;
+      while (s.status === "play" && n++ < 400) {
+        const free = s.alive.filter(id => isFree(s, id));
+        const want = free.filter(id => s.vehicles[id].color === s.queue[0]);
+        const pool = want.length ? want : free;
+        tap(s, pool[Math.floor(rand() * pool.length)]);
+      }
+      if (s.status === "won") wins++;
+    }
+    return wins / runs;
+  }
+
+  /* Target ease band per level: gentle at the start, a real puzzle by the end. */
+  function easeBand(level) {
+    if (level <= 3) return [0.95, 1.01];
+    if (level <= 10) return [0.8, 1.01];
+    if (level <= 25) return [0.6, 0.9];
+    if (level <= 45) return [0.4, 0.7];
+    return [0.2, 0.55];
+  }
+
+  function generate(level, seedOverride) {
+    if (seedOverride === undefined && FIXED[level]) return fromFixed(level, FIXED[level]);
+    const spec = levelSpec(level);
+    const base = seedOverride === undefined ? level * 7919 : seedOverride;
+    const [lo, hi] = easeBand(level);
+    let best = null, bestDist = Infinity;
+    for (let k = 0; k < 10; k++) {
+      const g = generateOnce(level, base + k * 7351, spec);
+      const e = easeOf(g, 16);
+      const dist = e < lo ? lo - e : e > hi ? e - hi : 0;
+      if (dist < bestDist) { best = g; bestDist = dist; best.ease = e; }
+      if (dist === 0) break;
+    }
+    return best;
+  }
+
+  function fromGenerated(g) {
     return {
       level: g.level, w: g.w, h: g.h,
       vehicles: g.vehicles,
@@ -110,6 +171,38 @@
       moves: 0,
       status: "play"
     };
+  }
+
+  /* Seed for the daily puzzle: same for everyone on the same day. */
+  function dailySeed(date) {
+    const d = date || new Date();
+    return d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate();
+  }
+
+  function newDaily(date) {
+    const seed = dailySeed(date);
+    const level = 12 + (seed % 14); // levels 12..25: a real puzzle, never brutal
+    const g = generate(level, seed * 31 + 5);
+    const s = fromGenerated(g);
+    s.daily = seed;
+    s.ease = g.ease;
+    return s;
+  }
+
+  function newGame(level) {
+    const g = generate(level);
+    const s = fromGenerated(g);
+    s.fixed = !!g.fixed;
+    s.ease = g.ease;
+    return s;
+  }
+
+  /* Undo support: a full copy of the mutable part of the state. */
+  function save(s) {
+    return { alive: s.alive.slice(), queue: s.queue.slice(), slots: s.slots.map(x => (x ? Object.assign({}, x) : null)), moves: s.moves, status: s.status };
+  }
+  function restore(s, snap) {
+    s.alive = snap.alive.slice(); s.queue = snap.queue.slice(); s.slots = snap.slots.map(x => (x ? Object.assign({}, x) : null)); s.moves = snap.moves; s.status = snap.status;
   }
 
   function snapshot(s) {
@@ -163,11 +256,14 @@
 
   /* A removable vehicle to suggest: next one on the known-good route. */
   function hint(s) {
+    // prefer a free vehicle that the front of the queue wants, on the known-good route
+    const want = s.order.filter(id => s.alive.includes(id) && isFree(s, id) && s.vehicles[id].color === s.queue[0]);
+    if (want.length) return want[0];
     for (const id of s.order) if (s.alive.includes(id) && isFree(s, id)) return id;
     return -1;
   }
 
-  const api = { COLORS, SLOT_COUNT, rng, cellsOf, frontCells, levelSpec, generate, newGame, tap, hint, isFree, blockerOf, snapshot };
+  const api = { COLORS, SLOT_COUNT, FIXED, rng, cellsOf, frontCells, levelSpec, generate, newGame, newDaily, dailySeed, easeOf, easeBand, save, restore, tap, hint, isFree, blockerOf, snapshot };
   if (typeof module !== "undefined" && module.exports) module.exports = api;
   else root.JamCore = api;
 })(typeof window !== "undefined" ? window : globalThis);
