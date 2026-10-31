@@ -14,6 +14,7 @@ body[data-page="home"] .site-nav a:hover,body[data-page="home"] .site-nav a[aria
 .h-btn.primary{background:var(--sun);box-shadow:4px 4px 0 var(--navy)}
 .h-btn.primary:hover{transform:translate(-1px,-1px);box-shadow:6px 6px 0 var(--navy)}
 .h-btn.ghost:hover{background:var(--navy);color:#fff}
+.h-btn.game{background:#DFF3FC;gap:8px}.h-btn.game:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--navy)}
 .h-note{margin:16px 0 0;font-size:.92rem;color:var(--muted)}
 .h-stage{position:relative;width:100%;max-width:420px;margin-left:auto;container-type:inline-size}
 .h-tian{position:relative;aspect-ratio:1;background:#fff;border:4px solid var(--coral);box-shadow:10px 10px 0 var(--sun)}
