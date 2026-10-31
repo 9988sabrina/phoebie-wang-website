@@ -151,6 +151,16 @@ td.num{font-variant-numeric:tabular-nums;text-align:right}
 .toast{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--paper);padding:10px 16px;border-radius:12px;font-weight:700;z-index:20;max-width:calc(100% - 32px)}
 @media (max-width:440px){.rings{grid-template-columns:1fr}.tzg{width:84px;height:84px}.tzg .ghost{font-size:58px}h1{font-size:1.6rem}}
 @media (prefers-reduced-motion:no-preference){.pop{animation:pop .35s ease}@keyframes pop{0%{transform:scale(.96)}60%{transform:scale(1.02)}100%{transform:scale(1)}}}
+.card.bed{background:linear-gradient(160deg,#1E1E38,#0F0F1A);color:#F3F0E6;border:none}
+.bedstars{margin:8px 0 2px;font-size:18px;letter-spacing:4px;color:#3A3A5C}.bedstars .on{color:#FFD166;text-shadow:0 0 8px #FFD166}
+.bedgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-top:8px}
+.bedcard{background:#2A2A4A;border-radius:16px;padding:12px 8px;text-align:center;transition:opacity .4s,transform .4s}
+.bedcard.done{opacity:.45;transform:translateY(-4px) scale(.97)}
+.bedzh{font-size:44px;font-weight:800;color:#FFE699;line-height:1.2;cursor:pointer}
+.bedpy{font-size:18px;color:#C9D1E8;margin:4px 0 8px;transition:opacity .3s}.bedpy.hid{opacity:0}
+.bed .icon-btn{background:#3B3B66;color:#FFE699;border-color:#55558A}
+.bednight{margin-top:12px;padding:14px;border-radius:14px;background:#2A2A4A;color:#FFE699;font-size:18px;text-align:center;animation:glow 2s ease-in-out infinite alternate}
+@keyframes glow{from{box-shadow:0 0 6px #FFD16655}to{box-shadow:0 0 22px #FFD166AA}}
 </style>
 
 <div class="wrap">
@@ -802,9 +812,13 @@ function vPet(){S.pet=S.pet||{p:0};const p=S.pet.p;let i=0;PETST.forEach((s,k)=>
 function bedtimeCard(){
   const z=S.rev.filter(r=>r.k.startsWith("z:")&&PY[r.k.slice(2)]).sort((a,b)=>(a.stage-b.stage)||(a.due<b.due?-1:1)).slice(0,8).map(r=>r.k.slice(2));
   if(!z.length)return"";
-  return `<div class="card" style="border-left:6px solid #6B4FBB"><div class="row" style="justify-content:space-between"><div><div class="eyebrow">睡前 5 分钟 · Bedtime review</div><h3 class="zhh">🌙 睡觉前读一读</h3></div><button class="icon-btn" data-say="${esc(z.join("，"))}">▶ 听</button></div>
-  <div class="row" style="flex-wrap:wrap;gap:8px;margin-top:10px">${z.map(w=>`<button class="chip" style="font-size:22px;padding:8px 12px" data-say="${esc(w)}">${esc(w)} <span class="small muted">${esc(PY[w])}</span></button>`).join("")}</div>
-  <p class="small muted" style="margin:10px 0 0">上床前：每个词大声读一遍，再说一个句子，然后盖住拼音自己写一遍。读完就睡觉，不再看屏幕。睡觉时大脑会把这些字存进长期记忆。</p></div>`}
+  const d=day();d.bed=d.bed||{};const done=z.filter(w=>d.bed[w]).length,all=done===z.length;
+  const intro="Phoebie，到睡前五分钟小卡片时间啦！今天写错的词语宝宝，我们轻轻读一遍，再盖住拼音自己写一写。不用急着全部背会，认真看、慢慢读，大脑会悄悄帮你存起来。读完就好好睡觉，明天醒来，词语就不容易忘咯。准备好了吗？我们开始！";
+  return `<div class="card bed"><div class="row" style="justify-content:space-between;align-items:flex-start"><div><div class="eyebrow" style="color:#FFE699">睡前 5 分钟 · Bedtime review</div><h3 class="zhh" style="color:#FFE699">🌙 睡觉前读一读</h3></div>
+    <div class="row" style="gap:6px"><button class="icon-btn" data-say="${esc(intro)}">▶ 开始</button><button class="icon-btn" data-bedhide="1">${d.bedHide?"👀 显示拼音":"🙈 盖住拼音"}</button></div></div>
+  <div class="bedstars">${z.map(w=>`<span class="${d.bed[w]?"on":""}">★</span>`).join("")}</div>
+  <div class="bedgrid">${z.map(w=>`<div class="bedcard ${d.bed[w]?"done":""}"><div class="bedzh" data-say="${esc(w)}">${esc(w)}</div><div class="bedpy ${d.bedHide?"hid":""}">${esc(PY[w])}</div><div class="row" style="gap:6px;justify-content:center"><button class="icon-btn ghost" data-say="${esc(w)}">🔊</button><button class="icon-btn" data-bedok="${esc(w)}">${d.bed[w]?"✓ 记牢了":"已记牢"}</button></div></div>`).join("")}</div>
+  ${all?`<div class="bednight">🌟 晚安星亮了！${z.length} 个词都记牢了，明天还会再来考你哦。晚安～</div>`:`<p class="small" style="margin:10px 0 0;color:#C9D1E8">怎么做：点 ▶ 听一遍 → 每个词大声读、说一个句子 → 点“盖住拼音”，在纸上写一遍 → 写对了点“已记牢”。读完就睡觉，不再看屏幕。</p>`}</div>`}
 function vToday(){
   const m=mProgress(),z=zProgress(),ep=eProgress();const restDay=isTuesday&&S.settings.tueOff;
   const due=S.rev.filter(r=>r.due<=TODAY).length;
@@ -1148,6 +1162,8 @@ document.addEventListener("click",async e=>{const b=e.target.closest("button");i
   if(ds.tab){TAB=ds.tab;try{history.replaceState(null,"","#"+TAB)}catch(_){}render();window.scrollTo(0,0);return}
   if(ds.go){TAB=ds.go;render();window.scrollTo(0,0);return}
   if(!S)return;
+  if(ds.bedok){const dd=day();dd.bed=dd.bed||{};dd.bed[ds.bedok]=!dd.bed[ds.bedok];save();render();const all=document.querySelector(".bednight");if(all)toast("🌟 晚安！");return}
+  if(ds.bedhide){const dd=day();dd.bedHide=!dd.bedHide;save();render();return}
   const qs=getM();const Q=id=>qs.find(q=>q.id===id);
   const finishQ=(q,first)=>{if(!first&&!q.again&&!getM().some(x=>x.again===q.id)){const nq=Object.assign({k:q.k,id:q.id+"b",again:q.id},G[q.k](rng(TODAY+q.k+"again"+q.id)));const ex=MSET.findIndex(x=>x.explain);MSET.splice(ex<0?MSET.length:ex,0,nq)}
     d.m[q.id]=first?"ok":"fix";skillHit(q.k,first);if(first&&!q.again)markRight("m:"+q.k);else if(!first)markWrong("m:"+q.k,"missed "+TODAY.slice(5));delete live[q.id];save();render();
