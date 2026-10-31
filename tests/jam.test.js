@@ -43,3 +43,7 @@ test("×11 bonus questions: answer is n×11, three distinct choices, difficulty 
     const carry=q.sums.some(x=>x>=10);if(L<=5){assert.ok(q.n<100&&!carry,`level ${L} should be 2-digit no carry`)}if(L>30){assert.ok(q.n>=100&&carry,`level ${L} should be 3-digit with carry`)}}
   const h=require("node:fs").readFileSync(require("node:path").join(__dirname,"..","parking-jam.html"),"utf8");assert.match(h,/id="jam-bonus"/);assert.match(h,/id="jam-math"/)
 });
+test("double-and-half questions are correct, easy by halving, and the bonus round alternates kinds",()=>{
+  for(let L=1;L<=60;L++)for(let s=0;s<20;s++){const q=J.dhQuestion(L,L*999+s);assert.equal(q.answer,q.a*q.b);assert.equal(q.a%2,0);assert.equal(q.half*q.dbl,q.answer);assert.ok(q.choices.includes(q.answer));assert.equal(new Set(q.choices).size,3);if(L<=5)assert.ok(q.b===5&&q.a<=20)}
+  assert.equal(J.bonusQuestion(4,10).kind,"x11");assert.equal(J.bonusQuestion(4,11).kind,"dh")
+});
