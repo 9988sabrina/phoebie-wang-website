@@ -38,3 +38,8 @@ test("parking-jam page: undo, sound, language and daily controls exist and no th
   for(const id of ["jam-undo","jam-sound","jam-lang","jam-daily","jam-coach","jam-track","jam-map","jam-over-skip","jam-code-in","jam-confetti"])assert.match(h,new RegExp('id="'+id+'"'));
   assert.doesNotMatch(h,/https?:\/\/[^"]*\.(js|css|mp3|wav|ogg)/)
 });
+test("×11 bonus questions: answer is n×11, three distinct choices, difficulty rises with level",()=>{
+  for(let L=1;L<=60;L++)for(let s=0;s<20;s++){const q=J.x11Question(L,L*1000+s);assert.equal(q.answer,q.n*11);assert.ok(q.choices.includes(q.answer));assert.equal(new Set(q.choices).size,3);
+    const carry=q.sums.some(x=>x>=10);if(L<=5){assert.ok(q.n<100&&!carry,`level ${L} should be 2-digit no carry`)}if(L>30){assert.ok(q.n>=100&&carry,`level ${L} should be 3-digit with carry`)}}
+  const h=require("node:fs").readFileSync(require("node:path").join(__dirname,"..","parking-jam.html"),"utf8");assert.match(h,/id="jam-bonus"/);assert.match(h,/id="jam-math"/)
+});

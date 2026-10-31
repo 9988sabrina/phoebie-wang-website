@@ -263,7 +263,37 @@
     return -1;
   }
 
-  const api = { COLORS, SLOT_COUNT, FIXED, rng, cellsOf, frontCells, levelSpec, generate, newGame, newDaily, dailySeed, easeOf, easeBand, save, restore, tap, hint, isFree, blockerOf, snapshot };
+  /* ×11 bonus question. Difficulty grows with the level: 2-digit without carry first, then carries, then 3 digits. */
+  function x11Question(level, seed) {
+    const rand = rng((seed === undefined ? level * 131 + 7 : seed) >>> 0);
+    const stage = level <= 5 ? 0 : level <= 15 ? 1 : level <= 30 ? 2 : 3;
+    let n = 0;
+    for (let tries = 0; tries < 200; tries++) {
+      const digits = stage >= 2 ? 3 : 2;
+      const lo = digits === 2 ? 12 : 102, hi = digits === 2 ? 98 : 987;
+      n = lo + Math.floor(rand() * (hi - lo + 1));
+      const d = String(n).split("").map(Number);
+      let carry = false;
+      for (let i = 0; i < d.length - 1; i++) if (d[i] + d[i + 1] >= 10) carry = true;
+      if (d[d.length - 1] === 0) continue;
+      if ((stage === 0 || stage === 2) && carry) continue;
+      if ((stage === 1 || stage === 3) && !carry) continue;
+      break;
+    }
+    const answer = n * 11;
+    const d = String(n).split("").map(Number);
+    const sums = [];
+    for (let i = 0; i < d.length - 1; i++) sums.push(d[i] + d[i + 1]);
+    const noCarry = Number(String(d[0]) + sums.map(x => x % 10).join("") + String(d[d.length - 1]));
+    const pool = [answer + 10, answer - 10, answer + 11, answer - 11, noCarry, answer + 100, answer - 100];
+    const wrong = [];
+    for (const w of pool) if (w > 0 && w !== answer && !wrong.includes(w)) { wrong.push(w); if (wrong.length === 2) break; }
+    const choices = [answer, wrong[0], wrong[1]];
+    for (let k = choices.length - 1; k > 0; k--) { const j = Math.floor(rand() * (k + 1)); [choices[k], choices[j]] = [choices[j], choices[k]]; }
+    return { n, answer, choices, digits: d, sums };
+  }
+
+  const api = { x11Question, COLORS, SLOT_COUNT, FIXED, rng, cellsOf, frontCells, levelSpec, generate, newGame, newDaily, dailySeed, easeOf, easeBand, save, restore, tap, hint, isFree, blockerOf, snapshot };
   if (typeof module !== "undefined" && module.exports) module.exports = api;
   else root.JamCore = api;
 })(typeof window !== "undefined" ? window : globalThis);

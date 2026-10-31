@@ -7,6 +7,7 @@
   const KEY_PREFS = "phoebie-jam-prefs-v1";
   const KEY_DAILY = "phoebie-jam-daily-v1";
   const KEY_STARS = "phoebie-jam-stars-v1";
+  const KEY_MATH = "phoebie-jam-math-v1";
   const MAX_LEVEL = 60;
   const COLOR = {
     red:    { fill: "#E5383B", name: "red",    zh: "红色", shape: "circle",   note: 0 },
@@ -46,6 +47,11 @@
       dailyLabel: "Today", dailyDone: "Today's Jam done ✓",
       skip: "Skip this level", skipped: "Skipped. The next level is open.",
       mapTitle: "Level map", mapSum: (c, st) => c + "/" + MAX_LEVEL + " levels · " + st + " stars",
+      bonusQ: (n) => "Bonus! The driver asks: " + n + " × 11 = ?",
+      bonusRight: (a) => "Yes! " + a + ". +1 math star ★",
+      bonusWrong: (a) => "Not quite. It is " + a + ". Here is the trick:",
+      trick: (q) => trickText(q, "en"),
+      bonusSkip: "Skip the question", mathOn: "×11 questions on", mathOff: "×11 questions off", mathStars: (n) => n + " math " + (n === 1 ? "star" : "stars"),
       codeTitle: "Progress code", codeHelp: "Copy this code to keep your progress, or paste one here to restore it on another device.", codeBad: "That code did not work.", codeOk: "Progress restored!",
       rules: ["<strong>Tap a car</strong> and it drives the way its arrow points. If another car is in the way it just wiggles.", "<strong>Parked cars fill up.</strong> Passengers join the car with the same colour and shape. A full car drives away.", "<strong>Keep a bay free.</strong> If all five bays hold cars that nobody can board, the lot is jammed. Undo and think ahead!"],
       starsRule: "Stars: 3 for no hints and no undos, 2 for one or two, 1 otherwise. Bumping into a car is free, so explore!",
@@ -88,6 +94,11 @@
       dailyLabel: "今日一题", dailyDone: "今日一题已完成 ✓",
       skip: "跳过这一关", skipped: "已跳过，下一关打开了。",
       mapTitle: "关卡地图", mapSum: (c, st) => "已过 " + c + "/" + MAX_LEVEL + " 关 · " + st + " 颗星",
+      bonusQ: (n) => "加分题！司机问：" + n + " × 11 = ?",
+      bonusRight: (a) => "对！" + a + "。+1 数学星 ★",
+      bonusWrong: (a) => "不对哦，答案是 " + a + "。看窍门：",
+      trick: (q) => trickText(q, "zh"),
+      bonusSkip: "跳过这题", mathOn: "×11 加分题：开", mathOff: "×11 加分题：关", mathStars: (n) => n + " 颗数学星",
       codeTitle: "进度码", codeHelp: "复制这串码就能保存进度，在别的设备粘贴即可恢复。", codeBad: "这串码不对。", codeOk: "进度已恢复！",
       rules: ["<strong>点一辆车</strong>，它会朝箭头方向开。前面有车挡着，它只会晃一下。", "<strong>停好的车会上人。</strong>乘客只上同颜色、同形状的车，坐满就开走。", "<strong>留一个空车位。</strong>五个车位都停着没人要上的车，就堵死了。撤销一步，想好再点！"],
       starsRule: "星星：不用提示不撤销 3 星，用一两次 2 星，其余 1 星。撞车不扣分，放心试！",
@@ -111,11 +122,21 @@
     }
   };
 
+  /* Explain the ×11 trick for one question, e.g. 23: keep 2 and 3, put 2+3=5 between them → 253. */
+  function trickText(q, lang) {
+    const d = q.digits, parts = [];
+    let carry = false;
+    for (let i = 0; i < q.sums.length; i++) { parts.push(d[i] + "+" + d[i + 1] + "=" + q.sums[i]); if (q.sums[i] >= 10) carry = true; }
+    if (lang === "zh") return "首尾不动：" + d[0] + " … " + d[d.length - 1] + "。中间填相邻两位的和：" + parts.join("，") + (carry ? "。满 10 就向左进 1" : "") + " → " + q.answer;
+    return "Keep the first and last digits " + d[0] + " … " + d[d.length - 1] + ". Between them write each pair's sum: " + parts.join(", ") + (carry ? ". A sum of 10 or more carries 1 to the left" : "") + " → " + q.answer;
+  }
+
   const $ = (id) => document.getElementById(id);
   const el = {};
-  ["board", "queue", "bays", "qcount", "level", "left", "msg", "overlay", "stars", "over-title", "over-text", "over-main", "over-retry", "over-undo", "over-share", "prev", "next", "hint", "restart", "undo", "sound", "lang", "daily", "track", "coach", "coach-text", "coach-skip", "rules", "stars-rule", "levelbox", "mode", "map", "map-toggle", "map-sum", "over-skip", "confetti", "code", "code-out", "code-in", "code-apply", "code-msg"].forEach((k) => { el[k.replace(/-([a-z])/g, (m, c) => c.toUpperCase())] = $("jam-" + k); });
+  ["board", "queue", "bays", "qcount", "level", "left", "msg", "overlay", "stars", "over-title", "over-text", "over-main", "over-retry", "over-undo", "over-share", "prev", "next", "hint", "restart", "undo", "sound", "lang", "daily", "track", "coach", "coach-text", "coach-skip", "rules", "stars-rule", "levelbox", "mode", "map", "map-toggle", "map-sum", "over-skip", "confetti", "code", "code-out", "code-in", "code-apply", "code-msg", "bonus", "bonus-q", "bonus-choices", "bonus-fb", "bonus-skip", "over-actions", "math", "math-count"].forEach((k) => { el[k.replace(/-([a-z])/g, (m, c) => c.toUpperCase())] = $("jam-" + k); });
 
-  let prefs = { sound: true, lang: "en", tutorialDone: false };
+  let prefs = { sound: true, lang: "en", tutorialDone: false, math: true };
+  let mathStars = 0;
   let unlocked = 1, level = 1, state = null, hinted = -1, mode = "level";
   let helps = 0, history = [], coachSteps = [], coachIdx = -1;
   let stars = {}, jams = {};
@@ -130,11 +151,12 @@
       const n = parseInt(localStorage.getItem(KEY), 10); if (n >= 1) unlocked = Math.min(n, MAX_LEVEL);
       const p = JSON.parse(localStorage.getItem(KEY_PREFS) || "{}"); prefs = Object.assign(prefs, p);
       stars = JSON.parse(localStorage.getItem(KEY_STARS) || "{}") || {};
+      mathStars = parseInt(localStorage.getItem(KEY_MATH), 10) || 0;
     } catch (e) { /* storage unavailable */ }
     if (!/^(en|zh)$/.test(prefs.lang)) prefs.lang = "en";
     level = unlocked;
   }
-  function save() { try { localStorage.setItem(KEY, String(unlocked)); localStorage.setItem(KEY_PREFS, JSON.stringify(prefs)); localStorage.setItem(KEY_STARS, JSON.stringify(stars)); } catch (e) { /* ignore */ } }
+  function save() { try { localStorage.setItem(KEY, String(unlocked)); localStorage.setItem(KEY_PREFS, JSON.stringify(prefs)); localStorage.setItem(KEY_STARS, JSON.stringify(stars)); localStorage.setItem(KEY_MATH, String(mathStars)); } catch (e) { /* ignore */ } }
   function dailyRecord() { try { return JSON.parse(localStorage.getItem(KEY_DAILY) || "null"); } catch (e) { return null; } }
 
   /* ---------- sound: tiny synthesized cues, nothing downloaded ---------- */
@@ -268,7 +290,7 @@
       b.addEventListener("click", () => { startLevel(i); el.map.parentElement.open = false; });
       el.map.appendChild(b);
     }
-    el.mapSum.textContent = t().mapSum(cleared, total);
+    el.mapSum.textContent = t().mapSum(cleared, total) + " · " + t().mathStars(mathStars);
     el.codeOut.value = btoa(JSON.stringify({ u: unlocked, s: stars }));
   }
   function renderTrack() {
@@ -303,6 +325,10 @@
     el.overShare.textContent = t().share;
     el.coachSkip.textContent = prefs.lang === "zh" ? "跳过教程" : "Skip tutorial";
     el.overSkip.textContent = t().skip;
+    el.bonusSkip.textContent = t().bonusSkip;
+    el.math.setAttribute("aria-pressed", String(prefs.math));
+    el.math.setAttribute("aria-label", prefs.math ? t().mathOn : t().mathOff);
+    el.math.classList.toggle("off", !prefs.math);
     el.mapToggle.textContent = t().mapTitle;
     el.codeApply.textContent = prefs.lang === "zh" ? "恢复" : "Restore";
     document.getElementById("jam-code-title").textContent = t().codeTitle;
@@ -369,8 +395,10 @@
       el.overRetry.hidden = false; el.overRetry.textContent = t().again;
       el.overShare.hidden = !(navigator.share || navigator.clipboard);
       coachEvent("done");
+      if (prefs.math && level >= 2) bonusAsk(); else { el.bonus.hidden = true; el.overActions.hidden = false; }
       setMsg(t().cleared);
     } else {
+      el.bonus.hidden = true; el.overActions.hidden = false;
       SFX.thud(); buzz([60, 40, 60]);
       el.stars.textContent = ""; el.stars.className = "jam-stars";
       el.overTitle.textContent = t().lostTitle;
@@ -383,7 +411,30 @@
       setMsg(t().jammed);
     }
     updateTop(); renderMap();
-    (el.overUndo.hidden ? el.overMain : el.overUndo).focus();
+    if (!el.bonus.hidden) el.bonusChoices.querySelector("button").focus();
+    else (el.overUndo.hidden ? el.overMain : el.overUndo).focus();
+  }
+
+  /* ---------- ×11 bonus question ---------- */
+  function bonusAsk() {
+    const q = J.x11Question(level, (mode === "daily" ? state.daily : level) * 977 + mathStars * 13 + state.moves);
+    el.bonus.hidden = false; el.overActions.hidden = true; el.bonusSkip.hidden = false;
+    el.bonusQ.textContent = t().bonusQ(q.n);
+    el.bonusFb.textContent = ""; el.bonusFb.className = "jam-bonus-fb";
+    el.bonusChoices.textContent = "";
+    q.choices.forEach((c) => {
+      const b = document.createElement("button");
+      b.type = "button"; b.className = "button secondary jam-choice"; b.textContent = String(c);
+      b.addEventListener("click", () => {
+        el.bonusChoices.querySelectorAll("button").forEach((x) => { x.disabled = true; });
+        if (c === q.answer) { b.classList.add("right"); mathStars++; save(); SFX.full(); el.bonusFb.textContent = t().bonusRight(q.answer); el.bonusFb.className = "jam-bonus-fb right"; }
+        else { b.classList.add("wrong"); SFX.bump(); el.bonusFb.innerHTML = ""; const p1 = document.createElement("strong"); p1.textContent = t().bonusWrong(q.answer); const p2 = document.createElement("span"); p2.textContent = t().trick(q); el.bonusFb.append(p1, p2); el.bonusFb.className = "jam-bonus-fb wrong"; }
+        el.mathCount.textContent = t().mathStars(mathStars); el.bonusSkip.hidden = true;
+        el.overActions.hidden = false; renderMap(); el.overMain.focus();
+      });
+      el.bonusChoices.appendChild(b);
+    });
+    el.mathCount.textContent = t().mathStars(mathStars);
   }
 
   /* ---------- actions ---------- */
@@ -497,6 +548,8 @@
     } catch (e) { el.codeMsg.textContent = t().codeBad; }
   });
   el.codeOut.addEventListener("focus", () => el.codeOut.select());
+  el.bonusSkip.addEventListener("click", () => { el.bonus.hidden = true; el.overActions.hidden = false; el.overMain.focus(); });
+  el.math.addEventListener("click", () => { prefs.math = !prefs.math; save(); applyLang(); });
   el.sound.addEventListener("click", () => { prefs.sound = !prefs.sound; save(); applyLang(); if (prefs.sound) SFX.full(); });
   el.lang.addEventListener("click", () => { prefs.lang = prefs.lang === "zh" ? "en" : "zh"; save(); applyLang(); updateTop(); if (state && state.status === "play") setMsg(t().tapClear); if (coachSteps.length) { coachSteps = t().coach[level] || []; coachEvent("start"); } });
   el.coachSkip.addEventListener("click", () => { prefs.tutorialDone = true; save(); coachEnd(); clearHint(); setMsg(t().tapClear); });
