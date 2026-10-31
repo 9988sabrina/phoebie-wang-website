@@ -26,6 +26,7 @@
     localStorage.removeItem("phoebieplays-state-v2");
     localStorage.removeItem("phoebie-learning-progress-v1");
     localStorage.removeItem("phoebie-jam-level-v1");
+    ["phoebie-jam-prefs-v1","phoebie-jam-daily-v1","phoebie-jam-stars-v1"].forEach((k) => localStorage.removeItem(k));
     button.textContent = "Local progress cleared";
   }));
   const config = window.LEARNING_LAB_CONFIG;

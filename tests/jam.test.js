@@ -35,6 +35,6 @@ test("the daily puzzle is the same for the same date and winnable",()=>{
 });
 test("parking-jam page: undo, sound, language and daily controls exist and no third-party code",()=>{
   const fs=require("node:fs"),h=fs.readFileSync(require("node:path").join(__dirname,"..","parking-jam.html"),"utf8");
-  for(const id of ["jam-undo","jam-sound","jam-lang","jam-daily","jam-coach","jam-track"])assert.match(h,new RegExp('id="'+id+'"'));
+  for(const id of ["jam-undo","jam-sound","jam-lang","jam-daily","jam-coach","jam-track","jam-map","jam-over-skip","jam-code-in","jam-confetti"])assert.match(h,new RegExp('id="'+id+'"'));
   assert.doesNotMatch(h,/https?:\/\/[^"]*\.(js|css|mp3|wav|ogg)/)
 });
