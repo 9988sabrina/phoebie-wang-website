@@ -246,6 +246,8 @@ function migrate(){S.settings=S.settings||{};S.rev=S.rev||[];S.mastered=S.master
   if(false){S._paper1031=1;day("2026-10-31").paper=true;
     const add={"m:x11":"10/31 paper #3 (69×11 = 759, carry the 1)","m:digitValue":"10/31 paper #17 (6 in 7.376 is 0.006)","m:pow10":"10/31 paper #18 (5.016÷1000 = 0.005016)","m:volume":"10/31 paper #30 (7×8×2 = 112 cm³)","m:scaling":"10/31 paper #32 (2/3 < 1 so 2/3×12 < 12)"};
     Object.entries(add).forEach(([k,src])=>{const r=S.rev.find(x=>x.k===k);if(r){r.stage=0;r.due="2026-11-01";r.src=src}else S.rev.push({k,stage:0,due:"2026-11-01",src});S.mastered=S.mastered.filter(m=>m.k!==k)})}
+  if(false){S._paper1031c=1;const add={"e:u0s2":"10/31 paper Reading+ #11 (2023 chain: big snowfall → snow melts → rivers overflow → lake fills)"};
+    Object.entries(add).forEach(([k,src])=>{const r=S.rev.find(x=>x.k===k);if(r){r.stage=0;r.due="2026-11-01";r.src=src}else S.rev.push({k,stage:0,due:"2026-11-01",src});S.mastered=S.mastered.filter(m=>m.k!==k)})}
   if(false){S._paper1031b=1;const add={"z:帮忙":"10/31 paper (忙 = 忄+亡, missed again)"};
     Object.entries(add).forEach(([k,src])=>{const r=S.rev.find(x=>x.k===k);if(r){r.stage=0;r.due="2026-11-01";r.src=src}else S.rev.push({k,stage:0,due:"2026-11-01",src});S.mastered=S.mastered.filter(m=>m.k!==k)})}
   if(false){S._paper1028b=1;const add={"z:手心":"10/28 paper (心 written wrong)","z:帮忙":"10/28 paper (忙 = 忄+亡)"};
