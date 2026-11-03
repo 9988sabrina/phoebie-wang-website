@@ -22,7 +22,7 @@
 
 ## 2026-11-03
 - 需求发现：家长搜「mental math tricks for kids」时，×5、×9、×11、×25 四个口诀最常被一起列出（Mathnasium 文章），而本站此前只有 ×11 和一半加倍；Etsy 上「math worksheets」月搜约 7.4 万次、中位价 $3.15，热销标题堆叠「年级 + 主题 + Printable/Instant download + 页数」，与本站 $1.99 定价和「free sample → Etsy」路径吻合。来源：https://www.mathnasium.com/math-centers/tuskawilla/news/mental-multiplication-shortcuts 、https://www.rankhero.com/keywords/math-worksheets 、https://helpingwithmath.com/multiplying-by-11/
-- 改了什么：新增免费页 /nine-trick.html「Multiply by 9 with your fingers」——点 1–10 任一数字，SVG 双手自动弯下对应手指并标出十位/个位（支持 reduced-motion），下方 6 道两位数 ×9「乘 10 再减一次」自测题带提示和换题；首页新增 ×9 入口卡（home.css v20261103a）、Printables 页内链、sitemap 和质量测试覆盖。PR #__PR__。
+- 改了什么：新增免费页 /nine-trick.html「Multiply by 9 with your fingers」——点 1–10 任一数字，SVG 双手自动弯下对应手指并标出十位/个位（支持 reduced-motion），下方 6 道两位数 ×9「乘 10 再减一次」自测题带提示和换题；首页新增 ×9 入口卡（home.css v20261103a）、Printables 页内链、sitemap 和质量测试覆盖。PR #32。
 - 候选（留给以后）：
   1. ×9 页配一张可打印 PDF（手指图 + 12 题 + 答案），并和 ×11、一半加倍合成「Mental Math Tricks 3-page sampler」做 Etsy 引流样张
   2. 感恩节页与 ×9 页各做一张专属 OG 分享图（现在复用 og-home.jpg）
