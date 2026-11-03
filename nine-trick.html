@@ -1,0 +1,116 @@
+<!doctype html><html lang="en"><head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Free multiply-by-9 trick for kids: fold one finger to read the answer for 1 to 10, then use ten-minus-one for bigger numbers. Six self-checking problems, no sign-up."><meta name="robots" content="index, follow"><meta name="theme-color" content="#fff8e8">
+  <link rel="canonical" href="https://www.phoebiewang.com/nine-trick.html"><meta property="og:title" content="Multiply by 9 With Your Fingers | Phoebie's Learning Lab"><meta property="og:description" content="Fold one finger and read the answer. A free mental math trick for kids 5 to 10, with six self-checking problems for bigger numbers."><meta property="og:url" content="https://www.phoebiewang.com/nine-trick.html"><meta property="og:type" content="website"><meta property="og:image" content="https://www.phoebiewang.com/assets/og-home.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image">
+  <title>Multiply by 9 With Your Fingers: Free Trick for Kids</title><link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"LearningResource","name":"Multiply by 9 with your fingers","description":"An interactive mental math trick for kids: fold one finger to multiply 1 to 10 by 9, then use ten-minus-one for two-digit numbers, with six self-checking problems.","educationalLevel":"Kindergarten to Grade 5","learningResourceType":"Interactive activity","inLanguage":["en","zh-CN"],"isAccessibleForFree":true,"url":"https://www.phoebiewang.com/nine-trick.html"}</script>
+  <style>
+    .nt-hero{padding-bottom:30px}
+    .nt-hero h1{max-width:16ch}
+    .nt-meta{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 22px;padding:0;list-style:none}
+    .nt-meta li{padding:6px 12px;border:2px solid var(--navy);border-radius:999px;font-size:.84rem;font-weight:800;background:#fff}
+    .nt-part{padding:clamp(28px,5vw,48px) 0 0}
+    .nt-part h2{display:flex;align-items:center;gap:12px;font-size:clamp(1.8rem,3.6vw,2.6rem)}
+    .nt-part h2 .ico{font-size:1.1em;line-height:1}
+    .nt-part>.sub{max-width:62ch;margin:12px 0 0;color:var(--muted)}
+    .nt-hint{margin:16px 0 0;padding:14px 18px;border-left:5px solid var(--sun);background:#fff;border-radius:0 12px 12px 0}
+    .nt-hint b{color:var(--coral-dark)}
+    .nt-stage{margin-top:22px;padding:clamp(16px,3vw,28px);border:2px solid var(--navy);border-radius:var(--radius);background:#fff;box-shadow:9px 9px 0 var(--blue)}
+    .nt-pick{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}
+    .nt-pick button{min-width:44px;min-height:44px;padding:0 12px;border:2px solid var(--navy);border-radius:10px;background:var(--paper);color:var(--navy);font-weight:900;font-size:1.1rem;cursor:pointer}
+    .nt-pick button[aria-pressed=true]{background:var(--navy);color:#fff}
+    .nt-hands{max-width:560px;margin-inline:auto}
+    .nt-hands svg{display:block;width:100%;height:auto}
+    .nt-hands .palm{fill:#FFD9B8;stroke:var(--navy);stroke-width:4}
+    .nt-hands .finger{fill:#FFD9B8;stroke:var(--navy);stroke-width:4;transform-box:fill-box;transform-origin:50% 100%;transition:transform .35s ease,fill .35s ease}
+    .nt-hands .finger.tens{fill:#9fd3f0}
+    .nt-hands .finger.ones{fill:#ffb8a8}
+    .nt-hands .finger.fold{fill:#cfd6dc;transform:scaleY(.32)}
+    .nt-hands .fnum{font:900 15px "Avenir Next",Avenir,"Segoe UI",system-ui,sans-serif;fill:var(--navy);pointer-events:none}
+    .nt-hands .finger.fold+.fnum{opacity:0}
+    .nt-hands.bump svg{animation:nt-bump .35s ease}
+    @keyframes nt-bump{50%{transform:translateY(-4px)}}
+    .nt-legend{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 22px;margin:10px 0 0;padding:0;list-style:none;font-weight:800}
+    .nt-legend .lt,.nt-legend .lo,.nt-legend .lf{display:inline-block;width:14px;height:14px;margin-right:6px;border:2px solid var(--navy);border-radius:4px;vertical-align:-2px}
+    .nt-legend .lt{background:#9fd3f0}.nt-legend .lo{background:#ffb8a8}.nt-legend .lf{background:#cfd6dc}
+    .nt-eq{margin:14px 0 0;text-align:center;font:800 clamp(2rem,6vw,3.2rem) Georgia,serif;letter-spacing:-.02em;color:var(--navy)}
+    .nt-eq b:first-of-type{color:#1f6f9a}.nt-eq b:last-of-type{color:var(--coral-dark)}
+    .nt-say{margin:6px 0 0;text-align:center;color:var(--muted);font-weight:700}
+    .nt-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:22px}
+    .nt-card{padding:18px 18px 16px;border:2px solid var(--navy);border-radius:16px;background:#fff;box-shadow:5px 5px 0 var(--sun)}
+    .nt-card .problem{margin:4px 0 12px;font:800 2.1rem Georgia,serif;letter-spacing:-.02em}
+    .nt-card form{display:flex;gap:8px}
+    .nt-card .answer-input{flex:1;min-width:0;width:auto;font-size:1.2rem;font-weight:800;text-align:center}
+    .nt-card .button{min-width:44px;padding:8px 16px}
+    .nt-card .practice-feedback{min-height:44px;margin-top:10px;font-size:.92rem}
+    .nt-card.ok{background:#e3f7ef;border-color:#16643d}
+    .nt-bar{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:20px}
+    .nt-score{flex:1 1 200px;margin:0;font-weight:800;font-size:1.15rem}
+    .nt-more{margin:48px 0 0;padding:clamp(22px,4vw,34px);display:grid;grid-template-columns:1fr auto;align-items:center;gap:24px;border:2px solid var(--navy);border-radius:var(--radius);background:var(--paper);box-shadow:9px 9px 0 var(--sun)}
+    .nt-more h2{font-size:1.7rem}.nt-more p{margin:8px 0 0;color:var(--muted)}
+    .nt-more .button-row{flex-direction:column;align-items:stretch}
+    .nt-parent{margin-top:34px;color:var(--muted);font-size:.95rem;max-width:70ch}
+    @media(max-width:820px){.nt-grid{grid-template-columns:repeat(2,1fr)}.nt-more{grid-template-columns:1fr}}
+    @media(max-width:600px){.nt-grid{grid-template-columns:1fr}.nt-card .problem{font-size:1.8rem}.nt-stage{box-shadow:6px 6px 0 var(--blue)}}
+    @media(prefers-reduced-motion:reduce){.nt-hands .finger{transition:none}.nt-hands.bump svg{animation:none}}
+    @media print{.nt-bar,.nt-more,.nt-parent,.crumb,.nt-card .button,.practice-feedback,.nt-pick{display:none!important}.nt-grid{grid-template-columns:repeat(3,1fr)}.nt-card,.nt-stage{box-shadow:none;break-inside:avoid}}
+  </style>
+  <!-- ANALYTICS: paste GA4 tag here once SITE_CONFIG.ga4Id is set -->
+</head><body data-page="nine-trick"><a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header"><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">P</span><span>Phoebie's Learning Lab<small>Learn it. Try it. Explain it.</small></span></a><button class="menu-button" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+<nav id="site-nav" class="site-nav" aria-label="Main navigation"><a href="practice/">Practice</a><a href="lesson.html">Learning Lab</a><a href="printables.html">Printables</a><a href="tools.html">AI Tools</a><a href="reviews/index.html">Reviews</a><a href="best-ai-tools.html">Best Picks</a><a href="coupons.html">Coupons</a><a href="about.html">About</a></nav></header>
+<main id="main" class="lesson-shell">
+  <header class="page-hero wrap nt-hero"><p class="crumb"><a href="index.html">Home</a> / <a href="printables.html">Printables</a> / Multiply by 9</p>
+    <ul class="nt-meta" aria-label="About this page"><li>Ages 5 to 10</li><li>Free, no sign-up</li><li>Two tricks</li><li>Works on a phone</li></ul>
+    <h1>Multiply by 9 with your fingers</h1>
+    <p class="lede">Hold up both hands. Fold one finger. Read the answer. That is the whole trick for 1 to 10, and there is a second trick below for bigger numbers. <span lang="zh-CN">手指算九的乘法：弯下一根手指，左边是十位，右边是个位。</span></p>
+    <div class="button-row"><a class="button primary" href="#nt-fingers">Try it now</a><a class="button secondary" href="#nt-big">Bigger numbers</a></div>
+  </header>
+
+  <section class="wrap nt-part" aria-labelledby="nt-fingers">
+    <h2 id="nt-fingers"><span class="ico" aria-hidden="true">✋</span>Fold a finger</h2>
+    <p class="sub">Number your fingers 1 to 10 from left to right. To work out a number times 9, fold that finger down. The fingers on the left of the fold are the tens, the fingers on the right are the ones.</p>
+    <div class="nt-hint"><b>Example:</b> 4 × 9 → fold finger 4. That leaves <b>3</b> fingers on the left and <b>6</b> on the right, so 4 × 9 = <b>36</b>.</div>
+    <div class="nt-stage">
+      <div class="nt-pick" id="nt-pick" role="group" aria-label="Pick a number to multiply by 9">
+        <button type="button" data-n="1" aria-pressed="false">1</button><button type="button" data-n="2" aria-pressed="false">2</button><button type="button" data-n="3" aria-pressed="true">3</button><button type="button" data-n="4" aria-pressed="false">4</button><button type="button" data-n="5" aria-pressed="false">5</button><button type="button" data-n="6" aria-pressed="false">6</button><button type="button" data-n="7" aria-pressed="false">7</button><button type="button" data-n="8" aria-pressed="false">8</button><button type="button" data-n="9" aria-pressed="false">9</button><button type="button" data-n="10" aria-pressed="false">10</button>
+      </div>
+      <div class="nt-hands" id="nt-hands">
+        <svg viewBox="0 0 400 200" role="img" aria-labelledby="nt-hands-title"><title id="nt-hands-title">Two hands with fingers numbered 1 to 10; the chosen finger folds down</title>
+          <rect class="palm" x="30" y="118" width="150" height="74" rx="26"/>
+          <rect class="finger" data-finger="1" x="39" y="60" width="22" height="86" rx="11"/><text class="fnum" x="50" y="82" text-anchor="middle">1</text>
+          <rect class="finger" data-finger="2" x="67" y="36" width="22" height="110" rx="11"/><text class="fnum" x="78" y="58" text-anchor="middle">2</text>
+          <rect class="finger" data-finger="3" x="95" y="26" width="22" height="120" rx="11"/><text class="fnum" x="106" y="48" text-anchor="middle">3</text>
+          <rect class="finger" data-finger="4" x="123" y="32" width="22" height="114" rx="11"/><text class="fnum" x="134" y="54" text-anchor="middle">4</text>
+          <rect class="finger" data-finger="5" x="151" y="70" width="22" height="76" rx="11"/><text class="fnum" x="162" y="92" text-anchor="middle">5</text>
+          <rect class="palm" x="220" y="118" width="150" height="74" rx="26"/>
+          <rect class="finger" data-finger="6" x="227" y="70" width="22" height="76" rx="11"/><text class="fnum" x="238" y="92" text-anchor="middle">6</text>
+          <rect class="finger" data-finger="7" x="255" y="32" width="22" height="114" rx="11"/><text class="fnum" x="266" y="54" text-anchor="middle">7</text>
+          <rect class="finger" data-finger="8" x="283" y="26" width="22" height="120" rx="11"/><text class="fnum" x="294" y="48" text-anchor="middle">8</text>
+          <rect class="finger" data-finger="9" x="311" y="36" width="22" height="110" rx="11"/><text class="fnum" x="322" y="58" text-anchor="middle">9</text>
+          <rect class="finger" data-finger="10" x="339" y="60" width="22" height="86" rx="11"/><text class="fnum" x="350" y="82" text-anchor="middle">10</text>
+        </svg>
+        <ul class="nt-legend" aria-hidden="true"><li><span class="lt"></span><span class="nt-lab-t">2 tens</span></li><li><span class="lf"></span>folded</li><li><span class="lo"></span><span class="nt-lab-o">7 ones</span></li></ul>
+      </div>
+      <p class="nt-eq" id="nt-eq" aria-hidden="true">3 × 9 = <b>2</b><b>7</b></p>
+      <p class="nt-say" id="nt-say" role="status" aria-live="polite">Fold finger 3. 2 fingers on the left, 7 on the right, so 3 × 9 = 27.</p>
+    </div>
+  </section>
+
+  <section class="wrap nt-part" aria-labelledby="nt-big">
+    <h2 id="nt-big"><span class="ico" aria-hidden="true">🔟</span>Bigger numbers: times 10, take one away</h2>
+    <p class="sub">Fingers run out at 10. For any other number, multiply by 10 first (just add a zero), then subtract the number once. Type each answer and tap Check.</p>
+    <div class="nt-hint"><b>The trick:</b> 23 × 9 → 23 × 10 = 230, then 230 − 23 = <b>207</b>. Nine is just ten with one taken away. <span lang="zh-CN">乘 9 等于乘 10 再减去自己一次。</span></div>
+    <div class="nt-grid" id="nt-grid"></div>
+    <div class="nt-bar"><p class="nt-score" id="nt-score" role="status" aria-live="polite">0 of 6 right so far.</p><button class="button secondary" id="nt-new" type="button">New numbers</button></div>
+  </section>
+
+  <div class="wrap">
+    <section class="nt-more" aria-labelledby="nt-more-title">
+      <div><h2 id="nt-more-title">More tricks like this.</h2><p>Multiply by 11 by splitting the digits, or halve one number and double the other. Printable 10-page packs are $1.99 each on Etsy.</p></div>
+      <div class="button-row"><a class="button primary" href="printables.html#try">The ×11 trick</a><a class="button secondary" href="lesson.html">Double and half</a><a class="button tertiary" href="https://www.etsy.com/shop/PhoebieCreates" rel="noopener">Full packs on Etsy</a></div>
+    </section>
+    <p class="nt-parent">For grown-ups: the finger trick works because 9 × n = 10 × (n − 1) + (10 − n). Nothing on this page is saved or sent anywhere; "New numbers" makes a fresh set. Try the <a href="thanksgiving.html">Thanksgiving mini-pack</a> for a printable version of the ×11 and double-and-half tricks.</p>
+  </div>
+</main>
+<footer class="site-footer"><div class="wrap footer-grid"><div><strong>Phoebie's Learning Lab</strong><span>Learn it. Try it. Explain it.</span></div><nav aria-label="Footer"><a href="disclosure.html">Affiliate Disclosure</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="refunds.html">Digital Product &amp; Refunds</a><button class="link-button" data-clear-progress type="button">Clear local progress</button></nav></div><p class="legal-note">Parent-managed educational project. Legal and business details are draft pending parent review.</p></footer>
+<script src="content-config.js"></script><script src="common.js"></script><script src="nine-trick.js?v=20261103a"></script></body></html>
