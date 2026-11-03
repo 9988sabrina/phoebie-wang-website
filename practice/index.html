@@ -246,6 +246,7 @@ function migrate(){S.settings=S.settings||{};S.rev=S.rev||[];S.mastered=S.master
   if(false){S._paper1031=1;day("2026-10-31").paper=true;
     const add={"m:x11":"10/31 paper #3 (69×11 = 759, carry the 1)","m:digitValue":"10/31 paper #17 (6 in 7.376 is 0.006)","m:pow10":"10/31 paper #18 (5.016÷1000 = 0.005016)","m:volume":"10/31 paper #30 (7×8×2 = 112 cm³)","m:scaling":"10/31 paper #32 (2/3 < 1 so 2/3×12 < 12)"};
     Object.entries(add).forEach(([k,src])=>{const r=S.rev.find(x=>x.k===k);if(r){r.stage=0;r.due="2026-11-01";r.src=src}else S.rev.push({k,stage:0,due:"2026-11-01",src});S.mastered=S.mastered.filter(m=>m.k!==k)})}
+  if(false){S._bonus1103=1;S.bonus={date:"2026-11-03",k:["mulMulti","mulMulti","mulMulti","div2","div2","div2"]}}
   if(false){S._paper1102b=1;const add={"e:u1r2":"11/2 paper Reading+ #3 (best evidence = soil lost only about 2 ounces, not the starting weight)"};
     Object.entries(add).forEach(([k,src])=>{const r=S.rev.find(x=>x.k===k);if(r){r.stage=0;r.due="2026-11-03";r.src=src}else S.rev.push({k,stage:0,due:"2026-11-03",src});S.mastered=S.mastered.filter(m=>m.k!==k)})}
   if(false){S._paper1102=1;day("2026-11-02").paper=true;
@@ -534,6 +535,7 @@ function mathSet(){
   const easy=list.slice(0,1),rest=shuffle(r,list.slice(1));
   const qs=easy.concat(rest).map((k,i)=>Object.assign({k,id:"q"+i},G[k](rng(TODAY+k+i))));
   const ex=EXPLAINS[Math.floor((new Date(TODAY).getTime()/864e5))%EXPLAINS.length];
+  if(S.bonus&&S.bonus.date===TODAY)S.bonus.k.forEach((k,i)=>qs.push(Object.assign({k,id:"bx"+i},G[k](rng(TODAY+k+"bx"+i)))));
   const dm=(S.days[TODAY]||{}).m||{};
   qs.slice().forEach(q=>{if(dm[q.id]==="fix")qs.push(Object.assign({k:q.k,id:q.id+"b",again:q.id},G[q.k](rng(TODAY+q.k+"again"+q.id))))});
   if(!busy)qs.push({k:"explain",id:"ex",explain:ex});
