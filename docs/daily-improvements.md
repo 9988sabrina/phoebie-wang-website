@@ -27,3 +27,11 @@
   1. ×9 页配一张可打印 PDF（手指图 + 12 题 + 答案），并和 ×11、一半加倍合成「Mental Math Tricks 3-page sampler」做 Etsy 引流样张
   2. 感恩节页与 ×9 页各做一张专属 OG 分享图（现在复用 og-home.jpg）
   3. 漫画 4–6 换手绘版（需 ChatGPT 出图，老板在 Chrome 里配合）
+
+## 2026-11-04
+- 需求发现：Etsy 上「multiplication chart」月搜约 55 万次（9 月反弹到 82 万，开学季+期中复习），「multiplication」约 45 万次、中位价 $3.75，热销标题模式是「Printable Multiplication Chart 1-12 + Instant Download/PDF + Homeschool/Classroom」；家长向文章建议口诀按「×2/×5/×10 → 翻倍类 → ×9 → 7×8 等难点」的顺序学，并配合混合练习；同类互动乘法表（Toy Theater、Memozor）只高亮行列，没有口诀提示和藏答案玩法。来源：https://www.rankhero.com/keywords/multiplication-chart 、https://www.rankhero.com/keywords/multiplication 、https://logicspark.pages.dev/blog/multiplication-tricks-struggling-kids/ 、https://toytheater.com/multiplication-chart/
+- 改了什么：新增免费页 /times-table.html「Times Table Explorer」——12×12 可点乘法表：点格子高亮行列和「孪生」交换律格、显示该口诀的心算小窍门（×9/×11/翻倍各带内链到现有技巧页）、「Hide 12 squares」藏答案自测、方向键导航、一键打印成干净的一页表；首页新增入口卡（home.css v20261104a）、Printables 页内链、sitemap 和质量测试覆盖。PR #33。
+- 候选（留给以后）：
+  1. 乘法表页加一张可下载 PDF（彩色 + 空白填写版各一页），并在 Etsy 上架「Multiplication Chart 1-12 + Practice Pack」$1.99（上架需老板确认）
+  2. 感恩节页、×9 页、乘法表页各做一张专属 OG 分享图（现在都复用 og-home.jpg）
+  3. 漫画 4–6 换手绘版（需 ChatGPT 出图，老板在 Chrome 里配合）
