@@ -19,13 +19,23 @@
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; media-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
     <title>Free Math Practice for Kids | Phoebie's Learning Lab</title>
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="preload" href="assets/fonts/poppins-bold.woff" as="font" type="font/woff" crossorigin>
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="home.css?v=20261105c">
+    <link rel="stylesheet" href="home.css?v=20261105d">
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Phoebie Wang","url":"https://www.phoebiewang.com/","description":"Free daily math and Chinese practice, visual lessons, printable worksheets, books and songs from the Wang family."}</script>
     <!-- ANALYTICS: paste GA4 tag here once SITE_CONFIG.ga4Id is set -->
 </head>
   <body data-page="home">
-        <a class="skip-link" href="#main">Skip to content</a>
+        <svg width="0" height="0" aria-hidden="true" focusable="false" class="sprite"><defs>
+<symbol id="ic-bag" viewBox="0 0 24 24"><path d="M5 8h14l-1 12H6L5 8zM9 8V6a3 3 0 0 1 6 0v2"/></symbol>
+<symbol id="ic-book" viewBox="0 0 24 24"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3V4zM8 17h11M9 8h6"/></symbol>
+<symbol id="ic-play" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="3"/><path d="M10 9.5l5 2.5-5 2.5z"/></symbol>
+<symbol id="ic-phone" viewBox="0 0 24 24"><rect x="7" y="3" width="10" height="18" rx="2"/><path d="M11 18h2M10 8c1-2 4-2 4 0 0 2-3 2-3 4"/></symbol>
+<symbol id="ic-car" viewBox="0 0 24 24"><path d="M4 16l1.5-5.5h13L20 16v3h-2.5v-1.5h-11V19H4v-3zM7.5 14h.01M16.5 14h.01M8 7l1-2h6l1 2"/></symbol>
+<symbol id="ic-smile" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8.5 14a4 4 0 0 0 7 0M9 10h.01M15 10h.01"/></symbol>
+<symbol id="ic-bubble" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M8.5 9.5a4 4 0 0 1 3-2"/></symbol>
+</defs></svg>
+    <a class="skip-link" href="#main">Skip to content</a>
     <header class="site-header">
       <a class="brand" href="index.html" aria-label="Phoebie's Learning Lab home"><span class="brand-mark" aria-hidden="true">学</span><span>Phoebie's Learning Lab<small>Learn it. Try it. Explain it.</small></span></a>
       <button class="menu-button" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
@@ -36,13 +46,27 @@
         <div class="intro-text">
           <h1 id="home-title">Free math practice for kids <span lang="zh-CN" class="zh">免费数学练习</span></h1>
           <p class="intro-lede">A fresh set every day, plus Chinese practice, printable pages and silly comics for ages 4 to 11, in English and <span lang="zh-CN" class="zh">中文</span>. Made by a family, for families.</p>
+          <div class="h-cta">
+            <a class="h-btn primary" href="practice/">Start today's practice</a>
+            <a class="h-btn ghost" href="downloads/Phoebie-Free-Sample-Page.pdf" download>Free sample page</a>
+          </div>
           <ul class="h-chips" aria-label="Good to know"><li>Free</li><li>No sign-up</li><li>Stays in your browser</li></ul>
-          <a class="h-holiday" href="thanksgiving.html"><span aria-hidden="true">🦃</span><span><strong>New for November:</strong> a free Thanksgiving math &amp; <span lang="zh-CN">中文</span> mini-pack. Play it or print 3 pages.</span></a>
         </div>
-        <div class="h-cta">
-          <a class="h-btn primary" href="practice/">Start today's practice</a>
-          <a class="h-btn ghost" href="downloads/Phoebie-Free-Sample-Page.pdf" download>Free sample page</a>
+        <div class="trace" id="trace">
+          <div class="pad" id="trace-pad" role="group" aria-label="Practice pad: trace the Chinese character 学 with your finger or mouse">
+            <svg class="pad-grid" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><path d="M50 0V100M0 50H100" fill="none" stroke="#D62839" stroke-width="1" stroke-dasharray="3 3" opacity=".55"/><path d="M0 0L100 100M100 0L0 100" fill="none" stroke="#D62839" stroke-width=".6" stroke-dasharray="2 4" opacity=".3"/></svg>
+            <span class="pad-ghost" lang="zh-CN" aria-hidden="true">学</span>
+            <canvas class="pad-ghost-canvas" id="trace-ghost" aria-hidden="true"></canvas>
+            <canvas class="pad-ink" id="trace-ink" aria-hidden="true"></canvas>
+            <span class="pad-stamp" lang="zh-CN" aria-hidden="true">好!</span>
+          </div>
+          <div class="trace-bar">
+            <p class="trace-say" id="trace-say" aria-live="polite">Trace <b lang="zh-CN">学</b> (xué, to learn) with your finger.</p>
+            <button type="button" class="h-btn ghost trace-reset" id="trace-reset">Again</button>
+          </div>
+          <img class="trace-det" src="assets/cast/detective-1.png" width="156" height="283" alt="A cartoon girl detective in a yellow cap and red coat, pointing at the practice pad">
         </div>
+        <a class="h-holiday" href="thanksgiving.html"><span aria-hidden="true">🦃</span><span><strong>New for November:</strong> a free Thanksgiving math &amp; <span lang="zh-CN">中文</span> mini-pack. Play it or print 3 pages.</span></a>
       </section>
 
       <section class="h-signup" aria-labelledby="signup-title">
@@ -73,11 +97,11 @@
         <h2 id="work-title">All our work, in one place.</h2>
         <p class="sub">Printables, novels, songs and apps, made at our kitchen table.</p>
         <div class="work-row">
-          <a href="https://www.etsy.com/shop/PhoebieCreates" rel="noopener"><strong>Etsy shop</strong><span>Printable worksheets, Chinese calligraphy posters and coloring pages. From $1.99.</span></a>
-          <a href="https://www.amazon.com/s?k=The+Last+Voicemail+Sabrina+Zhang" rel="noopener"><strong>The Last Voicemail</strong><span>A novel by Sabrina Zhang. On Amazon.</span></a>
-          <a href="https://www.amazon.com/s?k=The+Parcel+Nobody+Wanted+Sabrina+Zhang" rel="noopener"><strong>The Parcel Nobody Wanted</strong><span>A Briar Glen Mystery by Sabrina Zhang. On Amazon.</span></a>
-          <a href="https://www.youtube.com/@PhoebieWang" rel="noopener"><strong>YouTube</strong><span>Shorts, songs and math explainers on Phoebie's channel.</span></a>
-          <a href="projects.html"><strong>Bird Pal and more</strong><span>Phoebie's apps, our songs and the games.</span></a>
+          <a href="https://www.etsy.com/shop/PhoebieCreates" rel="noopener"><svg class="wk-ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#ic-bag"/></svg><strong>Etsy shop</strong><span>Printable worksheets, Chinese calligraphy posters and coloring pages. From $1.99.</span></a>
+          <a href="https://www.amazon.com/s?k=The+Last+Voicemail+Sabrina+Zhang" rel="noopener"><svg class="wk-ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#ic-book"/></svg><strong>The Last Voicemail</strong><span>A novel by Sabrina Zhang. On Amazon.</span></a>
+          <a href="https://www.amazon.com/s?k=The+Parcel+Nobody+Wanted+Sabrina+Zhang" rel="noopener"><svg class="wk-ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#ic-book"/></svg><strong>The Parcel Nobody Wanted</strong><span>A Briar Glen Mystery by Sabrina Zhang. On Amazon.</span></a>
+          <a href="https://www.youtube.com/@PhoebieWang" rel="noopener"><svg class="wk-ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#ic-play"/></svg><strong>YouTube</strong><span>Shorts, songs and math explainers on Phoebie's channel.</span></a>
+          <a href="projects.html"><svg class="wk-ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#ic-phone"/></svg><strong>Bird Pal and more</strong><span>Phoebie's apps, our songs and the games.</span></a>
         </div>
       </section>
 
@@ -164,6 +188,6 @@
 
     </main>
     <footer class="site-footer"><div class="wrap footer-grid"><div><strong>Phoebie's Learning Lab</strong><span>Learn it. Try it. Explain it.</span></div><nav aria-label="Footer"><a href="disclosure.html">Affiliate Disclosure</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="refunds.html">Digital Product &amp; Refunds</a><button class="link-button" data-clear-progress type="button">Clear local progress</button></nav></div><p class="legal-note">© 2026 The Wang family. Made by Sabrina Zhang and Phoebie. Questions or a broken page? Message us through <a href="https://www.etsy.com/shop/PhoebieCreates" rel="noopener">our Etsy shop</a>.</p></footer>
-    <script src="content-config.js"></script><script src="common.js"></script>
+    <script src="content-config.js"></script><script src="common.js"></script><script src="trace.js?v=20261105a"></script>
   </body>
 </html>
