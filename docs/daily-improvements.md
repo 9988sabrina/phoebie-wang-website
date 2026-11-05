@@ -35,3 +35,11 @@
   1. 乘法表页加一张可下载 PDF（彩色 + 空白填写版各一页），并在 Etsy 上架「Multiplication Chart 1-12 + Practice Pack」$1.99（上架需老板确认）
   2. 感恩节页、×9 页、乘法表页各做一张专属 OG 分享图（现在都复用 og-home.jpg）
   3. 漫画 4–6 换手绘版（需 ChatGPT 出图，老板在 Chrome 里配合）
+
+## 2026-11-05
+- 需求发现：家长搜「mental math tricks for kids」的头部文章（Mathnasium）把 ×5、×9、×11、×25 四个口诀并列讲，本站已有 ×9、×11，缺 ×5/×25；英国 Oak National Academy 的 KS1 课程和 TES 上的 5 倍表资源都用「5 倍表和 10 倍表的一半/翻倍关系」来教 ×5，说明这是课堂主流讲法；Etsy 侧「kids worksheets / math worksheets」仍是常青词，标题继续堆「年级 + 主题 + Printable」。（本轮搜索没找到同类网站近期新功能的可靠来源，未采用。）来源：https://www.mathnasium.com/math-centers/tuskawilla/news/mental-multiplication-shortcuts 、https://www.thenational.academy/teachers/programmes/maths-primary-ks1/units/doubling-halving-quotative-and-partitive-division/lessons/explain-patterns-and-relationships-between-the-5-and-10-times-tables 、https://www.tes.com/teaching-resource/five-times-tables-groups-arrays-wheels-tricks-and-tips-11635899 、https://www.rankhero.com/keywords/kids-worksheets
+- 改了什么：新增免费页 /five-trick.html「Multiply by 5 in a flash」——点 1–12 任一数字，看「两个 5 拼成一个 10」的点阵条（奇数会剩一个 5，支持 reduced-motion），偶数/奇数两条规则卡，下方 6 道自测题（4 道两位数 ×5 + 2 道 ×25「取四分之一加两个 0」）带提示和换题；首页新增 ×5 入口卡（home.css v20261105a，乘法表卡与 ×5 卡并排）、乘法表页 ×5 提示加内链（times-table.js v20261105a）、Printables 页内链、sitemap 和质量测试覆盖。PR #34。
+- 候选（留给以后）：
+  1. 把 ×5、×9、×11、一半加倍四个口诀做成一个「Mental Math Tricks」合集入口页（首页一个大卡代替四个小卡），并配 4 页可打印 PDF 做 Etsy 引流样张
+  2. 圣诞/寒假主题免费练习页（12 月初上线；Etsy 节日品需提前上架，上架要老板确认）
+  3. 各技巧页专属 OG 分享图（现在都复用 og-home.jpg）

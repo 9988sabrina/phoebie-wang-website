@@ -10,7 +10,7 @@
     2: { text: "Times 2 is a double. Add the number to itself: 7 + 7 = 14.", cn: "乘 2 就是翻倍。", link: "lesson.html", label: "Double and half lesson" },
     3: { text: "Times 3 is a double plus one more: 6 × 3 = 12 + 6 = 18.", cn: "乘 3 = 翻倍再加一次。" },
     4: { text: "Times 4 is double, then double again: 7 → 14 → 28.", cn: "乘 4 = 翻倍两次。" },
-    5: { text: "Times 5 always ends in 0 or 5. It is half of times 10: 8 × 10 = 80, half is 40.", cn: "乘 5 = 乘 10 再取一半。" },
+    5: { text: "Times 5 always ends in 0 or 5. It is half of times 10: 8 × 10 = 80, half is 40.", cn: "乘 5 = 乘 10 再取一半。", link: "five-trick.html", label: "The ×5 trick" },
     6: { text: "Times 6 is times 5 plus one more: 7 × 5 = 35, plus 7 is 42.", cn: "乘 6 = 乘 5 再加一次。" },
     7: { text: "Sevens are the tricky ones. Remember 5-6-7-8: 56 = 7 × 8. Flip it: 7 × 6 is 6 × 7 = 42.", cn: "7 的口诀最难，多看几遍。" },
     8: { text: "Times 8 is double three times: 6 → 12 → 24 → 48.", cn: "乘 8 = 翻倍三次。" },
