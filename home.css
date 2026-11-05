@@ -45,6 +45,12 @@ body[data-page="home"] .site-nav a:hover,body[data-page="home"] .site-nav a[aria
 .t-nine{grid-column:span 2;background:#FFE3DC}
 .t-table{grid-column:span 3;background:#E3F7EF}
 .t-five{grid-column:span 3;background:#FFF3C4}
+.t-tricks{grid-column:span 4;background:#FFF3C4}
+.t-tricks:hover{transform:none;box-shadow:5px 5px 0 var(--navy)}
+.t-tricks h3{margin-bottom:6px}
+.trick-links{display:flex;flex-wrap:wrap;gap:10px;margin:0;padding:0;list-style:none}
+.trick-links a{display:inline-flex;align-items:center;min-height:46px;padding:8px 16px;border:2.5px solid var(--navy);border-radius:999px;background:#fff;color:var(--navy);font-weight:800;text-decoration:none}
+.trick-links a:hover{background:var(--navy);color:#fff}
 .t-skill{grid-column:span 6;background:#D9F1EE}
 .t-jam{grid-column:span 6;background:#DFF3FC}
 .eqn{font-size:clamp(1.8rem,3.4vw,2.5rem);font-weight:900;letter-spacing:-.03em;line-height:1;color:var(--navy)}
@@ -89,7 +95,7 @@ body[data-page="home"] .t-practice p,body[data-page="home"] .t-chinese p{color:#
 @media(max-width:900px){
   .bento{grid-template-columns:1fr 1fr}
   .t-practice{grid-column:span 2}.t-chinese,.t-puzzle,.t-lesson,.t-nine,.t-table,.t-five{grid-column:span 1}
-  .t-skill,.t-jam{grid-column:span 2}
+  .t-skill,.t-jam,.t-tricks{grid-column:span 2}
   .h-band .inner{grid-template-columns:1fr}
   .h-band img{max-width:230px}
   .tools-row{grid-template-columns:1fr}.tools-row a{border-right:0}
@@ -102,7 +108,7 @@ body[data-page="home"] .t-practice p,body[data-page="home"] .t-chinese p{color:#
 @media(max-width:560px){
   .bubble-stage{height:300px}
   .bento{grid-template-columns:1fr}
-  .t-practice,.t-chinese,.t-puzzle,.t-lesson,.t-nine,.t-table,.t-five,.t-skill,.t-jam{grid-column:span 1}
+  .t-practice,.t-chinese,.t-puzzle,.t-lesson,.t-nine,.t-table,.t-five,.t-skill,.t-jam,.t-tricks{grid-column:span 1}
   .tile{box-shadow:4px 4px 0 var(--navy)}
   .h-mascot{width:44%;left:-6%}
 }
@@ -242,3 +248,18 @@ body[data-page="home"] .footer-grid nav{gap:4px 18px}
 .bp-note a{min-height:44px;display:inline-flex;align-items:center}
 
 .grade.grown{margin-top:6px;color:var(--sun)}
+
+/* star of the page: the game, right under the intro */
+.h-star{width:var(--wrap);margin:0 auto;padding:clamp(8px,1.5vw,16px) 0 0}
+.star-jam{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1fr);gap:clamp(20px,4vw,52px);align-items:center;padding:clamp(18px,3vw,36px);border:2.5px solid var(--navy);border-radius:14px;background:#DFF3FC;color:var(--navy);text-decoration:none;box-shadow:8px 8px 0 var(--navy);transition:transform .15s,box-shadow .15s}
+.star-jam:hover{transform:translate(-2px,-2px);box-shadow:11px 11px 0 var(--navy)}
+.star-jam img{display:block;width:100%;height:auto;border:2.5px solid var(--navy);border-radius:12px;transform:rotate(-1.5deg)}
+.star-kicker{margin:0 0 10px;font-weight:800;font-size:.9rem;letter-spacing:.06em;text-transform:uppercase;color:var(--coral-dark)}
+.star-text h2{font-size:clamp(2.1rem,5.2vw,4rem);line-height:1}
+.star-text p:not(.star-kicker){margin:16px 0 22px;max-width:40ch;font-size:clamp(1rem,1.5vw,1.15rem)}
+.star-text .h-btn{font-size:1.15rem;min-height:56px;padding:12px 30px}
+@media(max-width:720px){
+  .star-jam{grid-template-columns:1fr;box-shadow:5px 5px 0 var(--navy)}
+  .star-jam img{max-width:300px;margin-inline:auto}
+}
+@media(prefers-reduced-motion:reduce){.star-jam{transition:none}.star-jam:hover{transform:none}.star-jam img{transform:none}}
