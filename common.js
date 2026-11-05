@@ -13,6 +13,7 @@
     tools: "/tools.html",
     reviews: "/reviews/index.html",
     best: "/best-ai-tools.html",
+    projects: "/projects.html",
     about: "/about.html",
     newsletter: "/newsletter.html",
     disclosure: "/disclosure.html",
@@ -29,6 +30,19 @@
     ["phoebie-jam-prefs-v1","phoebie-jam-daily-v1","phoebie-jam-stars-v1"].forEach((k) => localStorage.removeItem(k));
     button.textContent = "Local progress cleared";
   }));
+  const form = document.getElementById("signup-form");
+  const siteConfig = window.SITE_CONFIG || {};
+  if (form && /^https:\/\//.test(siteConfig.emailFormAction || "")) {
+    form.action = siteConfig.emailFormAction;
+    form.noValidate = false;
+    form.querySelectorAll("input,button").forEach((el) => { el.disabled = false; });
+    const button = document.getElementById("signup-button");
+    if (button) button.textContent = "Send me the page";
+    const note = document.getElementById("signup-note");
+    if (note) note.innerHTML = 'One email a week. See our <a href="privacy.html">privacy notice</a>.';
+  } else if (form) {
+    form.addEventListener("submit", (event) => event.preventDefault());
+  }
   const config = window.LEARNING_LAB_CONFIG;
   if (!config) return;
   document.querySelectorAll("[data-product-name]").forEach((el) => { el.textContent = config.product.name; });

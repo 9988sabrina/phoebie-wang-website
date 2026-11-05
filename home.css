@@ -1,9 +1,9 @@
-/* Homepage-only visual layer. Loaded after styles.css; every rule is scoped to body[data-page="home"]. */
-body[data-page="home"]{--cream:#EEF3F6;--paper:#fff;--navy:#14213D;--ink:#14213D;--muted:#4a5568;--coral:#D62839;--coral-dark:#B01E2E;--sun:#FFD23F;--mint:#2A9D8F;--line:rgba(20,33,61,.12);font-family:"Avenir Next","Trebuchet MS",system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
-body[data-page="home"]::before{background-image:linear-gradient(rgba(20,33,61,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(20,33,61,.08) 1px,transparent 1px);background-size:28px 28px;mask-image:none;-webkit-mask-image:none}
-body[data-page="home"] h1,body[data-page="home"] h2,body[data-page="home"] h3{font-family:inherit;font-weight:800;letter-spacing:-.03em;color:var(--navy)}
-body[data-page="home"] .brand-mark{background:var(--sun);border-radius:6px;transform:none;font-family:inherit;font-weight:800}
-body[data-page="home"] .site-nav a:hover,body[data-page="home"] .site-nav a[aria-current=page]{border-color:var(--coral)}
+/* Homepage-only visual layer. Loaded after styles.css; every rule is scoped to body:is([data-page="home"],[data-page="projects"]). */
+body:is([data-page="home"],[data-page="projects"]){--cream:#EEF3F6;--paper:#fff;--navy:#14213D;--ink:#14213D;--muted:#4a5568;--coral:#D62839;--coral-dark:#B01E2E;--sun:#FFD23F;--mint:#2A9D8F;--line:rgba(20,33,61,.12);font-family:"Avenir Next","Trebuchet MS",system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
+body:is([data-page="home"],[data-page="projects"])::before{background-image:linear-gradient(rgba(20,33,61,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(20,33,61,.08) 1px,transparent 1px);background-size:28px 28px;mask-image:none;-webkit-mask-image:none}
+body:is([data-page="home"],[data-page="projects"]) h1,body:is([data-page="home"],[data-page="projects"]) h2,body:is([data-page="home"],[data-page="projects"]) h3{font-family:inherit;font-weight:800;letter-spacing:-.03em;color:var(--navy)}
+body:is([data-page="home"],[data-page="projects"]) .brand-mark{background:var(--sun);border-radius:6px;transform:none;font-family:inherit;font-weight:800}
+body:is([data-page="home"],[data-page="projects"]) .site-nav a:hover,body:is([data-page="home"],[data-page="projects"]) .site-nav a[aria-current=page]{border-color:var(--coral)}
 
 /* hero */
 .h-hero{width:var(--wrap);margin:0 auto;padding:34px 0 40px;display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(30px,6vw,84px);align-items:center}
@@ -76,8 +76,8 @@ body[data-page="home"] .site-nav a:hover,body[data-page="home"] .site-nav a[aria
 .h-band .h-btn.ghost{background:transparent;color:#fff;border-color:#fff}
 .h-band .h-btn.ghost:hover{background:#fff;color:var(--navy)}
 
-body[data-page="home"] .h-band h2,body[data-page="home"] .t-practice h3,body[data-page="home"] .t-chinese h3{color:#fff}
-body[data-page="home"] .t-practice p,body[data-page="home"] .t-chinese p{color:#fff}
+body:is([data-page="home"],[data-page="projects"]) .h-band h2,body:is([data-page="home"],[data-page="projects"]) .t-practice h3,body:is([data-page="home"],[data-page="projects"]) .t-chinese h3{color:#fff}
+body:is([data-page="home"],[data-page="projects"]) .t-practice p,body:is([data-page="home"],[data-page="projects"]) .t-chinese p{color:#fff}
 
 /* AI tools row */
 .tools-row{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:34px;border-top:3px solid var(--navy);background:#fff}
@@ -120,13 +120,13 @@ body[data-page="home"] .t-practice p,body[data-page="home"] .t-chinese p{color:#
 .h-section.flush-top{padding-top:0}
 .sums.dark{color:var(--navy)}
 .sums.dark span{border-color:var(--navy)}
-body[data-page="home"] .t-practice p,body[data-page="home"] .t-chinese p{opacity:1}
-body[data-page="home"] .brand{min-height:44px}
-body[data-page="home"] .menu-button{min-height:44px;min-width:44px}
-body[data-page="home"] .site-nav a{display:inline-flex;align-items:center;min-height:44px;padding-block:0}
-body[data-page="home"] .footer-grid nav a,body[data-page="home"] .footer-grid .link-button{display:inline-flex;align-items:center;min-height:44px}
-body[data-page="home"] .footer-grid nav{gap:4px 18px}
-@media(max-width:900px){body[data-page="home"] .site-nav a{min-height:48px}}
+body:is([data-page="home"],[data-page="projects"]) .t-practice p,body:is([data-page="home"],[data-page="projects"]) .t-chinese p{opacity:1}
+body:is([data-page="home"],[data-page="projects"]) .brand{min-height:44px}
+body:is([data-page="home"],[data-page="projects"]) .menu-button{min-height:44px;min-width:44px}
+body:is([data-page="home"],[data-page="projects"]) .site-nav a{display:inline-flex;align-items:center;min-height:44px;padding-block:0}
+body:is([data-page="home"],[data-page="projects"]) .footer-grid nav a,body:is([data-page="home"],[data-page="projects"]) .footer-grid .link-button{display:inline-flex;align-items:center;min-height:44px}
+body:is([data-page="home"],[data-page="projects"]) .footer-grid nav{gap:4px 18px}
+@media(max-width:900px){body:is([data-page="home"],[data-page="projects"]) .site-nav a{min-height:48px}}
 
 /* aesthetic pass: rhythm inside tiles, a quiet motif on the big tile */
 .tile .big,.tile .cn-big,.tile .eqn,.tile .play{margin-bottom:12px}
@@ -263,3 +263,21 @@ body[data-page="home"] .footer-grid nav{gap:4px 18px}
   .star-jam img{max-width:300px;margin-inline:auto}
 }
 @media(prefers-reduced-motion:reduce){.star-jam{transition:none}.star-jam:hover{transform:none}.star-jam img{transform:none}}
+
+/* work row + email signup (home, projects) */
+.work-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px;margin-top:30px}
+.work-row a{display:flex;flex-direction:column;gap:6px;min-height:118px;padding:20px 22px;border:2.5px solid var(--navy);border-radius:10px;background:#fff;color:var(--navy);text-decoration:none;box-shadow:4px 4px 0 var(--sun);transition:transform .15s,box-shadow .15s}
+.work-row a:hover{transform:translate(-1px,-1px);box-shadow:6px 6px 0 var(--sun)}
+.work-row strong{font-size:1.12rem}
+.work-row span{color:var(--muted);font-size:.95rem;line-height:1.4}
+.h-signup{width:var(--wrap);margin:0 auto;padding:clamp(14px,2vw,26px) 0;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:18px clamp(20px,4vw,48px);align-items:center;border:2.5px solid var(--navy);border-radius:14px;background:#fff;box-shadow:6px 6px 0 var(--sun);padding-inline:clamp(18px,3vw,34px);margin-top:clamp(10px,2vw,22px)}
+.h-signup h2{font-size:clamp(1.4rem,2.6vw,2rem)}
+.h-signup p{margin:8px 0 0;color:var(--muted)}
+.signup-form{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.signup-form input{flex:1 1 220px;min-height:50px;padding:10px 14px;border:2.5px solid var(--navy);border-radius:6px;background:#fff;color:var(--navy)}
+.signup-form input:disabled{background:#F1F4F7;color:#6b7280}
+.signup-form .h-btn:disabled{opacity:.7;cursor:not-allowed}
+.signup-note{flex-basis:100%;margin:2px 0 0;font-size:.9rem;color:var(--muted)}
+.playband.solo{grid-template-columns:minmax(0,1fr);padding-top:0}
+@media(max-width:720px){.h-signup{grid-template-columns:1fr}}
+.site-nav a [lang="zh-CN"]{margin-left:.35em}
