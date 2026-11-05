@@ -49,3 +49,9 @@
 - 改了什么：首页重排——标题下面第一屏就是 Parking Jam 大卡（真实关卡截图 assets/jam-board.jpg + 「Play now」），紧接着漫画区，然后才是鸟应用/泡泡/冷笑话；下方卡片区去掉重复的 Parking Jam 卡，四个口诀页 + 乘法表合并成一张「Mental math tricks」卡（五个入口按钮）；home.css v20261105b。新增 5 张 1000×1500 原创 Pinterest 竖图（assets/pins/）和发布清单 docs/pinterest-pins.md（标题、描述、目标链接都写好）。
 - 没做成：「不追踪也能知道哪页有人看」——网站端做不了；免费且不往网站加脚本的办法是 Google Search Console（需要老板用自己的 Google 账号验证域名，Claude 不能代开账号）。
 - 候选：1. 老板开通 Search Console 后，Claude 加验证文件并每周看一次搜索词；2. 漫画 4–6 换手绘版；3. Parking Jam 通关分享卡片。
+
+## 2026-11-05（大改版：砍）
+- 起因：老板问为什么网站没有一鸣惊人的感觉、也不赚钱。结论：首页杂货铺、导航一半是联盟/AI 工具、没有邮箱入口、没有链到 Etsy/KDP/YouTube、页脚写着「法律信息待审核」。
+- 改了什么：导航砍到 4 项（Practice / Printables / Books & Songs / About）；首页 H1 改为「Free math practice for kids」，加邮箱订阅区（未接服务商前按钮禁用，接法见 content-config.js 的 emailFormAction）和「All our work」入口行（Etsy、两本 KDP 小说、YouTube、Books & Songs）；新页 projects.html（Bird Pal、书、歌、游戏：Parking Jam / 找笑脸 / 泡泡 / 冷笑话）；工具、测评、优惠券、go/、newsletter 页下线（noindex + 移出 sitemap，文件保留）；logo「PPhoebie's」改成「学」；About/Privacy/Terms/Refunds 改为定稿文字，页脚改为联系 Etsy 店铺；所有页补齐 title / description / OG / canonical。
+- 规则（给每日任务）：每天只做一件事——删掉没用的东西、修一个坏的地方、或提升首页转化（邮箱订阅、Etsy/KDP 入口）。不加新功能、不加新页面。
+- 待老板接线：邮箱服务商（填 emailFormAction 并把其域名加入 index.html CSP 的 form-action）；KDP 两本书的直达链接（现为 Amazon 搜索链接）；抖音、Pinterest、晚风音乐 YouTube 频道的链接（未确认，暂未上线）。

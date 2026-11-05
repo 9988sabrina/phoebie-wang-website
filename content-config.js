@@ -14,4 +14,5 @@ window.LEARNING_LAB_CONFIG = Object.freeze({
 });
 
 // Owner configuration hooks: fill these only after analytics and email privacy review.
-window.SITE_CONFIG = { ga4Id: "", emailEmbedHtml: "" };
+// emailFormAction: HTTPS endpoint of the email provider's plain HTML form (also add that host to form-action in the CSP meta of index.html). Leave empty until the provider is approved: the homepage form stays switched off.
+window.SITE_CONFIG = { ga4Id: "", emailEmbedHtml: "", emailFormAction: "" };
