@@ -281,3 +281,78 @@ body:is([data-page="home"],[data-page="projects"]) .footer-grid nav{gap:4px 18px
 .playband.solo{grid-template-columns:minmax(0,1fr);padding-top:0}
 @media(max-width:720px){.h-signup{grid-template-columns:1fr}}
 .site-nav a [lang="zh-CN"]{margin-left:.35em}
+
+/* ===== identity pass: worksheet comes alive ===== */
+@font-face{font-family:"Poppins Display";src:url("assets/fonts/poppins-bold.woff") format("woff");font-weight:700;font-style:normal;font-display:swap}
+body:is([data-page="home"],[data-page="projects"]){--display:"Poppins Display","Avenir Next","Trebuchet MS",system-ui,"PingFang SC","Microsoft YaHei",sans-serif;--pink:#FF9FB2;--sky:#BDE6F7;--mint-soft:#BFEBDD;--sun-soft:#FFF3C4}
+body:is([data-page="home"],[data-page="projects"]) h1,body:is([data-page="home"],[data-page="projects"]) h2{font-family:var(--display);font-weight:700;letter-spacing:-.025em}
+.sprite{position:absolute;width:0;height:0;overflow:hidden}
+
+/* hero band: sun-yellow halftone, full width */
+.intro{position:relative;width:auto;margin:0 0 clamp(28px,4vw,52px);padding:clamp(28px,4.5vw,56px) max(20px,calc((100% - 1160px)/2)) clamp(32px,4.5vw,56px);display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr);gap:clamp(20px,3vw,40px) clamp(28px,5vw,72px);align-items:center;background-color:var(--sun);background-image:radial-gradient(rgba(20,33,61,.16) 1.6px,transparent 2px);background-size:16px 16px;border-bottom:3px solid var(--navy);overflow:hidden}
+.intro-text{flex:none;min-width:0}
+.intro h1{font-size:clamp(2.4rem,6vw,4.7rem);line-height:1.03;max-width:12ch;text-shadow:3px 3px 0 #fff}
+.intro h1 .zh{display:inline-block;margin-top:.12em;padding:.08em .32em;border:2.5px solid var(--navy);border-radius:10px;background:var(--coral);color:#fff;font-size:.5em;line-height:1.25;letter-spacing:0;text-shadow:none;transform:rotate(-2.5deg);box-shadow:4px 4px 0 var(--navy);vertical-align:.18em}
+.intro-lede{margin:20px 0 0;max-width:46ch;font-size:clamp(1.02rem,1.5vw,1.2rem);color:var(--navy)}
+.intro .h-cta{margin-top:26px}
+.intro .h-btn.primary{background:var(--coral);color:#fff;font-size:1.1rem;min-height:56px;padding:12px 28px}
+.intro .h-btn.ghost{background:#fff}
+.intro .h-chips li{background:rgba(255,255,255,.75)}
+.intro .h-holiday{grid-column:1/-1;margin:4px 0 0;background:#fff}
+
+/* the trace pad: the one memorable thing */
+.trace{position:relative;max-width:400px;width:100%;justify-self:center}
+.pad{position:relative;aspect-ratio:1;background:#fff;border:3px solid var(--navy);box-shadow:9px 9px 0 var(--navy);overflow:hidden}
+.pad::after{content:"";position:absolute;inset:0;border:2px solid var(--coral);opacity:.55;pointer-events:none}
+.pad-grid,.pad-ghost,.pad-ghost-canvas,.pad-ink{position:absolute;inset:0;width:100%;height:100%}
+.pad-ghost{display:grid;place-items:center;font-family:"Kaiti SC","STKaiti","KaiTi","BiauKai","Noto Serif CJK SC",serif;font-weight:700;font-size:min(72vw,320px);line-height:1;color:rgba(20,33,61,.13)}
+.pad-ghost-canvas,.pad-ink{display:none}
+.trace.live .pad-ghost{display:none}
+.trace.live .pad-ghost-canvas,.trace.live .pad-ink{display:block}
+.pad-ink{cursor:crosshair;touch-action:none}
+.pad-stamp{position:absolute;right:6%;bottom:6%;display:grid;place-items:center;width:34%;aspect-ratio:1;border:4px solid var(--coral);border-radius:14px;color:var(--coral);font-family:"Kaiti SC","STKaiti","KaiTi","BiauKai","Noto Serif CJK SC",serif;font-weight:700;font-size:min(14vw,64px);line-height:1;opacity:0;transform:rotate(-12deg) scale(1.6);pointer-events:none;background:rgba(255,255,255,.7)}
+.pad.done .pad-stamp{opacity:1;transform:rotate(-12deg) scale(1);transition:transform .28s cubic-bezier(.3,1.6,.5,1),opacity .12s}
+.trace-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:20px;padding-left:min(30%,110px)}
+.trace-say{margin:0;font-size:.98rem;line-height:1.35;font-weight:700;color:var(--navy);background:#fff;border:2.5px solid var(--navy);border-radius:12px 12px 12px 2px;padding:8px 12px;box-shadow:3px 3px 0 var(--navy)}
+.trace-say b{font-family:"Kaiti SC","STKaiti","KaiTi","BiauKai",serif;font-size:1.15em}
+.trace-reset{min-height:48px;padding:8px 16px;flex:0 0 auto;background:#fff}
+.trace-det{position:absolute;left:-26px;bottom:-14px;width:min(26%,100px);height:auto;pointer-events:none;filter:drop-shadow(3px 3px 0 rgba(20,33,61,.3))}
+
+/* section headings get room to breathe */
+.h-section>h2{font-size:clamp(1.9rem,4.6vw,3.1rem);line-height:1.06}
+.star-text h2{font-size:clamp(2.1rem,5.2vw,3.8rem)}
+.star-kicker{text-transform:none;letter-spacing:0;font-size:.95rem}
+
+/* work cards with icons */
+.work-row{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.work-row a{display:flex;flex-direction:column;align-items:flex-start;gap:6px;min-height:0;padding:20px 20px 22px;box-shadow:5px 5px 0 var(--navy)}
+.work-row a:hover{box-shadow:8px 8px 0 var(--navy)}
+.work-row .wk-ic{flex:0 0 auto;width:64px;height:64px;margin-bottom:8px;padding:13px;border:2.5px solid var(--navy);border-radius:16px;background:var(--sun);fill:none;stroke:var(--navy);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;box-shadow:3px 3px 0 var(--navy);transform:rotate(-4deg)}
+.work-row a:nth-child(5n+2) .wk-ic{background:var(--pink);transform:rotate(3deg)}
+.work-row a:nth-child(5n+3) .wk-ic{background:var(--sky)}
+.work-row a:nth-child(5n+4) .wk-ic{background:var(--mint-soft);transform:rotate(3deg)}
+.work-row a:nth-child(5n+5) .wk-ic{background:#FFC9A8}
+.work-row strong{font-size:1.12rem;line-height:1.2}
+.work-row span{font-size:.93rem}
+
+@media(max-width:900px){
+  .intro{grid-template-columns:minmax(0,1fr);gap:0}
+  .intro-text{display:contents}
+  .intro h1{order:1;max-width:14ch}
+  .trace{order:2;margin:26px auto 8px;max-width:340px}
+  .intro .h-cta{order:3;margin-top:14px}
+  .intro-lede{order:4}
+  .intro .h-chips{order:5}
+  .intro .h-holiday{order:6;margin-top:22px}
+}
+@media(max-width:560px){
+  .intro{padding-top:24px;padding-bottom:30px}
+  .intro h1{font-size:2.3rem}
+  .intro .h-cta{display:grid;grid-template-columns:1fr}
+  .intro .h-chips{gap:8px}.intro .h-chips li{padding:6px 11px;font-size:.82rem}
+  .intro .h-cta .h-btn{justify-content:center}
+  .trace{max-width:268px}.trace-bar{padding-left:84px;margin-top:14px}.trace-say{font-size:.88rem;padding:6px 10px}.trace-reset{min-height:44px}.trace-det{width:76px;left:-22px;bottom:-8px}
+  .trace-det{left:-20px}
+  .pad{box-shadow:6px 6px 0 var(--navy)}
+}
+@media(prefers-reduced-motion:reduce){.pad.done .pad-stamp{transition:none}}
