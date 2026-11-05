@@ -1,11 +1,4 @@
-<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta property="og:title" content="Daily Practice | Phoebie's Learning Lab">
-<meta property="og:description" content="Free daily practice for grades 4–6: math with bar models, Chinese, reading, choir and STEM. Progress stays in your own browser.">
-<meta property="og:image" content="https://www.phoebiewang.com/assets/og-home.jpg">
-<meta name="twitter:card" content="summary_large_image">
-<meta property="og:url" content="https://www.phoebiewang.com/practice/">
-<meta property="og:type" content="website">
-<meta name="description" content="Free daily practice for grades 4–6: math with bar models, Chinese, reading, choir and STEM. Progress stays in your own browser."><link rel="canonical" href="https://www.phoebiewang.com/practice/"><title>Daily Practice | Phoebie's Learning Lab</title>
+<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Free daily practice for grades 4–6: math with bar models, Chinese, reading, choir and STEM. Progress stays in your own browser."><link rel="canonical" href="https://www.phoebiewang.com/practice/"><title>Daily Practice | Phoebie's Learning Lab</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@400;600;700;800&family=Noto+Serif+SC:wght@500;700&family=ZCOOL+KuaiLe&display=swap">
@@ -275,7 +268,7 @@ function resolveWorkDay(){migrate();
   TODAY=REAL_TODAY;MSET=null;ZSET=null;ESET=null;
   const w=S.workDay;
   if(w&&w<REAL_TODAY&&S.skipCarry!==REAL_TODAY){TODAY=w;MSET=null;ZSET=null;ESET=null;
-    if(allDone()||leftovers().n<=4){if(!day().paper)leftovers().keys.forEach(k=>{if(!revOf(k))S.rev.push({k,stage:0,due:REAL_TODAY,src:"unfinished "+w.slice(5)})});{const dw=day();if(!dw.eDone&&typeof dw.eU==="number"&&dw.eU===(S.eUnit||0)%UNITS.length){dw.eDone=dw.eU+1;S.eUnit=(S.eUnit||0)+1}if(!dw.zDone&&(dw.paper||zProgress().done>=zProgress().total-2)){dw.zDone=S.zhDay;S.zhDay++}}TODAY=REAL_TODAY;MSET=null;ZSET=null;ESET=null}}
+    if(allDone()||leftovers().n<=4||(new Date(REAL_TODAY)-new Date(w))/864e5>=2){if(!day().paper)leftovers().keys.forEach(k=>{if(!revOf(k))S.rev.push({k,stage:0,due:REAL_TODAY,src:"unfinished "+w.slice(5)})});{const dw=day();if(!dw.eDone&&typeof dw.eU==="number"&&dw.eU===(S.eUnit||0)%UNITS.length){dw.eDone=dw.eU+1;S.eUnit=(S.eUnit||0)+1}if(!dw.zDone&&(dw.paper||zProgress().done>=zProgress().total-2)){dw.zDone=S.zhDay;S.zhDay++}}TODAY=REAL_TODAY;MSET=null;ZSET=null;ESET=null}}
   if(S.skipCarry===REAL_TODAY){}else delete S.skipCarry;
   S.workDay=TODAY;
 }
