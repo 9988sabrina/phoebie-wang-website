@@ -1497,6 +1497,35 @@ function svgRobot(prog,show){const dirs={U:[0,1],D:[0,-1],L:[-1,0],R:[1,0]};let 
  for(let i=minx;i<=maxx;i++)for(let j=miny;j<=maxy;j++)g+=`<rect x="${20+(i-minx)*cs}" y="${16+(maxy-j)*cs}" width="${cs}" height="${cs}" fill="${i===0&&j===0?"#FFE7A8":"#fff"}" stroke="#D8E2F0"/>`;
  const path="M"+pts.map(p=>X(p[0])+" "+Y(p[1])).join(" L");
  return `<svg class="ill" viewBox="0 0 ${Wd} ${Hd}">${g}<text x="${X(0)}" y="${Y(0)+4}" text-anchor="middle" font-size="10" fill="#B7791F">start</text>${show?`<path d="${path}" stroke="#E0453A" stroke-width="3" fill="none" stroke-dasharray="4 3"/><g><rect x="-9" y="-9" width="18" height="18" rx="4" fill="#5B8DEF"/><circle cx="-4" cy="-2" r="2" fill="#fff"/><circle cx="4" cy="-2" r="2" fill="#fff"/><animateMotion dur="${pts.length*.35}s" fill="freeze" path="${path}"/></g>`:`<g transform="translate(${X(0)} ${Y(0)})"><rect x="-9" y="-9" width="18" height="18" rx="4" fill="#5B8DEF"/><circle cx="-4" cy="-2" r="2" fill="#fff"/><circle cx="4" cy="-2" r="2" fill="#fff"/></g>`}</svg>`}
+// ---- Piano ----
+const PK={C4:261.63,"C#4":277.18,D4:293.66,"D#4":311.13,E4:329.63,F4:349.23,"F#4":369.99,G4:392,"G#4":415.30,A4:440,"A#4":466.16,B4:493.88,C5:523.25};
+const PW=["C4","D4","E4","F4","G4","A4","B4","C5"],PBK={0:"C#4",1:"D#4",3:"F#4",4:"G#4",5:"A#4"};
+const PLESSONS=[
+ {t:"Meet the keys",goal:"Find middle C.",steps:["Look at the black keys. They come in groups of 2 and groups of 3.","Find a group of 2 black keys. The white key just to the LEFT of the pair is C.","The C near the middle of the keyboard is called middle C. Press it and say \"C\".","Press C, D, E in a row, going up. Higher notes are to the right."],mel:"C4 D4 E4 D4 C4"},
+ {t:"Note names C D E F G",goal:"Say the name of every key you press.",steps:["Start on C. Go up one white key at a time: C D E F G.","Say each name out loud as you press it.","Then go back down: G F E D C.","Do it 3 times, a little faster each time."],mel:"C4 D4 E4 F4 G4 F4 E4 D4 C4"},
+ {t:"Five fingers, five notes",goal:"Use one finger for each key.",steps:["Number your right-hand fingers: thumb = 1, pointer = 2, middle = 3, ring = 4, pinky = 5.","Rest finger 1 on C, 2 on D, 3 on E, 4 on F, 5 on G.","Curve your fingers like you hold a small ball. Wrists quiet and flat.","Play 1-2-3-4-5, then 5-4-3-2-1. Slowly and evenly."],mel:"C4 D4 E4 F4 G4 F4 E4 D4 C4"},
+ {t:"Mary Had a Little Lamb (part 1)",goal:"Play your first song line.",steps:["Start with finger 3 on E.","Play: E D C D E E E (Mary had a lit-tle lamb).","Then: D D D (lit-tle lamb), E G G (lit-tle lamb).","Say the note names while you play, then play it without saying them."],mel:"E4 D4 C4 D4 E4 E4 E4 - D4 D4 D4 - E4 G4 G4"},
+ {t:"Mary Had a Little Lamb (whole song)",goal:"Play the whole song without stopping.",steps:["Line 1: E D C D E E E","Line 2: D D D  E G G","Line 3: E D C D E E E E","Line 4: D D E D C (finish on C and hold it).","Play it three times. Which part still feels wobbly? Practice just that part."],mel:"E4 D4 C4 D4 E4 E4 E4 - D4 D4 D4 - E4 G4 G4 - E4 D4 C4 D4 E4 E4 E4 E4 D4 D4 E4 D4 C4"},
+ {t:"Hot Cross Buns",goal:"Play a 3-note song and keep a steady beat.",steps:["Hot cross buns: E D C (hold C a little longer).","Again: E D C.","One a penny, two a penny: C C C C  D D D D.","Hot cross buns: E D C.","Tap your foot to keep the beat steady the whole time."],mel:"E4 D4 C4 - E4 D4 C4 - C4 C4 C4 C4 D4 D4 D4 D4 - E4 D4 C4"},
+ {t:"Twinkle, Twinkle",goal:"Jump from C up to G.",steps:["Twinkle, twinkle: C C G G A A G. (the jump from C to G is a big step: use finger 1 then finger 5)","Little star: F F E E D D C.","Slow and smooth. The two Gs and two As are the same note pressed twice.","Say \"jump\" out loud when you leap from C to G."],mel:"C4 C4 G4 G4 A4 A4 G4 - F4 F4 E4 E4 D4 D4 C4"},
+ {t:"Ode to Joy (line 1)",goal:"Play a famous tune by Beethoven.",steps:["E E F G | G F E D | C C D E | E D D.","Notice the notes move by steps (neighbors) most of the time.","Fingers: use 3-3-4-5, 5-4-3-2, 1-1-2-3, then 3-2-2.","Play it slowly three times."],mel:"E4 E4 F4 G4 G4 F4 E4 D4 C4 C4 D4 E4 E4 D4 D4"},
+ {t:"Ode to Joy (line 2)",goal:"Finish the tune the right way.",steps:["Line 2 starts the same as line 1: E E F G | G F E D | C C D E.","But the end is different: D C C (not E D D).","Play line 1, then line 2. Hear how line 2 sounds finished?","Play the whole tune twice."],mel:"E4 E4 F4 G4 G4 F4 E4 D4 C4 C4 D4 E4 D4 C4 C4"},
+ {t:"Long and short notes",goal:"Feel the beat: quarter, half, whole.",steps:["Clap 4 steady beats: 1 2 3 4.","Quarter note = 1 beat. Half note = 2 beats. Whole note = 4 beats.","Play C and count: C (1) C (1) C (2 beats: say 1-2) C (4 beats: 1-2-3-4).","Play Twinkle again and hold each last note longer."],mel:"C4 - C4 - C4 - - C4 - - - -"},
+ {t:"Black keys: F sharp",goal:"Find and play a black key.",steps:["Find the group of 3 black keys. The first one is F sharp (F♯). Its name means a little higher than F.","Play F, then F♯, then G. Hear how each step goes up a tiny bit.","A half step is the smallest step on a piano, white-to-black or white-to-white when no black key is between.","Play F♯ G F♯ G like a spooky sound."],mel:"F4 F#4 G4 F#4 F4"},
+ {t:"Small concert",goal:"Pick your best song and make it sound great.",steps:["Choose your favorite song from this week.","Play it slowly and without stopping. If you make a mistake, keep going.","Then play it one more time with a gentle start and a strong end.","Bow! (Yes, really.)"],mel:"C4 D4 E4 F4 G4 A4 B4 C5"},
+ {t:"Play for someone",goal:"Share your music.",steps:["Pick one song to play for a family member (or a stuffed animal).","Tell them the song name and the composer if you know it.","Play it all the way through.","Ask: which part did you like best?"],mel:"E4 D4 C4 D4 E4 E4 E4"}];
+function pkKeys(attr,qi,labels){return `<style>.pkb{position:relative;display:flex;width:100%;height:150px;max-width:420px;margin:8px auto;user-select:none;touch-action:manipulation}.pkey{all:unset;box-sizing:border-box;cursor:pointer}.pkey.w{flex:1;background:#fff;border:1.5px solid #333;border-radius:0 0 6px 6px;display:flex;align-items:flex-end;justify-content:center;padding-bottom:6px;font-weight:700;color:#444}.pkey.b{position:absolute;top:0;width:7%;height:92px;background:#222;border-radius:0 0 4px 4px;z-index:2}.pkey.w:active{background:#BFD7FF}.pkey.b:active{background:#5B8DEF}.pkey.c4{color:#E0453A}</style><div class="pkb">${PW.map(n=>`<button class="pkey w ${n==="C4"?"c4":""}" data-${attr}="${n}" ${qi!==undefined?`data-qi="${qi}"`:""} aria-label="${n}">${labels?(n==="C4"?"C•":n.replace(/\d/,"")):""}</button>`).join("")}${Object.entries(PBK).map(([i,n])=>`<button class="pkey b" data-${attr}="${n}" ${qi!==undefined?`data-qi="${qi}"`:""} style="left:calc(${(+i+1)*12.5}% - 3.5%)" aria-label="${n}"></button>`).join("")}</div>`}
+function vPiano(c){S.piano=S.piano||{n:0,last:""};const P=S.piano,idx=(P.last===TODAY?P.n-1:P.n)%PLESSONS.length,L=PLESSONS[Math.max(0,idx)];
+ const r=rng("pk"+TODAY),names=["C","D","E","F","G","A","B"],qs=[];while(qs.length<3){const x=names[Math.floor(r()*7)];if(!qs.includes(x))qs.push(x)}
+ return `<div class="card"><h3>🎹 Piano · lesson ${Math.max(0,idx)+1} of ${PLESSONS.length} ${c.pk?`<span class="chip ok">✓</span>`:""}</h3>
+  <p class="small muted" style="margin:0 0 6px">About 10 minutes. Use a real piano or keyboard if you have one; the keys below make sound too. Lessons completed: ${P.n}.</p>
+  <div style="font-weight:700">${esc(L.t)}</div><p style="margin:4px 0"><b>Goal:</b> ${esc(L.goal)}</p>
+  <ol style="margin:6px 0 8px 18px;padding:0">${L.steps.map(x=>`<li style="margin:3px 0">${esc(x)}</li>`).join("")}</ol>
+  ${pkKeys("key",undefined,true)}
+  <div class="row" style="gap:8px;flex-wrap:wrap"><button data-pkplay="${Math.max(0,idx)}">▶ Hear it</button><button data-pkplay="slow${Math.max(0,idx)}">🐢 Hear it slowly</button></div>
+  <div class="eyebrow" style="margin-top:12px">Find the key</div>
+  ${qs.map((x,i)=>{const ans=c["pq"+i],ok=x+"4";return `<div class="step" style="margin-top:8px"><div class="say">Tap the note ${x} (any ${x} in the lower octave) ${ans?(ans===ok?'<span class="chip ok">✓</span>':'<span class="chip warn">try again</span>'):""}</div>${pkKeys("pkq",i,false)}</div>`}).join("")}
+  <button style="margin-top:10px" data-pkdone="1">${c.pk?"✓ I practiced 10 minutes (undo)":"I practiced 10 minutes"}</button></div>`}
 function vClubs(){const d=day();d.c=d.c||{};const c=d.c;const r=rng("clubs"+TODAY);
  const song=SONGS[Math.floor((new Date(TODAY).getTime()/864e5))%SONGS.length];
  const th=shuffle(rng("th"+TODAY),THEORY).slice(0,3);
@@ -1518,6 +1547,7 @@ function vClubs(){const d=day();d.c=d.c||{};const c=d.c;const r=rng("clubs"+TODA
   <div class="eyebrow" style="margin-top:14px">4. Music quiz</div>
   ${th.map((q,i)=>mc("th"+i,q[0],shuffle(rng("tho"+TODAY+i),q[1].slice()),q[2])).join("")}
  </div>
+${vPiano(c)}
  <div class="card"><h3>🔬 STEM challenge: ${esc(stem.t)} ${done("stem")}</h3>
   ${STEMSVG[stem.t]||""}<p style="margin:6px 0"><b>Goal:</b> ${esc(stem.goal)}</p><p class="small muted" style="margin:0 0 6px"><b>You need:</b> ${esc(stem.mat)}</p>
   <ol style="margin:6px 0 10px 18px;padding:0">${stem.steps.map(x=>`<li style="margin:3px 0">${esc(x)}</li>`).join("")}</ol>
@@ -1538,6 +1568,10 @@ document.addEventListener("click",e=>{const b=e.target.closest("button");if(!b||
  if(ds.teach){const d=day();const t=teachItem();d.tb=ds.teach;if(ds.teach==="no"&&t.k)markWrong(t.k,"teach-back "+TODAY.slice(5));save();render();toast(ds.teach==="yes"?"Great teaching! ★":"OK! It comes back tomorrow.");return}
  if(ds.zwrite){const d=day();const v=(document.getElementById("zw-in")||{}).value||"";if(v.trim().length<4){toast("再多写几个字吧");return}d.zw=v.trim();save();render();toast("写得好！★");return}
  if(ds.sing){const t=document.querySelector("[data-songtitle]");if(ds.sing==="stop")singStop();else singSong(t?t.dataset.songtitle:"",ds.sing);return}
+ if(ds.key){tone(PK[ds.key],0,.9);return}
+ if(ds.pkq){tone(PK[ds.pkq],0,.9);const d=day();d.c=d.c||{};d.c["pq"+ds.qi]=ds.pkq;save();render();return}
+ if(ds.pkplay){const slow=ds.pkplay.startsWith("slow"),i=parseInt(ds.pkplay.replace("slow",""),10);const m=(PLESSONS[i]||PLESSONS[0]).mel.split(" ");playSeq(m.map(n=>n==="-"?0:PK[n]),slow?.8:.45);return}
+ if(ds.pkdone){const d=day();d.c=d.c||{};S.piano=S.piano||{n:0,last:""};if(!d.c.pk){d.c.pk=true;if(S.piano.last!==TODAY){S.piano.n++;S.piano.last=TODAY}}else{d.c.pk=false;if(S.piano.last===TODAY){S.piano.n=Math.max(0,S.piano.n-1);S.piano.last=""}}save();render();toast(d.c.pk?"Great practice! 🎹":"Undone");return}
  if(ds.play==="scale"){playSeq([NOTES.C4,NOTES.D4,NOTES.E4,NOTES.F4,NOTES.G4,NOTES.F4,NOTES.E4,NOTES.D4,NOTES.C4],.45);return}
  if(ds.play==="pair"){playSeq([NOTES[ds.a],0,NOTES[ds.b]],.6);return}
  if(ds.club){const d=day();d.c=d.c||{};d.c[ds.club]=ds.v;save();render();return}
