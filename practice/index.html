@@ -545,6 +545,8 @@ function mathSet(){
     weak.forEach((k,i)=>qs.push(Object.assign({k,id:"ax"+i},G[k](rng(TODAY+k+"ax"+i)))))}
   if(!(S.settings&&S.settings.busy)){const cut=addDays(TODAY,-45);const m=(S.mastered||[]).filter(x=>x.k.startsWith("m:")&&G[x.k.slice(2)]&&(x.chk||x.on)<=cut).sort((x,y)=>(x.chk||x.on)<(y.chk||y.on)?-1:1)[0];
     if(m)qs.push(Object.assign({k:m.k.slice(2),id:"mc0",mc:1},G[m.k.slice(2)](rng(TODAY+m.k+"mc"))))}
+  if(!(S.settings&&S.settings.busy)){const PV=["fracAdd","fracAsDiv","fracMul","scaling","fracDiv","unitFracDiv","volume","convert","expr","coord","shapes"];const wk=Math.floor((new Date(TODAY+"T12:00")-new Date("2026-11-02T12:00"))/(7*864e5));
+    if(wk>=0){const k=PV[wk%PV.length];if(G[k])[0,1].forEach(i=>qs.push(Object.assign({k,id:"pv"+i,pv:1},G[k](rng(TODAY+k+"pv"+i)))))}}
   {const bk=(S.bonusPlan||{})[TODAY]||(S.bonus&&S.bonus.date===TODAY?S.bonus.k:null);if(bk)bk.forEach((k,i)=>qs.push(Object.assign({k,id:"bx"+i},G[k](rng(TODAY+k+"bx"+i)))));}
   const dm=(S.days[TODAY]||{}).m||{};
   qs.slice().forEach(q=>{if(dm[q.id]==="fix")qs.push(Object.assign({k:q.k,id:q.id+"b",again:q.id},G[q.k](rng(TODAY+q.k+"again"+q.id))))});
