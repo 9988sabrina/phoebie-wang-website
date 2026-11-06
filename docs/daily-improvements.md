@@ -55,3 +55,9 @@
 - 改了什么：导航砍到 4 项（Practice / Printables / Books & Songs / About）；首页 H1 改为「Free math practice for kids」，加邮箱订阅区（未接服务商前按钮禁用，接法见 content-config.js 的 emailFormAction）和「All our work」入口行（Etsy、两本 KDP 小说、YouTube、Books & Songs）；新页 projects.html（Bird Pal、书、歌、游戏：Parking Jam / 找笑脸 / 泡泡 / 冷笑话）；工具、测评、优惠券、go/、newsletter 页下线（noindex + 移出 sitemap，文件保留）；logo「PPhoebie's」改成「学」；About/Privacy/Terms/Refunds 改为定稿文字，页脚改为联系 Etsy 店铺；所有页补齐 title / description / OG / canonical。
 - 规则（给每日任务）：每天只做一件事——删掉没用的东西、修一个坏的地方、或提升首页转化（邮箱订阅、Etsy/KDP 入口）。不加新功能、不加新页面。
 - 待老板接线：邮箱服务商（填 emailFormAction 并把其域名加入 index.html CSP 的 form-action）；KDP 两本书的直达链接（现为 Amazon 搜索链接）；抖音、Pinterest、晚风音乐 YouTube 频道的链接（未确认，暂未上线）。
+
+## 2026-11-06
+- 改了什么（修一个坏的地方）：手机上除首页和 Books & Songs 页以外的所有页面，右上角「Menu」按钮只有 38px 高、页脚链接只有 21px 高，低于 44px 的点击区标准，小手指容易点不中。把 44px 的规则从 home.css 的首页专用提到 styles.css 全站生效；所有页面的 styles.css 加 `?v=20261106a`。375px 下 20 个页面复查无横向溢出，44 个测试全过。PR 号见当天合并记录（claude/daily-2026-11-06）。
+- 没做的候选：
+  1. 页脚「Affiliate Disclosure」链接：联盟/工具页已下线，这个链接和 sitemap 里的 disclosure.html 可能已多余（涉及法律声明，需老板点头再删）。
+  2. practice/ 页的标签按钮 40px、「听一听」36px，chinese/ 页的按钮 41px，也略低于 44px（这两页用自己的样式表，留给以后单独修）。
