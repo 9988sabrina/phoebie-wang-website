@@ -11,3 +11,6 @@
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}@media print{.site-header,.site-footer,.button-row,.lesson-controls{display:none!important}body{background:#fff}body::before{display:none}}
 
 .site-nav a [lang="zh-CN"]{margin-left:.35em}
+
+/* 2026-11-06: tap targets at least 44px on every page (was home/projects only) */
+.menu-button{min-height:44px;min-width:44px}.footer-grid nav a,.footer-grid .link-button{display:inline-flex;align-items:center;min-height:44px}
