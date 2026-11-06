@@ -315,9 +315,9 @@ const SK={
  decWord:"Decimal word form",digitValue:"Digit value",decMul:"Decimal × decimal",cToF:"°C → °F",
  fracAdd:"Add fractions + simplify",fracDiv:"Fraction ÷ whole number",decOrder:"Order decimals",remainder:"Remainder reasoning",explain:"Explain It",
  volume:"Volume (l × w × h)",fracMul:"Fraction × fraction",unitDiv:"Whole ÷ unit fraction",expr:"Write expressions",coord:"Coordinate plane",shapes:"Classify 2-D shapes",
- decAddSub:"Add & subtract decimals",mulMulti:"Multi-digit multiplication",div2:"Divide by 2-digit numbers",decDivW:"Decimal ÷ whole number",unitFracDiv:"Unit fraction ÷ whole",convert:"Convert units",pow10:"Powers of 10",scaling:"Multiplying as scaling",fracAsDiv:"Fractions as division",olymp:"Olympiad Challenge"};
+ decAddSub:"Add & subtract decimals",mulMulti:"Multi-digit multiplication",div2:"Divide by 2-digit numbers",decDivW:"Decimal ÷ whole number",decDivDec:"Decimal ÷ decimal",unitFracDiv:"Unit fraction ÷ whole",convert:"Convert units",pow10:"Powers of 10",scaling:"Multiplying as scaling",fracAsDiv:"Fractions as division",olymp:"Olympiad Challenge"};
 const STD={round:"5.NBT.4",div9:"Gr 4",x11:"warm-up",dh:"warm-up",pemdas:"5.OA.1",decWord:"5.NBT.3a",digitValue:"5.NBT.1",decMul:"5.NBT.7",cToF:"science",fracAdd:"5.NF.1",fracDiv:"5.NF.7 stretch",decOrder:"5.NBT.3b",remainder:"challenge",volume:"5.MD.5",fracMul:"5.NF.4",unitDiv:"5.NF.7b",expr:"5.OA.2",coord:"5.G.1",shapes:"5.G.4",explain:"Explain",
- decAddSub:"5.NBT.7",mulMulti:"5.NBT.5",div2:"5.NBT.6",decDivW:"5.NBT.7",unitFracDiv:"5.NF.7a",convert:"5.MD.1",pow10:"5.NBT.2",scaling:"5.NF.5",fracAsDiv:"5.NF.3"};
+ decAddSub:"5.NBT.7",mulMulti:"5.NBT.5",div2:"5.NBT.6",decDivW:"5.NBT.7",decDivDec:"5.NBT.7",unitFracDiv:"5.NF.7a",convert:"5.MD.1",pow10:"5.NBT.2",scaling:"5.NF.5",fracAsDiv:"5.NF.3"};
 const PLACES=["tenths","hundredths","thousandths"];
 const G={
  round(r){let a,f,ds;do{a=ri(r,10,99);f=ri(r,101,989);ds=String(f).padStart(3,"0").split("")}while(new Set(ds).size<3||ds[2]==="0");
@@ -428,6 +428,10 @@ const G={
      {say:`Divide: ${n} ÷ ${d}. Is there a remainder?`,choices:["Yes","No"],ok:"Yes"},
      {say:`How many full boxes? (the quotient)`,input:true,ok:q},
      {say:`The leftover books still need a box! Write the total number of boxes.`}]}},
+ decDivDec(r){let dd;do{dd=ri(r,2,15)}while(dd%10===0);const Q=ri(r,2,30);const D10=dd*Q;const dv=(dd/10).toFixed(1);const Dv=(D10/10).toFixed(1);
+   return{prompt:`${Dv} ÷ ${dv} = ?`,ans:Q,show:String(Q),steps:[
+    {say:`Make the divisor a whole number: multiply BOTH numbers by 10. ${Dv} ÷ ${dv} becomes ${D10} ÷ ${dd}. What is ${D10} ÷ ${dd}?`,input:true,ok:Q},
+    {say:`Both numbers were multiplied by 10, so the answer stays the same: ${Q}.`}]}},
  decDivW(r){const k=ri(r,2,9);const Q=ri(r,12,95);const places=r()<.5?1:2;const qv=Q/Math.pow(10,places);const D=Q*k;const dv=D/Math.pow(10,places);
    return{prompt:`${dv.toFixed(places)} ÷ ${k} = ?`,ans:qv,show:qv.toFixed(places),steps:[
     {say:`Divide as if there were no decimal point: ${D} ÷ ${k} = ?`,input:true,ok:Q},
@@ -516,7 +520,7 @@ const EXPLAINS=[
    {say:"Move both decimals one place: 86.4 ÷ 12 = ?",input:true,ok:7.2}],
   frame:["The student put the decimal point in the wrong place. The answer should be about ","[8|0.8]",", so 8.64 ÷ 1.2 = ","[7.2|0.72]","."],okf:["8","7.2"]}
 ];
-const ALL_M=["x11","round","pemdas","decWord","digitValue","decMul","fracAdd","fracDiv","decOrder","remainder","volume","fracMul","unitDiv","expr","coord","shapes","decAddSub","mulMulti","div2","decDivW","unitFracDiv","convert","pow10","scaling","fracAsDiv"];
+const ALL_M=["x11","round","pemdas","decWord","digitValue","decMul","fracAdd","fracDiv","decOrder","remainder","volume","fracMul","unitDiv","expr","coord","shapes","decAddSub","mulMulti","div2","decDivW","decDivDec","unitFracDiv","convert","pow10","scaling","fracAsDiv"];
 const PARENT_M=ALL_M.concat(["x11","dh","div9","cToF"]);
 function weekKey(){const d=new Date();const day=(d.getDay()+6)%7;d.setDate(d.getDate()-day);return keyOf(d)}
 function focusSkills(){const wk=weekKey();
