@@ -539,6 +539,8 @@ function mathSet(){
   const ex=EXPLAINS[Math.floor((new Date(TODAY).getTime()/864e5))%EXPLAINS.length];
   {const weak=ALL_M.filter(k=>G[k]&&S.skill[k]&&S.skill[k].a>=4&&S.skill[k].c/S.skill[k].a<0.7).sort((x,y)=>S.skill[x].c/S.skill[x].a-S.skill[y].c/S.skill[y].a).slice(0,3);
     weak.forEach((k,i)=>qs.push(Object.assign({k,id:"ax"+i},G[k](rng(TODAY+k+"ax"+i)))))}
+  if(!(S.settings&&S.settings.busy)){const cut=addDays(TODAY,-45);const m=(S.mastered||[]).filter(x=>x.k.startsWith("m:")&&G[x.k.slice(2)]&&(x.chk||x.on)<=cut).sort((x,y)=>(x.chk||x.on)<(y.chk||y.on)?-1:1)[0];
+    if(m)qs.push(Object.assign({k:m.k.slice(2),id:"mc0",mc:1},G[m.k.slice(2)](rng(TODAY+m.k+"mc"))))}
   {const bk=(S.bonusPlan||{})[TODAY]||(S.bonus&&S.bonus.date===TODAY?S.bonus.k:null);if(bk)bk.forEach((k,i)=>qs.push(Object.assign({k,id:"bx"+i},G[k](rng(TODAY+k+"bx"+i)))));}
   const dm=(S.days[TODAY]||{}).m||{};
   qs.slice().forEach(q=>{if(dm[q.id]==="fix")qs.push(Object.assign({k:q.k,id:q.id+"b",again:q.id},G[q.k](rng(TODAY+q.k+"again"+q.id))))});
@@ -1184,7 +1186,7 @@ document.addEventListener("click",async e=>{const b=e.target.closest("button");i
   if(ds.bedhide){const dd=day();dd.bedHide=!dd.bedHide;save();render();return}
   const qs=getM();const Q=id=>qs.find(q=>q.id===id);
   const finishQ=(q,first)=>{if(!first&&!q.again&&!getM().some(x=>x.again===q.id)){const nq=Object.assign({k:q.k,id:q.id+"b",again:q.id},G[q.k](rng(TODAY+q.k+"again"+q.id)));const ex=MSET.findIndex(x=>x.explain);MSET.splice(ex<0?MSET.length:ex,0,nq)}
-    d.m[q.id]=first?"ok":"fix";skillHit(q.k,first);if(first&&!q.again)markRight("m:"+q.k);else if(!first)markWrong("m:"+q.k,"missed "+TODAY.slice(5));delete live[q.id];save();render();
+    d.m[q.id]=first?"ok":"fix";skillHit(q.k,first);if(first&&!q.again)markRight("m:"+q.k);else if(!first)markWrong("m:"+q.k,"missed "+TODAY.slice(5));if(q.mc){if(first){const mm=S.mastered.find(x=>x.k==="m:"+q.k);if(mm)mm.chk=TODAY}else S.mastered=S.mastered.filter(x=>x.k!=="m:"+q.k)}delete live[q.id];save();render();
     if(first)toast("Nice! ★");const c=document.getElementById("card-"+q.id);if(c)c.classList.add("pop")};
   const judge=(q,raw)=>{const st=live[q.id]=live[q.id]||{tries:0};
     let right=false,unsimp=false;
