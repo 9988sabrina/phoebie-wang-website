@@ -246,7 +246,7 @@ a.btn.pri,a.btn.print{color:var(--onj)}
   --ink:#1d1a17; --soft:#6b625a; --red:#c2412d; --grid:#e3a597; --trace:#cfc8c2; --line:#d9d2cb; --wash:#faf5f1;
   --hanzi:"Kaiti SC","STKaiti","KaiTi","Noto Sans CJK SC","Noto Sans SC",sans-serif;
   --serif:"Noto Serif SC","Noto Serif CJK SC","Songti SC",serif;
-  --latin:"Figtree","Helvetica Neue",Arial,sans-serif;font-family:var(--latin);color:var(--ink);line-height:1.25}
+  --latin:"Figtree","Helvetica Neue",Arial,sans-serif;--muted:#6b625a;font-family:var(--latin);color:var(--ink);line-height:1.25;color-scheme:light}
 .sheets{
 *{box-sizing:border-box;margin:0;padding:0}
 
@@ -315,7 +315,8 @@ a.btn.pri,a.btn.print{color:var(--onj)}
 .match .b{font-size:12px;display:flex;align-items:center;gap:8px}
 .dot{width:7px;height:7px;border-radius:50%;background:var(--ink);flex:none}
 /* p5 */
-.sent{display:flex;flex-direction:column;gap:10px}
+.psent{display:flex;flex-direction:column;gap:10px}
+.row{flex-wrap:nowrap;align-items:stretch}
 .s1{display:flex;align-items:flex-end;gap:10px}
 .s1 .num{font-size:11px;color:var(--red);font-weight:700;width:16px;padding-bottom:6px}
 ruby{font-family:var(--hanzi);font-size:26px;ruby-position:over;margin:0 4px}
@@ -572,7 +573,7 @@ function page5(d){
   const bank=shuffle(d.sent.map(s=>s.blank),r).map(c=>`<span>${c}</span>`).join('');
   const tw=shuffle(d.chars,r).slice(0,4).map(c=>`<div class="q">“${esc(D[c].we)}” →</div><div class="ln"></div>`).join('');
   return `<div class="page">${header(d.n,5)}
-  <div class="sec"><h3><span class="tag">A</span>朗读 <em>Read each sentence aloud 3 times — tick a box each time</em></h3><div class="sent">${S}</div></div>
+  <div class="sec"><h3><span class="tag">A</span>朗读 <em>Read each sentence aloud 3 times — tick a box each time</em></h3><div class="psent">${S}</div></div>
   <div class="sec"><h3><span class="tag">B</span>选字填空 <em>Fold the page to hide part A. Fill each blank from the word bank.</em></h3><div class="bank">${bank}</div><div class="fill">${F}</div></div>
   <div class="sec"><h3><span class="tag">C</span>英译中 <em>Write it in Chinese (characters, or pinyin if you can't write it yet)</em></h3><div class="tr">${tw}</div></div>
   ${foot(d.n,5)}</div>`;
