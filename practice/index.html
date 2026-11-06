@@ -537,6 +537,8 @@ function mathSet(){
   const easy=list.slice(0,1),rest=shuffle(r,list.slice(1));
   const qs=easy.concat(rest).map((k,i)=>Object.assign({k,id:"q"+i},G[k](rng(TODAY+k+i))));
   const ex=EXPLAINS[Math.floor((new Date(TODAY).getTime()/864e5))%EXPLAINS.length];
+  {const weak=ALL_M.filter(k=>G[k]&&S.skill[k]&&S.skill[k].a>=4&&S.skill[k].c/S.skill[k].a<0.7).sort((x,y)=>S.skill[x].c/S.skill[x].a-S.skill[y].c/S.skill[y].a).slice(0,3);
+    weak.forEach((k,i)=>qs.push(Object.assign({k,id:"ax"+i},G[k](rng(TODAY+k+"ax"+i)))))}
   {const bk=(S.bonusPlan||{})[TODAY]||(S.bonus&&S.bonus.date===TODAY?S.bonus.k:null);if(bk)bk.forEach((k,i)=>qs.push(Object.assign({k,id:"bx"+i},G[k](rng(TODAY+k+"bx"+i)))));}
   const dm=(S.days[TODAY]||{}).m||{};
   qs.slice().forEach(q=>{if(dm[q.id]==="fix")qs.push(Object.assign({k:q.k,id:q.id+"b",again:q.id},G[q.k](rng(TODAY+q.k+"again"+q.id))))});
