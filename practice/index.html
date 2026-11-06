@@ -1142,10 +1142,40 @@ function printPages(){
   let n=0;const mc=id=>{const q=EQ[id];const o=shuffle(rng(TODAY+id),q.o);return `<div class="pp-q"><b>${++n}.</b> ${esc(q.q)}<div class="pp-opts col">${o.map((c,j)=>`<span>${"ABC"[j]}. ${esc(c)}</span>`).join("")}</div></div>`};
   [["Reading",e.r],["Vocabulary",e.v],["Science · "+u.sci,e.s],["Social Studies · "+u.ss,e.h]].forEach(([t,ids])=>{ids.forEach((id,i)=>B.push((i?"":`<div class="pp-sec">${esc(t)}</div>`)+mc(id)))});
   B.push(`<div class="pp-sec">Writing · ${esc(u.w.type)}</div><div class="pp-q">${esc(u.w.prompt)}${"<div class='pp-ln'></div>".repeat(8)}<div class="pp-check">${u.w.check.map(c=>"□ "+esc(c)).join("&nbsp;&nbsp; ")}</div></div>`);
+  // ---- Data & Patterns (5.MD.2 line plot with fractions, 5.OA.3 number patterns): new numbers every day ----
+  const DP=(()=>{const r=rng(TODAY+"dp"),g=(a,b)=>b?g(b,a%b):a;
+    const F=(n,d)=>{if(n===0)return"0";const k=g(n,d);n/=k;d/=k;if(d===1)return String(n);const w=Math.floor(n/d),m=n%d;const f=`<span class="fr"><u>${m}</u><b>${d}</b></span>`;return w?`${w} ${f}`:(m?f:String(w))};
+    const T=(n,d)=>F(n,d);
+    const d=ri(r,0,1)?8:4,things=["pounds of apples in each bag","gallons of water in each bucket","cups of flour in each bowl"],th=things[ri(r,0,2)];
+    let cnt;do{cnt=Array.from({length:d+1},()=>ri(r,0,5));cnt[0]=Math.min(cnt[0],1)}while(cnt.reduce((a,b)=>a+b,0)<12||cnt.reduce((a,b)=>a+b,0)>22||cnt.filter(x=>x>0).length<4||(()=>{const t=[...cnt].sort((x,y)=>y-x);return !(t[0]>t[1]&&t[1]>t[2])})());
+    const tot=cnt.reduce((a,b)=>a+b,0),nz=cnt.map((c,i)=>c?i:-1).filter(i=>i>=0);
+    const q1=nz[Math.floor(nz.length/2)],q2=nz[1],q4=nz.filter(i=>cnt[i]>=2&&i>0)[0]||nz[1];
+    const above=cnt.slice(q2+1).reduce((a,b)=>a+b,0),top=cnt.map((c,i)=>[c,i]).sort((x,y)=>y[0]-x[0]),diff=Math.abs(top[0][1]-top[1][1]);
+    const dots=cnt.map((c,i)=>`<div class="dpc"><div class="dpd">${Array.from({length:c},()=>"<i></i>").join("")}</div><div class="dpt">${i===0?"0":i===d?"1":T(i,d)}</div></div>`).join("");
+    const a=ri(r,2,5),k=ri(r,2,4),b=a*k,N=a*ri(r,7,9);
+    const A=[0,1,2,3,4,5].map(i=>i*a),Bn=[0,1,2,3,4,5].map(i=>i*b);
+    const html=`<div class="pp-box"><div class="pp-bh"><b>J. Line plot</b><span>5.MD.2 · Read the dots, then use fractions</span></div>
+     <div class="pp-q">${tot} measurements are shown. Each dot is the number of ${th}.</div>
+     <div class="dpw">${dots}</div><div class="small" style="text-align:center;font-size:12px">Amount (${th.split(" ")[0]})</div>
+     <div class="pp-q"><b>1.</b> How many have ${T(q1,d)}? <span class="pp-ln" style="display:inline-block;width:70px"></span></div>
+     <div class="pp-q"><b>2.</b> How many have more than ${T(q2,d)}? <span class="pp-ln" style="display:inline-block;width:70px"></span></div>
+     <div class="pp-q"><b>3.</b> The two amounts with the most dots are different. What is the difference between them? <span class="pp-ln" style="display:inline-block;width:90px"></span></div>
+     <div class="pp-q"><b>4.</b> If all the ${T(q4,d)}s were put together, how much would there be in all? <span class="pp-ln" style="display:inline-block;width:90px"></span></div></div>
+     <div class="pp-box"><div class="pp-bh"><b>K. Number patterns</b><span>5.OA.3 · Two rules, then compare</span></div>
+     <div class="pp-q">Rule A: start at 0, <b>add ${a}</b>. &nbsp; Rule B: start at 0, <b>add ${b}</b>.</div>
+     <div class="pp-q"><b>1.</b> Fill in the first 4 terms of each pattern:<br>A: 0, ${a}, ____, ____ &nbsp;&nbsp; B: 0, ${b}, ____, ____</div>
+     <div class="pp-q"><b>2.</b> Write the ordered pairs (A, B) for the terms: (0, 0), (${a}, ${b}), ( ___ , ___ ), ( ___ , ___ )</div>
+     <div class="pp-q"><b>3.</b> Each B number is ______ times the A number next to it.</div>
+     <div class="pp-q"><b>4.</b> If A is ${N}, what is B? <span class="pp-ln" style="display:inline-block;width:70px"></span></div>
+     <div class="pp-q"><b>5.</b> Explain the pattern you see. Use the words “times” and “add”.</div><div class="pp-ln"></div><div class="pp-ln"></div><div class="pp-ln"></div></div>`;
+    const key=`<b>J.</b> 1. ${cnt[q1]} &nbsp; 2. ${above} &nbsp; 3. ${F(diff,d)} &nbsp; 4. ${F(cnt[q4]*q4,d)} &nbsp;&nbsp; <b>K.</b> 1. A: ${A.slice(0,4).join(", ")} &nbsp; B: ${Bn.slice(0,4).join(", ")} &nbsp; 2. (${A[2]}, ${Bn[2]}), (${A[3]}, ${Bn[3]}) &nbsp; 3. ${k} &nbsp; 4. ${N*k}`;
+    return{html,key}})();
+  B.push("<!--page-->"+hdr("Data & Patterns","New numbers every day · Line plots with fractions and number patterns")+DP.html);
   // ---- Answer key ----
   B.push("<!--page-->"+hdr("Answer key (for parents)","Check without telling her the answer first. If one is wrong, ask her for the first small step."));
   M.sec.forEach(sc=>{if(sc.explain)B.push(`<div class="pp-key"><b>${sc.title}:</b> answers vary — look for a clear reason that uses numbers.</div>`);else B.push(`<div class="pp-key"><b>${sc.title}:</b> ${sc.list.map(q=>`${q.n}. ${esc(q.show)}`).join(" &nbsp;·&nbsp; ")}</div>`)});
   B.push(`<div class="pp-key"><b>中文 一:</b> ${z.ws.map(esc).join("　")} &nbsp; <b>三:</b> ${z.cs.map((c,i)=>`${i+1}. ${esc(c.a)}`).join("　")} &nbsp; <b>六:</b> ${z.st.q.map((q,i)=>`${i+1}. ${esc(q[1][q[2]])}`).join("　")} &nbsp; <b>八（加练）:</b> ${extraWords(z).map(esc).join("　")}</div>`);
+  B.push(`<div class="pp-key"><b>Data & Patterns:</b> ${DP.key}</div>`);
   n=0;B.push(`<div class="pp-key"><b>Reading+:</b> ${[...e.r,...e.v,...e.s,...e.h].map(id=>{const q=EQ[id];const o=shuffle(rng(TODAY+id),q.o);return `${++n}. ${"ABC"[o.indexOf(q.o[0])]}`}).join(" &nbsp; ")}</div>`);
   return B;
 }
@@ -1164,7 +1194,8 @@ async function makePdf(btn){
    .pp-grid{display:grid;gap:5px 18px}.pp-grid.c2{grid-template-columns:1fr 1fr}.pp-grid.c3{grid-template-columns:1fr 1fr 1fr}
    .pp-q{margin:0}.pp-q b{font-variant-numeric:tabular-nums}.pp-opts{display:flex;flex-wrap:wrap;gap:2px 16px;margin:3px 0 0 14px;font-size:12.5px}.pp-opts.col{flex-direction:column}
    .pp-bar{height:30px;border:1.5px dashed #999;border-radius:4px;margin-top:4px;position:relative}.pp-bar span{position:absolute;left:4px;top:1px;font-size:9px;color:#999}.pp-work{height:24px}.pp-work.tall{height:34px}.pp-ln{border-bottom:1px solid #777;height:22px}.pp-ln.big{height:34px}
-   .pp-sec{font-weight:800;font-size:15px;margin:8px 0 2px;border-bottom:1px solid #ccc}
+   .fr{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;font-size:.85em;line-height:1.1;margin:0 1px}.fr u{text-decoration:none;border-bottom:1.5px solid #222;padding:0 2px}.fr b{font-weight:600}.dpw{display:flex;align-items:flex-end;gap:2px;border-bottom:2px solid #222;margin:10px 0 2px;padding:0 4px;min-height:120px}.dpc{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end}.dpd{display:flex;flex-direction:column-reverse;gap:3px;margin-bottom:4px}.dpd i{width:12px;height:12px;border-radius:50%;background:#222;display:block}.dpt{font-size:12px;margin-top:4px;min-height:30px;display:flex;align-items:flex-start}
+.pp-sec{font-weight:800;font-size:15px;margin:8px 0 2px;border-bottom:1px solid #ccc}
    .pp-words{display:grid;grid-template-columns:repeat(4,1fr);gap:8px 6px}.pp-w{display:flex;flex-direction:column;align-items:center;gap:3px}.pp-py{font-size:15px;letter-spacing:.3px}
    .pp-boxes{display:flex}.pp-boxes i{position:relative;width:62px;height:62px;border:1.6px solid #333;margin-left:-1.6px;background:linear-gradient(#9998,#9998) center/1px 100% no-repeat,linear-gradient(#9998,#9998) center/100% 1px no-repeat}
    .pp-boxes i em{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-style:normal;font-size:44px;font-family:"Noto Serif SC","Songti SC",serif;color:#111}
