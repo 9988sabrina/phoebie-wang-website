@@ -604,7 +604,7 @@ function revPick(n){
   const wchars=shuffle(wpool,r).slice(0,5);
   const sents=shuffle(prevDays.flatMap(d=>d.sent),r).slice(0,6);
   const pyDays=(window.ABC_PINYIN||[]).slice(0,Math.max(1,n-1));
-  const pyw=shuffle(pyDays.flatMap(L=>L.words),r).slice(0,8);
+  const seenW=new Set(); const pyw=shuffle(pyDays.flatMap(L=>L.words),r).filter(([w])=>!seenW.has(w)&&seenW.add(w)).slice(0,8);
   const pas=(window.ABC_EXTRA||{}).passages||[];
   const passage=pas.filter(p=>p.day<n).slice(-1)[0]||null;
   return {chars,wchars,sents,pyw,passage,from:n>1?`Days 1–${n-1}`:'Day 1'};
@@ -624,7 +624,11 @@ function review2(d){ const R=revPick(d.n);
   const A=R.sents.slice(0,3).map((s,i)=>`<div class="fl" style="font-size:22px"><span style="font-family:var(--latin);font-size:11px;color:var(--red);font-weight:700;width:16px">${i+1}</span>${esc(s.zh)}<span class="en">read <span class="box"></span><span class="box"></span><span class="box"></span></span></div>`).join('');
   const B=R.sents.slice(3,6).map(s=>`<div class="q">“${esc(s.en)}” →</div><div class="ln"></div>`).join('');
   const C=R.pyw.map(([w,p])=>`<div class="pyq"><span class="z">${w}</span><span class="ln">${noTone(p)}</span></div>`).join('');
-  const P=R.passage?`<div class="sec"><h3><span class="tag">D</span>短文重读 · ${esc(R.passage.title)} <em>From Day ${R.passage.day} — read it aloud without pinyin, then time yourself: ____ seconds</em></h3><div class="read" style="font-size:19px;line-height:1.85">${esc(R.passage.zh)}</div></div>`
+  const P=R.passage?(()=>{ const ps=R.passage, py=ps.py.split(' '), known=new Set(ABC.charsUpTo(d.n)); let k=0, out='', n=0, cut=false;
+    // easy version: first 2–3 short sentences (≤ ~32 characters), pinyin over characters not learned yet
+    for(const ch of ps.zh){ if(cut) break; if(/[一-鿿]/.test(ch)){ const y=py[k++]; n++; out+=known.has(ch)?ch:`<ruby>${ch}<rt>${y}</rt></ruby>`; } else { out+=ch; if('。！？'.includes(ch)&&n>=12) cut=true; } }
+    if(!out.trim().match(/[。！？”]$/)) out+='…';
+    return `<div class="sec"><h3><span class="tag">D</span>短文重读 · ${esc(ps.title)} <em>From Day ${ps.day} — just the start. Read it aloud twice. Pinyin is shown only on characters you haven't learned yet.</em></h3><div class="read" style="font-size:24px;line-height:2.3">${out}</div><div style="font-size:11px;color:var(--soft)">${esc(ps.en)}</div><div class="checks" style="margin-top:6px"><span><span class="box"></span> 1st read</span><span><span class="box"></span> 2nd read</span></div></div>`; })()
     :`<div class="sec"><h3><span class="tag">D</span>我还不熟的字 <em>Write the characters you still find hard — practise them in the app</em></h3><div class="dict6">${[1,2,3,4,5,6].map(i=>`<div>${i}<i></i></div>`).join('')}</div></div>`;
   return `<div class="page">${header(d.n,8)}
   <div class="sec"><h3><span class="tag">A</span>旧句子朗读 <em>Sentences from ${R.from}, no pinyin — read each aloud 3 times</em></h3><div class="fill">${A}</div></div>
