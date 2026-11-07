@@ -61,3 +61,9 @@
 - 没做的候选：
   1. 页脚「Affiliate Disclosure」链接：联盟/工具页已下线，这个链接和 sitemap 里的 disclosure.html 可能已多余（涉及法律声明，需老板点头再删）。
   2. practice/ 页的标签按钮 40px、「听一听」36px，chinese/ 页的按钮 41px，也略低于 44px（这两页用自己的样式表，留给以后单独修）。
+
+## 2026-11-07
+- 改了什么（修一个坏的地方）：practice/ 每日练习页在手机上，顶部 7 个标签按钮（Today / Math / 中文 / Reading+ …）只有 40px 高，「🔊 听一听 / Listen」等 icon-btn 小按钮只有 36px，低于 44px 点击区标准。把页内样式的两处 min-height 提到 44px（该页样式写在 HTML 里，无需改 `?v=`）。375px 下 7 个标签逐一切换复查：无横向溢出、无小于 44px 的按钮；44 个测试全过。PR 号见当天合并记录（claude/daily-2026-11-07）。
+- 没做的候选：
+  1. chinese/ 页：返回链接 20px、10 个 🔊 朗读按钮 34px、其余按钮 38–41px，也低于 44px（该页同样是页内样式，留给下一天单独修）。
+  2. 页脚「Affiliate Disclosure」链接与 sitemap 里的 disclosure.html 可能已多余（涉及法律声明，需老板点头再删）。
