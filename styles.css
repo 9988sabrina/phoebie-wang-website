@@ -14,3 +14,6 @@
 
 /* 2026-11-06: tap targets at least 44px on every page (was home/projects only) */
 .menu-button{min-height:44px;min-width:44px}.footer-grid nav a,.footer-grid .link-button{display:inline-flex;align-items:center;min-height:44px}
+
+/* 2026-11-08: breadcrumb links ("Home / Printables") were only ~16px tall on phones; pad the hit area to 44px without moving the text */
+.crumb a{display:inline-block;padding:13px 6px;margin:-13px -6px;min-height:44px;min-width:44px;box-sizing:border-box;line-height:18px}
