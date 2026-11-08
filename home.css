@@ -372,3 +372,7 @@ body:is([data-page="home"],[data-page="projects"]) h1,body:is([data-page="home"]
 @keyframes bpdrift{to{left:110%}}
 @keyframes bpfloat{0%,100%{transform:translateY(0) rotate(-8deg)}50%{transform:translateY(-14px) rotate(8deg)}}
 @media(prefers-reduced-motion:reduce){.bp-cloud,.bp-note-f,.bp-start img.bp-nori{animation:none}.bp-cloud.c1{left:12%}.bp-cloud.c2{left:58%}.bp-say b{animation:none}.bp-say b:first-child{opacity:1;transform:translateX(-50%)}}
+
+.bp-chips{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0;padding:0;list-style:none}
+.bp-chips li{padding:10px 16px;border:2.5px solid var(--navy);border-radius:999px;background:#fff;font-weight:800;box-shadow:3px 3px 0 var(--sun)}
+.bp-chips li:nth-child(2){background:#DCEBFB}.bp-chips li:nth-child(3){background:#FFE3E0}.bp-chips li:nth-child(4){background:#E3F6E5}
