@@ -152,6 +152,15 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
 @keyframes hop{from{transform:translateY(0)}to{transform:translateY(-3px)}}
 @media (prefers-reduced-motion:reduce){.hearBtn.talking,.hearBtn.talking .w1,.hearBtn.talking .w2{animation:none}}
 .credit{font-size:12px;color:var(--muted);text-align:center;margin:8px 0 0}
+/* Livelier home: sky scene behind Nori, bobbing bird, floating notes */
+#home .stage{border-radius:28px;border:3px solid var(--ink);background:linear-gradient(#7CC4FF,#CFEBFF 60%,#FFF3C4);overflow:hidden;min-height:290px;padding-top:56px;box-shadow:0 6px 0 var(--ink)}
+#home .stage::before,#home .stage::after{content:"♪";position:absolute;font-weight:900;font-size:30px;color:var(--cherry);animation:float 3s ease-in-out infinite}
+#home .stage::before{left:12%;top:34%}#home .stage::after{content:"♫";right:14%;top:52%;color:var(--sky);animation-delay:-1.4s}
+#home .stage .nori{position:relative;z-index:1;animation:bob 1.8s ease-in-out infinite alternate;transform-origin:50% 100%}
+#home .stage .bubble{z-index:2;top:12px}
+#home h1{color:var(--ink)}
+#home .big:not(.soft){background:linear-gradient(#FFD968,#FFC83D)}
+@media (prefers-reduced-motion:reduce){#home .stage::before,#home .stage::after,#home .stage .nori{animation:none}}
 </style>
 </head>
 <body>
