@@ -402,6 +402,9 @@ rt{font-family:var(--latin);font-size:10.5px;color:var(--soft);font-weight:500}
 .tr.two{display:grid;grid-template-columns:1fr 1fr;gap:6px 26px} .tr.two .ln{height:26px}
 .pg2 .read ruby{font-size:inherit;margin:0 1px} .pg2 .read{font-size:21px;line-height:2.05}
 .dayno{white-space:nowrap} .ttl{white-space:nowrap}
+.tr2{display:grid;grid-template-columns:1fr 1fr;gap:9px 18px} .t2{display:flex;align-items:center;gap:8px} .tr2 .tzg{--s:.5in} .t2 .wl{width:.8in}
+.grid6{display:grid;grid-template-columns:repeat(6,1fr);gap:12px 12px}
+.rb ruby{font-size:24px} 
 /* answer key */
 .ak{font-size:11px;line-height:1.55}
 .ak h4{font-family:var(--serif);font-size:13px;margin:8px 0 3px;color:var(--red)}
@@ -517,8 +520,8 @@ function rubyKnown(zh,py,known){ const p=py.split(' '); let k=0; return [...zh].
 function picker(seed){ const r=rng(seed), used=new Set();
   return (arr,n)=>{ const out=[]; for(const c of shuffle([...new Set(arr)],r)){ if(out.length>=n) break; if(!used.has(c)){ used.add(c); out.push(c);} } return out; }; }
 function hd(k,p,zh,en){ const P=ABC.plan(k); return `<div class="hd"><div class="l"><span class="dayno">第${cnNum(k)}天</span><span class="ttl">${zh}<small>${P.rev?'Lessons 1–'+P.L:'Lesson '+P.L} · ${en}</small></span></div>
-  <div class="r">Date <b></b> &nbsp; Time <b style="width:50px"></b><br>Page ${p} of 2</div></div>`; }
-const ft=(k,p)=>`<div class="ft"><span>每日中文 · 学两天，复习一天 Learn 2 days, review 1</span><span>Day ${k} — ${p}/2</span></div>`;
+  <div class="r">Date <b></b> &nbsp; Time <b style="width:50px"></b><br>Page ${p} of 10</div></div>`; }
+const ft=(k,p)=>`<div class="ft"><span>每日中文 · 学两天，复习一天 Learn 2 days, review 1</span><span>Day ${k} — ${p}/10</span></div>`;
 const wordBox=x=>`<div class="word"><div class="pyl">${x.wp.split(' ').map(s=>`<span>${s}</span>`).join('')}</div><div class="row">${[...x.w].map(()=>tz('')).join('')}</div><div class="en">${esc(x.we)}</div></div>`;
 const num=i=>`<span style="font-family:var(--latin);font-size:11px;color:var(--red);font-weight:700;width:16px;flex:none">${i}</span>`;
 const sec=(tag,zh,en,body)=>`<div class="sec"><h3><span class="tag">${tag}</span>${zh} <em>${en}</em></h3>${body}</div>`;
@@ -608,21 +611,118 @@ function revP2(k,weak){ const R=pickRev(k,weak);
    ${sec('E','造句','Write one sentence with each word',ZJ)}
    ${F}
    ${R.pas?sec('G','读一读，连一连','Read each sentence (no pinyin), then draw a line to its meaning',`<div class="match2">${R.sents.map((s,i)=>`<div class="a">${esc(s.zh)}<span class="dot"></span></div><div></div><div class="b"><span class="dot"></span>${esc(R.sents[R.enOrder[i]].en)}</div>`).join('')}</div>`):''}
-   ${sec('✓','今日打卡','Check off when done',`<div class="checks"><span><span class="box"></span> 2 pages done</span><span><span class="box"></span> Checked with the answer key</span><span><span class="box"></span> Marked my wrong characters in the app</span><span>Hardest today: <span style="display:inline-block;width:70px;border-bottom:1px solid var(--soft)"></span></span></div>`)}
+   ${sec('✓','今日打卡','Check off when done',`<div class="checks"><span><span class="box"></span> Pages 1–2 done</span><span><span class="box"></span> Checked with the answer key</span><span><span class="box"></span> Marked my wrong characters in the app</span><span>Hardest today: <span style="display:inline-block;width:70px;border-bottom:1px solid var(--soft)"></span></span></div>`)}
    ${ft(k,2)}</div>`; }
-function dayPages(k,weak){ weak=weak||[]; return ABC.plan(k).rev?revP1(k,weak)+revP2(k,weak):newP1(k,weak)+newP2(k,weak); }
+/* ---------- pages 3–10 (10 pages a day) ---------- */
+const pg=(k,p,zh,en,body,cls='')=>`<div class="page pg2 ${cls}">${hd(k,p,zh,en)}${body}${ft(k,p)}</div>`;
+const INITS=['zh','ch','sh','b','p','m','f','d','t','n','l','g','k','h','j','q','x','r','z','c','s','y','w'];
+function splitSyl(y){ const b=ABC.parse(y).base; const i=INITS.find(x=>b.startsWith(x))||''; return [i, y.slice(i.length)]; }
+function pyFill(L){ return L.words.map(([w,p])=>{ const syl=p.split(' '); let k=syl.findIndex(y=>{const [i]=splitSyl(y); return L.type==='i'?!!i&&!'yw'.includes(i):true;}); if(k<0)k=0;
+    const [i,f]=splitSyl(syl[k]); const ans=L.type==='i'?i:f;
+    const shown=syl.map((y,j)=>j!==k?y:(L.type==='i'?`<span class="gapb"></span>${f}`:`${i}<span class="gapb"></span>`)).join(' ');
+    return {w,shown,ans}; }); }
+function rubyAll(zh,py){ const p=py.split(' ');let k=0; return [...zh].map(c=>HZ(c)?`<ruby>${c}<rt>${p[k++]}</rt></ruby>`:c).join(''); }
+const wordsGrid=cs=>`<div class="words w3 sm">${cs.map(c=>wordBox(D[c])).join('')}</div>`;
+function traceGrid(cs){ const two=cs.length<=10;
+  return `<div class="tr2">${cs.map(c=>{const x=D[c]; const r1=[tz(c,'model'),tz(c,'trace'),tz(c,'trace'),tz(''),tz('')].join(''); const r2=two?`<div class="row">${[tz(c,'trace'),tz(''),tz(''),tz(''),tz('')].join('')}</div>`:'';
+    return `<div class="t2"><div class="wl"><b>${c}</b><span>${x.py}</span><i>${esc(en1(c))}</i></div><div style="display:flex;flex-direction:column;gap:3px"><div class="row">${r1}</div>${r2}</div></div>`}).join('')}</div>`; }
+const zhuyin=cs=>`<div class="grid6">${cs.map(c=>`<div class="zy"><div class="py4"></div><span class="z">${c}</span></div>`).join('')}</div>`;
+const toneQ=cs=>`<div class="tones">${cs.map(c=>`<div class="tone"><span class="z">${c}</span><span class="o">${toneOptions(D[c].py).map(o=>`<span>${o}</span>`).join('')}</span></div>`).join('')}</div>`;
+function matchQ(cs,seed,kind){ const r=rng(seed), right=shuffle(cs,r);
+  return `<div class="match">${cs.map((c,i)=>`<div class="a">${c}<span class="dot"></span></div><div></div><div class="b"><span class="dot"></span>${kind==='py'?D[right[i]].py:esc(en1(right[i]))}</div>`).join('')}</div>`; }
+const zuQ=cs=>`<div class="zu">${cs.map(c=>`<div><span class="z">${c}</span><i></i><i></i></div>`).join('')}</div>`;
+function fillQ(ss,seed){ const r=rng(seed), order=shuffle(ss.map((s,i)=>i),r);
+  const bank=shuffle(ss.map(s=>s.blank),r).map(c=>`<span>${c}</span>`).join('');
+  return {order,html:`<div class="bank">${bank}</div><div class="fill">${order.map((i,j)=>{const s=ss[i];return `<div class="fl">${num(j+1)}${esc(s.zh).replace(s.blank,'<span class="blank"></span>')}<span class="en">${esc(s.en)}</span></div>`}).join('')}</div>`}; }
+const transQ=ss=>`<div class="tr">${ss.map(s=>`<div class="q">“${esc(s.en)}” →</div><div class="ln"></div>`).join('')}</div>`;
+const toneW=ws=>`<div class="pytable" style="grid-template-columns:repeat(2,1fr);gap:10px 24px">${ws.map(([w,p])=>`<div class="pyq"><span class="z" style="min-width:2.4em">${w}</span><span class="ln" style="font-size:16px">${noTone(p)}</span></div>`).join('')}</div>`;
+const readQ=ss=>`<div class="fill">${ss.map((s,i)=>`<div class="fl" style="font-size:22px">${num(i+1)}${esc(s.zh)}<span class="en">read <span class="box"></span><span class="box"></span><span class="box"></span></span></div>`).join('')}</div>`;
+const doneBox=k=>sec('✓','今日打卡','Check off when done',`<div class="checks"><span><span class="box"></span> 10 pages done</span><span><span class="box"></span> App practice done</span><span><span class="box"></span> Checked with the answer key</span><span><span class="box"></span> Marked my wrong characters in the app</span></div>`);
+/* shared picks for older material */
+function oldPick(k,L,weak){ const take=picker(k*733+19), learned=ABC.charsUpTo(Math.max(1,L-1)), W=(weak||[]).filter(c=>learned.includes(c));
+  const spaced=[L-2,L-4,L-7,L-11,L-16,L-22,L-30].filter(x=>x>=1).flatMap(n=>day(n).chars);
+  const fill=(n,parts)=>{ let o=[]; for(const [arr,cap] of parts) o=o.concat(take(arr,Math.min(cap,n-o.length))); return o.concat(take(learned,n-o.length)); };
+  const words=fill(8,[[W,3],[spaced,8]]), mp=fill(8,[[W,2],[spaced,8]]);
+  const wl=writeUpTo(Math.max(1,L-1)); const wchars=take(W.filter(c=>wl.includes(c)).concat(shuffle(wl,rng(k*5))),6);
+  const prevSents=ABC.A.days.slice(0,Math.max(1,L-1)).flatMap(d=>d.sent), ss=shuffle(prevSents,rng(k*97));
+  const seen=new Set(); const pyw=shuffle(PY.slice(0,Math.min(30,Math.max(1,L-1))).flatMap(x=>x.words),rng(k*59)).filter(([w])=>!seen.has(w)&&(seen.add(w),true)).slice(0,8);
+  const pas=PAS.filter(p=>p.day<L).slice(-1)[0]||null;
+  return {words,mp,wchars,read:ss.slice(0,3),trans:ss.slice(3,6),pyw,pas};
+}
+function newMore(k,weak){ const N=pickNew(k,weak), L=N.L, d=N.d, Lp=PY[L-1], r=rng(k*41), O=oldPick(k,L,weak), pages=[];
+  const sh=shuffle(d.chars,r), m1=sh.slice(0,8), m2=shuffle(d.chars,rng(k*43)).slice(0,8), zu=shuffle(d.chars,rng(k*47)).slice(0,10);
+  if(Lp){
+    const items=Lp.items.map(it=>`<div class="pyi"><div class="sym">${esc(it.sym)}</div><div class="tip">${esc(it.tip)}</div><div class="exs">${it.ex.map(([y,z])=>`<div class="ex"><b>${y}</b><span>${z}</span></div>`).join('')}</div></div>`).join('');
+    pages.push(pg(k,3,'拼音课','Pinyin lesson '+L,`${sec('拼音','第 '+L+' 课 · '+esc(Lp.zh),esc(Lp.en),'<div class="note">Say each example out loud. In the app, the <b>拼音</b> card on the 学 tab plays every sound.</div>')}<div class="pyitems">${items}</div>${sec('读','拼读词语','Read the pinyin first, then the characters',`<div class="pywords">${Lp.words.map(([w,p])=>`<div class="pyw"><b>${p}</b><span>${w}</span></div>`).join('')}</div>`)}`));
+    const reads=Lp.items.flatMap(it=>it.ex.map(e=>e[0])).slice(0,16).map(y=>`<span><span class="box"></span>${y}</span>`).join('');
+    const B=(Lp.type==='i'||Lp.type==='f')?sec('B',Lp.type==='i'?'填声母':'填韵母','Fill in the missing '+(Lp.type==='i'?'initial':'final, with its tone mark'),`<div class="pytable">${pyFill(Lp).map(x=>`<div class="pyq"><span class="z">${x.w}</span><span class="ln">${x.shown}</span></div>`).join('')}</div>`):'';
+    const rr=rng(L*131);
+    pages.push(pg(k,4,'拼音练习','Pinyin practice',`${sec('A','读一读','Read each one aloud — tick it when it sounds right',`<div class="pyreads">${reads}</div>`)}${B}
+      ${sec('C','标声调','Add the tone marks',`<div class="pytable">${Lp.words.map(([w,p])=>`<div class="pyq"><span class="z">${w}</span><span class="ln">${noTone(p)}</span></div>`).join('')}</div>`)}
+      ${sec('D','圈出正确的拼音','Circle the right spelling',`<div class="pairs">${Lp.pairs.map(([w,a,b])=>{const o=shuffle([a,b],rr);return `<div class="pp"><span class="z">${esc(w)}</span><span>${esc(o[0])}</span><span>${esc(o[1])}</span></div>`}).join('')}</div>`)}
+      ${sec('E','听写','Dictation — in the app tap 拼音 → 听写 and write the pinyin you hear',`<div class="dict6">${[1,2,3,4,5,6].map(i=>`<div>${i}<i></i></div>`).join('')}</div>`)}`));
+  } else {
+    pages.push(pg(k,3,'注音和声调','Pinyin & tones',`${sec('A','给生字注音','Write the pinyin with tone marks above each new character',zhuyin(d.chars.slice(0,12)))}${sec('B','圈出正确的读音','Circle the correct tone — say all four aloud first',toneQ(d.chars.slice(12).concat(d.chars.slice(0,Math.max(0,8-d.chars.slice(12).length)))))}`));
+    pages.push(pg(k,4,'组词','Make words',`${sec('A','组词','Write two words that use each new character (any correct word counts)',zuQ(zu))}${sec('B','抄写句子','Copy each sentence once, neatly',`<div class="tr">${d.sent.slice(0,3).map(s=>`<div class="q" style="font-family:var(--hanzi);font-size:18px">${esc(s.zh)} <span style="font-family:var(--latin);font-size:10px;color:var(--soft)">${esc(s.en)}</span></div><div class="ln"></div>`).join('')}</div>`)}`));
+  }
+  pages.push(pg(k,5,'描红练字','Trace every new character',`<div class="note"><b>Model → trace → write.</b> Today's ✎ characters are on page 1; here you trace all ${d.chars.length} new ones so your hand learns them too.</div>${traceGrid(d.chars)}`));
+  pages.push(pg(k,6,'看拼音写词语','Pinyin → words',sec('A','看拼音，写词语','Write each word in characters — peek at page 1 only if stuck',wordsGrid(d.chars.slice(0,15)))));
+  const F=fillQ(d.sent,k*61);
+  pages.push(pg(k,7,'读句子','Read, fill in, translate',`${sec('A','朗读','Read each sentence aloud 3 times — tick a box each time',`<div class="psent">${d.sent.map((s,i)=>`<div><div class="s1"><span class="num">${i+1}</span><span class="rb">${rubyAll(s.zh,s.py)}</span><span class="chk">read<span class="box"></span><span class="box"></span><span class="box"></span></span></div><div class="s1"><span class="num"></span><span class="en">${esc(s.en)}</span></div></div>`).join('')}</div>`)}
+    ${sec('B','选字填空','Fold the page to hide part A, then fill each blank',F.html)}${sec('C','英译中','Write it in Chinese (characters, or pinyin for any you can\'t write yet)',transQ(d.sent.slice(0,3)))}`));
+  pages.push(pg(k,8,'连一连','Match',`${sec('A','连一连 · 意思','Draw a line from each character to its meaning',matchQ(m1,k*67,'en'))}${sec('B','连一连 · 拼音','Draw a line from each character to its pinyin',matchQ(m2,k*71+1,'py'))}`));
+  pages.push(pg(k,9,'复习一','Older characters',`<div class="note"><b>Review from earlier lessons</b>${weak&&weak.length?' — your problem characters come first':''}. Try every item before looking anything up.</div>
+    ${sec('A','看拼音，写词语','Words from earlier lessons',wordsGrid(O.words.slice(0,6)))}${sec('B','连一连','Match each character to its pinyin',matchQ(O.mp.slice(0,7),k*73,'py'))}
+    ${!O.wchars.length?'':sec('C','默写','Write the character from its meaning and pinyin',`<div class="dict" style="grid-template-columns:repeat(6,1fr)">${O.wchars.map(c=>`<div class="it">${tz('')}<span>${esc(en1(c))} · ${D[c].py}</span></div>`).join('')}</div>`)}`));
+  const P=O.pas?sec('D','短文重读 · '+esc(O.pas.title),'Read it aloud twice. Pinyin only on characters you haven\'t learned yet.',`<div class="read">${rubyKnown(O.pas.zh,O.pas.py,new Set(ABC.charsUpTo(L)))}</div><div class="checks"><span><span class="box"></span> 1st read</span><span><span class="box"></span> 2nd read</span></div>`):'';
+  pages.push(pg(k,10,'复习二','Older sentences',`${sec('A','旧句子朗读','No pinyin — read each aloud 3 times',readQ(O.read))}${O.trans.length?sec('B','英译中','Write these earlier sentences in Chinese',transQ(O.trans)):''}${O.pyw.length?sec('C','标声调','Add the tone marks',toneW(O.pyw.slice(0,6))):''}${P}${doneBox(k)}`));
+  return {pages,N,O,F,m1,m2,zu};
+}
+function revMore(k,weak){ const R=pickRev(k,weak), L=R.L, all=ABC.charsUpTo(L), take=picker(k*811+3), W=(weak||[]).filter(c=>all.includes(c));
+  const older=ABC.charsUpTo(Math.max(1,L-2)), pages=[];
+  const fill=(tk,n,parts)=>{ let o=[]; for(const [arr,cap] of parts) o=o.concat(tk(arr,Math.min(cap,n-o.length))); return o.concat(tk(all,n-o.length)); };
+  const rd=fill(take,30,[[W,8],[older,30]]);
+  const t2=picker(k*823+1), words=fill(t2,12,[[W,4],[older,12]]);
+  const wl=writeUpTo(L), wch=[...new Set(W.filter(c=>wl.includes(c)).concat(shuffle(wl,rng(k*13))))].slice(0,16);
+  const zu=fill(picker(k*827+5),12,[[W,3],[older,12]]), m1=fill(picker(k*829+5),8,[[W,2],[older,8]]), m2=fill(picker(k*831+5),8,[[W,2],[older,8]]), tq=fill(picker(k*833+5),12,[[W,3],[older,12]]);
+  const ss=shuffle(ABC.A.days.slice(0,L).flatMap(d=>d.sent),rng(k*101)); const seenB=new Set(); const fs=ss.filter(s=>!seenB.has(s.blank)&&(seenB.add(s.blank),true)).slice(0,6);
+  const tr=ss.filter(s=>!fs.includes(s)).slice(0,3); let rs=ss.filter(s=>!fs.includes(s)&&!tr.includes(s)).slice(0,8); if(rs.length<4) rs=shuffle(ss,rng(k*7)).slice(0,6);
+  const seen=new Set(); const pyw=shuffle(PY.slice(0,Math.min(30,L)).flatMap(x=>x.words),rng(k*103)).filter(([w])=>!seen.has(w)&&(seen.add(w),true)).slice(0,8);
+  const ps=PAS.filter(p=>p.day<=L); const pas2=ps.length>1?ps[ps.length-2]:null;
+  pages.push(pg(k,3,'复习 · 认读','Read 30 characters',sec('A','认一认，写拼音','Read each character aloud and write its pinyin with the tone mark',`<div class="rd5">${rd.map(c=>`<div class="rdc"><span class="z">${c}</span><div class="ln"></div></div>`).join('')}</div>`)));
+  pages.push(pg(k,4,'复习 · 写词语','Pinyin → words',sec('A','看拼音，写词语','Write each word in characters',wordsGrid(words))));
+  pages.push(pg(k,5,'复习 · 写字','Handwriting review',`<div class="note">Characters you have learned to write${W.length?' — problem characters first':''}. Model → trace → write from memory.</div>${traceGrid(wch)}`));
+  pages.push(pg(k,6,'复习 · 组词','Make words',sec('A','组词','Write two words that use each character',zuQ(zu))));
+  pages.push(pg(k,7,'复习 · 连一连','Match',`${sec('A','连一连 · 意思','Character → meaning',matchQ(m1,k*107,'en'))}${sec('B','连一连 · 拼音','Character → pinyin',matchQ(m2,k*109,'py'))}`));
+  const F=fillQ(fs,k*113);
+  pages.push(pg(k,8,'复习 · 句子','Sentences',`${sec('A','选字填空','Fill each blank from the word bank',F.html)}${tr.length?sec('B','英译中','Write it in Chinese',transQ(tr)):''}`));
+  pages.push(pg(k,9,'复习 · 声调','Tones',`${sec('A','圈出正确的读音','Circle the correct tone',toneQ(tq))}${pyw.length?sec('B','标声调','Add the tone marks',toneW(pyw)):''}`));
+  const P10=pas2?sec('A','阅读 · '+esc(pas2.title),`From Lesson ${pas2.day}. Read it aloud, then tick T or F.`,`<div class="read">${rubyKnown(pas2.zh,pas2.py,new Set(all))}</div><div class="tf">${(TF[pas2.title]||[]).map(([s],i)=>`<div>${num(i+1)}<span>${esc(s)}</span><span class="tfb">T <span class="box"></span> F <span class="box"></span></span></div>`).join('')}</div>`)
+    :sec('A','读一读','Read each sentence aloud — no pinyin',readQ(rs.slice(0,6)));
+  pages.push(pg(k,10,'复习 · 阅读','Reading',`${P10}${pas2&&rs.length?sec('B','读一读','More sentences — read aloud, no pinyin',readQ(rs.slice(0,4))):''}${doneBox(k)}`));
+  return {pages,R,rd,words,wch,zu,m1,m2,F,fs,tr,tq,pyw,pas2};
+}
+function dayPages(k,weak){ weak=weak||[]; return ABC.plan(k).rev?revP1(k,weak)+revP2(k,weak)+revMore(k,weak).pages.join(''):newP1(k,weak)+newP2(k,weak)+newMore(k,weak).pages.join(''); }
 /* characters that appear on a day's sheets (for marking mistakes in the app) */
-function sheetChars(k,weak){ const P=ABC.plan(k); if(P.rev){ const R=pickRev(k,weak); return [...new Set(R.read.concat(R.words,R.dict,R.zu))]; } const N=pickNew(k,weak); return [...new Set(N.d.chars.concat(N.old))]; }
+function sheetChars(k,weak){ const P=ABC.plan(k); if(P.rev){ const R=pickRev(k,weak), M=revMore(k,weak); return [...new Set(R.read.concat(R.words,R.dict,R.zu,M.rd,M.words,M.wch))]; } const N=pickNew(k,weak), O=oldPick(k,N.L,weak); return [...new Set(N.d.chars.concat(N.old,O.words.slice(0,6),O.mp.slice(0,7),O.wchars))]; }
 /* ---------- answer key ---------- */
 function answerDay(k,weak){ const P=ABC.plan(k), z=c=>`<span class="z">${c}</span>`;
   if(P.rev){ const R=pickRev(k,weak);
     const F=R.pas?`<b>P2-F</b> ${(TF[R.pas.title]||[]).map(([s,t],i)=>`${i+1}. ${t?'T':'F'}`).join('　')}`:`<b>P2-F</b> ${R.sents.map((s,i)=>`${z(s.zh)} → ${esc(s.en)}`).join('；')}`;
-    return `<div><h4>第${cnNum(k)}天 · Day ${k} · 复习日</h4><b>P1-A</b> ${R.read.map(c=>z(c)+' '+D[c].py).join('　')}<br><b>P1-B</b> ${R.words.map(c=>`${D[c].wp} = ${z(D[c].w)}`).join('；')}<br><b>P1-C 听写</b> ${R.dict.map((c,i)=>`${i+1}. ${z(D[c].w)}`).join('　')}<br><b>P2-D 组词</b> e.g. ${R.zu.map(c=>z(c)+': '+z(D[c].w)).join('；')} (any correct word counts)<br><b>P2-E 造句</b> e.g. ${R.zj.map(c=>z(D[c].w)).join('、')} — any correct sentence counts<br>${R.pyw.length?`<b>P1-D</b> ${R.pyw.map(([w,p])=>z(w)+' '+p).join('　')}<br>`:''}${F}${R.pas?`<br><b>P2-G</b> ${R.sents.map(s=>`${z(s.zh)} → ${esc(s.en)}`).join('；')}`:''}</div>`; }
+    return `<div><h4>第${cnNum(k)}天 · Day ${k} · 复习日</h4><b>P1-A</b> ${R.read.map(c=>z(c)+' '+D[c].py).join('　')}<br><b>P1-B</b> ${R.words.map(c=>`${D[c].wp} = ${z(D[c].w)}`).join('；')}<br><b>P1-C 听写</b> ${R.dict.map((c,i)=>`${i+1}. ${z(D[c].w)}`).join('　')}<br><b>P2-D 组词</b> e.g. ${R.zu.map(c=>z(c)+': '+z(D[c].w)).join('；')} (any correct word counts)<br><b>P2-E 造句</b> e.g. ${R.zj.map(c=>z(D[c].w)).join('、')} — any correct sentence counts<br>${R.pyw.length?`<b>P1-D</b> ${R.pyw.map(([w,p])=>z(w)+' '+p).join('　')}<br>`:''}${F}${R.pas?`<br><b>P2-G</b> ${R.sents.map(s=>`${z(s.zh)} → ${esc(s.en)}`).join('；')}`:''}<br>${answerMore(k,weak)}</div>`; }
   const N=pickNew(k,weak), d=N.d, Lp=PY[N.L-1], r=rng(k*71); const order=shuffle(d.sent.map((s,i)=>i),r);
-  return `<div><h4>第${cnNum(k)}天 · Day ${k} · Lesson ${N.L}</h4>${Lp&&pyN(Lp)?`<b>P1-B</b> ${Lp.words.slice(0,pyN(Lp)).map(([w,p])=>z(w)+' '+p).join('　')}<br>`:''}<b>P2-A</b> ${N.words.map(c=>`${D[c].wp} = ${z(D[c].w)}`).join('；')}<br><b>P2-B</b> ${order.map((i,j)=>`${j+1}. ${z(d.sent[i].blank)}`).join('　')}<br><b>P2-D</b> e.g. ${d.sent.map(s=>z(s.zh)).slice(0,2).join(' ')}<br>${N.old.length?`<b>P2-E</b> ${N.old.map(c=>`${z(c)} ${D[c].py} ${esc(en1(c))}`).join('；')}`:''}</div>`; }
+  return `<div><h4>第${cnNum(k)}天 · Day ${k} · Lesson ${N.L}</h4>${Lp&&pyN(Lp)?`<b>P1-B</b> ${Lp.words.slice(0,pyN(Lp)).map(([w,p])=>z(w)+' '+p).join('　')}<br>`:''}<b>P2-A</b> ${N.words.map(c=>`${D[c].wp} = ${z(D[c].w)}`).join('；')}<br><b>P2-B</b> ${order.map((i,j)=>`${j+1}. ${z(d.sent[i].blank)}`).join('　')}<br><b>P2-D</b> e.g. ${d.sent.map(s=>z(s.zh)).slice(0,2).join(' ')}<br>${N.old.length?`<b>P2-E</b> ${N.old.map(c=>`${z(c)} ${D[c].py} ${esc(en1(c))}`).join('；')}<br>`:''}${answerMore(k,weak)}</div>`; }
+function answerMore(k,weak){ const z=c=>`<span class="z">${c}</span>`, P=ABC.plan(k);
+  const m=(cs,seed,kind)=>cs.map(c=>`${z(c)} ${kind==='py'?D[c].py:esc(en1(c))}`).join('　');
+  if(P.rev){ const M=revMore(k,weak);
+    return `<b>P3</b> ${M.rd.map(c=>z(c)+' '+D[c].py).join('　')}<br><b>P4</b> ${M.words.map(c=>`${D[c].wp} = ${z(D[c].w)}`).join('；')}<br><b>P6</b> e.g. ${M.zu.map(c=>z(c)+': '+z(D[c].w)).join('；')}<br><b>P7-A</b> ${m(M.m1,0,'en')}<br><b>P7-B</b> ${m(M.m2,0,'py')}<br><b>P8-A</b> ${M.F.order.map((i,j)=>`${j+1}. ${z(M.fs[i].blank)}`).join('　')}${M.tr.length?`<br><b>P8-B</b> ${M.tr.map(s=>z(s.zh)).join('　')}`:''}<br><b>P9-A</b> ${M.tq.map(c=>z(c)+' '+D[c].py).join('　')}${M.pyw.length?`<br><b>P9-B</b> ${M.pyw.map(([w,p])=>z(w)+' '+p).join('　')}`:''}${M.pas2?`<br><b>P10</b> ${(TF[M.pas2.title]||[]).map(([s,t],i)=>`${i+1}. ${t?'T':'F'}`).join('　')}`:''}`; }
+  const X=newMore(k,weak), N=X.N, d=N.d, O=X.O, Lp=PY[N.L-1];
+  const py=Lp?`${(Lp.type==='i'||Lp.type==='f')?`<b>P4-B</b> ${pyFill(Lp).map(x=>z(x.w)+' '+x.ans).join('　')}<br>`:''}<b>P4-C</b> ${Lp.words.map(([w,p])=>z(w)+' '+p).join('　')}<br><b>P4-D</b> ${Lp.pairs.map(([w,a])=>z(esc(w))+' '+esc(a)).join('　')}<br><b>P4-E</b> ${pyDict(N.L).map(([y,w],i)=>`${i+1}. ${y} ${z(w)}`).join('　')}<br>`
+    :`<b>P3</b> ${d.chars.map(c=>z(c)+' '+D[c].py).join('　')}<br><b>P4-A</b> e.g. ${X.zu.map(c=>z(c)+': '+z(D[c].w)).join('；')}<br>`;
+  return `${py}<b>P6</b> ${d.chars.slice(0,15).map(c=>`${D[c].wp} = ${z(D[c].w)}`).join('；')}<br><b>P7-B</b> ${X.F.order.map((i,j)=>`${j+1}. ${z(d.sent[i].blank)}`).join('　')}<br><b>P7-C</b> ${d.sent.slice(0,3).map(s=>z(s.zh)).join('　')}<br><b>P8-A</b> ${m(X.m1,0,'en')}<br><b>P8-B</b> ${m(X.m2,0,'py')}<br><b>P9-A</b> ${O.words.slice(0,6).map(c=>`${D[c].wp} = ${z(D[c].w)}`).join('；')}<br><b>P9-B</b> ${m(O.mp.slice(0,7),0,'py')}<br><b>P9-C</b> ${O.wchars.map(c=>z(c)).join('　')}<br>${O.trans.length?`<b>P10-B</b> ${O.trans.map(s=>z(s.zh)).join('　')}<br>`:''}${O.pyw.length?`<b>P10-C</b> ${O.pyw.slice(0,6).map(([w,p])=>z(w)+' '+p).join('　')}`:''}`; }
 function answersFor(ks,weak){ let pages='';
-  for(let i=0;i<ks.length;i+=5){ const part=ks.slice(i,i+5).map(k=>answerDay(k,weak)).join('');
-    pages+=`<div class="page"><div class="hd"><div class="l"><span class="dayno">答案</span><span class="ttl">Answer key<small>Day ${ks[i]}${ks.length>1?'–'+ks[Math.min(i+4,ks.length-1)]:''}</small></span></div></div><div class="ak">${part}</div></div>`; }
+  for(let i=0;i<ks.length;i+=2){ const part=ks.slice(i,i+2).map(k=>answerDay(k,weak)).join('');
+    pages+=`<div class="page"><div class="hd"><div class="l"><span class="dayno">答案</span><span class="ttl">Answer key<small>Day ${ks[i]}${ks.length>1?'–'+ks[Math.min(i+1,ks.length-1)]:''}</small></span></div></div><div class="ak">${part}</div></div>`; }
   return pages; }
 
 const f=(k,w)=>dayPages(k,w||[]); f.answers=(k,w)=>answersFor([k],w||[]); f.dict=pyDict; f.rev=(k,w)=>pickRev(k,w||[]); f.chars=(k,w)=>sheetChars(k,w||[]); return f;})();</script>
@@ -740,7 +840,7 @@ function header(){
   const T=todayDay(), TP=ABC.plan(T), td=day(TP.L);
   const wk=['日','一','二','三','四','五','六'][new Date().getDay()];
   $('#todaybar').innerHTML=`<div class="tl"><div><div class="big">今天 · 第${cnNum(T)}天</div><div class="meta">星期${wk} · ${TP.rev?`<b style="color:var(--seal)">复习日 Review day</b> · 不学新字 · Lessons 1–${TP.L}`:`第${TP.L}课 · new: <b style="font-family:var(--hz);font-size:15px">${td.chars.join('')}</b> · write: <b style="font-family:var(--hz);font-size:15px">${td.write.join('')||'—'}</b>`}${S.done[T]?' · <b style="color:var(--seal)">已完成 完</b>':''}${dueRead().length?` · <b style="color:var(--seal)">复习 ${dueRead().length} 字</b>`:''}${undoneBefore(T).length?` · <button class="linkbtn" id="goCatch">第${undoneBefore(T).map(cnNum).join('、')}天还没盖章 · 去补</button>`:''}</div></div></div>
-   <div class="acts"><button class="btn print" id="prToday">${PRN} ${S.day===T?'打印今天 2 页':'打印第'+cnNum(S.day)+'天 2 页'}</button>${S.day!==T?`<button class="btn" id="goToday">回到今天</button>`:''}${!S.done[T]?`<button class="btn ghost" id="markDone">标记完成</button>`:''}</div>`;
+   <div class="acts"><button class="btn print" id="prToday">${PRN} ${S.day===T?'打印今天 10 页':'打印第'+cnNum(S.day)+'天 10 页'}</button>${S.day!==T?`<button class="btn" id="goToday">回到今天</button>`:''}${!S.done[T]?`<button class="btn ghost" id="markDone">标记完成</button>`:''}</div>`;
   const gc=$('#goCatch'); if(gc) gc.onclick=()=>{ S.day=undoneBefore(T)[0]; save(); header(); render(); };
   const md=$('#markDone'); if(md) md.onclick=()=>{ S.done[T]=1; S.log[today()]=1; save(); checkBadges(); toast('第'+cnNum(T)+'天已盖章 完'); S.day=todayDay(); header(); render(); };
   $('#prToday').onclick=e=>savePdf(S.day,e.currentTarget);
@@ -880,7 +980,7 @@ function result(){
    <div style="min-width:0;width:100%"><span class="verdict" style="background:color-mix(in srgb,${verdict[1]} 15%,var(--surface));color:${verdict[1]}">${verdict[0]}</span>
     <div class="bars" style="margin-top:14px">${Object.entries(by).map(([t,[a,b]])=>{const p=Math.round(a/b*100);return `<div class="bar"><span>${TYPES[t]}</span><div class="t"><i style="width:${p}%;background:${col(p)}"></i></div><span>${a}/${b}</span></div>`}).join('')}</div>
     ${wrong.length?`<p class="sub" style="margin:14px 0 0">Missed: <span style="font-family:var(--hz);font-size:22px;color:var(--seal)">${wrong.join(' ')}</span> — added to your review deck.</p>`:'<p class="sub" style="margin:14px 0 0">No misses. 太棒了！</p>'}
-    ${(!Q.review||Q.dayRev)&&pct>=80?'<p class="sub" style="margin:6px 0 0">Day stamped 完. Do the 2 printed pages, then mark any mistakes on the 学 tab.</p>':''}
+    ${(!Q.review||Q.dayRev)&&pct>=80?'<p class="sub" style="margin:6px 0 0">Day stamped 完. Do the 10 printed pages, then mark any mistakes on the 学 tab.</p>':''}
    </div></div>
    <div class="row" style="margin-top:18px"><button class="btn pri" id="again">Practice again</button>${wrong.length?'<button class="btn" id="fix">Drill my misses</button>':''}<button class="btn ghost" id="wr">Go write →</button></div></div>`;
   $('#again').onclick=()=>{const dr=Q.dayRev; Q=Q.review?buildQuiz(S.day,Q.qs.map(q=>q.c)):buildQuiz(S.day); if(dr) Q.dayRev=1; quiz();};
@@ -988,7 +1088,7 @@ function reviewDay(){ const k=S.day, P=PL(), W=weakList(), R=SHEETS.rev(k,W);
   $('#rvGo').onclick=()=>document.querySelector('.tab[data-t=quiz]').click();
   wirePassage(); wireMark(); }
 function markPanel(){ const cs=SHEETS.chars(S.day,weakList()); const done=S.marked[S.day];
-  return `<div class="panel" id="markP" style="margin-top:18px"><div class="row" style="justify-content:space-between"><div class="qtype">登记错字 · Mark mistakes from today's 2 pages</div>${done?'<span class="pill">今天已登记 ✓</span>':''}</div>
+  return `<div class="panel" id="markP" style="margin-top:18px"><div class="row" style="justify-content:space-between"><div class="qtype">登记错字 · Mark mistakes from today's 10 pages</div>${done?'<span class="pill">今天已登记 ✓</span>':''}</div>
    <p class="sub" style="margin:6px 0 10px">After checking with the answer key, tap every character you got wrong or couldn't do, then Save. They come back in the next reviews until you get them right twice in a row. <span style="color:var(--gold)">●</span> = still a problem character.</p>
    <div class="mgrid">${cs.map(c=>`<button class="mk ${markSel[c]?'on':''} ${S.weak[c]>0?'wk':''}" data-c="${c}" aria-pressed="${!!markSel[c]}">${c}</button>`).join('')}</div>
    <div class="row" style="margin-top:12px"><button class="btn pri" id="mkSave">保存 Save</button></div></div>`; }
@@ -1027,11 +1127,11 @@ async function buildPdf(n,answers,onP){
 }
 async function savePdf(n,btn,answers){
   if(BUSY) return; BUSY=true;
-  const name=answers?`每日中文_第${n}天_答案.pdf`:`每日中文_第${n}天_2页.pdf`;
+  const name=answers?`每日中文_第${n}天_答案.pdf`:`每日中文_第${n}天_10页.pdf`;
   try{
     if(DL===undefined) DL=(window.claude&&window.claude.use)?await window.claude.use('downloads'):null;
     let blob=null;
-    busy(true,'正在准备 PDF',answers?'答案':`第${cnNum(n)}天 · 2 页`,8);
+    busy(true,'正在准备 PDF',answers?'答案':`第${cnNum(n)}天 · 10 页`,8);
     // build the PDF right here from the pages (same method as Phoebie's Tutor) — no network fetch that can hang
     if(!window.jspdf||!window.html2canvas){ busy(false); toast('PDF 工具没有载入，请检查网络后再按一次'); return; }
     blob=await buildPdf(n,answers,(i,t)=>busy(true,'正在生成 PDF',`第 ${i+1} / ${t} 页`,10+Math.round(i/t*85)));
@@ -1048,16 +1148,16 @@ async function savePdf(n,btn,answers){
 function fitSheets(){ const el=$('#sheets'); if(!el) return; const w=el.parentElement.clientWidth; el.style.zoom=Math.min(1,w/816); }
 window.addEventListener('resize',fitSheets);
 function print(){
-  const k=S.day, P=PL(), d=day(P.L); const a=k*2-1, b=k*2;
+  const k=S.day, P=PL(), d=day(P.L); const a=k*10-9, b=k*10;
   $('#view').innerHTML=`<h2>第${cnNum(k)}天 · 打印 Print <span style="font-size:15px;color:var(--muted)">${P.rev?'复习日 Review day':'第'+P.L+'课 Lesson '+P.L}</span></h2>
   <div class="panel" style="margin-bottom:16px">
    <div class="row" style="justify-content:space-between"><b>怎么打印 How to print</b></div>
-   <div class="row" style="margin:12px 0"><button class="btn print" id="savePdf">${PRN} 保存第${cnNum(k)}天 2 页 PDF</button><button class="btn" id="saveAns">保存答案 PDF</button></div>
+   <div class="row" style="margin:12px 0"><button class="btn print" id="savePdf">${PRN} 保存第${cnNum(k)}天 10 页 PDF</button><button class="btn" id="saveAns">保存答案 PDF</button></div>
    <ol style="margin:0;padding-left:20px;color:var(--muted)">
     <li>按上面的红色按钮，在弹出的确认框里选“保存”。</li>
     <li>打开刚保存的 PDF（Mac：下载文件夹；iPhone/iPad：“文件”App），按 ⌘P 或分享 → 打印。纸张选 Letter。</li>
-    <li>每天 2 页：学两天新字，第三天复习。复习页会优先放你登记过的错字。</li>
-    <li>备用：聊天里的 “每日中文_90天打印练习_180页.pdf”，打印第 <b style="color:var(--seal)">${a}–${b}</b> 页（这份没有你的错字）。</li>
+    <li>每天 10 页：学两天新字，第三天复习。复习页会优先放你登记过的错字。</li>
+    <li>备用：聊天里的 “每日中文_90天打印练习_900页.pdf”，打印第 <b style="color:var(--seal)">${a}–${b}</b> 页（这份没有你的错字）。</li>
    </ol>
    <div class="startset"><label for="voiceSel">发音 Voice</label><select id="voiceSel"><option value="__ms" ${!S.voice?'selected':''}>★ 微软神经语音 Xiaoxiao（录好的，推荐）</option>${VOICES.length?VOICES.map(v=>`<option value="${esc(v.name)}" ${S.voice===v.name?'selected':''}>${esc(v.name)}${isNeural(v)?' ★ 微软神经':''}</option>`).join(''):''}</select><button class="btn ghost" id="vTest" type="button">${SPK} 试听</button></div>
    <p class="sub" style="margin:6px 0 0;font-size:12.5px">所有字、词、句子和短文都用微软神经语音 Xiaoxiao 录好了，在手机、iPad、电脑上都一样。下面的设备语音只在选择时使用。 <span id="packStat"></span></p>
