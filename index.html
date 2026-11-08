@@ -21,7 +21,7 @@
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <link rel="preload" href="assets/fonts/poppins-bold.woff" as="font" type="font/woff" crossorigin>
     <link rel="stylesheet" href="styles.css?v=20261106a">
-    <link rel="stylesheet" href="home.css?v=20261108a">
+    <link rel="stylesheet" href="home.css?v=20261108b">
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Phoebie Wang","url":"https://www.phoebiewang.com/","description":"Free daily math and Chinese practice, visual lessons, printable worksheets, books and songs from the Wang family."}</script>
     <!-- ANALYTICS: paste GA4 tag here once SITE_CONFIG.ga4Id is set -->
 </head>
@@ -98,9 +98,11 @@
           <div class="phone">
             <div class="phone-screen" id="bp-screen">
               <button class="bp-start" id="bp-start" type="button">
-                <img src="birdpal/icon-192.png" width="96" height="96" alt="">
+                <span class="bp-sky" aria-hidden="true"><i class="bp-cloud c1"></i><i class="bp-cloud c2"></i><i class="bp-note-f n1">♪</i><i class="bp-note-f n2">♫</i><i class="bp-note-f n3">♪</i></span>
+                <span class="bp-say" aria-hidden="true"><b>Hello!</b><b>I'm Nori!</b><b>Good morning!</b></span>
+                <img class="bp-nori" src="birdpal/nori.svg" width="170" height="189" alt="">
                 <strong id="bp-title">Teach a bird to talk</strong>
-                <span>Tap to open Bird Pal Buddies</span>
+                <span class="bp-go">Tap to play with Nori</span>
               </button>
             </div>
           </div>
@@ -111,6 +113,8 @@
             <h2 id="bird-story-title">Phoebie built an app that teaches birds to talk.</h2>
             <p class="sub">Phoebie is 10, and she has pet birds she wants to teach new words. So she built Bird Pal Buddies, an app that helps pet birds learn to talk, with her mom.</p>
             <p class="sub">It is free and runs in your browser (try it on the phone to the left). The microphone only turns on after you tap its button.</p>
+            <ul class="bp-chips"><li>🦜 Teaches pet birds new words</li><li>🌏 English · 中文 · Español</li><li>🔥 Daily streak</li><li>🎤 Mic only when you tap</li></ul>
+            <a class="h-btn primary bp-open" href="birdpal/">Open it full screen</a>
           </section>
         </div>
       </div>
