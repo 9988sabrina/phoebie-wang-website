@@ -249,6 +249,10 @@ function migrate(){S.settings=S.settings||{};S.rev=S.rev||[];S.mastered=S.master
   if(false){S._bonus1103=1;S.bonus={date:"2026-11-03",k:["mulMulti","mulMulti","mulMulti","div2","div2","div2"]}}
   if(false){S._bonus1106=1;S.bonus={date:"2026-11-06",k:["scaling","scaling","scaling"]}}
   if(false){S._bonusWk1106=1;S.bonusPlan=S.bonusPlan||{};["2026-11-06","2026-11-07","2026-11-08","2026-11-09","2026-11-10","2026-11-11","2026-11-12"].forEach(d=>{S.bonusPlan[d]=["scaling","scaling","scaling"]})}
+  if(false){S._paper1107=1;day("2026-11-07").paper=true;
+    const add={"m:decDivW":"11/7 paper #13 (29.4 ÷ 7 = 4.2, she wrote 4; 2nd time, also 10/28)","m:pow10":"11/7 paper #18 (6,457 ÷ 1,000 = 6.457, she wrote 0.06457; 2nd time)","m:fracMul":"11/7 paper #25 (4/7 × 3/8 = 12/56 = 3/14, simplify)","m:olymp":"11/7 paper #35 (book = 3 pens, $12.96 → pen $3.24, book $9.72; 3rd time)","e:u4h1":"11/7 paper Reading+ (Legislative/Congress makes the laws; 2nd time, also 10/28)","z:时间":"11/7 Chinese (时间 missing 间; write wrong characters twice and self-check)"};
+    Object.entries(add).forEach(([k,src])=>{const r=S.rev.find(x=>x.k===k);if(r){r.stage=0;r.due="2026-11-08";r.src=src}else S.rev.push({k,stage:0,due:"2026-11-08",src});S.mastered=S.mastered.filter(m=>m.k!==k)});
+    S.bonusPlan=S.bonusPlan||{};["2026-11-08","2026-11-09","2026-11-10"].forEach(d=>{S.bonusPlan[d]=["olymp","olymp","scaling"]})}
   if(false){S._paper1105=1;day("2026-11-05").paper=true;
     const add={"m:div2":"11/5 paper #11 (1,406 ÷ 37 = 38, she wrote the estimate 40; check by multiplying 37 × 38)","m:fracAdd":"11/5 paper #38 (4/6 + 8/12 = 2/3 + 2/3 = 4/3 = 1 1/3)","m:olymp":"11/5 paper #36 (book = 3 pens, total $9.36: 4 units → pen $2.34, book $7.02; she gave the pen's price)","e:u2r0":"11/5 paper Reading+ #1 (shadow short at lunch = Sun HIGH in the sky)","e:u2v2":"11/5 paper Reading+ #7 (left blank: angle = space between two lines that meet)"};
     Object.entries(add).forEach(([k,src])=>{const r=S.rev.find(x=>x.k===k);if(r){r.stage=0;r.due="2026-11-06";r.src=src}else S.rev.push({k,stage:0,due:"2026-11-06",src});S.mastered=S.mastered.filter(m=>m.k!==k)})}
