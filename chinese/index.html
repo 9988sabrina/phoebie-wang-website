@@ -84,6 +84,11 @@ h2{font-family:var(--display);font-size:20px;margin:0 0 4px;text-wrap:balance}
 .todaybar .meta b{color:var(--ink)}
 .todaybar .acts{display:flex;gap:8px;flex-wrap:wrap}
 .btn.print{background:var(--seal);border-color:var(--seal);color:var(--onj);font-size:15px;padding:11px 18px}
+.dchip.rev{background:var(--seal-soft);border-color:color-mix(in srgb,var(--seal) 35%,transparent)} .dchip.rev small{color:var(--seal);font-weight:700}
+.mgrid{display:flex;flex-wrap:wrap;gap:8px}
+.mk{width:50px;height:50px;border-radius:10px;border:1px solid var(--line);background:var(--surface);font-family:var(--hz);font-size:27px;color:var(--ink);cursor:pointer;position:relative}
+.mk.wk::after{content:"";position:absolute;top:5px;right:5px;width:7px;height:7px;border-radius:50%;background:var(--gold)}
+.mk.on{background:var(--seal);border-color:var(--seal);color:#fff}
 .dchip .now{position:absolute;bottom:-7px;left:50%;transform:translateX(-50%);font-size:9px;font-weight:700;background:var(--seal);color:#fff;border-radius:4px;padding:0 4px;white-space:nowrap}
 .startset{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:13px;color:var(--muted);margin-top:12px}
 .startset select{font:inherit;padding:6px 8px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);max-width:100%;min-width:0}
@@ -369,6 +374,32 @@ rt{font-family:var(--latin);font-size:10.5px;color:var(--soft);font-weight:500}
 .dict6 div{display:flex;align-items:flex-end;gap:8px;font-size:12px;color:var(--soft)}
 .dict6 div i{flex:1;border-bottom:1px solid var(--line);height:38px}
 .pycopy{display:grid;grid-template-columns:1fr 1fr;gap:12px 28px}.pycopy>div{display:flex;align-items:flex-end;gap:12px}.pycopy .z{font-family:var(--hanzi);font-size:24px;min-width:3em}.pycopy .py4{height:.42in}
+/* 2-page plan */
+.pg2{gap:9px} .pg2 .pyq .ln{white-space:nowrap}
+.pg2 .tzg{--s:.62in}
+.mcards{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.mc{border:1px solid var(--line);border-radius:4px;background:var(--wash);padding:8px 6px;display:flex;flex-direction:column;align-items:center;gap:2px;text-align:center}
+.mc .mz{font-family:var(--hanzi);font-size:46px;line-height:1.1;width:.78in;height:.78in;display:flex;align-items:center;justify-content:center;background:#fff;border:1.2px solid var(--grid)}
+.mc .mpy{font-size:15px;font-weight:600;color:var(--red)} .mc .mpy .w{font-size:11px}
+.mc .men{font-size:10px;color:var(--soft);line-height:1.2;min-height:12px}
+.mc .mw{font-size:10.5px} .mc .mw .z{font-family:var(--hanzi);font-size:15px}
+.pyline{display:flex;flex-wrap:wrap;gap:6px 22px;font-size:14px} .pyline b{font-size:20px;color:var(--red);margin-right:4px} .pyline i{font-style:normal;font-family:var(--hanzi)}
+.words.w3{grid-template-columns:repeat(3,1fr);gap:8px 18px}
+.pg2 .word .pyl span{width:.62in}
+.rv3{display:grid;grid-template-columns:repeat(2,1fr);gap:10px 26px}
+.rd5{display:grid;grid-template-columns:repeat(5,1fr);gap:10px 16px}
+.rdc{display:flex;align-items:flex-end;gap:8px} .rdc .z{font-family:var(--hanzi);font-size:34px;line-height:1} .rdc .ln{flex:1;border-bottom:1px solid var(--line);height:34px}
+.dt{display:grid;grid-template-columns:repeat(3,1fr);gap:12px 18px} .dt>div{display:flex;align-items:center;gap:8px}
+.zu{display:grid;grid-template-columns:repeat(2,1fr);gap:14px 30px} .zu>div{display:flex;align-items:flex-end;gap:12px} .zu .z{font-family:var(--hanzi);font-size:34px;line-height:1} .zu i{flex:1;border-bottom:1px solid var(--line);height:36px}
+.tf{display:flex;flex-direction:column;gap:8px;font-size:13px} .tf>div{display:flex;align-items:center;gap:8px} .tf .tfb{margin-left:auto;white-space:nowrap;font-size:12px}
+.match2{display:grid;grid-template-columns:auto 1.1in 1fr;align-items:center;row-gap:12px} .match2 .a{font-family:var(--hanzi);font-size:21px;display:flex;justify-content:flex-end;align-items:center;gap:8px} .match2 .b{font-size:12px;display:flex;align-items:center;gap:8px}
+.pg2 .read{font-size:22px;line-height:2.1;padding:8px 14px}
+.pg2 .tr .ln{height:30px}
+.pg2 .words.w3.sm .tzg{--s:.52in} .pg2 .words.w3.sm .pyl span{width:.52in}
+.rd3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px 22px} .rdc .ln{position:relative} .rdc .ln i{position:absolute;top:-2px;left:0;font-size:8px;color:var(--soft);font-style:normal;letter-spacing:.05em}
+.tr.two{display:grid;grid-template-columns:1fr 1fr;gap:6px 26px} .tr.two .ln{height:26px}
+.pg2 .read ruby{font-size:inherit;margin:0 1px} .pg2 .read{font-size:21px;line-height:2.05}
+.dayno{white-space:nowrap} .ttl{white-space:nowrap}
 /* answer key */
 .ak{font-size:11px;line-height:1.55}
 .ak h4{font-family:var(--serif);font-size:13px;margin:8px 0 3px;color:var(--red)}
@@ -447,222 +478,145 @@ function reviewChars(n){
 }
 const CN=['零','一','二','三','四','五','六','七','八','九','十'];
 function cnNum(n){ if(n<=10) return CN[n]; if(n<20) return '十'+CN[n-10]; const t=Math.floor(n/10),u=n%10; return CN[t]+'十'+(u?CN[u]:''); }
-window.ABC = {A, D:A.dict, day, charsUpTo, writeUpTo, reviewChars, toneOptions, parse, rng, shuffle, cnNum};
+// 2+1 cycle (from 2026-11-07): days 1-2 new lessons, day 3 full review, repeat. 30 lessons -> 45 days.
+const TOTAL=45;
+function plan(k){ k=Math.max(1,Math.min(TOTAL,k)); const rev=k%3===0; return {k,rev,L:rev?2*k/3:k-Math.floor(k/3)}; }
+function kOfLesson(L){ return L+Math.floor((L-1)/2); }
+window.ABC = {A, D:A.dict, TOTAL, plan, kOfLesson, day, charsUpTo, writeUpTo, reviewChars, toneOptions, parse, rng, shuffle, cnNum};
 })();
 </script>
 <script>window.ABC_PINYIN=[{"n": 1, "type": "t", "zh": "单韵母 a o e 和四个声调", "en": "Simple finals a o e + the four tones", "items": [{"sym": "ā á ǎ à", "tip": "Four tones: 1 high & flat, 2 rising (like \"what?\"), 3 dip low, 4 falling fast (like \"No!\").", "ex": [["mā", "妈"], ["má", "麻"], ["mǎ", "马"], ["mà", "骂"]]}, {"sym": "a", "tip": "Open wide, like \"a\" in father.", "ex": [["bā", "八"], ["pà", "怕"], ["dà", "大"], ["tā", "他"]]}, {"sym": "o", "tip": "Round your lips, like \"aw\" in law.", "ex": [["bō", "波"], ["pó", "婆"], ["mò", "墨"], ["fó", "佛"]]}, {"sym": "e", "tip": "Lips spread, like \"uh\" in duh — not English \"e\".", "ex": [["gē", "哥"], ["hé", "河"], ["kě", "渴"], ["rè", "热"]]}], "words": [["妈妈", "mā ma"], ["爸爸", "bà ba"], ["哥哥", "gē ge"], ["可以", "kě yǐ"], ["喝水", "hē shuǐ"], ["大马", "dà mǎ"]], "pairs": [["马", "mǎ", "mà"], ["妈", "mā", "má"], ["热", "rè", "lè"]]}, {"n": 2, "type": "f", "zh": "i u ü 和 y w", "en": "i u ü, and y / w", "items": [{"sym": "i", "tip": "Like \"ee\" in see.", "ex": [["yī", "衣"], ["yí", "姨"], ["yǐ", "椅"], ["mǐ", "米"]]}, {"sym": "u", "tip": "Like \"oo\" in food.", "ex": [["wū", "屋"], ["wú", "无"], ["wǔ", "五"], ["wù", "雾"]]}, {"sym": "ü", "tip": "Say \"ee\", then round your lips. No English sound like it!", "ex": [["yú", "鱼"], ["yǔ", "雨"], ["yù", "玉"], ["lǜ", "绿"]]}, {"sym": "y w", "tip": "Alone, i is written yi, u is wu, ü is yu (dots dropped).", "ex": [["yī", "衣"], ["wǔ", "午"], ["yǔ", "语"], ["yuè", "月"]]}], "words": [["下雨", "xià yǔ"], ["五月", "wǔ yuè"], ["衣服", "yī fu"], ["小鱼", "xiǎo yú"], ["绿色", "lǜ sè"], ["无聊", "wú liáo"]], "pairs": [["雨", "yǔ", "yǐ"], ["绿", "lǜ", "lù"], ["五", "wǔ", "wǒ"]]}, {"n": 3, "type": "i", "zh": "声母 b p m f", "en": "Initials b p m f", "items": [{"sym": "b", "tip": "No puff of air — like the \"p\" in spin.", "ex": [["bā", "八"], ["bái", "白"], ["bǎ", "把"], ["bù", "布"]]}, {"sym": "p", "tip": "Strong puff of air, like \"p\" in pin.", "ex": [["pá", "爬"], ["pǎo", "跑"], ["pí", "皮"], ["pà", "怕"]]}, {"sym": "m", "tip": "Like English m.", "ex": [["māo", "猫"], ["mén", "门"], ["mǎi", "买"], ["mài", "卖"]]}, {"sym": "f", "tip": "Like English f.", "ex": [["fēi", "飞"], ["fàn", "饭"], ["fēng", "风"], ["fáng", "房"]]}], "words": [["跑步", "pǎo bù"], ["飞机", "fēi jī"], ["米饭", "mǐ fàn"], ["朋友", "péng you"], ["面包", "miàn bāo"], ["爸爸", "bà ba"]], "pairs": [["怕", "pà", "bà"], ["步", "bù", "pù"], ["饭", "fàn", "pàn"]]}, {"n": 4, "type": "i", "zh": "声母 d t n l", "en": "Initials d t n l", "items": [{"sym": "d", "tip": "No puff — like the \"t\" in stop.", "ex": [["dà", "大"], ["dì", "地"], ["duō", "多"], ["dōng", "东"]]}, {"sym": "t", "tip": "Strong puff, like \"t\" in top.", "ex": [["tā", "他"], ["tiān", "天"], ["tóu", "头"], ["tài", "太"]]}, {"sym": "n", "tip": "Like English n.", "ex": [["nǐ", "你"], ["nán", "男"], ["niú", "牛"], ["nǚ", "女"]]}, {"sym": "l", "tip": "Like English l.", "ex": [["lái", "来"], ["lǎo", "老"], ["liù", "六"], ["lǜ", "绿"]]}], "words": [["大学", "dà xué"], ["天气", "tiān qì"], ["你们", "nǐ men"], ["老师", "lǎo shī"], ["男女", "nán nǚ"], ["地铁", "dì tiě"]], "pairs": [["女", "nǚ", "lǚ"], ["天", "tiān", "diān"], ["来", "lái", "nái"]]}, {"n": 5, "type": "i", "zh": "声母 g k h", "en": "Initials g k h", "items": [{"sym": "g", "tip": "No puff — like the \"k\" in skin.", "ex": [["gē", "哥"], ["gāo", "高"], ["gǒu", "狗"], ["guó", "国"]]}, {"sym": "k", "tip": "Strong puff, like \"k\" in kite.", "ex": [["kāi", "开"], ["kàn", "看"], ["kǒu", "口"], ["kuài", "快"]]}, {"sym": "h", "tip": "Rougher than English h — from the throat, like \"ch\" in Scottish loch.", "ex": [["hǎo", "好"], ["hē", "喝"], ["hóng", "红"], ["huǒ", "火"]]}], "words": [["哥哥", "gē ge"], ["高兴", "gāo xìng"], ["开心", "kāi xīn"], ["可口", "kě kǒu"], ["喝水", "hē shuǐ"], ["火车", "huǒ chē"]], "pairs": [["看", "kàn", "gàn"], ["好", "hǎo", "kǎo"], ["国", "guó", "kuó"]]}, {"n": 6, "type": "i", "zh": "声母 j q x", "en": "Initials j q x", "items": [{"sym": "j", "tip": "Like \"j\" in jeep, but smile — tongue tip down behind your lower teeth.", "ex": [["jiā", "家"], ["jǐ", "几"], ["jiàn", "见"], ["jīn", "金"]]}, {"sym": "q", "tip": "Like \"ch\" in cheese, with a puff, smiling. (Not \"kw\"!)", "ex": [["qī", "七"], ["qù", "去"], ["qián", "前"], ["qīng", "青"]]}, {"sym": "x", "tip": "Like \"sh\" in she, but smiling. (Not \"ks\"!)", "ex": [["xī", "西"], ["xiǎo", "小"], ["xuě", "雪"], ["xiè", "谢"]]}, {"sym": "ju qu xu", "tip": "After j q x, ü loses its dots — ju qu xu still sound ü.", "ex": [["jú", "橘"], ["qù", "去"], ["xū", "需"], ["jù", "句"]]}], "words": [["回家", "huí jiā"], ["七月", "qī yuè"], ["小心", "xiǎo xīn"], ["下雪", "xià xuě"], ["去年", "qù nián"], ["谢谢", "xiè xie"]], "pairs": [["七", "qī", "chī"], ["西", "xī", "shī"], ["去", "qù", "cù"]]}, {"n": 7, "type": "i", "zh": "声母 z c s", "en": "Initials z c s", "items": [{"sym": "z", "tip": "Like \"ds\" in kids.", "ex": [["zǎo", "早"], ["zì", "字"], ["zuò", "坐"], ["zài", "在"]]}, {"sym": "c", "tip": "Like \"ts\" in cats, with a puff. (Not \"k\"!)", "ex": [["cài", "菜"], ["cóng", "从"], ["cǎo", "草"], ["cuò", "错"]]}, {"sym": "s", "tip": "Like English s.", "ex": [["sān", "三"], ["sì", "四"], ["suì", "岁"], ["sè", "色"]]}], "words": [["早上", "zǎo shang"], ["写字", "xiě zì"], ["青菜", "qīng cài"], ["草莓", "cǎo méi"], ["颜色", "yán sè"], ["四岁", "sì suì"]], "pairs": [["菜", "cài", "zài"], ["四", "sì", "shì"], ["草", "cǎo", "zǎo"]]}, {"n": 8, "type": "i", "zh": "翘舌音 zh ch sh r", "en": "Curled-tongue initials zh ch sh r", "items": [{"sym": "zh", "tip": "Curl your tongue tip up — like \"j\" in judge, curled.", "ex": [["zhōng", "中"], ["zhè", "这"], ["zhǎo", "找"], ["zhù", "住"]]}, {"sym": "ch", "tip": "Curled, like \"ch\" in church, with a puff.", "ex": [["chē", "车"], ["chī", "吃"], ["chá", "茶"], ["chū", "出"]]}, {"sym": "sh", "tip": "Curled, like \"sh\" in shirt.", "ex": [["shū", "书"], ["shì", "是"], ["shuǐ", "水"], ["shān", "山"]]}, {"sym": "r", "tip": "Curled, like the \"s\" in pleasure.", "ex": [["rén", "人"], ["rì", "日"], ["ròu", "肉"], ["rè", "热"]]}], "words": [["中国", "zhōng guó"], ["吃饭", "chī fàn"], ["喝茶", "hē chá"], ["书包", "shū bāo"], ["老师", "lǎo shī"], ["人口", "rén kǒu"]], "pairs": [["中", "zhōng", "zōng"], ["是", "shì", "sì"], ["山", "shān", "sān"]]}, {"n": 9, "type": "x", "zh": "整体认读音节", "en": "Whole syllables you read as one unit", "items": [{"sym": "zhi chi shi ri", "tip": "Read as one unit. The \"i\" here is a buzz, not \"ee\".", "ex": [["zhī", "知"], ["chī", "吃"], ["shí", "十"], ["rì", "日"]]}, {"sym": "zi ci si", "tip": "Also whole units — the \"i\" is a buzzing \"z\" sound.", "ex": [["zì", "字"], ["cí", "词"], ["sī", "丝"], ["sì", "四"]]}, {"sym": "yi wu yu", "tip": "Whole syllables — don't spell them out.", "ex": [["yī", "衣"], ["wū", "屋"], ["yú", "鱼"], ["yǔ", "雨"]]}, {"sym": "ye yue yuan yin yun ying", "tip": "More whole syllables.", "ex": [["yè", "叶"], ["yuè", "月"], ["yuán", "元"], ["yún", "云"]]}], "words": [["知道", "zhī dào"], ["生日", "shēng rì"], ["名字", "míng zi"], ["生词", "shēng cí"], ["衣服", "yī fu"], ["月亮", "yuè liang"]], "pairs": [["十", "shí", "sí"], ["日", "rì", "lì"], ["字", "zì", "zhì"]]}, {"n": 10, "type": "f", "zh": "复韵母 ai ei ui", "en": "Compound finals ai ei ui", "items": [{"sym": "ai", "tip": "Like \"eye\".", "ex": [["ài", "爱"], ["bái", "白"], ["mǎi", "买"], ["lái", "来"]]}, {"sym": "ei", "tip": "Like \"ay\" in say.", "ex": [["fēi", "飞"], ["hēi", "黑"], ["měi", "美"], ["lèi", "累"]]}, {"sym": "ui", "tip": "Sounds like \"way\" (it is short for uei).", "ex": [["huí", "回"], ["shuǐ", "水"], ["duì", "对"], ["guì", "贵"]]}], "words": [["买菜", "mǎi cài"], ["美国", "měi guó"], ["回来", "huí lai"], ["对不起", "duì bu qǐ"], ["黑白", "hēi bái"], ["飞机", "fēi jī"]], "pairs": [["美", "měi", "mǎi"], ["白", "bái", "béi"], ["水", "shuǐ", "shǔi"]]}, {"n": 11, "type": "f", "zh": "复韵母 ao ou iu", "en": "Compound finals ao ou iu", "items": [{"sym": "ao", "tip": "Like \"ow\" in cow.", "ex": [["hǎo", "好"], ["gāo", "高"], ["lǎo", "老"], ["dào", "到"]]}, {"sym": "ou", "tip": "Like \"oh\".", "ex": [["gǒu", "狗"], ["kǒu", "口"], ["shǒu", "手"], ["zǒu", "走"]]}, {"sym": "iu", "tip": "Like \"yo\" (it is short for iou).", "ex": [["liù", "六"], ["jiǔ", "九"], ["qiú", "球"], ["niú", "牛"]]}], "words": [["你好", "nǐ hǎo"], ["老师", "lǎo shī"], ["小狗", "xiǎo gǒu"], ["走路", "zǒu lù"], ["牛肉", "niú ròu"], ["足球", "zú qiú"]], "pairs": [["狗", "gǒu", "gǎo"], ["九", "jiǔ", "jǐu"], ["手", "shǒu", "shǎo"]]}, {"n": 12, "type": "f", "zh": "复韵母 ie üe er", "en": "Finals ie üe er", "items": [{"sym": "ie", "tip": "Like \"yeah\".", "ex": [["xiè", "谢"], ["jiě", "姐"], ["bié", "别"], ["tiě", "铁"]]}, {"sym": "üe", "tip": "ü + eh. After j q x y it is written ue: jue que xue yue.", "ex": [["xué", "学"], ["yuè", "月"], ["quē", "缺"], ["xuě", "雪"]]}, {"sym": "er", "tip": "Like American \"are\" — curl your tongue.", "ex": [["ér", "儿"], ["ěr", "耳"], ["èr", "二"]]}], "words": [["谢谢", "xiè xie"], ["姐姐", "jiě jie"], ["学生", "xué sheng"], ["下雪", "xià xuě"], ["女儿", "nǚ ér"], ["耳机", "ěr jī"]], "pairs": [["学", "xué", "xié"], ["二", "èr", "è"], ["姐", "jiě", "jǐ"]]}, {"n": 13, "type": "f", "zh": "前鼻韵母 an en in", "en": "Front nasal finals an en in", "items": [{"sym": "an", "tip": "Like \"ahn\" — end with your tongue tip touching the top.", "ex": [["sān", "三"], ["fàn", "饭"], ["kàn", "看"], ["nán", "男"]]}, {"sym": "en", "tip": "Like \"un\" in under + n.", "ex": [["rén", "人"], ["mén", "门"], ["hěn", "很"], ["fēn", "分"]]}, {"sym": "in", "tip": "Like \"een\" in seen.", "ex": [["xīn", "心"], ["jīn", "今"], ["nín", "您"], ["lín", "林"]]}], "words": [["吃饭", "chī fàn"], ["男人", "nán rén"], ["很好", "hěn hǎo"], ["开门", "kāi mén"], ["开心", "kāi xīn"], ["今天", "jīn tiān"]], "pairs": [["门", "mén", "mán"], ["心", "xīn", "xīng"], ["看", "kàn", "kàng"]]}, {"n": 14, "type": "f", "zh": "un ün 和 üan", "en": "Finals un ün üan", "items": [{"sym": "un", "tip": "Like \"wun\" (short for uen).", "ex": [["chūn", "春"], ["cūn", "村"], ["sūn", "孙"], ["kùn", "困"]]}, {"sym": "ün", "tip": "ü + n. After j q x y written un: jun qun xun yun — still ü!", "ex": [["yún", "云"], ["jūn", "军"], ["qún", "群"], ["yùn", "运"]]}, {"sym": "üan", "tip": "Like \"ywen\": yuan juan quan xuan.", "ex": [["yuǎn", "远"], ["quán", "全"], ["xuǎn", "选"], ["yuán", "元"]]}], "words": [["春天", "chūn tiān"], ["白云", "bái yún"], ["很远", "hěn yuǎn"], ["安全", "ān quán"], ["微信群", "wēi xìn qún"], ["运动", "yùn dòng"]], "pairs": [["群", "qún", "chún"], ["远", "yuǎn", "wǎn"], ["云", "yún", "yóng"]]}, {"n": 15, "type": "f", "zh": "后鼻韵母 ang eng ing ong", "en": "Back nasal finals ang eng ing ong", "items": [{"sym": "ang", "tip": "Like \"ahng\" — from the back of your mouth.", "ex": [["máng", "忙"], ["fáng", "房"], ["shàng", "上"], ["táng", "糖"]]}, {"sym": "eng", "tip": "Like \"ung\" in lung.", "ex": [["fēng", "风"], ["lěng", "冷"], ["děng", "等"], ["péng", "朋"]]}, {"sym": "ing", "tip": "Like \"ing\" in sing.", "ex": [["míng", "明"], ["tīng", "听"], ["xīng", "星"], ["qǐng", "请"]]}, {"sym": "ong", "tip": "Like \"oong\", lips round.", "ex": [["dōng", "东"], ["hóng", "红"], ["zhōng", "中"], ["tòng", "痛"]]}], "words": [["很忙", "hěn máng"], ["上班", "shàng bān"], ["朋友", "péng you"], ["很冷", "hěn lěng"], ["明天", "míng tiān"], ["红色", "hóng sè"]], "pairs": [["方", "fāng", "fān"], ["星", "xīng", "xīn"], ["冷", "lěng", "lěn"]]}, {"n": 16, "type": "f", "zh": "三拼音节 ia ua uo", "en": "Three-part syllables ia ua uo", "items": [{"sym": "ia", "tip": "Like \"yah\": jia qia xia.", "ex": [["jiā", "家"], ["xià", "夏"], ["liǎ", "俩"], ["yā", "鸭"]]}, {"sym": "ua", "tip": "Like \"wah\".", "ex": [["huā", "花"], ["guā", "瓜"], ["huà", "画"], ["wā", "蛙"]]}, {"sym": "uo", "tip": "Like \"woh\".", "ex": [["guó", "国"], ["duō", "多"], ["zuò", "坐"], ["huǒ", "火"]]}, {"sym": "j-i-ā", "tip": "Initial + i/u/ü + final — say it in one breath, don't chop it.", "ex": [["jiā", "家"], ["huā", "花"], ["guó", "国"], ["xià", "下"]]}], "words": [["回家", "huí jiā"], ["西瓜", "xī guā"], ["画画", "huà huà"], ["中国", "zhōng guó"], ["很多", "hěn duō"], ["火车", "huǒ chē"]], "pairs": [["花", "huā", "hā"], ["多", "duō", "dō"], ["家", "jiā", "jā"]]}, {"n": 17, "type": "f", "zh": "iao ian iang · uai uan uang", "en": "iao ian iang · uai uan uang", "items": [{"sym": "iao", "tip": "Like \"yow\".", "ex": [["xiǎo", "小"], ["jiào", "叫"], ["tiào", "跳"], ["piào", "票"]]}, {"sym": "ian", "tip": "Careful: sounds like \"yen\", not \"yan\"!", "ex": [["tiān", "天"], ["qián", "钱"], ["diàn", "电"], ["miàn", "面"]]}, {"sym": "iang", "tip": "Like \"yahng\".", "ex": [["liǎng", "两"], ["xiǎng", "想"], ["jiāng", "江"], ["yáng", "羊"]]}, {"sym": "uai uan uang", "tip": "Like \"wai\", \"wan\", \"wahng\".", "ex": [["kuài", "快"], ["wǎn", "晚"], ["guān", "关"], ["huáng", "黄"]]}], "words": [["小心", "xiǎo xīn"], ["电话", "diàn huà"], ["多少钱", "duō shao qián"], ["想家", "xiǎng jiā"], ["很快", "hěn kuài"], ["黄色", "huáng sè"]], "pairs": [["天", "tiān", "tān"], ["钱", "qián", "qiáng"], ["快", "kuài", "kài"]]}, {"n": 18, "type": "f", "zh": "iong ueng · 韵母总复习", "en": "iong ueng · all finals review", "items": [{"sym": "iong", "tip": "Like \"yoong\": xiong qiong yong.", "ex": [["xióng", "熊"], ["yòng", "用"], ["qióng", "穷"], ["xiōng", "兄"]]}, {"sym": "ueng", "tip": "Only one syllable: weng.", "ex": [["wēng", "翁"]]}, {"sym": "单韵母", "tip": "Simple finals: a o e i u ü", "ex": [["mǎ", "马"], ["pó", "婆"], ["kě", "渴"], ["yú", "鱼"]]}, {"sym": "复韵母 · 鼻韵母", "tip": "Compound: ai ei ui ao ou iu ie üe er · Nasal: an en in un ün ang eng ing ong", "ex": [["bái", "白"], ["tóu", "头"], ["lěng", "冷"], ["hóng", "红"]]}], "words": [["有用", "yǒu yòng"], ["熊猫", "xióng māo"], ["兄弟", "xiōng dì"], ["游泳", "yóu yǒng"], ["用心", "yòng xīn"], ["永远", "yǒng yuǎn"]], "pairs": [["用", "yòng", "yòu"], ["熊", "xióng", "xóng"], ["红", "hóng", "hún"]]}, {"n": 19, "type": "t", "zh": "标调规则", "en": "Where the tone mark goes", "items": [{"sym": "a e 优先", "tip": "If there is an a or e, the mark goes on it: hǎo, xiè, bái.", "ex": [["hǎo", "好"], ["xiè", "谢"], ["měi", "美"], ["dào", "到"]]}, {"sym": "o", "tip": "No a or e? Put it on o: duō, gǒu.", "ex": [["duō", "多"], ["gǒu", "狗"], ["huǒ", "火"], ["zuò", "坐"]]}, {"sym": "iu · ui", "tip": "With iu or ui, mark the second letter: liù, duì.", "ex": [["liù", "六"], ["duì", "对"], ["jiǔ", "九"], ["huí", "回"]]}, {"sym": "i 去点", "tip": "On i, the dot is replaced by the mark: nǐ, xīn.", "ex": [["nǐ", "你"], ["xīn", "心"], ["jǐ", "几"], ["mǐ", "米"]]}], "words": [["好久", "hǎo jiǔ"], ["水果", "shuǐ guǒ"], ["学校", "xué xiào"], ["对面", "duì miàn"], ["回家", "huí jiā"], ["游戏", "yóu xì"]], "pairs": [["六", "liù", "líu"], ["对", "duì", "dùi"], ["好", "hǎo", "haǒ"]]}, {"n": 20, "type": "t", "zh": "轻声", "en": "The neutral tone", "items": [{"sym": "轻声", "tip": "No mark — short and light, quicker than the syllable before it.", "ex": [["ma", "吗"], ["ne", "呢"], ["ba", "吧"], ["de", "的"]]}, {"sym": "叠词", "tip": "In repeated family words the 2nd syllable is neutral.", "ex": [["mā ma", "妈妈"], ["bà ba", "爸爸"], ["gē ge", "哥哥"], ["jiě jie", "姐姐"]]}, {"sym": "子 们 么", "tip": "Suffixes 子 们 么 (and many 2nd syllables) are neutral.", "ex": [["zhuō zi", "桌子"], ["wǒ men", "我们"], ["shén me", "什么"], ["péng you", "朋友"]]}], "words": [["谢谢", "xiè xie"], ["东西", "dōng xi"], ["衣服", "yī fu"], ["名字", "míng zi"], ["时候", "shí hou"], ["喜欢", "xǐ huan"]], "pairs": [["东西", "dōng xi", "dōng xī"], ["妈妈", "mā ma", "mā mā"], ["朋友", "péng you", "péng yǒu"]]}, {"n": 21, "type": "t", "zh": "“一”的变调", "en": "How 一 changes tone", "items": [{"sym": "yī", "tip": "Alone, at the end, or counting: yī — 一, 十一, 第一.", "ex": [["yī", "一"], ["shí yī", "十一"], ["dì yī", "第一"], ["yī yuè", "一月"]]}, {"sym": "yí", "tip": "Before a 4th tone: yí — yí gè, yí yàng.", "ex": [["yí gè", "一个"], ["yí yàng", "一样"], ["yí bàn", "一半"], ["yí kuài", "一块"]]}, {"sym": "yì", "tip": "Before tones 1, 2, 3: yì — yì tiān, yì nián, yì qǐ.", "ex": [["yì tiān", "一天"], ["yì nián", "一年"], ["yì qǐ", "一起"], ["yì zhī", "一只"]]}], "words": [["一点", "yì diǎn"], ["一下", "yí xià"], ["一起", "yì qǐ"], ["一共", "yí gòng"], ["一些", "yì xiē"], ["星期一", "xīng qī yī"]], "pairs": [["一个", "yí gè", "yì gè"], ["一起", "yì qǐ", "yí qǐ"], ["第一", "dì yī", "dì yì"]]}, {"n": 22, "type": "t", "zh": "“不”的变调", "en": "How 不 changes tone", "items": [{"sym": "bù", "tip": "Normally bù: bù hǎo, bù lái.", "ex": [["bù hǎo", "不好"], ["bù lái", "不来"], ["bù duō", "不多"], ["bù xíng", "不行"]]}, {"sym": "bú", "tip": "Before a 4th tone: bú — bú shì, bú yào.", "ex": [["bú shì", "不是"], ["bú yào", "不要"], ["bú duì", "不对"], ["bú kè qi", "不客气"]]}, {"sym": "bu", "tip": "In the middle of A不A it goes light: hǎo bu hǎo.", "ex": [["hǎo bu hǎo", "好不好"], ["qù bu qù", "去不去"], ["duì bu qǐ", "对不起"], ["yào bu yào", "要不要"]]}], "words": [["不用", "bú yòng"], ["不错", "bú cuò"], ["不会", "bú huì"], ["不少", "bù shǎo"], ["不知道", "bù zhī dào"], ["差不多", "chà bu duō"]], "pairs": [["不是", "bú shì", "bù shì"], ["不好", "bù hǎo", "bú hǎo"], ["对不起", "duì bu qǐ", "duì bú qǐ"]]}, {"n": 23, "type": "t", "zh": "第三声变调", "en": "Third-tone changes", "items": [{"sym": "3 + 3", "tip": "Two 3rd tones: the first one becomes 2nd — nǐ hǎo sounds like ní hǎo (still written nǐ).", "ex": [["nǐ hǎo", "你好"], ["kě yǐ", "可以"], ["shuǐ guǒ", "水果"], ["xiǎo gǒu", "小狗"]]}, {"sym": "半三声", "tip": "A 3rd tone before 1, 2 or 4 just stays low (no rise at the end).", "ex": [["hǎo chī", "好吃"], ["měi guó", "美国"], ["kǎo shì", "考试"], ["wǔ fàn", "午饭"]]}], "words": [["洗手", "xǐ shǒu"], ["老虎", "lǎo hǔ"], ["雨伞", "yǔ sǎn"], ["很好", "hěn hǎo"], ["所以", "suǒ yǐ"], ["手表", "shǒu biǎo"]], "pairs": [["你好", "nǐ hǎo", "ní hǎo"], ["可以", "kě yǐ", "ké yǐ"], ["水果", "shuǐ guǒ", "shuí guǒ"]]}, {"n": 24, "type": "t", "zh": "儿化音", "en": "The -r ending", "items": [{"sym": "-r", "tip": "Curl your tongue at the end. Very common in northern speech.", "ex": [["huàr", "画儿"], ["wánr", "玩儿"], ["yì diǎnr", "一点儿"], ["zhèr", "这儿"]]}, {"sym": "儿 → r", "tip": "Written with 儿; in pinyin just add r.", "ex": [["nǎr", "哪儿"], ["nàr", "那儿"], ["xiǎo háir", "小孩儿"], ["hǎo wánr", "好玩儿"]]}], "words": [["一会儿", "yí huìr"], ["一点儿", "yì diǎnr"], ["哪儿", "nǎr"], ["这儿", "zhèr"], ["玩儿", "wánr"], ["小孩儿", "xiǎo háir"]], "pairs": [["哪儿", "nǎr", "nǎ ér"], ["这儿", "zhèr", "zhè ér"], ["玩儿", "wánr", "wán ér"]]}, {"n": 25, "type": "t", "zh": "声调对比", "en": "Tone pairs that change meaning", "items": [{"sym": "1 vs 4", "tip": "tāng 汤 soup · tàng 烫 hot — high flat vs falling.", "ex": [["tāng", "汤"], ["tàng", "烫"], ["mā", "妈"], ["mà", "骂"]]}, {"sym": "3 vs 4", "tip": "mǎi 买 buy · mài 卖 sell.", "ex": [["mǎi", "买"], ["mài", "卖"], ["táng", "糖"], ["tǎng", "躺"]]}, {"sym": "同音不同调", "tip": "shuì jiào 睡觉 sleep · shuǐ jiǎo 水饺 dumplings.", "ex": [["shuì jiào", "睡觉"], ["shuǐ jiǎo", "水饺"], ["wèn", "问"], ["wěn", "吻"]]}], "words": [["糖果", "táng guǒ"], ["水饺", "shuǐ jiǎo"], ["睡觉", "shuì jiào"], ["问题", "wèn tí"], ["买菜", "mǎi cài"], ["卖完", "mài wán"]], "pairs": [["买", "mǎi", "mài"], ["水饺", "shuǐ jiǎo", "shuì jiào"], ["汤", "tāng", "táng"]]}, {"n": 26, "type": "i", "zh": "容易混的声母", "en": "Initials that trip up English speakers", "items": [{"sym": "zh ch sh · j q x", "tip": "zh ch sh: tongue curled up. j q x: smile, tongue down.", "ex": [["zhī", "知"], ["jī", "鸡"], ["shī", "诗"], ["xī", "西"]]}, {"sym": "z c s · zh ch sh", "tip": "z c s: tongue flat. zh ch sh: curled.", "ex": [["zì", "字"], ["zhǐ", "纸"], ["sān", "三"], ["shān", "山"]]}, {"sym": "送气 · 不送气", "tip": "b/p d/t g/k j/q z/c zh/ch — hold a tissue: p t k q c ch make it move.", "ex": [["bǎo", "饱"], ["pǎo", "跑"], ["dà", "大"], ["tā", "他"]]}, {"sym": "q x c r", "tip": "Pinyin letters that fool English readers: q ≈ ch, x ≈ sh, c ≈ ts, r ≈ the s in pleasure.", "ex": [["qī", "七"], ["xī", "西"], ["cài", "菜"], ["rì", "日"]]}], "words": [["知识", "zhī shi"], ["四十", "sì shí"], ["吃菜", "chī cài"], ["洗澡", "xǐ zǎo"], ["自己", "zì jǐ"], ["出租车", "chū zū chē"]], "pairs": [["四十", "sì shí", "shì sí"], ["七", "qī", "chī"], ["自己", "zì jǐ", "zhì jǐ"]]}, {"n": 27, "type": "f", "zh": "容易混的韵母", "en": "Finals that are easy to mix up", "items": [{"sym": "an · ang", "tip": "an ends at the front (tongue tip up); ang at the back.", "ex": [["fān", "翻"], ["fāng", "方"], ["shān", "山"], ["shāng", "伤"]]}, {"sym": "en · eng · in · ing", "tip": "Same idea: front n vs back ng.", "ex": [["fēn", "分"], ["fēng", "风"], ["xīn", "心"], ["xīng", "星"]]}, {"sym": "u · ü", "tip": "After j q x y, \"u\" is really ü. After l n, write the dots: lǜ nǚ.", "ex": [["lù", "路"], ["lǜ", "绿"], ["nǚ", "女"], ["jù", "句"]]}, {"sym": "ian uo ui iu", "tip": "ian = \"yen\", uo = \"woh\", ui = \"way\", iu = \"yo\".", "ex": [["tiān", "天"], ["guó", "国"], ["duì", "对"], ["liù", "六"]]}], "words": [["上班", "shàng bān"], ["很冷", "hěn lěng"], ["生病", "shēng bìng"], ["绿色", "lǜ sè"], ["去年", "qù nián"], ["电影", "diàn yǐng"]], "pairs": [["方", "fāng", "fān"], ["风", "fēng", "fēn"], ["绿", "lǜ", "lù"]]}, {"n": 28, "type": "x", "zh": "用拼音打字", "en": "Typing Chinese with pinyin", "items": [{"sym": "打字", "tip": "On your phone or computer: type pinyin without tones, then pick the characters.", "ex": [["nǐ hǎo", "你好"], ["xiè xie", "谢谢"], ["zài jiàn", "再见"], ["méi wèn tí", "没问题"]]}, {"sym": "ü = v", "tip": "ü is typed as v: lǜ → lv, nǚ → nv.", "ex": [["lǜ", "绿"], ["nǚ", "女"], ["lǚ yóu", "旅游"], ["nǚ ér", "女儿"]]}, {"sym": "首字母", "tip": "Shortcut: first letters often work — nh → 你好, xx → 谢谢.", "ex": [["hǎo de", "好的"], ["kě yǐ", "可以"], ["dāng rán", "当然"], ["míng tiān", "明天"]]}], "words": [["好的", "hǎo de"], ["没问题", "méi wèn tí"], ["微信", "wēi xìn"], ["发短信", "fā duǎn xìn"], ["打电话", "dǎ diàn huà"], ["生日快乐", "shēng rì kuài lè"]], "pairs": [["绿茶", "lvcha", "lucha"], ["女儿", "nver", "nuer"], ["你好", "nihao", "nǐhǎo"]]}, {"n": 29, "type": "x", "zh": "拼读句子", "en": "Reading whole sentences in pinyin", "items": [{"sym": "句子 1", "tip": "Read the pinyin first, then check the characters.", "ex": [["nǐ jiào shén me míng zi", "你叫什么名字"], ["wǒ zài měi guó zhǎng dà", "我在美国长大"]]}, {"sym": "句子 2", "tip": "Watch the tone changes: 不, 一, 3+3.", "ex": [["wǒ bú huì shuō", "我不会说"], ["yì qǐ chī fàn ba", "一起吃饭吧"]]}, {"sym": "句子 3", "tip": "Neutral tones keep the rhythm natural.", "ex": [["xiè xie nǐ", "谢谢你"], ["nǐ de péng you", "你的朋友"]]}], "words": [["你叫什么名字", "nǐ jiào shén me míng zi"], ["我在美国长大", "wǒ zài měi guó zhǎng dà"], ["我会说一点儿中文", "wǒ huì shuō yì diǎnr zhōng wén"], ["请再说一遍", "qǐng zài shuō yí biàn"], ["我们一起去吧", "wǒ men yì qǐ qù ba"], ["你家在哪儿", "nǐ jiā zài nǎr"]], "pairs": [["我不会说", "wǒ bú huì shuō", "wǒ bù huì shuō"], ["一起", "yì qǐ", "yí qǐ"], ["你好", "nǐ hǎo", "nǐ hāo"]]}, {"n": 30, "type": "x", "zh": "拼音总复习", "en": "Pinyin review", "items": [{"sym": "声母 23 个", "tip": "b p m f d t n l g k h j q x zh ch sh r z c s y w", "ex": [["bā", "八"], ["dà", "大"], ["gē", "哥"], ["jiā", "家"]]}, {"sym": "韵母", "tip": "a o e i u ü · ai ei ui ao ou iu ie üe er · an en in un ün · ang eng ing ong", "ex": [["ài", "爱"], ["xiè", "谢"], ["xīn", "心"], ["hóng", "红"]]}, {"sym": "声调与变调", "tip": "4 tones + neutral · 一 and 不 change · 3+3 → 2+3", "ex": [["mā", "妈"], ["má", "麻"], ["mǎ", "马"], ["mà", "骂"]]}], "words": [["中国人", "zhōng guó rén"], ["好久不见", "hǎo jiǔ bú jiàn"], ["一路平安", "yí lù píng ān"], ["生日快乐", "shēng rì kuài lè"], ["学习中文", "xué xí zhōng wén"], ["加油", "jiā yóu"]], "pairs": [["好久不见", "hǎo jiǔ bú jiàn", "hǎo jiǔ bù jiàn"], ["一路平安", "yí lù píng ān", "yì lù píng ān"], ["学习", "xué xí", "xié xí"]]}];</script>
 <script>window.SHEETS=(function(){const {D,day,reviewChars,toneOptions,rng,shuffle,writeUpTo,cnNum}=ABC;
 
-const esc=s=>s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
-const han=s=>[...s].filter(c=>/[一-鿿]/.test(c));
-function ruby(zh,py){ const p=py.split(' ');let k=0; return [...zh].map(c=>/[一-鿿]/.test(c)?`<ruby>${c}<rt>${p[k++]}</rt></ruby>`:`<span style="font-family:var(--hanzi);font-size:24px">${c}</span>`).join(''); }
-const TITLES=[['生字卡','New characters'],['描红练字','Trace & write'],['看拼音写词语','Pinyin → characters'],['拼音与声调','Pinyin & tones'],['读句子','Read & fill in'],['复习','Review'],['综合复习一','Mixed review 1'],['综合复习二','Mixed review 2']];
-function header(n,p){
-  const [zh,en]=TITLES[p-1];
-  return `<div class="hd"><div class="l"><span class="dayno">第${cnNum(n)}天</span><span class="ttl">${zh}<small>Day ${n} · ${en}</small></span></div>
-  <div class="r">Date <b></b> &nbsp; Time <b style="width:50px"></b><br>Page ${p+2} of 10</div></div>`;
-}
-const foot=(n,p)=>`<div class="ft"><span>每日中文 · Daily Chinese for ABC adults</span><span>Day ${n} — ${p+2}/10</span></div>`;
+const esc=s=>String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+const HZ=c=>/[一-鿿]/.test(c);
 const tz=(c,cls='')=>`<div class="tzg dash ${cls}">${c||''}</div>`;
-
 const PY=(window.ABC_PINYIN||[]);
-const INITS=['zh','ch','sh','b','p','m','f','d','t','n','l','g','k','h','j','q','x','r','z','c','s','y','w'];
-function splitSyl(y){ const b=ABC.parse(y).base; const i=INITS.find(x=>b.startsWith(x))||''; return [i, y.slice(i.length)]; }
+const PAS=(window.ABC_EXTRA||{}).passages||[];
 const noTone=p=>p.split(' ').map(y=>ABC.parse(y).base).join(' ');
-function pyFill(L){ // B: blank the initial (initial lessons) or the final (final lessons) of one syllable per word
-  return L.words.map(([w,p])=>{ const syl=p.split(' '); let k=syl.findIndex(y=>{const [i]=splitSyl(y); return L.type==='i'?!!i&&!'yw'.includes(i):true;}); if(k<0)k=0;
-    const [i,f]=splitSyl(syl[k]); const ans=L.type==='i'?i:f;
-    const shown=syl.map((y,j)=>j!==k?y:(L.type==='i'?`<span class="gapb"></span>${f}`:`${i}<span class="gapb"></span>`)).join(' ');
-    return {w,shown,ans}; }); }
-function pyHead(n,pp,zh,en){ return `<div class="hd"><div class="l"><span class="dayno">第${cnNum(n)}天</span><span class="ttl">${zh}<small>Day ${n} · ${en}</small></span></div>
-  <div class="r">Date <b></b> &nbsp; Time <b style="width:50px"></b><br>Page ${pp} of 10</div></div>`; }
-const pyFoot=(n,pp)=>`<div class="ft"><span>每日中文 · Daily Chinese for ABC adults</span><span>Day ${n} — ${pp}/10</span></div>`;
-function pyLesson(d){ const L=PY[d.n-1]; if(!L) return '';
-  const items=L.items.map(it=>`<div class="pyi"><div class="sym">${esc(it.sym)}</div><div class="tip">${esc(it.tip)}</div><div class="exs">${it.ex.map(([y,z])=>`<div class="ex"><b>${y}</b><span>${z}</span></div>`).join('')}</div></div>`).join('');
-  const words=L.words.map(([w,p])=>`<div class="pyw"><b>${p}</b><span>${w}</span></div>`).join('');
-  return `<div class="page">${pyHead(d.n,1,'拼音课','Pinyin lesson')}
-   <div class="sec"><h3><span class="tag">第 ${d.n} 课</span>${esc(L.zh)} <em>${esc(L.en)}</em></h3>
-   <div class="note">Say each example out loud. In the app, the <b>拼音</b> card on the 学 tab plays every sound in Microsoft's natural voice.</div></div>
-   <div class="pyitems">${items}</div>
-   <div class="sec"><h3><span class="tag">读词语</span>拼读词语 <em>Read the pinyin first, then the characters</em></h3><div class="pywords">${words}</div></div>
-   ${pyFoot(d.n,1)}</div>`; }
-function pyPractice(d){ const L=PY[d.n-1]; if(!L) return ''; const r=rng(d.n*131);
-  const reads=L.items.flatMap(it=>it.ex.map(e=>e[0])).slice(0,16).map(y=>`<span><span class="box"></span>${y}</span>`).join('');
-  let B='';
-  if(L.type==='i'||L.type==='f'){ B=`<div class="sec"><h3><span class="tag">B</span>${L.type==='i'?'填声母':'填韵母'} <em>Fill in the missing ${L.type==='i'?'initial (the first sound)':'final, with its tone mark'}</em></h3><div class="pytable">${pyFill(L).map(x=>`<div class="pyq"><span class="z">${x.w}</span><span class="ln">${x.shown}</span></div>`).join('')}</div></div>`; }
-  const C=`<div class="sec"><h3><span class="tag">${B?'C':'B'}</span>标声调 <em>Add the tone marks${L.type==='t'?' — remember today\'s tone rule':''}</em></h3><div class="pytable">${L.words.map(([w,p])=>`<div class="pyq"><span class="z">${w}</span><span class="ln">${noTone(p)}</span></div>`).join('')}</div></div>`;
-  const Dp=`<div class="sec"><h3><span class="tag">${B?'D':'C'}</span>圈出正确的拼音 <em>Circle the right spelling</em></h3><div class="pairs">${L.pairs.map(([w,a,b])=>{const o=shuffle([a,b],r);return `<div class="pp"><span class="z">${esc(w)}</span><span>${esc(o[0])}</span><span>${esc(o[1])}</span></div>`}).join('')}</div></div>`;
-  const E=`<div class="sec"><h3><span class="tag">${B?'E':'D'}</span>听写 <em>Dictation — in the app tap 拼音 → 听写 and write the pinyin you hear</em></h3><div class="dict6">${[1,2,3,4,5,6].map(i=>`<div>${i}<i></i></div>`).join('')}</div></div>`;
-  return `<div class="page">${pyHead(d.n,2,'拼音练习','Pinyin practice')}
-   <div class="sec"><h3><span class="tag">A</span>读一读 <em>Read each one aloud — tick it when it sounds right</em></h3><div class="pyreads">${reads}</div></div>
-   ${B}${C}${Dp}${E}
-   <div class="sec"><h3><span class="tag">✎</span>抄写拼音 <em>Copy the pinyin neatly on the four lines, tone marks included</em></h3><div class="pycopy">${L.words.slice(0,4).map(([w,p])=>`<div><span class="z">${w}</span><div class="py4"></div></div>`).join('')}</div></div>
-   ${pyFoot(d.n,2)}</div>`; }
 function pyDict(n){ const L=PY[n-1]; if(!L) return []; const all=L.items.flatMap(it=>it.ex).concat(L.words.map(([w,p])=>[p,w])); return shuffle(all,rng(n*977)).slice(0,6); }
-function pyAnswers(d){ const L=PY[d.n-1]; if(!L) return '';
-  const B=(L.type==='i'||L.type==='f')?`<b>P2-B</b> ${pyFill(L).map(x=>`<span class="z">${x.w}</span> ${x.ans}`).join('　')}<br>`:'';
-  const C=`<b>P2-${B?'C':'B'}</b> ${L.words.map(([w,p])=>`<span class="z">${w}</span> ${p}`).join('　')}<br>`;
-  const Dp=`<b>P2-${B?'D':'C'}</b> ${L.pairs.map(([w,a])=>`<span class="z">${esc(w)}</span> ${esc(a)}`).join('　')}<br>`;
-  const E=`<b>P2-${B?'E':'D'}</b> ${pyDict(d.n).map(([y,z],i)=>`${i+1}. ${y} <span class="z">${z}</span>`).join('　')}<br>`;
-  return B+C+Dp+E; }
-function page1(d){
-  const cards=d.chars.map(c=>{const x=D[c];const w=d.write.includes(c);return `<div class="card"><div class="big">${c}</div><div>
-   <div class="py">${x.py}${w?' <span class="w">· write it</span>':''}</div><div class="en">${esc(x.en)}</div>
-   <div class="wd"><span class="z">${x.w}</span><span class="p">${x.wp}</span><span class="e">${esc(x.we)}</span></div></div></div>`}).join('');
-  return `<div class="page">${header(d.n,1)}
-  <div class="note"><b>How to use:</b> read each character out loud 3 times, then say the word. In the app, tap a card to hear it. Characters marked <b style="color:var(--red)">write it</b> are today's handwriting characters (page 4).</div>
-  <div class="cards">${cards}</div>${foot(d.n,1)}</div>`;
+const pyN=Lp=>Lp.words.slice(0,4).some(([w])=>w.length>2)?2:4;
+const en1=c=>D[c].en.split(';')[0].trim();
+/* reading comprehension: true/false questions for each passage */
+const TF={5:[['Mom and Dad go up the mountain.',1],['Dad paints a bird; Mom paints a horse.',0],['It starts to rain, and the wind is very strong.',0]],
+ 10:[['It is the first day of autumn.',1],['In the morning I read at home.',1],['It rains all night.',0]],
+ 15:[['The cat at home is small and yellow.',1],['The cat stays on the table the whole time.',0],['Mom says the cat is my shadow.',1]],
+ 20:[['Yesterday was my birthday.',1],['My friends made the cake themselves.',0],['I tell my friends my age right away.',0]],
+ 25:[['I work at a company.',1],['At lunch I like to order chicken noodles.',0],['Next month we are going to the beach.',1]],
+ 30:[['Last month I went back to China.',1],['Grandpa is 70 years old.',0],['Grandpa walks in the park every morning.',1]]};
+function rubyKnown(zh,py,known){ const p=py.split(' '); let k=0; return [...zh].map(c=>{ if(!HZ(c)) return c; const y=p[k++]; return known.has(c)?`<ruby>${c}<rt>&nbsp;</rt></ruby>`:`<ruby>${c}<rt>${y}</rt></ruby>`; }).join(''); }
+function picker(seed){ const r=rng(seed), used=new Set();
+  return (arr,n)=>{ const out=[]; for(const c of shuffle([...new Set(arr)],r)){ if(out.length>=n) break; if(!used.has(c)){ used.add(c); out.push(c);} } return out; }; }
+function hd(k,p,zh,en){ const P=ABC.plan(k); return `<div class="hd"><div class="l"><span class="dayno">第${cnNum(k)}天</span><span class="ttl">${zh}<small>${P.rev?'Lessons 1–'+P.L:'Lesson '+P.L} · ${en}</small></span></div>
+  <div class="r">Date <b></b> &nbsp; Time <b style="width:50px"></b><br>Page ${p} of 2</div></div>`; }
+const ft=(k,p)=>`<div class="ft"><span>每日中文 · 学两天，复习一天 Learn 2 days, review 1</span><span>Day ${k} — ${p}/2</span></div>`;
+const wordBox=x=>`<div class="word"><div class="pyl">${x.wp.split(' ').map(s=>`<span>${s}</span>`).join('')}</div><div class="row">${[...x.w].map(()=>tz('')).join('')}</div><div class="en">${esc(x.we)}</div></div>`;
+const num=i=>`<span style="font-family:var(--latin);font-size:11px;color:var(--red);font-weight:700;width:16px;flex:none">${i}</span>`;
+const sec=(tag,zh,en,body)=>`<div class="sec"><h3><span class="tag">${tag}</span>${zh} <em>${en}</em></h3>${body}</div>`;
+
+/* ---------- what goes on each day ---------- */
+function pickNew(k,weak){ const P=ABC.plan(k), L=P.L, d=day(L), take=picker(k*409+11);
+  const words=take(d.write.concat(d.chars),6);
+  const zj=shuffle(d.chars.filter(c=>D[c].w.length>=2),rng(k*7)).slice(0,2);
+  const learned=new Set(ABC.charsUpTo(L-1));
+  const t2=picker(k*211+5); const W=(weak||[]).filter(c=>learned.has(c));
+  let old=t2(W,3); old=old.concat(t2([L-1,L-2].filter(x=>x>=1).flatMap(n=>day(n).chars),6-old.length)); old=old.concat(t2([L-3,L-5,L-8,L-12].filter(x=>x>=1).flatMap(n=>day(n).chars),6-old.length)); old=old.concat(t2(ABC.charsUpTo(L-1),6-old.length));
+  const pas=PAS.find(p=>p.day===L)||null;
+  return {P,L,d,words,zj,old,pas};
 }
-function page2(d){
-  const W=d.write; const per=W.length===1?5:W.length===2?4:W.length===3?3:2;
-  let rows='';
-  W.forEach(c=>{
-    const x=D[c];
-    rows+=`<div class="sec"><h3><span class="tag">${x.py}</span>${c} <em>${esc(x.en)} · word: ${x.w} ${x.wp}</em></h3>`;
-    for(let i=0;i<per;i++){
-      const cells=[]; for(let k=0;k<10;k++){ if(i===0&&k===0) cells.push(tz(c,'model')); else if(i===0&&k<5) cells.push(tz(c,'trace')); else if(i>0&&k<2) cells.push(tz(c,'trace')); else cells.push(tz('')); }
-      rows+=`<div class="row">${cells.join('')}</div>`;
-    }
-    rows+=`</div>`;
-  });
-  // fill remaining with recognition-char tracing
-  const extra = d.chars.filter(c=>!W.includes(c)).slice(0, W.length>=4?0:(W.length===3?5:(W.length===2?5:10)));
-  let ex='';
-  if(extra.length){
-    ex=`<div class="sec"><h3><span class="tag">bonus</span>描一描今天的认读字 <em>Trace the rest of today's characters once each</em></h3>`;
-    for(let i=0;i<extra.length;i+=5){ const g=extra.slice(i,i+5); ex+=`<div class="row">${g.map(c=>tz(c,'trace')+tz('')).join('')}</div>`; }
-    ex+='</div>';
-  }
-  return `<div class="page">${header(d.n,2)}
-  <div class="note"><b>Model → trace → write.</b> Black square = model. Grey = trace over it. Empty = write from memory. Watch the stroke order animation in the app (写 tab) before you start.</div>
-  ${rows}${ex}${foot(d.n,2)}</div>`;
-}
-function copyS(d){
-  const ss=d.sent.slice(0,2).map(s=>{const h=[...s.zh].filter(c=>/[\u4e00-\u9fff]/.test(c));return `<div style="display:flex;flex-direction:column;gap:4px"><div style="font-family:var(--hanzi);font-size:16px;color:var(--soft)">${s.zh} <span style="font-family:var(--latin);font-size:10px">${esc(s.en)}</span></div><div class="row" style="--s:.6in">${h.map(()=>`<div class="tzg dash" style="--s:.6in"></div>`).join('')}</div></div>`}).join('');
-  return `<div class="sec"><h3><span class="tag">B</span>抄写句子 <em>Copy the sentence, one character per box</em></h3>${ss}</div>`;
-}
-function page3(d){
-  const words=d.chars.map(c=>D[c]);
-  const items=words.map(x=>`<div class="word"><div class="pyl">${x.wp.split(' ').map(s=>`<span>${s}</span>`).join('')}</div><div class="row">${[...x.w].map(()=>tz('')).join('')}</div><div class="en">${esc(x.we)}</div></div>`).join('');
-  // cumulative writing chars dictation via pinyin
-  const r=rng(d.n*31); const pool=shuffle(writeUpTo(d.n),r).slice(0,10);
-  const wr=pool.map(c=>`<div style="display:flex;flex-direction:column;align-items:center;gap:3px"><span style="font-size:13px;font-weight:500">${D[c].py}</span>${tz('')}</div>`).join('');
-  return `<div class="page p3">${header(d.n,3)}
-  <div class="sec"><h3><span class="tag">A</span>看拼音，写词语 <em>Write the word in characters. Peek at page 3 only if you're stuck.</em></h3><div class="words">${items}</div></div>
-  ${copyS(d)}
-  <div class="sec"><h3><span class="tag">C</span>写字复习 <em>Handwriting review — characters you've learned to write so far</em></h3><div style="display:flex;gap:10px;flex-wrap:wrap">${wr}</div></div>
-  ${foot(d.n,3)}</div>`;
-}
-function page4(d){
-  const r=rng(d.n*53);
-  const A=d.chars.map(c=>`<div class="zy"><div class="py4"></div><span class="z">${c}</span></div>`).join('');
-  const T=d.chars.map(c=>`<div class="tone"><span class="z">${c}</span><span class="o">${toneOptions(D[c].py).map(o=>`<span>${o}</span>`).join('')}</span></div>`).join('');
-  const left=shuffle(d.chars,r).slice(0,8), right=shuffle(left,r);
-  const M=left.map((c,i)=>`<div class="a">${c}<span class="dot"></span></div><div></div><div class="b"><span class="dot"></span>${esc(D[right[i]].en.split(';')[0])}</div>`).join('');
-  return `<div class="page">${header(d.n,4)}
-  <div class="sec"><h3><span class="tag">A</span>给生字注音 <em>Write the pinyin with tone marks above each character</em></h3><div class="grid5">${A}</div></div>
-  <div class="sec"><h3><span class="tag">B</span>圈出正确的读音 <em>Circle the correct tone. Say all four out loud first.</em></h3><div class="tones">${T}</div></div>
-  <div class="sec"><h3><span class="tag">C</span>连一连 <em>Draw a line from each character to its meaning</em></h3><div class="match">${M}</div></div>
-  ${foot(d.n,4)}</div>`;
-}
-function page5(d){
-  const S=d.sent.map((s,i)=>`<div><div class="s1"><span class="num">${i+1}</span><span>${ruby(s.zh,s.py)}</span><span class="chk">read<span class="box"></span><span class="box"></span><span class="box"></span></span></div><div class="s1"><span class="num"></span><span class="en">${esc(s.en)}</span></div></div>`).join('');
-  const r=rng(d.n*71);
-  const order=shuffle(d.sent.map((s,i)=>i),r);
-  const F=order.map((i,k)=>{const s=d.sent[i];return `<div class="fl"><span style="font-family:var(--latin);font-size:11px;color:var(--red);font-weight:700;width:16px">${k+1}</span>${esc(s.zh).replace(s.blank,'<span class="blank"></span>')}<span class="en">${esc(s.en)}</span></div>`}).join('');
-  const bank=shuffle(d.sent.map(s=>s.blank),r).map(c=>`<span>${c}</span>`).join('');
-  const tw=shuffle(d.chars,r).slice(0,4).map(c=>`<div class="q">“${esc(D[c].we)}” →</div><div class="ln"></div>`).join('');
-  return `<div class="page">${header(d.n,5)}
-  <div class="sec"><h3><span class="tag">A</span>朗读 <em>Read each sentence aloud 3 times — tick a box each time</em></h3><div class="psent">${S}</div></div>
-  <div class="sec"><h3><span class="tag">B</span>选字填空 <em>Fold the page to hide part A. Fill each blank from the word bank.</em></h3><div class="bank">${bank}</div><div class="fill">${F}</div></div>
-  <div class="sec"><h3><span class="tag">C</span>英译中 <em>Write it in Chinese (characters, or pinyin if you can't write it yet)</em></h3><div class="tr">${tw}</div></div>
-  ${foot(d.n,5)}</div>`;
-}
-function page6(d){
-  const R=reviewChars(d.n).map(c=>`<div class="rvi"><span class="z">${c}</span><div class="ln"><i>PINYIN</i></div><div class="ln"><i>MEANING</i></div></div>`).join('');
-  const r=rng(d.n*89); const pool=shuffle(writeUpTo(d.n),r).slice(0,8);
-  const DI=pool.map(c=>`<div class="it">${tz('')}<span>${esc(D[c].en.split(';')[0])}</span></div>`).join('');
-  const prev=d.n>1?day(d.n-1):d;
-  const RD=prev.sent.map(s=>s.zh).join('　');
-  return `<div class="page">${header(d.n,6)}
-  <div class="sec"><h3><span class="tag">A</span>旧字复习 <em>Characters from Day ${d.n>1?[d.n-1,d.n-3,d.n-7].filter(x=>x>0).join(', '):'1'} — write pinyin and meaning</em></h3><div class="rv">${R}</div></div>
-  <div class="sec"><h3><span class="tag">B</span>默写 <em>Write the character from memory</em></h3><div class="dict">${DI}</div></div>
-  <div class="sec"><h3><span class="tag">C</span>无拼音阅读 <em>${d.n>1?'Yesterday\'s sentences — no pinyin this time. Read aloud.':'Read today\'s sentences without pinyin.'}</em></h3><div class="read">${esc(RD)}</div></div>
-  <div class="sec"><h3><span class="tag">✓</span>今日打卡 <em>Check off when done</em></h3><div class="checks">
-   <span><span class="box"></span> 6 pages done</span><span><span class="box"></span> App practice done</span><span><span class="box"></span> Checked answers</span><span><span class="box"></span> Said every new word aloud</span><span>Hardest character today: <span style="display:inline-block;width:60px;border-bottom:1px solid var(--soft)"></span></span></div></div>
-  ${foot(d.n,6)}</div>`;
-}
-/* ---------- 综合复习 pages 9–10: everything learned before today ---------- */
-function revPick(n){
-  const r=rng(n*613+7), prevDays=n>1?ABC.A.days.slice(0,n-1):[day(1)];
-  // half from spaced days (2, 5, 10, 14, 21 days back), half from anywhere earlier
-  const spaced=[2,5,10,14,21].map(k=>n-k).filter(k=>k>=1).map(k=>day(k));
-  const pool=prevDays.flatMap(d=>d.chars), sp=spaced.flatMap(d=>d.chars);
-  const take=(arr,k,used)=>shuffle(arr,r).filter(c=>!used.has(c)&&used.add(c)).slice(0,k);
-  const used=new Set(); const chars=take(sp,6,used).concat(take(pool,14,used));
-  const wpool=n>1?writeUpTo(n-1):day(1).write;
-  const wchars=shuffle(wpool,r).slice(0,5);
-  const sents=shuffle(prevDays.flatMap(d=>d.sent),r).slice(0,6);
-  const pyDays=(window.ABC_PINYIN||[]).slice(0,Math.max(1,n-1));
-  const seenW=new Set(); const pyw=shuffle(pyDays.flatMap(L=>L.words),r).filter(([w])=>!seenW.has(w)&&seenW.add(w)).slice(0,8);
-  const pas=(window.ABC_EXTRA||{}).passages||[];
-  const passage=pas.filter(p=>p.day<n).slice(-1)[0]||null;
-  return {chars,wchars,sents,pyw,passage,from:n>1?`Days 1–${n-1}`:'Day 1'};
-}
-function review1(d){ const R=revPick(d.n), r=rng(d.n*29+3);
-  const A=R.chars.slice(0,8).map(c=>D[c]).map((x,i)=>`<div class="word"><div class="pyl">${x.wp.split(' ').map(s=>`<span>${s}</span>`).join('')}</div><div class="row">${[...x.w].map(()=>tz('')).join('')}</div><div class="en">${esc(x.we)}</div></div>`).join('');
-  const mc=R.chars.slice(8,14), right=shuffle(mc,r);
-  const B=mc.map((c,i)=>`<div class="a">${c}<span class="dot"></span></div><div></div><div class="b"><span class="dot"></span>${D[right[i]].py}</div>`).join('');
-  const C=R.wchars.map(c=>`<div class="it">${tz('')}<span>${esc(D[c].en.split(';')[0])} · ${D[c].py}</span></div>`).join('');
-  return `<div class="page p3">${header(d.n,7)}
-  <div class="note"><b>Mixed review from ${R.from}.</b> No peeking first — try every item, then check page 3 of the old days or the answer key. Circle anything you missed and add it to the 复习 tab in the app.</div>
-  <div class="sec"><h3><span class="tag">A</span>看拼音写词语 <em>Words from earlier days</em></h3><div class="words">${A}</div></div>
-  <div class="sec"><h3><span class="tag">B</span>连一连 <em>Match each character to its pinyin</em></h3><div class="match">${B}</div></div>
-  <div class="sec"><h3><span class="tag">C</span>默写 <em>Write the character from the meaning and pinyin</em></h3><div class="dict" style="grid-template-columns:repeat(5,1fr)">${C}</div></div>
-  ${foot(d.n,7)}</div>`; }
-function review2(d){ const R=revPick(d.n);
-  const A=R.sents.slice(0,3).map((s,i)=>`<div class="fl" style="font-size:22px"><span style="font-family:var(--latin);font-size:11px;color:var(--red);font-weight:700;width:16px">${i+1}</span>${esc(s.zh)}<span class="en">read <span class="box"></span><span class="box"></span><span class="box"></span></span></div>`).join('');
-  const B=R.sents.slice(3,6).map(s=>`<div class="q">“${esc(s.en)}” →</div><div class="ln"></div>`).join('');
-  const C=R.pyw.map(([w,p])=>`<div class="pyq"><span class="z">${w}</span><span class="ln">${noTone(p)}</span></div>`).join('');
-  const P=R.passage?(()=>{ const ps=R.passage, py=ps.py.split(' '), known=new Set(ABC.charsUpTo(d.n)); let k=0, out='', n=0, cut=false;
-    // easy version: first 2–3 short sentences (≤ ~32 characters), pinyin over characters not learned yet
-    for(const ch of ps.zh){ if(cut) break; if(/[一-鿿]/.test(ch)){ const y=py[k++]; n++; out+=known.has(ch)?ch:`<ruby>${ch}<rt>${y}</rt></ruby>`; } else { out+=ch; if('。！？'.includes(ch)&&n>=12) cut=true; } }
-    if(!out.trim().match(/[。！？”]$/)) out+='…';
-    return `<div class="sec"><h3><span class="tag">D</span>短文重读 · ${esc(ps.title)} <em>From Day ${ps.day} — just the start. Read it aloud twice. Pinyin is shown only on characters you haven't learned yet.</em></h3><div class="read" style="font-size:24px;line-height:2.3">${out}</div><div style="font-size:11px;color:var(--soft)">${esc(ps.en)}</div><div class="checks" style="margin-top:6px"><span><span class="box"></span> 1st read</span><span><span class="box"></span> 2nd read</span></div></div>`; })()
-    :`<div class="sec"><h3><span class="tag">D</span>我还不熟的字 <em>Write the characters you still find hard — practise them in the app</em></h3><div class="dict6">${[1,2,3,4,5,6].map(i=>`<div>${i}<i></i></div>`).join('')}</div></div>`;
-  return `<div class="page">${header(d.n,8)}
-  <div class="sec"><h3><span class="tag">A</span>旧句子朗读 <em>Sentences from ${R.from}, no pinyin — read each aloud 3 times</em></h3><div class="fill">${A}</div></div>
-  <div class="sec"><h3><span class="tag">B</span>英译中 <em>Write these earlier sentences in Chinese</em></h3><div class="tr">${B}</div></div>
-  <div class="sec"><h3><span class="tag">C</span>拼音复习 · 标声调 <em>Words from earlier pinyin lessons — add the tone marks</em></h3><div class="pytable">${C}</div></div>
-  ${P}${foot(d.n,8)}</div>`; }
-function revAnswers(d){ const R=revPick(d.n), r=rng(d.n*29+3);
-  const A=R.chars.slice(0,8).map(c=>`${D[c].wp} = <span class="z">${D[c].w}</span>`).join('；');
-  const mc=R.chars.slice(8,14); shuffle(mc,r);
-  const B=mc.map(c=>`<span class="z">${c}</span> ${D[c].py}`).join('　');
-  const C=R.wchars.map(c=>`<span class="z">${c}</span> ${D[c].py}`).join('　');
-  const E=R.sents.slice(3,6).map(s=>`<span class="z">${esc(s.zh)}</span>`).join('　');
-  const P=R.pyw.map(([w,p])=>`<span class="z">${w}</span> ${p}`).join('　');
-  return `<b>P9-A</b> ${A}<br><b>P9-B</b> ${B}<br><b>P9-C</b> ${C}<br><b>P10-B</b> ${E}<br><b>P10-C</b> ${P}<br>`; }
-function answers(ds){
-  let pages='';
-  for(let i=0;i<ds.length;i+=2){
-    const part=ds.slice(i,i+2).map(d=>{
-      const r4=d.chars.map(c=>`<span class="z">${c}</span> ${D[c].py}`).join('　');
-      const r3=d.chars.map(c=>`${D[c].wp} = <span class="z">${D[c].w}</span>`).join('；');
-      const r=rng(d.n*71); const order=shuffle(d.sent.map((s,i)=>i),r);
-      const r5=order.map((i,k)=>`${k+1}. <span class="z">${d.sent[i].blank}</span>`).join('　'); shuffle(d.sent.map(s=>s.blank),r); const r5c=shuffle(d.chars,r).slice(0,4).map(c=>`${esc(D[c].we)} = <span class="z">${D[c].w}</span>`).join('；');
-      const rv=reviewChars(d.n).map(c=>`<span class="z">${c}</span> ${D[c].py} ${esc(D[c].en.split(';')[0])}`).join('；');
-      const r6b=shuffle(writeUpTo(d.n),rng(d.n*89)).slice(0,8).map(c=>`<span class="z">${c}</span> ${esc(D[c].en.split(';')[0])}`).join('；');
-      const r3b=shuffle(writeUpTo(d.n),rng(d.n*31)).slice(0,10).map(c=>`${D[c].py} <span class="z">${c}</span>`).join('　');
-      return `<div><h4>第${cnNum(d.n)}天 · Day ${d.n}</h4>
-      ${pyAnswers(d)}${revAnswers(d)}<b>P5-A</b> ${r3}<br><b>P5-C</b> ${r3b}<br><b>P6-A/B</b> ${r4}<br><b>P7-B</b> ${r5}<br><b>P7-C</b> ${r5c}<br><b>P8-A</b> ${rv}<br><b>P8-B</b> ${r6b}</div>`;
-    }).join('');
-    pages+=`<div class="page"><div class="hd"><div class="l"><span class="dayno">答案</span><span class="ttl">Answer key<small>Days ${ds[i].n}–${ds[Math.min(i+1,ds.length-1)].n}</small></span></div><div class="r">Page 6 C (matching): check with page 3</div></div><div class="ak">${part}</div></div>`;
-  }
-  return pages;
+function pickRev(k,weak){ const P=ABC.plan(k), L=P.L, take=picker(k*613+7);
+  const learned=ABC.charsUpTo(L), W=(weak||[]).filter(c=>learned.includes(c));
+  const recent=[L,L-1].filter(x=>x>=1).flatMap(n=>day(n).chars);
+  const older=[L-2,L-3,L-5,L-8,L-12,L-17].filter(x=>x>=1).flatMap(n=>day(n).chars);
+  const all=ABC.charsUpTo(L);
+  const fill=(tk,n,parts)=>{ let o=[]; for(const [arr,cap] of parts){ o=o.concat(tk(arr,Math.min(cap,n-o.length))); } return o.concat(tk(all,n-o.length)); };
+  const tB=picker(k*617+3), tC=picker(k*619+9);
+  const read=fill(take,15,[[W,6],[recent,6],[older,15]]);
+  const words=fill(tB,6,[[W,2],[recent,2],[older,6]]);
+  const dict=fill(tB,6,[[W,2],[recent,3],[older,6]]);
+  const zu=fill(tC,4,[[W,1],[recent,2],[older,4]]);
+  const zj=fill(tC,2,[[recent,1],[older,2]]);
+  const pas=PAS.filter(p=>p.day<=L).slice(-1)[0]||null;
+  const sents=shuffle(ABC.A.days.slice(0,L).flatMap(d=>d.sent),rng(k*31)).slice(0,4);
+  const enOrder=shuffle([0,1,2,3],rng(k*37));
+  const seen=new Set(); const pyw=shuffle(PY.slice(0,L).flatMap(x=>x.words),rng(k*53)).filter(([w])=>!seen.has(w)&&(seen.add(w),true)).slice(0,6);
+  return {P,L,read,words,dict,zu,zj,pas,sents,enOrder,pyw,weakN:W.length};
 }
 
-const f=n=>{const d=day(n);return [pyLesson,pyPractice,page1,page2,page3,page4,page5,page6,review1,review2].map(f=>f(d)).join('');}; f.answers=n=>answers([day(n)]); f.dict=pyDict; return f;})();</script>
+/* ---------- NEW-CHARACTER DAY: 2 pages ---------- */
+function newP1(k,weak){ const N=pickNew(k,weak), d=N.d, Lp=PY[N.L-1];
+  const cards=d.chars.map(c=>{const x=D[c], w=d.write.includes(c);return `<div class="mc"><div class="mz">${c}</div><div class="mpy">${x.py}${w?' <span class="w">✎</span>':''}</div><div class="men">${esc(en1(c))}</div><div class="mw"><span class="z">${x.w}</span> ${x.wp}</div></div>`}).join('');
+  const pyb=Lp?sec('B','今日拼音 · '+esc(Lp.zh),esc(Lp.en)+' — read each sound, then add tone marks to the words',
+    `<div class="pyline">${Lp.items.map(it=>`<span><b>${esc(it.sym)}</b> ${it.ex.slice(0,2).map(([y,z])=>`${y} <i>${z}</i>`).join(' · ')}</span>`).join('')}</div>
+     <div class="pytable" style="grid-template-columns:repeat(${pyN(Lp)},1fr);gap:8px 18px">${Lp.words.slice(0,pyN(Lp)).map(([w,p])=>`<div class="pyq"><span class="z" style="min-width:2em">${w}</span><span class="ln" style="font-size:16px">${noTone(p)}</span></div>`).join('')}</div>`):'';
+  const W=d.write, rowsEach=W.length<=2?2:1; let rows='';
+  W.forEach(c=>{ const x=D[c]; let r='';
+    for(let i=0;i<rowsEach;i++){ const cells=[]; for(let j=0;j<10;j++) cells.push(i===0&&j===0?tz(c,'model'):(i===0&&j<5)||(i>0&&j<2)?tz(c,'trace'):tz('')); r+=`<div class="row">${cells.join('')}</div>`; }
+    rows+=`<div style="display:flex;flex-direction:column;gap:3px"><div style="font-size:11px;color:var(--soft)"><b style="font-family:var(--hanzi);font-size:15px;color:var(--ink)">${c}</b> ${x.py} · ${esc(en1(c))} · watch the stroke order in the app (写 tab) first</div>${r}</div>`; });
+  return `<div class="page pg2">${hd(k,1,'学新字','New characters')}
+   ${sec('A','生字','Read each one aloud 3 times, then the word. ✎ = handwriting character (part C).',`<div class="mcards">${cards}</div>`)}
+   ${pyb}
+   ${sec('C','笔顺描红','Black = model · grey = trace · empty = write from memory',`<div style="display:flex;flex-direction:column;gap:8px">${rows}</div>`)}
+   ${ft(k,1)}</div>`; }
+function newP2(k,weak){ const N=pickNew(k,weak), d=N.d, r=rng(k*71);
+  const A=`<div class="words w3 sm">${N.words.map(c=>wordBox(D[c])).join('')}</div>`;
+  const order=shuffle(d.sent.map((s,i)=>i),r);
+  const F=order.map((i,j)=>{const s=d.sent[i];return `<div class="fl">${num(j+1)}${esc(s.zh).replace(s.blank,'<span class="blank"></span>')}<span class="en">${esc(s.en)}</span></div>`}).join('');
+  const bank=shuffle(d.sent.map(s=>s.blank),r).map(c=>`<span>${c}</span>`).join('');
+  const known=new Set(ABC.charsUpTo(N.L-1));
+  let C;
+  if(N.pas){ C=sec('C','短文阅读 · '+esc(N.pas.title),'Read it aloud twice. Pinyin only on characters that are new to you.',`<div class="read">${rubyKnown(N.pas.zh,N.pas.py,known)}</div><div class="note">${esc(N.pas.en)}</div><div class="checks"><span><span class="box"></span> 1st read</span><span><span class="box"></span> 2nd read</span></div>`); }
+  else { const zh=d.sent.map(s=>s.zh).join(''), py=d.sent.map(s=>s.py).join(' ');
+    C=sec('C','读一读','Today\'s sentences as one short reading. Read it aloud twice — pinyin only on new characters.',`<div class="read">${rubyKnown(zh,py,known)}</div><div class="checks"><span><span class="box"></span> 1st read</span><span><span class="box"></span> 2nd read</span></div>`); }
+  const ZJ=sec('D','造句','Write one sentence with each word (characters, or pinyin for any you can\'t write yet)',`<div class="tr two">${N.zj.map(c=>`<div><div class="q"><b style="font-family:var(--hanzi);font-size:18px">${D[c].w}</b> ${D[c].wp} · ${esc(D[c].we)}</div><div class="ln"></div><div class="ln"></div></div>`).join('')}</div>`);
+  const E=N.old.length?sec('E','滚动复习','Older characters'+(weak&&weak.length?' — your problem characters come first':'')+'. Write the pinyin and the meaning.',`<div class="rd3">${N.old.map(c=>`<div class="rdc"><span class="z">${c}</span><div class="ln"><i>PINYIN · MEANING</i></div></div>`).join('')}</div>`):'';
+  return `<div class="page pg2">${hd(k,2,'用一用','Use the new characters')}
+   ${sec('A','看拼音，写词语','Write each word in characters',A)}
+   ${sec('B','选字填空','Fill each blank from the word bank',`<div class="bank">${bank}</div><div class="fill">${F}</div>`)}
+   ${C}${ZJ}${E}${ft(k,2)}</div>`; }
+
+/* ---------- REVIEW DAY: 2 pages, no new characters ---------- */
+function revP1(k,weak){ const R=pickRev(k,weak);
+  const A=`<div class="rd5">${R.read.map(c=>`<div class="rdc"><span class="z">${c}</span><div class="ln"></div></div>`).join('')}</div>`;
+  const B=`<div class="words w3">${R.words.map(c=>wordBox(D[c])).join('')}</div>`;
+  const C=`<div class="dt">${R.dict.map((c,i)=>`<div>${num(i+1)}<div class="row">${[...D[c].w].map(()=>tz('')).join('')}</div></div>`).join('')}</div>`;
+  return `<div class="page pg2">${hd(k,1,'复习 · 认和写','Read & write')}
+   <div class="note"><b>Review day — no new characters.</b> Everything here is from Lessons 1–${R.L}${R.weakN?`, with your ${R.weakN} problem character${R.weakN>1?'s':''} mixed in`:''}. Try every item before you look anything up. Circle what you miss, then mark it in the app: <b>复习 → 登记错字</b>.</div>
+   ${sec('A','认一认，写拼音','Read each character aloud and write its pinyin with the tone mark',A)}
+   ${sec('B','看拼音，写汉字','Write the word in characters',B)}
+   ${sec('C','听写','Dictation — in the app open 学 and tap 1–6 under 听写. Write each word you hear.',C)}
+   ${R.pyw.length?sec('D','拼音 · 标声调','Words from your pinyin lessons — add the tone marks',`<div class="pytable" style="grid-template-columns:repeat(${R.pyw.some(([w])=>w.length>2)?2:3},1fr);gap:8px 18px">${R.pyw.map(([w,p])=>`<div class="pyq"><span class="z" style="min-width:2em">${w}</span><span class="ln" style="font-size:16px">${noTone(p)}</span></div>`).join('')}</div>`):''}
+   ${ft(k,1)}</div>`; }
+function revP2(k,weak){ const R=pickRev(k,weak);
+  const ZU=`<div class="zu">${R.zu.map(c=>`<div><span class="z">${c}</span><i></i><i></i></div>`).join('')}</div>`;
+  const ZJ=`<div class="tr">${R.zj.map(c=>`<div class="q"><b style="font-family:var(--hanzi);font-size:18px">${D[c].w}</b> ${D[c].wp} · ${esc(D[c].we)}</div><div class="ln"></div>`).join('')}</div>`;
+  let F;
+  if(R.pas){ const known=new Set(ABC.charsUpTo(R.L)); const qs=TF[R.pas.day]||[];
+    F=sec('F','阅读理解 · '+esc(R.pas.title),`From Lesson ${R.pas.day}. Read it aloud, then tick T (true) or F (false).`,`<div class="read">${rubyKnown(R.pas.zh,R.pas.py,known)}</div><div class="tf">${qs.map(([s],i)=>`<div>${num(i+1)}<span>${esc(s)}</span><span class="tfb">T <span class="box"></span> F <span class="box"></span></span></div>`).join('')}</div>`); }
+  else { F=sec('F','读一读，连一连','Read each sentence (no pinyin), then draw a line to its meaning',`<div class="match2">${R.sents.map((s,i)=>`<div class="a">${esc(s.zh)}<span class="dot"></span></div><div></div><div class="b"><span class="dot"></span>${esc(R.sents[R.enOrder[i]].en)}</div>`).join('')}</div>`); }
+  return `<div class="page pg2">${hd(k,2,'复习 · 用一用','Use what you know')}
+   ${sec('D','组词','Write two words that use each character',ZU)}
+   ${sec('E','造句','Write one sentence with each word',ZJ)}
+   ${F}
+   ${R.pas?sec('G','读一读，连一连','Read each sentence (no pinyin), then draw a line to its meaning',`<div class="match2">${R.sents.map((s,i)=>`<div class="a">${esc(s.zh)}<span class="dot"></span></div><div></div><div class="b"><span class="dot"></span>${esc(R.sents[R.enOrder[i]].en)}</div>`).join('')}</div>`):''}
+   ${sec('✓','今日打卡','Check off when done',`<div class="checks"><span><span class="box"></span> 2 pages done</span><span><span class="box"></span> Checked with the answer key</span><span><span class="box"></span> Marked my wrong characters in the app</span><span>Hardest today: <span style="display:inline-block;width:70px;border-bottom:1px solid var(--soft)"></span></span></div>`)}
+   ${ft(k,2)}</div>`; }
+function dayPages(k,weak){ weak=weak||[]; return ABC.plan(k).rev?revP1(k,weak)+revP2(k,weak):newP1(k,weak)+newP2(k,weak); }
+/* characters that appear on a day's sheets (for marking mistakes in the app) */
+function sheetChars(k,weak){ const P=ABC.plan(k); if(P.rev){ const R=pickRev(k,weak); return [...new Set(R.read.concat(R.words,R.dict,R.zu))]; } const N=pickNew(k,weak); return [...new Set(N.d.chars.concat(N.old))]; }
+/* ---------- answer key ---------- */
+function answerDay(k,weak){ const P=ABC.plan(k), z=c=>`<span class="z">${c}</span>`;
+  if(P.rev){ const R=pickRev(k,weak);
+    const F=R.pas?`<b>P2-F</b> ${(TF[R.pas.day]||[]).map(([s,t],i)=>`${i+1}. ${t?'T':'F'}`).join('　')}`:`<b>P2-F</b> ${R.sents.map((s,i)=>`${z(s.zh)} → ${esc(s.en)}`).join('；')}`;
+    return `<div><h4>第${cnNum(k)}天 · Day ${k} · 复习日</h4><b>P1-A</b> ${R.read.map(c=>z(c)+' '+D[c].py).join('　')}<br><b>P1-B</b> ${R.words.map(c=>`${D[c].wp} = ${z(D[c].w)}`).join('；')}<br><b>P1-C 听写</b> ${R.dict.map((c,i)=>`${i+1}. ${z(D[c].w)}`).join('　')}<br><b>P2-D 组词</b> e.g. ${R.zu.map(c=>z(c)+': '+z(D[c].w)).join('；')} (any correct word counts)<br><b>P2-E 造句</b> e.g. ${R.zj.map(c=>z(D[c].w)).join('、')} — any correct sentence counts<br>${R.pyw.length?`<b>P1-D</b> ${R.pyw.map(([w,p])=>z(w)+' '+p).join('　')}<br>`:''}${F}${R.pas?`<br><b>P2-G</b> ${R.sents.map(s=>`${z(s.zh)} → ${esc(s.en)}`).join('；')}`:''}</div>`; }
+  const N=pickNew(k,weak), d=N.d, Lp=PY[N.L-1], r=rng(k*71); const order=shuffle(d.sent.map((s,i)=>i),r);
+  return `<div><h4>第${cnNum(k)}天 · Day ${k} · Lesson ${N.L}</h4>${Lp?`<b>P1-B</b> ${Lp.words.slice(0,pyN(Lp)).map(([w,p])=>z(w)+' '+p).join('　')}<br>`:''}<b>P2-A</b> ${N.words.map(c=>`${D[c].wp} = ${z(D[c].w)}`).join('；')}<br><b>P2-B</b> ${order.map((i,j)=>`${j+1}. ${z(d.sent[i].blank)}`).join('　')}<br><b>P2-D</b> e.g. ${d.sent.map(s=>z(s.zh)).slice(0,2).join(' ')}<br>${N.old.length?`<b>P2-E</b> ${N.old.map(c=>`${z(c)} ${D[c].py} ${esc(en1(c))}`).join('；')}`:''}</div>`; }
+function answersFor(ks,weak){ let pages='';
+  for(let i=0;i<ks.length;i+=5){ const part=ks.slice(i,i+5).map(k=>answerDay(k,weak)).join('');
+    pages+=`<div class="page"><div class="hd"><div class="l"><span class="dayno">答案</span><span class="ttl">Answer key<small>Day ${ks[i]}${ks.length>1?'–'+ks[Math.min(i+4,ks.length-1)]:''}</small></span></div></div><div class="ak">${part}</div></div>`; }
+  return pages; }
+
+const f=(k,w)=>dayPages(k,w||[]); f.answers=(k,w)=>answersFor([k],w||[]); f.dict=pyDict; f.rev=(k,w)=>pickRev(k,w||[]); f.chars=(k,w)=>sheetChars(k,w||[]); return f;})();</script>
 <script>window.ABC_EXTRA={"passages": [{"day": 5, "title": "山上", "te": "On the mountain", "zh": "爸爸妈妈上山。山上有云，有花，有鸟，有虫。爸爸坐在石头上画马，妈妈站在花下画鸟。下雨了，风不大。我打电话：“爸爸，下雨了！”", "py": "bà ba mā ma shàng shān shān shang yǒu yún yǒu huā yǒu niǎo yǒu chóng bà ba zuò zài shí tou shang huà mǎ mā ma zhàn zài huā xià huà niǎo xià yǔ le fēng bú dà wǒ dǎ diàn huà bà ba xià yǔ le", "en": "Mom and Dad sketch horses and birds on the mountain until it starts to rain."}, {"day": 10, "title": "秋天的晚上", "te": "An autumn evening", "zh": "今天是秋天的第一天。早上，我在家里看书。下午下了一场雨，雨大，风也大。晚上雨不下了，天上的星星一闪一闪的。妈妈说：“明天是个好天气。”", "py": "jīn tiān shì qiū tiān de dì yī tiān zǎo shang wǒ zài jiā lǐ kàn shū xià wǔ xià le yì chǎng yǔ yǔ dà fēng yě dà wǎn shang yǔ bú xià le tiān shang de xīng xing yì shǎn yì shǎn de mā ma shuō míng tiān shì gè hǎo tiān qì", "en": "First day of autumn: reading at home, an afternoon storm, stars at night."}, {"day": 15, "title": "小猫", "te": "The little cat", "zh": "家里有一只小黄猫。我在桌子边看书，猫也坐在桌子上看我。我去开门，猫也走到门边。我在家里走来走去，猫也走来走去。妈妈说：“小猫是你的影子。”", "py": "jiā lǐ yǒu yì zhī xiǎo huáng māo wǒ zài zhuō zi biān kàn shū māo yě zuò zài zhuō zi shang kàn wǒ wǒ qù kāi mén māo yě zǒu dào mén biān wǒ zài jiā lǐ zǒu lái zǒu qù māo yě zǒu lái zǒu qù mā ma shuō xiǎo māo shì nǐ de yǐng zi", "en": "A little yellow cat follows me everywhere at home. Mom says it's my shadow."}, {"day": 20, "title": "生日", "te": "Birthday", "zh": "昨天是我的生日。朋友们给我买了一个大蛋糕，上面有红色和黄色的花。我们一起唱生日歌。朋友问我：“你今年几岁？”我笑着说：“你猜！”", "py": "zuó tiān shì wǒ de shēng rì péng you men gěi wǒ mǎi le yí gè dà dàn gāo shàng miàn yǒu hóng sè hé huáng sè de huā wǒ men yì qǐ chàng shēng rì gē péng you wèn wǒ nǐ jīn nián jǐ suì wǒ xiào zhe shuō nǐ cāi", "en": "Friends bring a birthday cake and ask how old I am. \"Guess!\""}, {"day": 25, "title": "上班", "te": "At work", "zh": "我在一家公司工作。我的同事都很好。中午我们常常一起去吃饭，我最喜欢点牛肉面。老板说：“下个月我们去海边。”大家都很开心，我觉得时间过得真快。", "py": "wǒ zài yì jiā gōng sī gōng zuò wǒ de tóng shì dōu hěn hǎo zhōng wǔ wǒ men cháng cháng yì qǐ qù chī fàn wǒ zuì xǐ huan diǎn niú ròu miàn lǎo bǎn shuō xià gè yuè wǒ men qù hǎi biān dà jiā dōu hěn kāi xīn wǒ jué de shí jiān guò de zhēn kuài", "en": "Lunch with coworkers, beef noodles, and a company beach trip next month."}, {"day": 30, "title": "回中国", "te": "Back to China", "zh": "好久不见！上个月我回中国看爷爷奶奶。爷爷今年八十岁了，身体还很好，每天早上去公园走路。奶奶给我做了很多好吃的。回美国以前，奶奶说：“有时间就回来，我们在家等你。”", "py": "hǎo jiǔ bú jiàn shàng gè yuè wǒ huí zhōng guó kàn yé ye nǎi nai yé ye jīn nián bā shí suì le shēn tǐ hái hěn hǎo měi tiān zǎo shang qù gōng yuán zǒu lù nǎi nai gěi wǒ zuò le hěn duō hǎo chī de huí měi guó yǐ qián nǎi nai shuō yǒu shí jiān jiù huí lai wǒ men zài jiā děng nǐ", "en": "Visiting grandparents in China: Grandpa is 80 and still walks every morning."}], "parts": {"地": ["土", "也"], "你": ["亻", "尔"], "他": ["亻", "也"], "站": ["立", "占"], "坐": ["人", "人", "土"], "对": ["又", "寸"], "云": ["二", "厶"], "花": ["艹", "化"], "妈": ["女", "马"], "打": ["扌", "丁"], "棋": ["木", "其"], "鸡": ["又", "鸟"], "字": ["宀", "子"], "词": ["讠", "司"], "语": ["讠", "吾"], "纸": ["纟", "氏"], "音": ["立", "日"], "妹": ["女", "未"], "奶": ["女", "乃"], "桥": ["木", "乔"], "雪": ["雨", "彐"], "草": ["艹", "早"], "家": ["宀", "豕"], "路": ["足", "各"], "灯": ["火", "丁"], "秋": ["禾", "火"], "树": ["木", "对"], "叶": ["口", "十"], "闪": ["门", "人"], "星": ["日", "生"], "江": ["氵", "工"], "莲": ["艹", "连"], "说": ["讠", "兑"], "蛙": ["虫", "圭"], "男": ["田", "力"], "好": ["女", "子"], "远": ["辶", "元"], "近": ["辶", "斤"], "听": ["口", "斤"], "猫": ["犭", "苗"], "边": ["辶", "力"], "鸭": ["甲", "鸟"], "苹": ["艹", "平"], "杏": ["木", "口"], "桃": ["木", "兆"], "作": ["亻", "乍"], "笔": ["⺮", "毛"], "课": ["讠", "果"], "早": ["日", "十"], "校": ["木", "交"], "明": ["日", "月"], "尘": ["小", "土"], "从": ["人", "人"], "众": ["人", "人", "人"], "双": ["又", "又"], "林": ["木", "木"], "森": ["木", "木", "木"], "红": ["纟", "工"], "歌": ["哥", "欠"], "晚": ["日", "免"], "昨": ["日", "乍"], "狗": ["犭", "句"], "朋": ["月", "月"], "尾": ["尸", "毛"], "谁": ["讠", "隹"], "短": ["矢", "豆"], "把": ["扌", "巴"], "最": ["日", "取"], "公": ["八", "厶"], "诗": ["讠", "寺"], "给": ["纟", "合"], "们": ["亻", "门"], "彩": ["采", "彡"], "空": ["穴", "工"], "问": ["门", "口"], "到": ["至", "刂"], "没": ["氵", "殳"], "绿": ["纟", "录"], "睡": ["目", "垂"], "海": ["氵", "每"], "吗": ["口", "马"], "时": ["日", "寸"], "很": ["彳", "艮"], "穿": ["穴", "牙"], "快": ["忄", "夬"], "蓝": ["艹", "监"], "笑": ["⺮", "夭"], "娃": ["女", "圭"], "挂": ["扌", "圭"], "活": ["氵", "舌"], "哥": ["可", "可"], "姐": ["女", "且"], "爷": ["父", "卩"], "群": ["君", "羊"], "加": ["力", "口"], "洞": ["氵", "同"], "鸦": ["牙", "鸟"], "找": ["扌", "戈"], "许": ["讠", "午"], "法": ["氵", "去"], "放": ["方", "攵"], "进": ["辶", "井"], "住": ["亻", "主"], "孩": ["子", "亥"], "玩": ["王", "元"], "吧": ["口", "巴"], "芽": ["艹", "牙"], "爬": ["爪", "巴"], "呀": ["口", "牙"], "回": ["囗", "口"], "院": ["阝", "完"]}};</script>
 <script>window.ABC_AUDIO={"天": [1, "249aba763258.mp3"], "今天": [1, "800dfdd90200.mp3"], "地": [1, "1ee506bf5e2a.mp3"], "地铁": [1, "9266202469b6.mp3"], "人": [1, "465afe3c1185.mp3"], "中国人": [1, "308d5ff8e759.mp3"], "你": [1, "df1fd9101108.mp3"], "你好": [1, "7eca689f0d33.mp3"], "我": [1, "168152545317.mp3"], "我们": [1, "ab4a85fc2ec4.mp3"], "他": [1, "5fe86c60debb.mp3"], "他们": [1, "d0a33aaeb397.mp3"], "一": [1, "7941da94db2a.mp3"], "一样": [1, "2e8626c44eaa.mp3"], "二": [1, "2d8be272c9e7.mp3"], "二月": [1, "b61c62688643.mp3"], "三": [1, "e662ff59a0da.mp3"], "三明治": [1, "c69e9774b82f.mp3"], "四": [1, "21716cf31107.mp3"], "四季": [1, "b88e93ba350b.mp3"], "五": [2, "1fcc29d077c0.mp3"], "星期五": [2, "450ea3af464f.mp3"], "上": [2, "af767b7e4ae0.mp3"], "上班": [2, "b4f0388f1ee9.mp3"], "下": [2, "3850a186c323.mp3"], "下班": [2, "96ed60cdcb75.mp3"], "口": [2, "c9417574314d.mp3"], "出口": [2, "551ce9c9fe6c.mp3"], "耳": [2, "78e4f46b19a7.mp3"], "耳机": [2, "01b6f87b8ff0.mp3"], "目": [2, "4064560fbd2f.mp3"], "节目": [2, "bb2ca1fa126e.mp3"], "手": [2, "3c7d183f1b71.mp3"], "手机": [2, "9f9d36327d96.mp3"], "足": [2, "fbb4674dab3f.mp3"], "足球": [2, "ed05233ac827.mp3"], "站": [2, "4b3774c6a24b.mp3"], "车站": [2, "9726ca980a4f.mp3"], "坐": [2, "0169bebf684e.mp3"], "请坐": [2, "f260056d5fbd.mp3"], "日": [3, "3edddd85ac2c.mp3"], "生日": [3, "8483ed132b2c.mp3"], "月": [3, "e42b99d59954.mp3"], "月饼": [3, "0305f3d5c27c.mp3"], "水": [3, "eab619fba24a.mp3"], "喝水": [3, "2c8250acfd81.mp3"], "火": [3, "df3bbd5232a0.mp3"], "火车": [3, "e7e95e681311.mp3"], "山": [3, "86fa9c82d812.mp3"], "爬山": [3, "cde9750b379e.mp3"], "石": [3, "87cc016a0893.mp3"], "石头": [3, "452d1576b0e0.mp3"], "田": [3, "3db5087bec1f.mp3"], "田地": [3, "b197936bc779.mp3"], "禾": [3, "86469aae1b9e.mp3"], "禾苗": [3, "122acd401726.mp3"], "对": [3, "00447bbe5e22.mp3"], "对不起": [3, "cd51c8c91eab.mp3"], "云": [3, "a45fb6bbf291.mp3"], "云朵": [3, "2b5647815c89.mp3"], "雨": [4, "95433763b346.mp3"], "下雨": [4, "060e263e4b22.mp3"], "风": [4, "b24891983d09.mp3"], "台风": [4, "647d33aff1e4.mp3"], "花": [4, "22dbba75b9b0.mp3"], "花钱": [4, "793128cb18b7.mp3"], "鸟": [4, "cdd7ce48a936.mp3"], "小鸟": [4, "0dfb791e2825.mp3"], "虫": [4, "aed372359cb1.mp3"], "虫子": [4, "25adc44dedbd.mp3"], "六": [4, "61b453523d86.mp3"], "六月": [4, "dc71b73f68d6.mp3"], "七": [4, "aad6914f8f4e.mp3"], "七天": [4, "d4d9859f5238.mp3"], "八": [4, "edf1acd5c657.mp3"], "八点": [4, "1378032eb869.mp3"], "九": [4, "9b4851f85d53.mp3"], "九月": [4, "cd9559ebaf7c.mp3"], "十": [4, "181245720b77.mp3"], "十分": [4, "fd6f38ad6d69.mp3"], "爸": [5, "ab10119e3665.mp3"], "爸爸": [5, "0d00c80f61a7.mp3"], "妈": [5, "11148107cdfb.mp3"], "妈妈": [5, "e6c7ee60031d.mp3"], "马": [5, "4e2572e0c729.mp3"], "马上": [5, "f5abec1211ed.mp3"], "土": [5, "06da773f5816.mp3"], "土豆": [5, "d4e601be079d.mp3"], "不": [5, "9eba1ab69790.mp3"], "不要": [5, "498957b3e388.mp3"], "画": [5, "2287851dee7c.mp3"], "画画": [5, "806075baa80a.mp3"], "打": [5, "0e1ceeea4671.mp3"], "打电话": [5, "575345386cf4.mp3"], "棋": [5, "3621c8349880.mp3"], "下棋": [5, "95957d588d9f.mp3"], "鸡": [5, "ef2712b1bb1f.mp3"], "鸡蛋": [5, "bd29625b4835.mp3"], "字": [5, "a95dbb0ea4a5.mp3"], "名字": [5, "689fad203a16.mp3"], "词": [6, "c809738f2212.mp3"], "生词": [6, "e68888149826.mp3"], "语": [6, "94441e69c7c6.mp3"], "汉语": [6, "25cf96268eb2.mp3"], "句": [6, "e1b9163e385c.mp3"], "句子": [6, "f5e4551f7426.mp3"], "子": [6, "ff6ae520d1d9.mp3"], "孩子": [6, "03e25ab08d38.mp3"], "桌": [6, "128b1e7cb0ee.mp3"], "桌子": [6, "9e2fde20b6aa.mp3"], "纸": [6, "d17f43870dc5.mp3"], "纸巾": [6, "1ece362b59b3.mp3"], "文": [6, "56b69ecf5143.mp3"], "中文": [6, "a7bac2239fcd.mp3"], "数": [6, "54af0a5df5db.mp3"], "数学": [6, "6e65831863db.mp3"], "学": [6, "65f27a241313.mp3"], "学生": [6, "35d9969dfa48.mp3"], "音": [6, "43ad15e73d11.mp3"], "音乐": [6, "95521bb74446.mp3"], "乐": [7, "a2705d7fc85f.mp3"], "快乐": [7, "f8bea620b138.mp3"], "妹": [7, "aa8098078b8e.mp3"], "妹妹": [7, "1c097b12de69.mp3"], "奶": [7, "0bf2ceb39e76.mp3"], "牛奶": [7, "7a5794ace915.mp3"], "小": [7, "391b8fa9c747.mp3"], "小心": [7, "1f5e5856ce41.mp3"], "桥": [7, "3e3c1513167a.mp3"], "大桥": [7, "447e95975c36.mp3"], "台": [7, "f923606a39e1.mp3"], "台湾": [7, "f06972a5060f.mp3"], "雪": [7, "c4fccd8dd11f.mp3"], "下雪": [7, "1837e3d126e7.mp3"], "儿": [7, "e90f3430e9af.mp3"], "女儿": [7, "b62d330b5ae5.mp3"], "白": [7, "9b9a35c22a6c.mp3"], "白天": [7, "4ed52bef83ea.mp3"], "草": [7, "7d3cfe8c4ecb.mp3"], "草莓": [7, "4e9244f80edc.mp3"], "家": [8, "a6cdd2a00bc8.mp3"], "回家": [8, "7b894d7a03dc.mp3"], "是": [8, "0a60ac8f02cc.mp3"], "是的": [8, "9578bd37b900.mp3"], "车": [8, "7fce128995c5.mp3"], "开车": [8, "220e7cbf23d0.mp3"], "路": [8, "d047a27f42ed.mp3"], "走路": [8, "a31570691640.mp3"], "灯": [8, "7ccb13782a11.mp3"], "红绿灯": [8, "35240a5c3f4e.mp3"], "走": [8, "0154e79e142c.mp3"], "走了": [8, "fa7c48c17b3c.mp3"], "秋": [8, "fdf31ff3a880.mp3"], "秋天": [8, "7dd7fb711151.mp3"], "气": [8, "3d3b3453c7e0.mp3"], "天气": [8, "265f273cf1a7.mp3"], "了": [8, "163773fb211e.mp3"], "好了": [8, "2b062a3da67d.mp3"], "树": [8, "302f276a934f.mp3"], "树叶": [8, "cf28c11de45c.mp3"], "叶": [9, "066aab17034d.mp3"], "茶叶": [9, "fcc734148321.mp3"], "片": [9, "b26fc74c5735.mp3"], "照片": [9, "d2fb1e3e1710.mp3"], "大": [9, "ab18e30c0dc4.mp3"], "大学": [9, "572a6791c397.mp3"], "飞": [9, "a8dd7133d947.mp3"], "飞机": [9, "16678800cfd0.mp3"], "会": [9, "647477bbc544.mp3"], "开会": [9, "43f7edae16a2.mp3"], "个": [9, "930882bb0a8c.mp3"], "一个人": [9, "1134466965c6.mp3"], "的": [9, "01d7aa494b07.mp3"], "我的": [9, "07b181184280.mp3"], "船": [9, "7def9ee0ca92.mp3"], "坐船": [9, "2be375b28002.mp3"], "两": [9, "0bff8e5ca64a.mp3"], "两个": [9, "80cdce8e2eb8.mp3"], "头": [9, "4be2abbcf7d3.mp3"], "头发": [9, "d75cf7706138.mp3"], "在": [10, "241d47a3ee97.mp3"], "现在": [10, "505ccfb0e8b6.mp3"], "里": [10, "ff875e907414.mp3"], "家里": [10, "8d4e40061e8d.mp3"], "看": [10, "9302446f9b75.mp3"], "看书": [10, "e3ccf0942cf7.mp3"], "见": [10, "b0deb10456ac.mp3"], "再见": [10, "8e5c0a1e4670.mp3"], "闪": [10, "24523d02b0f6.mp3"], "闪电": [10, "6259d676f095.mp3"], "星": [10, "d1cde6adff1b.mp3"], "星期": [10, "9e71cf606e16.mp3"], "江": [10, "4e285c9f43ef.mp3"], "长江": [10, "98c3833610e7.mp3"], "南": [10, "48029ea20853.mp3"], "南方": [10, "8409dbb837d8.mp3"], "可": [10, "4aebcc5f1c6d.mp3"], "可以": [10, "eaa9c5c2f1ef.mp3"], "采": [10, "0d7b54102305.mp3"], "采花": [10, "aec8a6153e46.mp3"], "莲": [11, "baf51961984a.mp3"], "莲花": [11, "baac6e1600a9.mp3"], "鱼": [11, "0857fa4e346f.mp3"], "钓鱼": [11, "34e96bf784a0.mp3"], "东": [11, "d9ca5d6eef84.mp3"], "东西": [11, "a026c722b2b8.mp3"], "西": [11, "d62cb2a2a159.mp3"], "西瓜": [11, "b9af3fd5d3ec.mp3"], "北": [11, "9e08f63a9cf2.mp3"], "北京": [11, "692e92669c0c.mp3"], "尖": [11, "91b9aafdcd6f.mp3"], "尖尖": [11, "7a02d4feb6ff.mp3"], "说": [11, "ddc9d3d10db6.mp3"], "说话": [11, "b3aa9cae4cb5.mp3"], "春": [11, "dd201928f77d.mp3"], "春节": [11, "d2339bb4edaa.mp3"], "青": [11, "1ca69c4be0f9.mp3"], "青菜": [11, "5ce43b2ba534.mp3"], "蛙": [11, "9ca5e313358d.mp3"], "青蛙": [11, "5fc061b2b18f.mp3"], "夏": [12, "d4b37c9f04ea.mp3"], "夏天": [12, "860176ffdb1f.mp3"], "弯": [12, "568b73f4ad80.mp3"], "弯弯": [12, "0a114fc2c772.mp3"], "皮": [12, "c5e0100fa6ee.mp3"], "皮鞋": [12, "82a54445ffdb.mp3"], "冬": [12, "5d6e3b1dd169.mp3"], "冬天": [12, "8f5324a6322e.mp3"], "男": [12, "36a4908a5577.mp3"], "男人": [12, "09eb84e19dba.mp3"], "女": [12, "87c835a6b174.mp3"], "女人": [12, "16410036f7a3.mp3"], "开": [12, "849320560237.mp3"], "开门": [12, "96dc96f5b440.mp3"], "关": [12, "d58a55bceec7.mp3"], "关灯": [12, "39a0e9bc7fc9.mp3"], "正": [12, "0f756c3fad32.mp3"], "正在": [12, "e7c3012c3b87.mp3"], "反": [12, "3d2eeee72f28.mp3"], "反正": [12, "ee071b64b643.mp3"], "远": [13, "6619176b571b.mp3"], "很远": [13, "2110ec16e060.mp3"], "有": [13, "cc4ad2fd27e2.mp3"], "没有": [13, "b4ebe3f519ec.mp3"], "色": [13, "9122c53716e5.mp3"], "颜色": [13, "6b36c6f7ec83.mp3"], "近": [13, "c68a31cb466b.mp3"], "附近": [13, "6688f226e2a5.mp3"], "听": [13, "8cbe1c93ad66.mp3"], "听说": [13, "c187cd3413cc.mp3"], "无": [13, "d81bb206a889.mp3"], "无聊": [13, "37c1f05099b8.mp3"], "声": [13, "52fe83e6df45.mp3"], "声音": [13, "fb5fc98bcc55.mp3"], "去": [13, "dfb9366c910b.mp3"], "出去": [13, "e4e06820c724.mp3"], "还": [13, "1993f80c4918.mp3"], "还是": [13, "d33a3d0563c9.mp3"], "来": [13, "f7b0a3bd20fd.mp3"], "回来": [13, "95c9f3130483.mp3"], "多": [14, "7b1568e67999.mp3"], "多少": [14, "22266fe1ddcc.mp3"], "少": [14, "bd2282db359a.mp3"], "不少": [14, "c8ce431d8a2c.mp3"], "黄": [14, "12401e3443f9.mp3"], "黄色": [14, "ddb86dd31ce7.mp3"], "牛": [14, "a933ef6a9bf8.mp3"], "牛肉": [14, "282ddc878610.mp3"], "只": [14, "f4a0476b2161.mp3"], "一只猫": [14, "ea97ad3bfc7b.mp3"], "猫": [14, "b655de688e0a.mp3"], "小猫": [14, "acf5547a8c99.mp3"], "边": [14, "34cfaae151dc.mp3"], "这边": [14, "d03489d528bc.mp3"], "鸭": [14, "3840579d1bec.mp3"], "烤鸭": [14, "16891cf27915.mp3"], "苹": [14, "7d7bc94583af.mp3"], "苹果": [14, "e6803e21b9c6.mp3"], "果": [14, "2bbb3b39928f.mp3"], "水果": [14, "64254630ba43.mp3"], "杏": [15, "985709b4a8f1.mp3"], "杏仁": [15, "08e5b7e29233.mp3"], "桃": [15, "432c77651bde.mp3"], "桃子": [15, "6bdfe0af87eb.mp3"], "书": [15, "2f3703e4272d.mp3"], "书包": [15, "999f3de2cf01.mp3"], "包": [15, "5442dfce9bae.mp3"], "包子": [15, "68e695653bde.mp3"], "尺": [15, "977314f941c5.mp3"], "尺子": [15, "427a2b7c0bc0.mp3"], "作": [15, "4cde0dec60ad.mp3"], "工作": [15, "9a018b21ab11.mp3"], "业": [15, "d7d676139846.mp3"], "作业": [15, "116e07721979.mp3"], "本": [15, "a4fb8425cd19.mp3"], "本子": [15, "59abf9c63a9f.mp3"], "笔": [15, "9fb4dafdc6c8.mp3"], "铅笔": [15, "ffa77d1bfcf1.mp3"], "刀": [15, "83f6c0da39d2.mp3"], "刀子": [15, "a3516927bc93.mp3"], "课": [16, "dbbd6d48dbe6.mp3"], "上课": [16, "18b930ed1f86.mp3"], "早": [16, "d6cb15b9a680.mp3"], "早上": [16, "c8c0ba481d74.mp3"], "校": [16, "750800b75db7.mp3"], "学校": [16, "413b738061f6.mp3"], "明": [16, "e647d10f148d.mp3"], "明天": [16, "8bcbd77d1fd9.mp3"], "力": [16, "3003cba5bd3a.mp3"], "力气": [16, "715fa52ffb6d.mp3"], "尘": [16, "b7f890f2787a.mp3"], "灰尘": [16, "aaced7ca4b74.mp3"], "从": [16, "0cc05f4268b0.mp3"], "从来": [16, "f93686c40708.mp3"], "众": [16, "d877d132fe63.mp3"], "大众": [16, "c3f70203da24.mp3"], "双": [16, "ff8f4688ff3f.mp3"], "一双": [16, "7808d9095155.mp3"], "木": [16, "e0a5e08af3c1.mp3"], "木头": [16, "a56fd12aecde.mp3"], "林": [17, "70c4b42ab0e3.mp3"], "树林": [17, "ca3d52154949.mp3"], "森": [17, "0d9aeb6eaecf.mp3"], "森林": [17, "8aa2cdb2cd3d.mp3"], "条": [17, "cc1bacb5117a.mp3"], "面条": [17, "814b1c8d80e3.mp3"], "心": [17, "bf08c05e00b9.mp3"], "开心": [17, "0218cbc88086.mp3"], "升": [17, "4caf8b402987.mp3"], "上升": [17, "7c446cc0aad4.mp3"], "国": [17, "62f8ae5410fd.mp3"], "美国": [17, "1efc978309b2.mp3"], "旗": [17, "331575be2e97.mp3"], "国旗": [17, "9f6d3a946897.mp3"], "中": [17, "aed1dfbc3170.mp3"], "中国": [17, "c13dceabcb14.mp3"], "红": [17, "d088e65280dd.mp3"], "红包": [17, "4dfa3b47e701.mp3"], "歌": [17, "f45782691b09.mp3"], "唱歌": [17, "d49c9b66f60f.mp3"], "起": [18, "308fdfa05b71.mp3"], "起床": [18, "59b19552d695.mp3"], "么": [18, "f20eff3561d1.mp3"], "怎么": [18, "786df5625907.mp3"], "美": [18, "5a93a2705211.mp3"], "美食": [18, "c8922754fd0f.mp3"], "丽": [18, "98c3aaff536e.mp3"], "美丽": [18, "a84ce0c3857a.mp3"], "立": [18, "d3d2b63d4d6a.mp3"], "立刻": [18, "0707f0bb3228.mp3"], "午": [18, "1933b5e73646.mp3"], "午饭": [18, "f90637abd0d0.mp3"], "晚": [18, "9299aa7acaed.mp3"], "晚上": [18, "a80cc5027a1d.mp3"], "昨": [18, "ccbcdbcd3f96.mp3"], "昨天": [18, "2f8d6f1584b7.mp3"], "今": [18, "ba4b5ed1ab70.mp3"], "今年": [18, "d3dbc7a7fd9f.mp3"], "年": [18, "465260fe80b0.mp3"], "新年": [18, "d46d5bb15db1.mp3"], "影": [19, "bfe38bd3e35c.mp3"], "电影": [19, "51e9743451d4.mp3"], "前": [19, "d8cbd0465734.mp3"], "以前": [19, "37de0da6d3b2.mp3"], "后": [19, "2038d4bae747.mp3"], "以后": [19, "552990e8ebcd.mp3"], "黑": [19, "9cba58579b62.mp3"], "黑色": [19, "9d2d1f62ae2c.mp3"], "狗": [19, "5090e44ef940.mp3"], "小狗": [19, "541167ce902c.mp3"], "左": [19, "d2aff1417831.mp3"], "左边": [19, "a7eaff29603a.mp3"], "右": [19, "4d9c32c23df5.mp3"], "右边": [19, "128d58f066a1.mp3"], "它": [19, "3c1400fbc256.mp3"], "它们": [19, "b65d4db6c2f0.mp3"], "好": [19, "ac2c8f13c6e6.mp3"], "好吃": [19, "a78e4f228bed.mp3"], "朋": [19, "75767133ff6e.mp3"], "朋友": [19, "9d53230a9593.mp3"], "友": [20, "b75aa526b189.mp3"], "好友": [20, "59d29a3663b5.mp3"], "比": [20, "d6eea35759d1.mp3"], "比赛": [20, "a5c5d0dc90cc.mp3"], "尾": [20, "7d85957e395c.mp3"], "尾巴": [20, "c166c8f764bc.mp3"], "巴": [20, "8f046140b841.mp3"], "巴士": [20, "e13ccf768983.mp3"], "谁": [20, "cfbafdf1d6de.mp3"], "是谁": [20, "f1a90117953a.mp3"], "长": [20, "092acb9c0e60.mp3"], "长城": [20, "592c5cd94486.mp3"], "短": [20, "b58b94d8073c.mp3"], "短信": [20, "485c3abbd939.mp3"], "把": [20, "a37a9be784a4.mp3"], "把手": [20, "e2ae9e0fb362.mp3"], "伞": [20, "e3c7a14b3f61.mp3"], "雨伞": [20, "3bd9d5ab6cf6.mp3"], "兔": [20, "ff5e0a155e87.mp3"], "兔子": [20, "4c16854a6f9f.mp3"], "最": [21, "084fa77fa057.mp3"], "最好": [21, "c234cad3e4ad.mp3"], "公": [21, "7d6c6b0efe2e.mp3"], "公司": [21, "41716f87c375.mp3"], "写": [21, "4d7dc6c5f886.mp3"], "写字": [21, "8a30f75b7550.mp3"], "诗": [21, "be6715edcbe7.mp3"], "唐诗": [21, "d220b3d8de23.mp3"], "点": [21, "be604f8b7ec5.mp3"], "点菜": [21, "d85522beda69.mp3"], "要": [21, "5438c873f9d2.mp3"], "需要": [21, "df16ffceb35f.mp3"], "过": [21, "a4c566f849a3.mp3"], "过年": [21, "3ff6a33dc78e.mp3"], "给": [21, "37186b95f597.mp3"], "给我": [21, "e981be81c8cf.mp3"], "当": [21, "249e061b3514.mp3"], "当然": [21, "0d6cfd1fdf8b.mp3"], "串": [21, "8c7249fc8ab6.mp3"], "羊肉串": [21, "be365541ebdb.mp3"], "们": [22, "888632a45d6c.mp3"], "你们": [22, "247edb94d448.mp3"], "以": [22, "0de67b95d7d1.mp3"], "所以": [22, "7681c2795500.mp3"], "成": [22, "3fe84c082f2e.mp3"], "成功": [22, "330363dfc524.mp3"], "彩": [22, "e3b100cce4b3.mp3"], "彩虹": [22, "279d6446d2d0.mp3"], "半": [22, "2475dea6e829.mp3"], "一半": [22, "e10997c55bdc.mp3"], "空": [22, "b7612b71c085.mp3"], "空气": [22, "8ba12c2c3d1f.mp3"], "问": [22, "57fe12bfc3e5.mp3"], "问题": [22, "5dc99f6efe53.mp3"], "到": [22, "d716f1e8a1f1.mp3"], "到了": [22, "2bd5ed196afa.mp3"], "方": [22, "c26236c2e1be.mp3"], "地方": [22, "d73d0c2b9732.mp3"], "没": [22, "3672c6af9724.mp3"], "没关系": [22, "ac85b3780c3c.mp3"], "更": [23, "13541715a588.mp3"], "更好": [23, "ee52f978c7b2.mp3"], "绿": [23, "806c43883568.mp3"], "绿茶": [23, "7e668e496ff4.mp3"], "出": [23, "58f021061002.mp3"], "出门": [23, "b584bad0c7d5.mp3"], "睡": [23, "0e7c928c5497.mp3"], "睡觉": [23, "60cffce1f686.mp3"], "那": [23, "995c3ec9d76d.mp3"], "那里": [23, "a793c356f12e.mp3"], "海": [23, "9aa7f82989fa.mp3"], "上海": [23, "e94e8bd35fc8.mp3"], "真": [23, "5a7958d89e64.mp3"], "真的": [23, "550b549d21c7.mp3"], "老": [23, "04837a0cbcf7.mp3"], "老板": [23, "db3ac57de8f0.mp3"], "师": [23, "2928bba232ac.mp3"], "老师": [23, "295af37e0588.mp3"], "吗": [23, "2988084a7495.mp3"], "好吗": [23, "02d01c3453b6.mp3"], "同": [24, "49cd6e0ab7c4.mp3"], "同事": [24, "3a1ff305f35c.mp3"], "什": [24, "3a7dc8e563e3.mp3"], "什么": [24, "736ccbe56037.mp3"], "才": [24, "cef3bb04c66c.mp3"], "刚才": [24, "4b756cba612f.mp3"], "亮": [24, "f4b50e418326.mp3"], "月亮": [24, "3b373249de71.mp3"], "时": [24, "609b5f0a08da.mp3"], "时间": [24, "19fcb9eb2594.mp3"], "候": [24, "588ef62ed5d9.mp3"], "时候": [24, "b6d9780b0dce.mp3"], "觉": [24, "2a3e34601346.mp3"], "觉得": [24, "291b5c616c0d.mp3"], "得": [24, "49f12aa61d89.mp3"], "记得": [24, "bb351527dd7a.mp3"], "自": [24, "fc051a9f8948.mp3"], "自己": [24, "0c105e7ca060.mp3"], "己": [24, "abf98b9d13eb.mp3"], "很": [25, "5e360de1b1eb.mp3"], "很好": [25, "745e25a85ec5.mp3"], "穿": [25, "355af5326be0.mp3"], "穿衣服": [25, "3c4e3148e9fc.mp3"], "衣": [25, "0cd16de4acda.mp3"], "衣服": [25, "6e06060b4830.mp3"], "服": [25, "7a4ec5e09d76.mp3"], "服务": [25, "47d68cd0f4c3.mp3"], "门": [25, "a4960087a90f.mp3"], "门口": [25, "e98e3093b87a.mp3"], "快": [25, "8fcedbfdde8f.mp3"], "蓝": [25, "2fc8da52420e.mp3"], "蓝天": [25, "74aa189b0bf1.mp3"], "又": [25, "1689ddd7ffc8.mp3"], "又来了": [25, "8cda61397c43.mp3"], "笑": [25, "1300f40cb658.mp3"], "笑话": [25, "86e921607657.mp3"], "着": [25, "7d49b35ca843.mp3"], "看着": [25, "8b4d7a2f2f47.mp3"], "向": [26, "a510ac9d0581.mp3"], "方向": [26, "a465db53b8c9.mp3"], "和": [26, "ab20cc42f302.mp3"], "和平": [26, "d799842baaa2.mp3"], "贝": [26, "26b41cbd83b0.mp3"], "宝贝": [26, "506a2e458f32.mp3"], "娃": [26, "da42b7183a89.mp3"], "娃娃": [26, "99745665ccf0.mp3"], "挂": [26, "b4c2740c4fde.mp3"], "挂号": [26, "4b6414cf7da0.mp3"], "活": [26, "e6c42c1f65ee.mp3"], "生活": [26, "aefcbfca08c8.mp3"], "金": [26, "9c41898568fd.mp3"], "金色": [26, "454b22f95d16.mp3"], "哥": [26, "d8a297a6e40e.mp3"], "哥哥": [26, "39af35e7b7d1.mp3"], "姐": [26, "05da6973db9d.mp3"], "姐姐": [26, "033e1fb01ca6.mp3"], "弟": [26, "10b8e3ca50b7.mp3"], "弟弟": [26, "427034659a1b.mp3"], "叔": [27, "030ad182d73e.mp3"], "叔叔": [27, "b25d78653337.mp3"], "爷": [27, "cc607188efae.mp3"], "爷爷": [27, "e571dca2d01f.mp3"], "群": [27, "532575314791.mp3"], "微信群": [27, "940bc49a1a71.mp3"], "竹": [27, "50064b40e1ca.mp3"], "竹子": [27, "9bc4eb747dd2.mp3"], "牙": [27, "d582052b07a4.mp3"], "刷牙": [27, "bf65a273f6cd.mp3"], "用": [27, "2f7919916a82.mp3"], "有用": [27, "93fa21a0f622.mp3"], "几": [27, "28fef849a654.mp3"], "几点": [27, "ace28ebb3343.mp3"], "步": [27, "4a0ff5106d12.mp3"], "跑步": [27, "7b385d028431.mp3"], "为": [27, "935e96a6d34e.mp3"], "为什么": [27, "cf9e991128f5.mp3"], "参": [27, "8fb1ccc95809.mp3"], "参加": [27, "fe0d7a795e92.mp3"], "加": [28, "85be08f9260a.mp3"], "加油": [28, "062286ae94fb.mp3"], "洞": [28, "30c64b2c0b94.mp3"], "山洞": [28, "16b9e780ae8a.mp3"], "乌": [28, "23fd0a1ddfa8.mp3"], "乌鸦": [28, "fceb5a1820d8.mp3"], "鸦": [28, "1258f3dc3796.mp3"], "处": [28, "b59907bab831.mp3"], "到处": [28, "b798b7f4e0b5.mp3"], "找": [28, "0a4df2a5ba82.mp3"], "找工作": [28, "09496b16b5b0.mp3"], "办": [28, "cb52ac5f3a2c.mp3"], "办法": [28, "e131ab6cdb5a.mp3"], "旁": [28, "3a39eb6e7e5f.mp3"], "旁边": [28, "0a50d8e5691f.mp3"], "许": [28, "8b49465ea459.mp3"], "也许": [28, "4329e585a8be.mp3"], "法": [28, "82d85ed8a3cc.mp3"], "方法": [28, "ea340b9dda8b.mp3"], "放": [29, "cedaabc91c5c.mp3"], "放假": [29, "e8403b61f4ee.mp3"], "进": [29, "0b1b3058fbce.mp3"], "进来": [29, "c7fd8da0b14e.mp3"], "高": [29, "4296d7d293c9.mp3"], "高兴": [29, "60b633faa9d9.mp3"], "住": [29, "84f3602f49e7.mp3"], "住在": [29, "3b324ce11767.mp3"], "孩": [29, "310ae7368ba9.mp3"], "玩": [29, "53b1c12a682b.mp3"], "好玩": [29, "d165380c5ccd.mp3"], "吧": [29, "9ff279f5410e.mp3"], "走吧": [29, "268cb2b3d00c.mp3"], "发": [29, "922e08aef5dc.mp3"], "发短信": [29, "c159a911f3e2.mp3"], "芽": [29, "13026bc185d3.mp3"], "发芽": [29, "862a1ec29177.mp3"], "爬": [29, "0d0bdce47057.mp3"], "呀": [30, "4bdddbd287d5.mp3"], "好呀": [30, "fff9305b77c2.mp3"], "久": [30, "1a2c72663299.mp3"], "好久不见": [30, "3e2cfa216fef.mp3"], "回": [30, "e0a113160c3a.mp3"], "全": [30, "1e5142e81a34.mp3"], "安全": [30, "fdbc77bd19b9.mp3"], "变": [30, "c645567ae1f9.mp3"], "变化": [30, "cbe2f1cd761f.mp3"], "工": [30, "a626497bc388.mp3"], "工人": [30, "290d00e57006.mp3"], "厂": [30, "a7ea7ce5cd61.mp3"], "工厂": [30, "3e67b3dcfe3c.mp3"], "医": [30, "c1fad4ce8962.mp3"], "医生": [30, "6d7c1afb0792.mp3"], "院": [30, "bd3a00748731.mp3"], "医院": [30, "071bd02a3624.mp3"], "生": [30, "b30c1a985e26.mp3"], "你好，我是中国人。": [1, "d5511e78d0c3.mp3"], "他是我的朋友。": [1, "6649385a8ad1.mp3"], "今天我们三个人去。": [1, "db5574bf0df2.mp3"], "地上有四个苹果。": [1, "9f284da84f02.mp3"], "我五点下班。": [2, "81ef9101ef8b.mp3"], "请坐，我站着就好。": [2, "07a3a967a5d9.mp3"], "我的手机在桌子上。": [2, "185be2b87a8e.mp3"], "他戴着耳机听歌。": [2, "866419d600d2.mp3"], "今天是我的生日。": [3, "b6b55d404980.mp3"], "周末我们去爬山。": [3, "0e2565601669.mp3"], "请给我一杯水。": [3, "6cee32c9a073.mp3"], "对，我坐火车去。": [3, "7668ca3d881f.mp3"], "外面下雨了，风很大。": [4, "ec839be0ffa9.mp3"], "妈妈喜欢花。": [4, "d4a9aae75091.mp3"], "树上有一只小鸟。": [4, "eea32e8c0f8d.mp3"], "我八点上班，六点下班。": [4, "74080617b988.mp3"], "爸爸妈妈在家。": [5, "7918091d2e7f.mp3"], "我马上给你打电话。": [5, "f15fb3725b95.mp3"], "我不会写这个字。": [5, "207ad4543a52.mp3"], "爷爷喜欢下棋。": [5, "6cb8303be772.mp3"], "这个句子有几个生词？": [6, "16253bf3e742.mp3"], "我在学中文。": [6, "4f9ea2b973f0.mp3"], "桌子上有纸和笔。": [6, "983e87c10834.mp3"], "她的数学很好。": [6, "dcd973f1d918.mp3"], "祝你生日快乐！": [7, "e48c375ea9e3.mp3"], "我妹妹喜欢喝牛奶。": [7, "13dcdbba68ae.mp3"], "小心，桥上有雪。": [7, "0335eadb5199.mp3"], "他有一个女儿。": [7, "c79c69641f55.mp3"], "我开车回家。": [8, "86308096c347.mp3"], "秋天的天气很好。": [8, "1c676c54ee3a.mp3"], "红绿灯坏了。": [8, "ef1e85357d03.mp3"], "我们走路去吧。": [8, "24f61be97de7.mp3"], "我坐飞机去北京。": [9, "253e38137233.mp3"], "你会说中文吗？": [9, "15eaca52603c.mp3"], "这是我的照片。": [9, "b0ca55152bee.mp3"], "下午两点开会。": [9, "8027d65f61d2.mp3"], "我现在在家里。": [10, "b8e88814304c.mp3"], "明天见！": [10, "48770c5cbac2.mp3"], "晚上我们看电影。": [10, "5fe464f4d2ab.mp3"], "天上有很多星星。": [10, "5969b0e822bc.mp3"], "你去超市买东西吗？": [11, "6ef90f878a56.mp3"], "夏天吃西瓜。": [11, "dc4bbac70b09.mp3"], "春节我们回家。": [11, "6eda4bb5a39c.mp3"], "请说慢一点。": [11, "f89b50a4897c.mp3"], "冬天很冷，夏天很热。": [12, "00d24331caae.mp3"], "请开门。": [12, "5e2711b364bc.mp3"], "出门前关灯。": [12, "88e4b0465e43.mp3"], "我正在开会。": [12, "7a11d29ad3dd.mp3"], "你家远不远？": [13, "40b187068d8d.mp3"], "附近有没有地铁站？": [13, "e3c2327f18fa.mp3"], "我听说你回来了。": [13, "329a15a54af0.mp3"], "你还去不去？": [13, "6a300907f3d9.mp3"], "这个多少钱？": [14, "7ffc317d9878.mp3"], "我家有一只猫。": [14, "729413626fa5.mp3"], "我只吃水果。": [14, "8884502d90ca.mp3"], "北京烤鸭很好吃。": [14, "f0a652769cfa.mp3"], "我的工作很忙。": [15, "7713941caebd.mp3"], "孩子在写作业。": [15, "025cbea7748e.mp3"], "我想吃包子。": [15, "d5cfcbba2204.mp3"], "这本书很好看。": [15, "4b408f6cd902.mp3"], "早上好！": [16, "4351f4faf38d.mp3"], "明天几点上课？": [16, "7085baf4e530.mp3"], "我从美国来。": [16, "943db4589b12.mp3"], "我买了一双鞋。": [16, "e7b582c45372.mp3"], "今天我很开心。": [17, "8e2037119a57.mp3"], "我们去唱歌吧。": [17, "061623067574.mp3"], "过年给孩子红包。": [17, "9acf753b92c8.mp3"], "我爸爸是中国人。": [17, "af9dacbcf024.mp3"], "你几点起床？": [18, "8cf220f0f499.mp3"], "这个字怎么写？": [18, "f1e51ef9ae57.mp3"], "昨天晚上下雨了。": [18, "2bc0d230015e.mp3"], "今年我要学好中文。": [18, "c36f7edf5a3b.mp3"], "我以前住在上海。": [19, "04c886ad7eb2.mp3"], "左边是银行，右边是医院。": [19, "f570e6f81e6b.mp3"], "我的朋友有一只黑狗。": [19, "3d4bf43bc41a.mp3"], "这家饭馆很好吃。": [19, "b0851ebd299a.mp3"], "你是谁？": [20, "4cd43b154e3f.mp3"], "下雨了，带把伞。": [20, "fb29a3b8ac94.mp3"], "今天比昨天冷。": [20, "dd5165295aa5.mp3"], "他的头发很长。": [20, "5cc6c201d9f8.mp3"], "这是最好的办法。": [21, "68117a75b6b5.mp3"], "我在一家公司工作。": [21, "9019a5d8a818.mp3"], "我们点菜吧。": [21, "914f472b9741.mp3"], "你要不要喝茶？": [21, "b554c40a1750.mp3"], "我可以问一个问题吗？": [22, "fceaaf683697.mp3"], "没关系。": [22, "e6c20f1d0109.mp3"], "我们到了。": [22, "b9611ecdca4d.mp3"], "这个地方很美。": [22, "fd47ba9cfbba.mp3"], "我喜欢喝绿茶。": [23, "e5ade92b69f4.mp3"], "你真的很好。": [23, "d560bc1a8c44.mp3"], "我昨天睡得很晚。": [23, "b342e31fa9df.mp3"], "老师，那是什么？": [23, "10cd908c8ff2.mp3"], "他是我的同事。": [24, "c681f7770c93.mp3"], "我刚才到。": [24, "5d3a91a7f28c.mp3"], "你什么时候有时间？": [24, "e81461e4ac9f.mp3"], "我觉得自己说得不好。": [24, "fd1f11448f3c.mp3"], "今天很冷，多穿衣服。": [25, "7bbf45f67732.mp3"], "我在门口等你。": [25, "7abea1e7acf4.mp3"], "快一点！": [25, "71dbf7ec4e94.mp3"], "他又笑了。": [25, "4f8e92d05bbf.mp3"], "我和哥哥去打球。": [26, "dde68be140d6.mp3"], "我姐姐有两个宝贝。": [26, "0d052d31eced.mp3"], "我们向前走。": [26, "b42a7bb1d5d4.mp3"], "我喜欢这里的生活。": [26, "09830b8bf75e.mp3"], "爷爷今年八十岁了。": [27, "fbdec3e27430.mp3"], "你几点刷牙？": [27, "b7827df6b2be.mp3"], "为什么你不来？": [27, "7a2d6824c406.mp3"], "我每天早上跑步。": [27, "23368eff9738.mp3"], "加油！你可以的。": [28, "44d829ba9b0d.mp3"], "我在找工作。": [28, "1c08ca74028c.mp3"], "有什么好办法吗？": [28, "ef34c4fbfe81.mp3"], "也许他明天来。": [28, "b47917a756af.mp3"], "请进！": [29, "cb381ed81dd8.mp3"], "见到你很高兴。": [29, "292c1e3dec5e.mp3"], "你住在哪里？": [29, "2d90b995e106.mp3"], "我们去玩吧！": [29, "e0a7a3921ceb.mp3"], "好久不见！": [30, "c4bd8918934a.mp3"], "我要回家了。": [30, "3981af3266f8.mp3"], "我妈妈是医生。": [30, "a270d2d7131d.mp3"], "这里变化很大。": [30, "6cd927049a35.mp3"], "爸爸妈妈上山。山上有云，有花，有鸟，有虫。爸爸坐在石头上画马，妈妈站在花下画鸟。下雨了，风不大。我打电话：“爸爸，下雨了！”": [5, "4eed6925fc45.mp3"], "今天是秋天的第一天。早上，我在家里看书。下午下了一场雨，雨大，风也大。晚上雨不下了，天上的星星一闪一闪的。妈妈说：“明天是个好天气。”": [10, "980af2c947a6.mp3"], "家里有一只小黄猫。我在桌子边看书，猫也坐在桌子上看我。我去开门，猫也走到门边。我在家里走来走去，猫也走来走去。妈妈说：“小猫是你的影子。”": [15, "1099c2e470dd.mp3"], "昨天是我的生日。朋友们给我买了一个大蛋糕，上面有红色和黄色的花。我们一起唱生日歌。朋友问我：“你今年几岁？”我笑着说：“你猜！”": [20, "6c8f6de60f8f.mp3"], "我在一家公司工作。我的同事都很好。中午我们常常一起去吃饭，我最喜欢点牛肉面。老板说：“下个月我们去海边。”大家都很开心，我觉得时间过得真快。": [25, "aea232288ae0.mp3"], "好久不见！上个月我回中国看爷爷奶奶。爷爷今年八十岁了，身体还很好，每天早上去公园走路。奶奶给我做了很多好吃的。回美国以前，奶奶说：“有时间就回来，我们在家等你。”": [30, "324263754b76.mp3"], "你好，我们一起学中文。": [0, "b48aa7c44fad.mp3"], "麻": [101, "4430d7daa79f.mp3"], "骂": [101, "aefa6b4338a7.mp3"], "怕": [101, "93efc278bc68.mp3"], "波": [101, "63e4479b69be.mp3"], "婆": [101, "7b9bf09a0da5.mp3"], "墨": [101, "2540b0ef0da9.mp3"], "佛": [101, "20c37a06f23b.mp3"], "河": [101, "5ea03ddf50a5.mp3"], "渴": [101, "922265b4eaeb.mp3"], "热": [101, "2044c2739790.mp3"], "大马": [101, "697fe499892b.mp3"], "姨": [102, "4d60a507095b.mp3"], "椅": [102, "732515816d36.mp3"], "米": [102, "8227e17a675f.mp3"], "屋": [102, "9a117e2bf963.mp3"], "雾": [102, "090606faf9f8.mp3"], "玉": [102, "b4f965683ff7.mp3"], "五月": [102, "cd474e412550.mp3"], "小鱼": [102, "ab6dcda178ff.mp3"], "绿色": [102, "b2c712c788d3.mp3"], "布": [103, "cfc2f0139ace.mp3"], "跑": [103, "c5032ff770b7.mp3"], "买": [103, "8be34d50fdd6.mp3"], "卖": [103, "821d5fce7800.mp3"], "饭": [103, "094f7310ef02.mp3"], "房": [103, "61c4260a0eea.mp3"], "米饭": [103, "edfec00f071f.mp3"], "面包": [103, "e51a45076710.mp3"], "太": [104, "2b2daab20079.mp3"], "男女": [104, "b451f9010149.mp3"], "喝": [105, "57df27116d40.mp3"], "可口": [105, "860cf590cb80.mp3"], "谢": [106, "e2643f042837.mp3"], "橘": [106, "faa5dda24c7d.mp3"], "需": [106, "f5e1541bac99.mp3"], "七月": [106, "328dcec7ed9c.mp3"], "去年": [106, "3a88df8846e0.mp3"], "谢谢": [106, "a34490b593cd.mp3"], "菜": [107, "3ee77c8ef934.mp3"], "错": [107, "6160eb68ddea.mp3"], "岁": [107, "2854fa1c124c.mp3"], "四岁": [107, "a73565f9cc5d.mp3"], "这": [108, "8e9b7a3a19b7.mp3"], "吃": [108, "a52b77dfc6b7.mp3"], "茶": [108, "a001ed1cf190.mp3"], "肉": [108, "f37896e63b9e.mp3"], "吃饭": [108, "0068330a1096.mp3"], "喝茶": [108, "43354521aa86.mp3"], "人口": [108, "4e1e66753027.mp3"], "知": [109, "e46ce2998254.mp3"], "丝": [109, "5788e74a30d3.mp3"], "元": [109, "c16655df815c.mp3"], "知道": [109, "5dd93697ae22.mp3"], "爱": [110, "8f743c2c688f.mp3"], "累": [110, "af467b208f46.mp3"], "贵": [110, "0a0f0a1307c5.mp3"], "买菜": [110, "b09e50c3331a.mp3"], "黑白": [110, "1fdbed3e6af5.mp3"], "球": [111, "1b2527d8aeca.mp3"], "别": [112, "994f48ba91ca.mp3"], "铁": [112, "81b706680eb8.mp3"], "缺": [112, "e4d78e431335.mp3"], "分": [113, "daf783c8cdf9.mp3"], "您": [113, "6e2d1fbf2362.mp3"], "村": [114, "79c5bcc15808.mp3"], "孙": [114, "ea1dd3a7077c.mp3"], "困": [114, "dba64cc14e5e.mp3"], "军": [114, "80a9a870c930.mp3"], "运": [114, "d9c58a2fe4df.mp3"], "选": [114, "96900d6bf3c0.mp3"], "春天": [114, "3a864e53ae59.mp3"], "白云": [114, "5fc6e45d2c54.mp3"], "运动": [114, "37b6debeb44d.mp3"], "忙": [115, "1c0a089e7a69.mp3"], "糖": [115, "a0b763d871b9.mp3"], "冷": [115, "74eaee9656d2.mp3"], "等": [115, "11ccee3ac8c1.mp3"], "请": [115, "d1a34a5779d4.mp3"], "痛": [115, "1627e739128f.mp3"], "很忙": [115, "69805a7ad937.mp3"], "很冷": [115, "8362e6d92f73.mp3"], "红色": [115, "52636511861a.mp3"], "俩": [116, "c34366ab42ac.mp3"], "瓜": [116, "cfec36ed99d2.mp3"], "很多": [116, "036d6e7cc522.mp3"], "叫": [117, "27ead3ff934e.mp3"], "跳": [117, "f4965ce10c94.mp3"], "票": [117, "e46f3b4fe1a0.mp3"], "钱": [117, "d23513f09bc6.mp3"], "电": [117, "974899ef025c.mp3"], "面": [117, "fd6a0e7d3606.mp3"], "想": [117, "291837bd5b8b.mp3"], "羊": [117, "a136f339af8c.mp3"], "电话": [117, "5a93d3f72d13.mp3"], "多少钱": [117, "57af3610b143.mp3"], "想家": [117, "2653a342281a.mp3"], "很快": [117, "ab771baaf325.mp3"], "熊": [118, "8df702f4accf.mp3"], "穷": [118, "0b6010ecd73c.mp3"], "兄": [118, "63b9b59ee9b7.mp3"], "翁": [118, "7240518e1607.mp3"], "熊猫": [118, "b1a6effdd57c.mp3"], "兄弟": [118, "c8b87810d39a.mp3"], "游泳": [118, "221486055c9c.mp3"], "用心": [118, "ece822ac01a2.mp3"], "永远": [118, "8a3ec011dd88.mp3"], "好久": [119, "8cf5f35214a0.mp3"], "对面": [119, "60cf15687eb6.mp3"], "游戏": [119, "ba08216f13dd.mp3"], "呢": [120, "65ac5a7b1552.mp3"], "喜欢": [120, "3d6c396cf4de.mp3"], "十一": [121, "6863d827d8eb.mp3"], "第一": [121, "918024a67763.mp3"], "一月": [121, "43bc301e7352.mp3"], "一个": [121, "8b9a14d93c3e.mp3"], "一块": [121, "36056e12b8d9.mp3"], "一天": [121, "deb12cfdb99b.mp3"], "一年": [121, "5c83b1cd6af4.mp3"], "一起": [121, "3efffd5f35a6.mp3"], "一只": [121, "2008e465b65c.mp3"], "一点": [121, "887d0fb9b545.mp3"], "一下": [121, "88bdd356047f.mp3"], "一共": [121, "af2bbb623799.mp3"], "一些": [121, "fae65ac05d59.mp3"], "星期一": [121, "5ce438210f58.mp3"], "不好": [122, "3ed53de49b12.mp3"], "不来": [122, "1ce7a0dc0793.mp3"], "不多": [122, "f2579cc654e4.mp3"], "不行": [122, "2a0fbaf046cb.mp3"], "不是": [122, "046f5a050a0f.mp3"], "不对": [122, "3d8754efe1b6.mp3"], "不客气": [122, "be672ad54806.mp3"], "好不好": [122, "f985d92df094.mp3"], "去不去": [122, "f37f4447e6b9.mp3"], "要不要": [122, "81ed892a5ba7.mp3"], "不用": [122, "6bb02875d37c.mp3"], "不错": [122, "c3097ae1fdc8.mp3"], "不会": [122, "40dea0cab16f.mp3"], "不知道": [122, "d5b347ba776c.mp3"], "差不多": [122, "dbd86e5e1f77.mp3"], "考试": [123, "7746fb87c607.mp3"], "洗手": [123, "fd6d26e916d8.mp3"], "老虎": [123, "38a3d1ca0b66.mp3"], "手表": [123, "abc55f407bb8.mp3"], "画儿": [124, "816ac3d150dd.mp3"], "玩儿": [124, "961b11cf0bd5.mp3"], "一点儿": [124, "796019f7b036.mp3"], "这儿": [124, "4146aab4b3c9.mp3"], "哪儿": [124, "92c54556549e.mp3"], "那儿": [124, "751af044c626.mp3"], "小孩儿": [124, "03c8e516a6a8.mp3"], "好玩儿": [124, "38475cddc573.mp3"], "一会儿": [124, "ed88192c1912.mp3"], "汤": [125, "9c6d2f2f451d.mp3"], "烫": [125, "2f5c76382982.mp3"], "躺": [125, "2ebf30c4136a.mp3"], "水饺": [125, "56de637afe9a.mp3"], "吻": [125, "03b09592e609.mp3"], "糖果": [125, "d22100628910.mp3"], "卖完": [125, "ff8c8270c675.mp3"], "饱": [126, "bc4abfbcee04.mp3"], "知识": [126, "6b80d642bb80.mp3"], "四十": [126, "988adf6969f5.mp3"], "吃菜": [126, "580391052a83.mp3"], "洗澡": [126, "5ac500cfcc1f.mp3"], "出租车": [126, "4f5289fad3f8.mp3"], "翻": [127, "6a8136ecdc1f.mp3"], "伤": [127, "08d7e824629d.mp3"], "生病": [127, "75d80e662baa.mp3"], "没问题": [128, "2a7530b2b903.mp3"], "旅游": [128, "0ebbd85f6891.mp3"], "好的": [128, "375ec8858f2e.mp3"], "微信": [128, "cfbf6f4c8292.mp3"], "生日快乐": [128, "f83c5e617196.mp3"], "你叫什么名字": [129, "b9924d6aabe2.mp3"], "我在美国长大": [129, "15bc87cb17b8.mp3"], "我不会说": [129, "faae7aeb826f.mp3"], "一起吃饭吧": [129, "52fe3926914c.mp3"], "谢谢你": [129, "89017a349713.mp3"], "你的朋友": [129, "b4c0bac20506.mp3"], "我会说一点儿中文": [129, "eb0da2c6453f.mp3"], "请再说一遍": [129, "5b3372960820.mp3"], "我们一起去吧": [129, "6dacd37a695e.mp3"], "你家在哪儿": [129, "e2b3ff5e2986.mp3"], "一路平安": [130, "edfd79506d04.mp3"], "学习中文": [130, "da71738f87d2.mp3"]};</script>
 <script>
@@ -675,6 +629,9 @@ const SPK='<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor
 const KEY='abc-daily-chinese-v1';
 let S={day:1,lv:{},done:{},log:{},scores:{},start:null,srs:{},wsrs:{},badges:{}};
 try{const raw=localStorage.getItem(KEY); if(raw) S=Object.assign(S,JSON.parse(raw));}catch(e){}
+// 2026-11-07: restart with the learn-2-days / review-1-day plan — today is Day 1
+if(!S.plan2){ S.done={}; S.scores={}; S.startManual=0; S.weak={}; S.marked={}; S.plan2=1; }
+S.weak=S.weak||{}; S.marked=S.marked||{};
 let DOC=null, syncT=null, writing=false, again=false;
 function save(){ S.updated=Date.now(); try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){} if(DOC){ clearTimeout(syncT); syncT=setTimeout(push,800); } }
 async function push(){ if(!DOC) return; if(writing){ again=true; return; } writing=true;
@@ -686,19 +643,19 @@ function mergeState(a,b){ const m=Object.assign({},a,b);
   m.done=Object.assign({},a.done,b.done); m.log=Object.assign({},a.log,b.log); m.badges=Object.assign({},a.badges,b.badges);
   m.scores={}; [a.scores,b.scores].forEach(x=>Object.entries(x||{}).forEach(([k,v])=>m.scores[k]=Math.max(m.scores[k]||0,v)));
   const pick=(x,y)=>{ const o={}; new Set([...Object.keys(x||{}),...Object.keys(y||{})]).forEach(c=>{ const p=(x||{})[c], q=(y||{})[c]; o[c]=!p?q:!q?p:((p.due>q.due)?p:q); }); return o; };
-  m.srs=pick(a.srs,b.srs); m.wsrs=pick(a.wsrs,b.wsrs); m.lv={}; Object.keys(m.srs).forEach(c=>m.lv[c]=m.srs[c].b);
+  m.weak=Object.assign({},a.weak,b.weak); m.marked=Object.assign({},a.marked,b.marked); m.plan2=1; m.srs=pick(a.srs,b.srs); m.wsrs=pick(a.wsrs,b.wsrs); m.lv={}; Object.keys(m.srs).forEach(c=>m.lv[c]=m.srs[c].b);
   const man=[a,b].find(x=>x.startManual); if(man){ m.start=man.start; m.startManual=1; }
   m.updated=Math.max(a.updated||0,b.updated||0); return m; }
 async function startSync(){
   try{ if(!(window.claude&&window.claude.use)) return setSync(''); const db=await window.claude.use('db'); if(!db) return setSync('');
     const ref=db.doc('progress/main'); const snap=await ref.get();
-    if(snap.exists&&snap.data().json){ const remote=JSON.parse(snap.data().json); const day=S.day, voice=S.voice; S=mergeState(remote,S); S.day=todayDay(); if(voice!==undefined) S.voice=voice; }
+    if(snap.exists&&snap.data().json){ const remote=JSON.parse(snap.data().json); if(!remote.plan2){ remote.done={}; remote.scores={}; remote.start=COURSE_START; delete remote.startManual; } const day=S.day, voice=S.voice; S=mergeState(remote,S); S.day=todayDay(); if(voice!==undefined) S.voice=voice; }
     DOC=ref; try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){} await push(); header(); render();
   }catch(e){ setSync('fail'); } }
 const ymd=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
 const today=()=>ymd(new Date());
-// the course started 2026-10-26 on every device, unless the learner sets another start date on the Print page
-const COURSE_START='2026-10-26';
+// the course restarted 2026-11-07 (learn 2 days, review 1) on every device, unless the learner sets another start date on the Print page
+const COURSE_START='2026-11-07';
 if(!S.startManual && S.start!==COURSE_START){ S.start=COURSE_START; save(); }
 S.srs=S.srs||{}; S.wsrs=S.wsrs||{}; S.badges=S.badges||{};
 const addDays=(k,n)=>{const d=new Date(k+'T00:00:00'); d.setDate(d.getDate()+n); return ymd(d);};
@@ -706,10 +663,13 @@ const addDays=(k,n)=>{const d=new Date(k+'T00:00:00'); d.setDate(d.getDate()+n);
 Object.keys(S.lv||{}).forEach(c=>{ if(!S.srs[c]) S.srs[c]={b:Math.min(5,S.lv[c]||0),due:today()}; });
 const INT=[1,1,3,7,14,30];   // interval after reaching box b
 const PT=(window.ABC_EXTRA||{}).parts||{}, PASS=(window.ABC_EXTRA||{}).passages||[];
-function calDay(){ const a=new Date(S.start+'T00:00:00'), b=new Date(today()+'T00:00:00'); const n=Math.round((b-a)/864e5)+1; return Math.max(1,Math.min(30,n)); }
-function firstUndone(){ for(let n=1;n<=30;n++) if(!S.done[n]) return n; return 30; }
+function calDay(){ const a=new Date(S.start+'T00:00:00'), b=new Date(today()+'T00:00:00'); const n=Math.round((b-a)/864e5)+1; return Math.max(1,Math.min(ABC.TOTAL,n)); }
+function firstUndone(){ for(let n=1;n<=ABC.TOTAL;n++) if(!S.done[n]) return n; return ABC.TOTAL; }
 // a new day every morning by the calendar; unfinished earlier days are only reminded, never block
 function todayDay(){ return calDay(); }
+const PL=()=>ABC.plan(S.day), LS=()=>PL().L;
+// problem characters: marked wrong on paper (until right twice) + missed in the app
+function weakList(){ const L=charsUpTo(LS()); const w=Object.keys(S.weak||{}).filter(c=>S.weak[c]>0&&L.includes(c)).sort((a,b)=>S.weak[b]-S.weak[a]); L.forEach(c=>{ if(S.srs[c]&&S.srs[c].b===0&&!w.includes(c)) w.push(c); }); return w; }
 function undoneBefore(T){ const a=[]; for(let n=1;n<T;n++) if(!S.done[n]) a.push(n); return a; }
 const pdfOf=n=>'pdf/day'+String(n).padStart(2,'0')+'.pdf';
 const PRN='<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V3h12v6"/><rect x="3" y="9" width="18" height="8" rx="2"/><path d="M6 14h12v7H6z"/></svg>';
@@ -720,7 +680,7 @@ function schedule(store,c,good){
   else if(r.due<=t){ r.b=Math.min(5,r.b+1); r.due=addDays(t, r.b>=5&&r.last5?60:INT[r.b]); if(r.b>=5) r.last5=1; }
   return store[c];
 }
-function bump(c,good){ const r=schedule(S.srs,c,good); S.lv[c]=r.b; S.log[today()]=1; save(); }
+function bump(c,good){ if(good&&S.weak[c]>0) S.weak[c]--; const r=schedule(S.srs,c,good); S.lv[c]=r.b; S.log[today()]=1; save(); }
 function wbump(c,good){ schedule(S.wsrs,c,good); S.log[today()]=1; save(); }
 const lvOf=c=>(S.srs[c]&&S.srs[c].b)||0, wlvOf=c=>(S.wsrs[c]&&S.wsrs[c].b)||0;
 const isDue=(store,c)=>store[c]&&store[c].due<=today();
@@ -768,32 +728,33 @@ function header(){
   const solid=ALL.filter(c=>lvOf(c)>=3).length;
   $('#sKnown').textContent=solid; $('#sDays').textContent=Object.keys(S.done).length; $('#sStreak').textContent=streak();
   $('#pbar').style.width=(solid/300*100)+'%';
-  const T=todayDay(), td=day(T);
+  const T=todayDay(), TP=ABC.plan(T), td=day(TP.L);
   const wk=['日','一','二','三','四','五','六'][new Date().getDay()];
-  $('#todaybar').innerHTML=`<div class="tl"><div><div class="big">今天 · 第${cnNum(T)}天</div><div class="meta">星期${wk} · new: <b style="font-family:var(--hz);font-size:15px">${td.chars.join('')}</b> · write: <b style="font-family:var(--hz);font-size:15px">${td.write.join('')||'—'}</b>${S.done[T]?' · <b style="color:var(--seal)">已完成 完</b>':''}${dueRead().length?` · <b style="color:var(--seal)">复习 ${dueRead().length} 字</b>`:''}${undoneBefore(T).length?` · <button class="linkbtn" id="goCatch">第${undoneBefore(T).map(cnNum).join('、')}天还没盖章 · 去补</button>`:''}</div></div></div>
-   <div class="acts"><button class="btn print" id="prToday">${PRN} ${S.day===T?'打印今天 10 页':'打印第'+cnNum(S.day)+'天 10 页'}</button>${S.day!==T?`<button class="btn" id="goToday">回到今天</button>`:''}${!S.done[T]?`<button class="btn ghost" id="markDone">标记完成</button>`:''}</div>`;
+  $('#todaybar').innerHTML=`<div class="tl"><div><div class="big">今天 · 第${cnNum(T)}天</div><div class="meta">星期${wk} · ${TP.rev?`<b style="color:var(--seal)">复习日 Review day</b> · 不学新字 · Lessons 1–${TP.L}`:`第${TP.L}课 · new: <b style="font-family:var(--hz);font-size:15px">${td.chars.join('')}</b> · write: <b style="font-family:var(--hz);font-size:15px">${td.write.join('')||'—'}</b>`}${S.done[T]?' · <b style="color:var(--seal)">已完成 完</b>':''}${dueRead().length?` · <b style="color:var(--seal)">复习 ${dueRead().length} 字</b>`:''}${undoneBefore(T).length?` · <button class="linkbtn" id="goCatch">第${undoneBefore(T).map(cnNum).join('、')}天还没盖章 · 去补</button>`:''}</div></div></div>
+   <div class="acts"><button class="btn print" id="prToday">${PRN} ${S.day===T?'打印今天 2 页':'打印第'+cnNum(S.day)+'天 2 页'}</button>${S.day!==T?`<button class="btn" id="goToday">回到今天</button>`:''}${!S.done[T]?`<button class="btn ghost" id="markDone">标记完成</button>`:''}</div>`;
   const gc=$('#goCatch'); if(gc) gc.onclick=()=>{ S.day=undoneBefore(T)[0]; save(); header(); render(); };
   const md=$('#markDone'); if(md) md.onclick=()=>{ S.done[T]=1; S.log[today()]=1; save(); checkBadges(); toast('第'+cnNum(T)+'天已盖章 完'); S.day=todayDay(); header(); render(); };
   $('#prToday').onclick=e=>savePdf(S.day,e.currentTarget);
   const gt=$('#goToday'); if(gt) gt.onclick=()=>{S.day=T; save(); header(); render();};
-  $('#days').innerHTML=ABC.A.days.map(d=>`<button class="dchip ${d.n===S.day?'on':''} ${S.done[d.n]?'done':''}" data-d="${d.n}" aria-label="Day ${d.n}${d.n===T?' (today)':''}"><small>DAY</small><b>${d.n}</b>${d.n===T?'<span class="now">今天</span>':''}</button>`).join('');
+  $('#days').innerHTML=Array.from({length:ABC.TOTAL},(_,i)=>i+1).map(n=>{const rv=ABC.plan(n).rev; return `<button class="dchip ${rv?'rev':''} ${n===S.day?'on':''} ${S.done[n]?'done':''}" data-d="${n}" aria-label="Day ${n}${rv?' review':''}${n===T?' (today)':''}"><small>${rv?'复习':'DAY'}</small><b>${n}</b>${n===T?'<span class="now">今天</span>':''}</button>`}).join('');
   const on=$('#days .on'); if(on) on.scrollIntoView({inline:'center',block:'nearest'});
 }
 $('#days').addEventListener('click',e=>{const b=e.target.closest('.dchip'); if(!b)return; S.day=+b.dataset.d; save(); header(); render();});
 let TAB='learn';
 document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{TAB=b.dataset.t; if(TAB==='quiz'&&Q&&Q.i>=Q.qs.length) Q=null; document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x===b)); render(); window.scrollTo({top:0});}));
-function render(){ prefetchDay(S.day); ({learn,quiz,write,review,print})[TAB](); }
+function render(){ prefetchDay(LS()); ({learn,quiz,write,review,print})[TAB](); }
 const dots=(c,v=lvOf(c))=>{ return [1,2,3,4,5].map(i=>`<i class="${i<=v?'y':''}"></i>`).join('');};
 function rubyH(zh,py){ const p=py.split(' ');let k=0; return [...zh].map(c=>/[一-鿿]/.test(c)?`<ruby>${c}<rt>${p[k++]}</rt></ruby>`:`<span class="pc">${c}</span>`).join(''); }
 /* ---------- LEARN ---------- */
 let hidePy=null;  // null = automatic: pinyin hidden from Day 8 on
-const pyHidden=()=>hidePy===null?S.day>=8:hidePy;
+const pyHidden=()=>hidePy===null?LS()>=8:hidePy;
 function learn(){
-  const d=day(S.day);
+  if(PL().rev) return reviewDay();
+  const d=day(LS());
   const due=dueRead(); const pas=PASS.find(p=>p.day===d.n);
   $('#view').innerHTML=`${due.length?`<div class="duebar"><div><b>今日必复习 · ${due.length} 个字</b><span>Review first, then learn new characters. 先复习，再学新字。</span><div class="duehz">${due.slice(0,24).join('')}${due.length>24?'…':''}</div></div><button class="btn print" id="goDue">开始复习</button></div>`:''}
   ${pinyinCard(d.n)}
-  <h2>第${cnNum(d.n)}天 · 生字 New characters</h2>
+  <h2>第${cnNum(S.day)}天 · 第${d.n}课 · 生字 New characters</h2>
   <p class="sub">Tap a card to flip it. Tap the speaker to hear it. Say it out loud, then say the word. Red-tagged cards are today's handwriting characters.</p>
   <div class="row" style="margin-bottom:14px"><button class="btn" id="playAll">${SPK} Hear all 10</button><button class="btn ghost" id="flipAll">Flip all</button></div>
   <div class="cards">${d.chars.map(c=>{const x=D[c];return `<div class="fc" data-c="${c}" tabindex="0" role="button" aria-label="${c}"><div class="in">
@@ -804,8 +765,9 @@ function learn(){
   ${pyHidden()?'<p class="sub" style="margin:6px 0 0">From Day 8 pinyin starts hidden — read first, then tap Show pinyin to check.</p>':''}
   <div class="sents ${pyHidden()?'hidepy':''}">${d.sent.map(s=>`<div class="sent"><button class="spk" style="position:static;flex:none" data-say="${esc(s.zh)}" aria-label="Hear sentence">${SPK}</button><div style="min-width:0"><div>${rubyH(s.zh,s.py)}</div><div class="en">${esc(s.en)}</div></div></div>`).join('')}</div>
   ${pas?passageHTML(pas):''}
-  <div class="row" style="margin-top:22px"><button class="btn pri" id="toQuiz">Start today's practice →</button></div>`;
-  wirePassage(); wirePinyin(d.n);
+  <div class="row" style="margin-top:22px"><button class="btn pri" id="toQuiz">Start today's practice →</button></div>
+  ${markPanel()}`;
+  wirePassage(); wirePinyin(d.n); wireMark();
   const gd=$('#goDue'); if(gd) gd.onclick=()=>startDue();
   $('#view').querySelectorAll('.fc').forEach(el=>{el.addEventListener('click',e=>{ if(e.target.closest('.spk'))return; el.classList.toggle('flip'); if(el.classList.contains('flip')) say(D[el.dataset.c].w);}); el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();el.click();}});});
   $('#view').querySelectorAll('[data-say]').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation(); say(b.dataset.say);}));
@@ -821,14 +783,14 @@ function pinyinCard(n){ const L=PYL[n-1]; if(!L) return '';
    <div class="pygrid">${L.items.map(it=>`<div class="pyit"><div class="pysym">${esc(it.sym)}</div><div class="pytip">${esc(it.tip)}</div><div class="pyexs">${it.ex.map(([y,z])=>`<button class="pyex" data-raw="${esc(z)}"><b>${y}</b><span>${z}</span></button>`).join('')}</div></div>`).join('')}</div>
    <div class="qtype" style="margin:14px 0 6px">拼读词语 · Words</div>
    <div class="pyexs">${L.words.map(([w,p])=>`<button class="pyex" data-raw="${esc(w)}"><b>${p}</b><span>${w}</span></button>`).join('')}</div>
-   <div class="pydict"><div class="row" style="justify-content:space-between"><div><div class="qtype">听写 · Dictation</div><span class="sub" style="margin:0;font-size:13px">Tap a number, write the pinyin on printed page 2, then check.</span></div><button class="btn ghost" id="pyAns">${pyShow?'隐藏答案':'显示答案'}</button></div>
+   <div class="pydict"><div class="row" style="justify-content:space-between"><div><div class="qtype">听写 · Dictation</div><span class="sub" style="margin:0;font-size:13px">Tap a number, write the pinyin you hear on scrap paper, then check.</span></div><button class="btn ghost" id="pyAns">${pyShow?'隐藏答案':'显示答案'}</button></div>
     <div class="pydbtns">${dict.map(([y,z],i)=>`<button class="btn" data-raw="${esc(z)}">${SPK} ${i+1}${pyShow?` · <b>${y}</b> ${z}`:''}</button>`).join('')}</div></div></details>`; }
 function wirePinyin(n){ const c=$('#view .pycard'); if(!c) return; c.addEventListener('toggle',()=>{pyOpen=c.open;});
   c.querySelectorAll('[data-raw]').forEach(b=>b.onclick=e=>{ e.preventDefault(); say(b.dataset.raw,.8,true); });
   const a=$('#pyAns'); if(a) a.onclick=()=>{ pyShow=!pyShow; learn(); }; }
 function startDue(){ const due=dueRead(); if(!due.length){toast('今天没有要复习的字');return;} Q=buildQuiz(S.day,shuffle(due,Math.random).slice(0,20)); Q.kind='due'; TAB='quiz'; document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x.dataset.t==='quiz')); quiz(); window.scrollTo({top:0}); }
 function passageHTML(p){
-  const known=new Set(charsUpTo(S.day)); const py=p.py.split(' '); let k=0;
+  const known=new Set(charsUpTo(LS())); const py=p.py.split(' '); let k=0;
   const body=[...p.zh].map(c=>{ if(!/[\u4e00-\u9fff]/.test(c)) return `<span class="pp">${c}</span>`; const y=py[k++]; return known.has(c)?`<button class="pc2" data-py="${y}">${c}</button>`:`<ruby class="new">${c}<rt>${y}</rt></ruby>`; }).join('');
   return `<div class="passage"><div class="row" style="justify-content:space-between"><div><div class="qtype">短文阅读 · Reading</div><h2 style="margin:2px 0 0">${p.title} <span style="font-family:var(--body);font-size:14px;color:var(--muted);font-weight:500">${esc(p.te)}</span></h2></div><button class="btn" data-say="${esc(p.zh)}">${SPK} Listen</button></div>
    <p class="sub" style="margin:8px 0 10px">No pinyin on characters you've learned — tap one if you're stuck. Grey characters with pinyin are new.</p>
@@ -839,7 +801,7 @@ function wirePassage(){ $('#view').querySelectorAll('.pc2').forEach(b=>b.onclick
 const TYPES={parts:'Build the character',listen:'Listen → character',pinyin:'Character → pinyin',meaning:'Character → meaning',reverse:'English → character',fill:'Fill the sentence',word:'Word → pinyin'};
 let Q=null;
 function buildQuiz(n,reviewMode){
-  const d=day(n); const r=rng(Date.now()%100000); const pool=charsUpTo(n);
+  const d=day(ABC.plan(n).L); const r=rng(Date.now()%100000); const pool=charsUpTo(ABC.plan(n).L);
   const GROUPS=['你我他它','一二三四五六七八九十两几','上下左右前后里东西南北边','红黄绿蓝白黑青彩','春夏秋冬','早午晚今昨明','爸妈哥姐弟妹叔爷奶','大小多少长短高'];
   const grp=c=>GROUPS.find(g=>g.includes(c))||'';
   const distract=(c,k,mode)=>shuffle(pool.filter(x=>x!==c&&!(mode==='listen'&&D[x].py===D[c].py)&&!(mode==='fill'&&grp(c).includes(x))&&!(mode==='en'&&D[x].en.split(';')[0]===D[c].en.split(';')[0])),r).slice(0,k);
@@ -862,13 +824,13 @@ function buildQuiz(n,reviewMode){
 }
 function quiz(){
   if(!Q||Q.n!==S.day&&!Q.review) Q=null;
-  if(!Q){ const d=day(S.day); const best=S.scores[S.day];
-    $('#view').innerHTML=`<h2>第${cnNum(d.n)}天 · 练习 Practice</h2><p class="sub">${d.chars.length+d.sent.length} questions mixing listening, tones, meaning and sentences. Mistakes go into your review deck automatically.</p>
-    <div class="panel"><div class="row" style="justify-content:space-between"><div><div class="qtype">Today's set</div><div style="font-family:var(--hz);font-size:30px;letter-spacing:.08em">${d.chars.join('')}</div>${best!=null?`<div class="pill" style="margin-top:6px">Best score: ${best}%</div>`:''}</div><button class="btn pri" id="go">Start</button></div>${canSpeak()?'':'<p class="sub" style="margin:12px 0 0">Listening questions are off: this browser has no Chinese voice.</p>'}</div>`;
+  if(!Q){ const P=PL(), d=day(P.L); const best=S.scores[S.day]; const set=P.rev?SHEETS.chars(S.day,weakList()).slice(0,20):d.chars;
+    $('#view').innerHTML=`<h2>第${cnNum(S.day)}天 · ${P.rev?'复习练习 Review practice':'练习 Practice'}</h2><p class="sub">${P.rev?`${set.length} characters from Lessons 1–${P.L} — problem characters first. No new characters today.`:`${d.chars.length+d.sent.length} questions mixing listening, tones, meaning and sentences.`} Mistakes go into your review deck automatically.</p>
+    <div class="panel"><div class="row" style="justify-content:space-between"><div><div class="qtype">Today's set</div><div style="font-family:var(--hz);font-size:30px;letter-spacing:.08em;word-break:break-all">${set.join('')}</div>${best!=null?`<div class="pill" style="margin-top:6px">Best score: ${best}%</div>`:''}</div><button class="btn pri" id="go">Start</button></div>${canSpeak()?'':'<p class="sub" style="margin:12px 0 0">Listening questions are off: this browser has no Chinese voice.</p>'}</div>`;
     const dueN=dueRead().length;
     if(dueN) $('#view').insertAdjacentHTML('afterbegin',`<div class="duebar"><div><b>先复习 · ${dueN} 个字到期</b><span>Spaced review: each character comes back after 1, 3, 7, 14 and 30 days.</span></div><button class="btn print" id="goDue2">开始复习</button></div>`);
     if(dueN) $('#goDue2').onclick=()=>startDue();
-    $('#go').onclick=()=>{Q=buildQuiz(S.day); quiz();}; return; }
+    $('#go').onclick=()=>{Q=P.rev?buildQuiz(S.day,set):buildQuiz(S.day); if(P.rev) Q.dayRev=1; quiz();}; return; }
   if(Q.i>=Q.qs.length) return result();
   const q=Q.qs[Q.i]; const x=D[q.c];
   let prompt='';
@@ -899,7 +861,7 @@ function quiz(){
 }
 function result(){
   const tot=Q.res.length, ok=Q.res.filter(r=>r.ok).length, pct=Math.round(ok/tot*100);
-  if(!Q.review){ S.scores[Q.n]=Math.max(S.scores[Q.n]||0,pct); if(pct>=80) S.done[Q.n]=1; save(); header(); } checkBadges();
+  if(!Q.review||Q.dayRev){ S.scores[Q.n]=Math.max(S.scores[Q.n]||0,pct); if(pct>=80) S.done[Q.n]=1; save(); header(); } checkBadges();
   const by={}; Q.res.forEach(r=>{(by[r.t]=by[r.t]||[0,0]); by[r.t][1]++; if(r.ok)by[r.t][0]++;});
   const col=p=>p>=80?'var(--ok)':p>=60?'var(--gold)':'var(--bad)';
   const C=2*Math.PI*60, verdict=pct>=80?['过关 Passed','var(--ok)']:pct>=60?['差一点 Almost','var(--gold)']:['再练一次 Try again','var(--bad)'];
@@ -909,10 +871,10 @@ function result(){
    <div style="min-width:0;width:100%"><span class="verdict" style="background:color-mix(in srgb,${verdict[1]} 15%,var(--surface));color:${verdict[1]}">${verdict[0]}</span>
     <div class="bars" style="margin-top:14px">${Object.entries(by).map(([t,[a,b]])=>{const p=Math.round(a/b*100);return `<div class="bar"><span>${TYPES[t]}</span><div class="t"><i style="width:${p}%;background:${col(p)}"></i></div><span>${a}/${b}</span></div>`}).join('')}</div>
     ${wrong.length?`<p class="sub" style="margin:14px 0 0">Missed: <span style="font-family:var(--hz);font-size:22px;color:var(--seal)">${wrong.join(' ')}</span> — added to your review deck.</p>`:'<p class="sub" style="margin:14px 0 0">No misses. 太棒了！</p>'}
-    ${!Q.review&&pct>=80?'<p class="sub" style="margin:6px 0 0">Day stamped 完. Do the 6 printed pages, then move on.</p>':''}
+    ${(!Q.review||Q.dayRev)&&pct>=80?'<p class="sub" style="margin:6px 0 0">Day stamped 完. Do the 2 printed pages, then mark any mistakes on the 学 tab.</p>':''}
    </div></div>
    <div class="row" style="margin-top:18px"><button class="btn pri" id="again">Practice again</button>${wrong.length?'<button class="btn" id="fix">Drill my misses</button>':''}<button class="btn ghost" id="wr">Go write →</button></div></div>`;
-  $('#again').onclick=()=>{Q=Q.review?buildQuiz(S.day,Q.qs.map(q=>q.c)):buildQuiz(S.day); quiz();};
+  $('#again').onclick=()=>{const dr=Q.dayRev; Q=Q.review?buildQuiz(S.day,Q.qs.map(q=>q.c)):buildQuiz(S.day); if(dr) Q.dayRev=1; quiz();};
   if(wrong.length) $('#fix').onclick=()=>{Q=buildQuiz(S.day,wrong.concat(wrong)); quiz();};
   $('#wr').onclick=()=>document.querySelector('.tab[data-t=write]').click();
 }
@@ -926,11 +888,12 @@ function loadStroke(c){
     timeout(5000)]);
 }
 function write(){
-  const d=day(S.day); const list=d.write.length?d.write:d.chars.slice(0,3);
-  const earlier=[...new Set(dueWrite().filter(c=>writeUpTo(S.day).includes(c)).concat(writeUpTo(S.day-1).slice(-8)))].filter(c=>!list.includes(c)).slice(0,12);
+  const P=PL(), d=day(P.L), wl=writeUpTo(P.L);
+  const list=P.rev?[...new Set(weakList().filter(c=>wl.includes(c)).concat(d.write,P.L>1?day(P.L-1).write:[]))].slice(0,8):(d.write.length?d.write:d.chars.slice(0,3));
+  const earlier=[...new Set(dueWrite().filter(c=>wl.includes(c)).concat(writeUpTo(P.L-1).slice(-8)))].filter(c=>!list.includes(c)).slice(0,12);
   if(!WC||!list.concat(earlier).includes(WC)) WC=list[0];
   const x=D[WC];
-  $('#view').innerHTML=`<h2>第${cnNum(d.n)}天 · 写字 Write</h2><p class="sub">Watch the stroke order, then write it yourself on the grid with a finger, stylus or mouse. Same characters as printed page 2.</p>
+  $('#view').innerHTML=`<h2>第${cnNum(S.day)}天 · 写字 Write</h2><p class="sub">Watch the stroke order, then write it yourself on the grid with a finger, stylus or mouse. ${P.rev?'Review day: your problem characters and the last two lessons.':'Same characters as printed page 1, part C.'}</p>
   <div class="wlist">${list.map(c=>`<button class="wchip ${c===WC?'on':''}" data-c="${c}">${c}</button>`).join('')}${earlier.length?`<span style="align-self:center;color:var(--muted);font-size:12px;margin:0 4px">review</span>`+earlier.map(c=>`<button class="wchip ${c===WC?'on':''} ${isDue(S.wsrs,c)?'wdue':''}" data-c="${c}" title="${isDue(S.wsrs,c)?'due for review':''}">${c}</button>`).join(''):''}</div>
   <div class="wstage">
    <div><div class="pad" id="pad"><div class="ghost" id="ghost">${WC}</div><div class="hw" id="hw"></div><canvas id="cv"></canvas></div>
@@ -970,13 +933,13 @@ function clearCanvas(){ const cv=$('#cv'); if(ctx) ctx.clearRect(0,0,cv.width,cv
 /* ---------- REVIEW ---------- */
 let RV='read';
 function review(){
-  const learned=charsUpTo(S.day), wl=writeUpTo(S.day);
+  const learned=charsUpTo(LS()), wl=writeUpTo(LS());
   const dueR=dueRead(), dueW=dueWrite().filter(c=>wl.includes(c));
   const weak=learned.filter(c=>S.srs[c]&&lvOf(c)<2);
   const solid=learned.filter(c=>lvOf(c)>=3).length, wsolid=wl.filter(c=>wlvOf(c)>=3).length;
   const B=badgeList();
   const list=RV==='read'?learned:wl, lv=RV==='read'?lvOf:wlvOf, store=RV==='read'?S.srs:S.wsrs;
-  const unlocked=PASS.filter(p=>p.day<=S.day);
+  const unlocked=PASS.filter(p=>p.day<=LS());
   $('#view').innerHTML=`<h2>复习 Review</h2><p class="sub">Each character comes back after 1, 3, 7, 14 and 30 days. Get it right when it's due and it moves up a box; miss it and it starts again tomorrow.</p>
    <div class="rstats">
     <div class="rs"><b>${dueR.length}</b><span>认读到期<br>due to read</span></div>
@@ -985,7 +948,8 @@ function review(){
     <div class="rs"><b>${wsolid}<small>/${wl.length}</small></b><span>写得牢<br>solid writing</span></div>
    </div>
    <div class="row" style="margin:14px 0"><button class="btn print" id="rdue" ${dueR.length?'':'disabled'}>复习到期的字 (${Math.min(dueR.length,20)})</button><button class="btn" id="rw" ${weak.length?'':'disabled'}>练弱字 (${Math.min(weak.length,15)})</button>${dueW.length?`<button class="btn" id="wdue">去写到期的字 (${dueW.length})</button>`:''}</div>
-   <div class="badges">${B.map(([n,ok])=>`<span class="bdg ${ok?'on':''}">${ok?'★':'☆'} ${n}</span>`).join('')}</div>
+   ${markPanel()}
+   <div class="badges" style="margin-top:14px">${B.map(([n,ok])=>`<span class="bdg ${ok?'on':''}">${ok?'★':'☆'} ${n}</span>`).join('')}</div>
    <div class="panel" style="margin-top:14px">
     <div class="seg" role="tablist"><button class="${RV==='read'?'on':''}" data-rv="read">认读 Read (${learned.length})</button><button class="${RV==='write'?'on':''}" data-rv="write">书写 Write (${wl.length})</button></div>
     <div class="legend"><span>● box 0–5</span><span><span class="pill" style="background:var(--seal-soft);color:var(--seal)">red</span> due today</span><span>Tap to hear</span></div>
@@ -993,13 +957,38 @@ function review(){
    </div>
    ${unlocked.length?`<h2 style="margin-top:22px">短文 Readings</h2><div class="plist">${unlocked.map(p=>`<button class="pg" data-pd="${p.day}" style="text-align:left;cursor:pointer"><em>DAY ${p.day}</em><b>${p.title}</b><span>${esc(p.te)}</span></button>`).join('')}</div><div id="pview"></div>`:''}`;
   $('#view').querySelectorAll('[data-say]').forEach(b=>b.onclick=()=>say(b.dataset.say));
-  $('#view').querySelectorAll('[data-rv]').forEach(b=>b.onclick=()=>{RV=b.dataset.rv; review();});
+  $('#view').querySelectorAll('[data-rv]').forEach(b=>b.onclick=()=>{RV=b.dataset.rv; review();}); wireMark();
   $('#view').querySelectorAll('[data-pd]').forEach(b=>b.onclick=()=>{ $('#pview').innerHTML=passageHTML(PASS.find(p=>p.day===+b.dataset.pd)); wirePassage(); $('#pview').scrollIntoView({behavior:'smooth',block:'start'}); });
   const go=list=>{ Q=buildQuiz(S.day,list); TAB='quiz'; document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x.dataset.t==='quiz')); quiz(); };
   if(dueR.length) $('#rdue').onclick=()=>startDue();
   if(weak.length) $('#rw').onclick=()=>go(shuffle(weak,Math.random).slice(0,15));
   const wd=$('#wdue'); if(wd) wd.onclick=()=>{ WC=dueW[0]; TAB='write'; document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x.dataset.t==='write')); write(); };
 }
+/* ---------- REVIEW DAY + MISTAKE MARKING ---------- */
+let markSel={}, dictShow=false;
+function reviewDay(){ const k=S.day, P=PL(), W=weakList(), R=SHEETS.rev(k,W);
+  $('#view').innerHTML=`<div class="duebar"><div><b>第${cnNum(k)}天 · 复习日 Review day</b><span>No new characters today — everything from Lessons 1–${P.L}${W.length?`, with your ${W.length} problem character${W.length>1?'s':''} first`:''}. 先学会，再记牢。</span>${W.length?`<div class="duehz">${W.slice(0,24).join('')}${W.length>24?'…':''}</div>`:''}</div><button class="btn print" id="rvGo">开始复习练习</button></div>
+   <h2>听写 Dictation</h2><p class="sub">For printed page 1, part C. Tap a number, listen, write the word in the boxes.</p>
+   <div class="pydbtns">${R.dict.map((c,i)=>`<button class="btn" data-w="${esc(D[c].w)}">${SPK} ${i+1}${dictShow?` · <b style="font-family:var(--hz);font-size:18px">${D[c].w}</b> ${D[c].wp}`:''}</button>`).join('')}</div>
+   <div class="row" style="margin-top:10px"><button class="btn ghost" id="dAns">${dictShow?'隐藏答案':'显示答案 Show answers'}</button><button class="btn ghost" id="toW">去写字 Write →</button></div>
+   ${markPanel()}
+   ${R.pas?`<div style="margin-top:18px">${passageHTML(R.pas)}</div>`:''}`;
+  $('#view').querySelectorAll('[data-w]').forEach(b=>b.onclick=()=>say(b.dataset.w,.75));
+  $('#dAns').onclick=()=>{ dictShow=!dictShow; reviewDay(); };
+  $('#toW').onclick=()=>document.querySelector('.tab[data-t=write]').click();
+  $('#rvGo').onclick=()=>document.querySelector('.tab[data-t=quiz]').click();
+  wirePassage(); wireMark(); }
+function markPanel(){ const cs=SHEETS.chars(S.day,weakList()); const done=S.marked[S.day];
+  return `<div class="panel" id="markP" style="margin-top:18px"><div class="row" style="justify-content:space-between"><div class="qtype">登记错字 · Mark mistakes from today's 2 pages</div>${done?'<span class="pill">今天已登记 ✓</span>':''}</div>
+   <p class="sub" style="margin:6px 0 10px">After checking with the answer key, tap every character you got wrong or couldn't do, then Save. They come back in the next reviews until you get them right twice in a row. <span style="color:var(--gold)">●</span> = still a problem character.</p>
+   <div class="mgrid">${cs.map(c=>`<button class="mk ${markSel[c]?'on':''} ${S.weak[c]>0?'wk':''}" data-c="${c}" aria-pressed="${!!markSel[c]}">${c}</button>`).join('')}</div>
+   <div class="row" style="margin-top:12px"><button class="btn pri" id="mkSave">保存 Save</button></div></div>`; }
+function wireMark(){ const P=$('#markP'); if(!P) return;
+  P.querySelectorAll('.mk').forEach(b=>b.onclick=()=>{ const c=b.dataset.c; markSel[c]=!markSel[c]; b.classList.toggle('on',!!markSel[c]); b.setAttribute('aria-pressed',!!markSel[c]); });
+  $('#mkSave').onclick=()=>{ const cs=SHEETS.chars(S.day,weakList()), wl=writeUpTo(LS()), first=!S.marked[S.day]; let nw=0, fixed=0;
+    cs.forEach(c=>{ if(markSel[c]){ S.weak[c]=2; schedule(S.srs,c,false); S.lv[c]=0; if(wl.includes(c)) schedule(S.wsrs,c,false); nw++; } else if(first&&S.weak[c]>0){ S.weak[c]--; if(!S.weak[c]) fixed++; } });
+    markSel={}; S.marked[S.day]=1; S.log[today()]=1; save(); header(); render();
+    toast(nw?`记下 ${nw} 个错字，后面的复习会再考`:'全对！太棒了'+(fixed?` · ${fixed} 个错字已过关`:'')); }; }
 /* ---------- PRINT ---------- */
 let DL, BUSY=false;
 function busy(on,title,msg,pct){
@@ -1012,7 +1001,7 @@ const tick=()=>new Promise(r=>setTimeout(r,30));
 async function buildPdf(n,answers,onP){
   const {jsPDF}=window.jspdf;
   const host=document.createElement('div'); host.className='sheets'; host.style.cssText='position:fixed;left:-12000px;top:0;width:816px;zoom:1';
-  host.innerHTML=answers?SHEETS.answers(n):SHEETS(n); document.body.appendChild(host);
+  host.innerHTML=answers?SHEETS.answers(n,weakList()):SHEETS(n,weakList()); document.body.appendChild(host);
   try{
     if(document.fonts&&document.fonts.ready) await document.fonts.ready;
     const pages=[...host.querySelectorAll('.page')];
@@ -1029,11 +1018,11 @@ async function buildPdf(n,answers,onP){
 }
 async function savePdf(n,btn,answers){
   if(BUSY) return; BUSY=true;
-  const name=answers?`每日中文_第${n}天_答案.pdf`:`每日中文_第${n}天_10页.pdf`;
+  const name=answers?`每日中文_第${n}天_答案.pdf`:`每日中文_第${n}天_2页.pdf`;
   try{
     if(DL===undefined) DL=(window.claude&&window.claude.use)?await window.claude.use('downloads'):null;
     let blob=null;
-    busy(true,'正在准备 PDF',answers?'答案':`第${cnNum(n)}天 · 10 页`,8);
+    busy(true,'正在准备 PDF',answers?'答案':`第${cnNum(n)}天 · 2 页`,8);
     // build the PDF right here from the pages (same method as Phoebie's Tutor) — no network fetch that can hang
     if(!window.jspdf||!window.html2canvas){ busy(false); toast('PDF 工具没有载入，请检查网络后再按一次'); return; }
     blob=await buildPdf(n,answers,(i,t)=>busy(true,'正在生成 PDF',`第 ${i+1} / ${t} 页`,10+Math.round(i/t*85)));
@@ -1050,29 +1039,30 @@ async function savePdf(n,btn,answers){
 function fitSheets(){ const el=$('#sheets'); if(!el) return; const w=el.parentElement.clientWidth; el.style.zoom=Math.min(1,w/816); }
 window.addEventListener('resize',fitSheets);
 function print(){
-  const d=day(S.day); const a=d.n*10-9, b=d.n*10;
-  $('#view').innerHTML=`<h2>第${cnNum(d.n)}天 · 打印 Print</h2>
+  const k=S.day, P=PL(), d=day(P.L); const a=k*2-1, b=k*2;
+  $('#view').innerHTML=`<h2>第${cnNum(k)}天 · 打印 Print <span style="font-size:15px;color:var(--muted)">${P.rev?'复习日 Review day':'第'+P.L+'课 Lesson '+P.L}</span></h2>
   <div class="panel" style="margin-bottom:16px">
    <div class="row" style="justify-content:space-between"><b>怎么打印 How to print</b></div>
-   <div class="row" style="margin:12px 0"><button class="btn print" id="savePdf">${PRN} 保存第${cnNum(d.n)}天 10 页 PDF</button><button class="btn" id="saveAns">保存答案 PDF</button></div>
+   <div class="row" style="margin:12px 0"><button class="btn print" id="savePdf">${PRN} 保存第${cnNum(k)}天 2 页 PDF</button><button class="btn" id="saveAns">保存答案 PDF</button></div>
    <ol style="margin:0;padding-left:20px;color:var(--muted)">
     <li>按上面的红色按钮，在弹出的确认框里选“保存”。</li>
     <li>打开刚保存的 PDF（Mac：下载文件夹；iPhone/iPad：“文件”App），按 ⌘P 或分享 → 打印。纸张选 Letter。</li>
-    <li>备用：聊天里的 “每日中文_30天打印练习_300页.pdf”，打印第 <b style="color:var(--seal)">${a}–${b}</b> 页也是同样的 10 页。</li>
+    <li>每天 2 页：学两天新字，第三天复习。复习页会优先放你登记过的错字。</li>
+    <li>备用：聊天里的 “每日中文_45天打印练习_90页.pdf”，打印第 <b style="color:var(--seal)">${a}–${b}</b> 页（这份没有你的错字）。</li>
    </ol>
    <div class="startset"><label for="voiceSel">发音 Voice</label><select id="voiceSel"><option value="__ms" ${!S.voice?'selected':''}>★ 微软神经语音 Xiaoxiao（录好的，推荐）</option>${VOICES.length?VOICES.map(v=>`<option value="${esc(v.name)}" ${S.voice===v.name?'selected':''}>${esc(v.name)}${isNeural(v)?' ★ 微软神经':''}</option>`).join(''):''}</select><button class="btn ghost" id="vTest" type="button">${SPK} 试听</button></div>
    <p class="sub" style="margin:6px 0 0;font-size:12.5px">所有字、词、句子和短文都用微软神经语音 Xiaoxiao 录好了，在手机、iPad、电脑上都一样。下面的设备语音只在选择时使用。 <span id="packStat"></span></p>
-   <div class="startset"><label for="startDate">课程开始日期 Start date</label><input type="date" id="startDate" value="${S.start}"><span>Day 1 = this date; the app moves to the next day every morning.</span></div>
+   <div class="startset"><label for="startDate">课程开始日期 Start date</label><input type="date" id="startDate" value="${S.start}"><span>Day 1 = this date; the app moves to the next day every morning (learn 2 days, review 1).</span></div>
    <p class="sub" style="margin:8px 0 0;font-size:12.5px" id="syncStat"></p>
   </div>
-  <p class="sub" style="margin:0 0 10px">预览 Preview — 和保存的 PDF 一样</p><div class="sheetwrap"><div id="sheets" class="sheets">${SHEETS(d.n)}</div></div>`;
+  <p class="sub" style="margin:0 0 10px">预览 Preview — 和保存的 PDF 一样</p><div class="sheetwrap"><div id="sheets" class="sheets">${SHEETS(k,weakList())}</div></div>`;
   fitSheets(); setSync(S._sync||'');
-  $('#savePdf').onclick=e=>savePdf(d.n,e.currentTarget);
+  $('#savePdf').onclick=e=>savePdf(k,e.currentTarget);
   const vs=$('#voiceSel'); if(vs) vs.onchange=()=>{ S.voice=vs.value==='__ms'?null:vs.value; save(); pickVoice(); print(); say('你好，我们一起学中文。'); };
   $('#vTest').onclick=()=>say('你好，我们一起学中文。');
-  const ps=()=>{ const el=$('#packStat'); if(!el) return; const st=PSTATE[d.n]; el.innerHTML=st==='ok'?'<b style="color:var(--ok)">✓ 第'+cnNum(d.n)+'天录音已载入</b>':st?'<b style="color:var(--bad)">录音载入失败（'+esc(st)+'），暂时用设备语音</b>':'录音载入中…'; };
+  const ps=()=>{ const el=$('#packStat'); if(!el) return; const st=PSTATE[d.n]; el.innerHTML=st==='ok'?'<b style="color:var(--ok)">✓ 第'+d.n+'课录音已载入</b>':st?'<b style="color:var(--bad)">录音载入失败（'+esc(st)+'），暂时用设备语音</b>':'录音载入中…'; };
   ps(); loadPack(d.n).then(ps,ps);
-  $('#saveAns').onclick=e=>savePdf(d.n,e.currentTarget,true);
+  $('#saveAns').onclick=e=>savePdf(k,e.currentTarget,true);
   $('#startDate').onchange=e=>{ if(!e.target.value) return; S.start=e.target.value; S.startManual=1; S.day=todayDay(); save(); header(); render(); toast('今天是第'+cnNum(S.day)+'天'); };
 }
 S.day=todayDay(); save();
