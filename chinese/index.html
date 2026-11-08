@@ -405,6 +405,7 @@ rt{font-family:var(--latin);font-size:10.5px;color:var(--soft);font-weight:500}
 .tr2{display:grid;grid-template-columns:1fr 1fr;gap:9px 18px} .t2{display:flex;align-items:center;gap:8px} .tr2 .tzg{--s:.5in} .t2 .wl{width:.8in}
 .grid6{display:grid;grid-template-columns:repeat(6,1fr);gap:12px 12px}
 .rb ruby{font-size:24px} 
+.tzg.given{color:#a9a39b;font-weight:400}
 /* answer key */
 .ak{font-size:11px;line-height:1.55}
 .ak h4{font-family:var(--serif);font-size:13px;margin:8px 0 3px;color:var(--red)}
@@ -522,7 +523,9 @@ function picker(seed){ const r=rng(seed), used=new Set();
 function hd(k,p,zh,en){ const P=ABC.plan(k); return `<div class="hd"><div class="l"><span class="dayno">第${cnNum(k)}天</span><span class="ttl">${zh}<small>${P.rev?'Lessons 1–'+P.L:'Lesson '+P.L} · ${en}</small></span></div>
   <div class="r">Date <b></b> &nbsp; Time <b style="width:50px"></b><br>Page ${p} of 10</div></div>`; }
 const ft=(k,p)=>`<div class="ft"><span>每日中文 · 学两天，复习一天 Learn 2 days, review 1</span><span>Day ${k} — ${p}/10</span></div>`;
-const wordBox=x=>`<div class="word"><div class="pyl">${x.wp.split(' ').map(s=>`<span>${s}</span>`).join('')}</div><div class="row">${[...x.w].map(()=>tz('')).join('')}</div><div class="en">${esc(x.we)}</div></div>`;
+let KNOWN=null; // characters learned so far: only these are left blank; anything not yet learned is printed in grey
+const cellsFor=w=>[...w].map(c=>!KNOWN||KNOWN.has(c)?tz(''):tz(c,'given')).join('');
+const wordBox=x=>`<div class="word"><div class="pyl">${x.wp.split(' ').map(s=>`<span>${s}</span>`).join('')}</div><div class="row">${cellsFor(x.w)}</div><div class="en">${esc(x.we)}</div></div>`;
 const num=i=>`<span style="font-family:var(--latin);font-size:11px;color:var(--red);font-weight:700;width:16px;flex:none">${i}</span>`;
 const sec=(tag,zh,en,body)=>`<div class="sec"><h3><span class="tag">${tag}</span>${zh} <em>${en}</em></h3>${body}</div>`;
 
@@ -583,7 +586,7 @@ function newP2(k,weak){ const N=pickNew(k,weak), d=N.d, r=rng(k*71);
   const ZJ=sec('D','造句','Write one sentence with each word (characters, or pinyin for any you can\'t write yet)',`<div class="tr two">${N.zj.map(c=>`<div><div class="q"><b style="font-family:var(--hanzi);font-size:18px">${D[c].w}</b> ${D[c].wp} · ${esc(D[c].we.split(';')[0])}</div><div class="ln"></div><div class="ln"></div></div>`).join('')}</div>`);
   const E=N.old.length?sec('E','滚动复习','Older characters'+(weak&&weak.length?' — your problem characters come first':'')+'. Write the pinyin and the meaning.',`<div class="rd3">${N.old.map(c=>`<div class="rdc"><span class="z">${c}</span><div class="ln"><i>PINYIN · MEANING</i></div></div>`).join('')}</div>`):'';
   return `<div class="page pg2">${hd(k,2,'用一用','Use the new characters')}
-   ${sec('A','看拼音，写词语','Write each word in characters',A)}
+   ${sec('A','看拼音，写词语','Write the missing characters — grey ones are not taught yet',A)}
    ${sec('B','选字填空','Fill each blank from the word bank',`<div class="bank">${bank}</div><div class="fill">${F}</div>`)}
    ${C}${ZJ}${E}${ft(k,2)}</div>`; }
 
@@ -591,7 +594,7 @@ function newP2(k,weak){ const N=pickNew(k,weak), d=N.d, r=rng(k*71);
 function revP1(k,weak){ const R=pickRev(k,weak);
   const A=`<div class="rd5">${R.read.map(c=>`<div class="rdc"><span class="z">${c}</span><div class="ln"></div></div>`).join('')}</div>`;
   const B=`<div class="words w3">${R.words.map(c=>wordBox(D[c])).join('')}</div>`;
-  const C=`<div class="dt">${R.dict.map((c,i)=>`<div>${num(i+1)}<div class="row">${[...D[c].w].map(()=>tz('')).join('')}</div></div>`).join('')}</div>`;
+  const C=`<div class="dt">${R.dict.map((c,i)=>`<div>${num(i+1)}<div class="row">${cellsFor(D[c].w)}</div></div>`).join('')}</div>`;
   return `<div class="page pg2">${hd(k,1,'复习 · 认和写','Read & write')}
    <div class="note"><b>Review day — no new characters.</b> Everything here is from Lessons 1–${R.L}${R.weakN?`, with your ${R.weakN} problem character${R.weakN>1?'s':''} mixed in`:''}. Try every item before you look anything up. Circle what you miss, then mark it in the app: <b>复习 → 登记错字</b>.</div>
    ${sec('A','认一认，写拼音','Read each character aloud and write its pinyin with the tone mark',A)}
@@ -666,7 +669,7 @@ function newMore(k,weak){ const N=pickNew(k,weak), L=N.L, d=N.d, Lp=PY[L-1], r=r
     pages.push(pg(k,4,'组词','Make words',`${sec('A','组词','Write two words that use each new character (any correct word counts)',zuQ(zu))}${sec('B','抄写句子','Copy each sentence once, neatly',`<div class="tr">${d.sent.slice(0,3).map(s=>`<div class="q" style="font-family:var(--hanzi);font-size:18px">${esc(s.zh)} <span style="font-family:var(--latin);font-size:10px;color:var(--soft)">${esc(s.en)}</span></div><div class="ln"></div>`).join('')}</div>`)}`));
   }
   pages.push(pg(k,5,'描红练字','Trace every new character',`<div class="note"><b>Model → trace → write.</b> Today's ✎ characters are on page 1; here you trace all ${d.chars.length} new ones so your hand learns them too.</div>${traceGrid(d.chars)}`));
-  pages.push(pg(k,6,'看拼音写词语','Pinyin → words',sec('A','看拼音，写词语','Write each word in characters — peek at page 1 only if stuck',wordsGrid(d.chars.slice(0,15)))));
+  pages.push(pg(k,6,'看拼音写词语','Pinyin → words',sec('A','看拼音，写词语','Write the missing characters. Grey ones are not taught yet — just read them.',wordsGrid(d.chars.slice(0,15)))));
   const F=fillQ(d.sent,k*61);
   pages.push(pg(k,7,'读句子','Read, fill in, translate',`${sec('A','朗读','Read each sentence aloud 3 times — tick a box each time',`<div class="psent">${d.sent.map((s,i)=>`<div><div class="s1"><span class="num">${i+1}</span><span class="rb">${rubyAll(s.zh,s.py)}</span><span class="chk">read<span class="box"></span><span class="box"></span><span class="box"></span></span></div><div class="s1"><span class="num"></span><span class="en">${esc(s.en)}</span></div></div>`).join('')}</div>`)}
     ${sec('B','选字填空','Fold the page to hide part A, then fill each blank',F.html)}${sec('C','英译中','Write it in Chinese (characters, or pinyin for any you can\'t write yet)',transQ(d.sent.slice(0,3)))}`));
@@ -702,7 +705,7 @@ function revMore(k,weak){ const R=pickRev(k,weak), L=R.L, all=ABC.charsUpTo(L), 
   pages.push(pg(k,10,'复习 · 阅读','Reading',`${P10}${pas2&&rs.length?sec('B','读一读','More sentences — read aloud, no pinyin',readQ(rs.slice(0,4))):''}${doneBox(k)}`));
   return {pages,R,rd,words,wch,zu,m1,m2,F,fs,tr,tq,pyw,pas2};
 }
-function dayPages(k,weak){ weak=weak||[]; return ABC.plan(k).rev?revP1(k,weak)+revP2(k,weak)+revMore(k,weak).pages.join(''):newP1(k,weak)+newP2(k,weak)+newMore(k,weak).pages.join(''); }
+function dayPages(k,weak){ weak=weak||[]; KNOWN=new Set(ABC.charsUpTo(ABC.plan(k).L)); return ABC.plan(k).rev?revP1(k,weak)+revP2(k,weak)+revMore(k,weak).pages.join(''):newP1(k,weak)+newP2(k,weak)+newMore(k,weak).pages.join(''); }
 /* characters that appear on a day's sheets (for marking mistakes in the app) */
 function sheetChars(k,weak){ const P=ABC.plan(k); if(P.rev){ const R=pickRev(k,weak), M=revMore(k,weak); return [...new Set(R.read.concat(R.words,R.dict,R.zu,M.rd,M.words,M.wch))]; } const N=pickNew(k,weak), O=oldPick(k,N.L,weak); return [...new Set(N.d.chars.concat(N.old,O.words.slice(0,6),O.mp.slice(0,7),O.wchars))]; }
 /* ---------- answer key ---------- */
