@@ -249,6 +249,7 @@ function migrate(){S.settings=S.settings||{};S.rev=S.rev||[];S.mastered=S.master
   if(false){S._bonus1103=1;S.bonus={date:"2026-11-03",k:["mulMulti","mulMulti","mulMulti","div2","div2","div2"]}}
   if(false){S._bonus1106=1;S.bonus={date:"2026-11-06",k:["scaling","scaling","scaling"]}}
   if(false){S._bonusWk1106=1;S.bonusPlan=S.bonusPlan||{};["2026-11-06","2026-11-07","2026-11-08","2026-11-09","2026-11-10","2026-11-11","2026-11-12"].forEach(d=>{S.bonusPlan[d]=["scaling","scaling","scaling"]})}
+  if(false){S._adv1109=1;{const d8=day("2026-11-08");d8.paper=true;if(!d8.zDone){d8.zDone=S.zhDay;S.zhDay++}if(!d8.eDone){d8.eU=(S.eUnit||0)%UNITS.length;d8.eDone=d8.eU+1;S.eUnit=(S.eUnit||0)+1}{const d9=day(REAL_TODAY);if(!Object.keys(d9.e||{}).length){S.eUnit=UNITS.length*2-1;d9.eU=UNITS.length-1}}ZSET=null;ESET=null}}
   if(false){S._paper1107=1;day("2026-11-07").paper=true;
     const add={"m:decDivW":"11/7 paper #13 (29.4 ÷ 7 = 4.2, she wrote 4; 2nd time, also 10/28)","m:pow10":"11/7 paper #18 (6,457 ÷ 1,000 = 6.457, she wrote 0.06457; 2nd time)","m:fracMul":"11/7 paper #25 (4/7 × 3/8 = 12/56 = 3/14, simplify)","m:olymp":"11/7 paper #35 (book = 3 pens, $12.96 → pen $3.24, book $9.72; 3rd time)","e:u4h1":"11/7 paper Reading+ (Legislative/Congress makes the laws; 2nd time, also 10/28)","z:时间":"11/7 Chinese (时间 missing 间; write wrong characters twice and self-check)"};
     Object.entries(add).forEach(([k,src])=>{const r=S.rev.find(x=>x.k===k);if(r){r.stage=0;r.due="2026-11-08";r.src=src}else S.rev.push({k,stage:0,due:"2026-11-08",src});S.mastered=S.mastered.filter(m=>m.k!==k)});
@@ -754,7 +755,32 @@ const UNITS=[
      ["What challenged their hope for an easy water route to the Pacific?",["Large mountain ranges between the river systems","The Atlantic Ocean was too shallow","The Great Plains were all forest"]],
      ["Why was Sacagawea important to the expedition?",["Her language skills and connections helped them communicate and travel","She was the President","She bought the Louisiana Territory"]]],
  w:{type:"Opinion",prompt:"Which was MORE important to the success of the Lewis and Clark expedition: knowing geography or cooperating with other people? Use at least two facts from the passage.",
-    check:["I clearly answered the question","Two accurate facts from the passage","I explained how each fact supports my claim","Linking words (because, also, for example, therefore)","Complete sentences, capitals and punctuation"]}}
+    check:["I clearly answered the question","Two accurate facts from the passage","I explained how each fact supports my claim","Linking words (because, also, for example, therefore)","Complete sentences, capitals and punctuation"]}},
+{t:"Gold! The Rush to California",sci:"Properties of materials (why gold is special)",ss:"The California Gold Rush",
+ facts:["Gold is very dense: a cup of gold would weigh about 19 times as much as a cup of water.","Gold is soft and bends or flattens when pressed. Fool's gold (pyrite) is hard and brittle, and it breaks into pieces.","People who came to California in 1849 were called forty-niners.","California became the 31st state of the United States in 1850."],
+ p:["On a cold morning in January 1848, a carpenter named James Marshall was building a sawmill for John Sutter on the American River in California. He noticed something shiny in the water. It was gold! At first, the men tried to keep the secret, but news spreads fast. By 1849, people all over the country and around the world were hurrying to California to look for gold. They were called forty-niners.",
+    "Most gold seekers used a simple tool called a pan. A miner scooped sand and gravel from a stream into a wide metal pan, added water, and swirled it gently. Gold is very dense, which means a small piece of it is much heavier than a piece of rock the same size. The lighter sand and gravel washed over the edge, and the heavy gold stayed behind at the bottom of the pan.",
+    "Miners also had to avoid being fooled. Pyrite, or \"fool's gold,\" looks shiny and golden, but it is a different material. Real gold is soft, so it bends or flattens when it is pressed. Pyrite is hard and brittle, so it breaks into pieces. A careful miner could test a shiny rock to learn which one he had found.",
+    "The Gold Rush changed California quickly. San Francisco grew from a small village of about a thousand people into a busy city of tens of thousands. In 1850, California became the 31st state. But the Gold Rush also brought great hardship to the Native peoples of California, who lost land, food sources and, too often, their lives. And while a few miners got rich, most did not. Often the people who earned the most money were the ones who sold the miners food, tools and clothing.",
+    "Today, the Gold Rush is still part of California's story. California's nickname is the Golden State, and the Gold Rush is a reminder of how one discovery can change the lives of millions of people, in both good ways and painful ways."],
+ rq:[["What is the main idea of the passage?",["The discovery of gold in 1848 brought thousands of people to California and changed the state quickly.","James Marshall built the biggest sawmill in California.","Pyrite is more valuable than gold."]],
+     ["In paragraph 2, \"dense\" means…",["having a lot of matter packed into a small space","very bright","easy to see through"]],
+     ["Why did the heavy gold stay in the pan while the sand washed away?",["Gold is denser than sand and gravel, so it sinks and settles.","Gold is lighter than sand.","The miners picked the gold out with their hands first."]],
+     ["Which sentence from the passage is the best evidence that most miners did not get rich?",["\"And while a few miners got rich, most did not.\"","\"He noticed something shiny in the water.\"","\"California's nickname is the Golden State.\""]],
+     ["Why does the author include paragraph 3?",["To show how a miner could tell real gold from fool's gold.","To explain how San Francisco grew.","To describe how James Marshall built the sawmill."]],
+     ["Which sentence is the best summary of the passage?",["Gold was found in California in 1848, miners used the dense, soft metal's properties to find it, and the Gold Rush changed California, helping some people and hurting others.","James Marshall was a carpenter who worked for John Sutter.","Fool's gold is a mineral that is hard and brittle."]]],
+ v:[["dense","having a lot of matter packed into a small space",["very shiny","easy to bend"]],
+    ["brittle","hard but easily broken into pieces",["soft and flat","very heavy"]],
+    ["hardship","a time of great difficulty or suffering",["a kind of tool","a happy celebration"]],
+    ["discovery","finding something for the first time",["losing something","building something"]]],
+ sq:[["Which property of gold helps a miner separate it from sand in a pan?",["Gold is dense, so it sinks and stays at the bottom.","Gold is magnetic.","Gold dissolves in water."]],
+     ["A shiny rock breaks into pieces when you hit it. What does this show?",["It is probably pyrite (fool's gold), not real gold.","It is definitely real gold.","It is made of water."]],
+     ["Which is a physical property of a material?",["how hard or soft it is","who found it","how much a miner paid for it"]]],
+ hq:[["Where was gold found in 1848?",["On the American River in California","In the Rocky Mountains","On the Atlantic coast"]],
+     ["Who were the forty-niners?",["People who came to California in 1849 to look for gold","Soldiers in the Revolutionary War","The 49 members of the first Congress"]],
+     ["Why did many people who sold food, tools and clothing to miners earn more than the miners?",["Many miners needed supplies, but only a few found a lot of gold.","The miners did not need supplies.","The government gave them gold."]]],
+ w:{type:"Opinion",prompt:"Was the California Gold Rush mostly good or mostly bad for California? Give your opinion and two reasons. Use at least one fact from the passage.",
+    check:["My first sentence says my opinion","Reason 1 with a fact","Reason 2","Linking words (because, also, for example)","A conclusion sentence"]}}
 ];
 /* Flat question index: id → {q, opts(correct first), sub} */
 const EQ={};
