@@ -61,3 +61,10 @@
 - 没做的候选：
   1. 页脚「Affiliate Disclosure」链接：联盟/工具页已下线，这个链接和 sitemap 里的 disclosure.html 可能已多余（涉及法律声明，需老板点头再删）。
   2. practice/ 页的标签按钮 40px、「听一听」36px，chinese/ 页的按钮 41px，也略低于 44px（这两页用自己的样式表，留给以后单独修）。
+
+## 2026-11-09
+- 改了什么（修一个坏的地方）：首页「每日中文」入口卡的文案还是旧版「A 30-day course … 8 printable pages」，而 chinese/ 页面本身（11-07、11-08 老板改版后）已是「1000 characters in 90 days、每天 10 页」，首页说的和点进去看到的对不上。只改这一句文案，与 chinese/ 页 H1 和内置 TOTAL=90 一致。无 CSS/JS 改动。PR 号见当天合并记录（claude/daily-2026-11-09）。
+- 顺手核查：45 个页面站内链接无死链（go/ 和 reviews/_TEMPLATE 的占位链接属于已下线页，未动）；21 个页面 375px 无横向溢出；44 个测试全过。
+- 没做的候选：
+  1. chinese/ 页自己的 meta description 仍写「30-day course、300 characters」，和页内「90 days、1000 characters」矛盾——这页由老板的同步脚本维护，建议老板在源头改。
+  2. 首页 Bird Pal 段的「try it on the phone to the left」在手机上手机图其实在上方；且「Open it full screen」出现两次（文字链 + 按钮），可去掉一个。
