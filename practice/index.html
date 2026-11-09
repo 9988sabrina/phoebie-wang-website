@@ -1145,7 +1145,7 @@ function printPages(){
   B.push(`<div class="pp-pass">${u.p.map((x,i)=>`<p><sup>${i+1}</sup> ${esc(x)}</p>`).join("")}</div>`);
   let n=0;const mc=id=>{const q=EQ[id];const o=shuffle(rng(TODAY+id),q.o);return `<div class="pp-q"><b>${++n}.</b> ${esc(q.q)}<div class="pp-opts col">${o.map((c,j)=>`<span>${"ABC"[j]}. ${esc(c)}</span>`).join("")}</div></div>`};
   [["Reading",e.r],["Vocabulary",e.v],["Science · "+u.sci,e.s],["Social Studies · "+u.ss,e.h]].forEach(([t,ids])=>{ids.forEach((id,i)=>B.push((i?"":`<div class="pp-sec">${esc(t)}</div>`)+mc(id)))});
-  B.push(`<div class="pp-sec">Writing · ${esc(u.w.type)}</div><div class="pp-q">${esc(u.w.prompt)}${"<div class='pp-ln'></div>".repeat(6)}<div class="pp-check">${u.w.check.map(c=>"□ "+esc(c)).join("&nbsp;&nbsp; ")}</div></div>`);
+  B.push(`<div class="pp-sec">Writing · ${esc(u.w.type)}</div><div class="pp-q">${esc(u.w.prompt)}${"<div class='pp-ln'></div>".repeat(5)}<div class="pp-check">${u.w.check.map(c=>"□ "+esc(c)).join("&nbsp;&nbsp; ")}</div></div>`);
   // ---- Data & Patterns (5.MD.2 line plot with fractions, 5.OA.3 number patterns): new numbers every day ----
   const DP=(()=>{const r=rng(TODAY+"dp"),g=(a,b)=>b?g(b,a%b):a;
     const F=(n,d)=>{if(n===0)return"0";const k=g(n,d);n/=k;d/=k;if(d===1)return String(n);const w=Math.floor(n/d),m=n%d;const f=`<span class="fr"><u>${m}</u><b>${d}</b></span>`;return w?`${w} ${f}`:(m?f:String(w))};
@@ -1191,22 +1191,22 @@ async function makePdf(btn){
   btn.disabled=true;say("Making the PDF…");
   const W=816,H=1056,PAD=48;
   const host=document.createElement("div");host.style.cssText="position:fixed;left:-10000px;top:0;";
-  host.innerHTML=`<style>.pp{width:${W}px;height:${H}px;padding:40px 44px;box-sizing:border-box;background:#fff;color:#111;font:13.5px/1.4 "DejaVu Sans",Nunito,"PingFang SC",sans-serif;overflow:hidden;display:flex;flex-direction:column;gap:8px}.pp>*{flex-shrink:0}
+  host.innerHTML=`<style>.pp{width:${W}px;height:${H}px;padding:40px 44px;box-sizing:border-box;background:#fff;color:#111;font:13.5px/1.4 "DejaVu Sans",Nunito,"PingFang SC",sans-serif;overflow:hidden;display:flex;flex-direction:column;gap:6px}.pp>*{flex-shrink:0}
    .pp-h{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:2.5px solid #111;padding-bottom:5px;font-size:12px;text-align:right}.pp-h b{font-size:20px}.pp-h .pp-sub{font-size:11.5px;color:#333;text-align:left;margin-top:2px}
    .pp-box{border:1.5px solid #222;border-radius:8px;padding:6px 10px 8px}.pp-box.exit{border-style:dashed;border-width:2.5px}.pp-box.dash{border-style:dashed;font-size:12.5px}
    .pp-bh{display:flex;justify-content:space-between;gap:10px;margin-bottom:5px}.pp-bh b{font-size:14px}.pp-bh span{font-size:11px;color:#444;text-align:right}
    .pp-grid{display:grid;gap:5px 18px}.pp-grid.c2{grid-template-columns:1fr 1fr}.pp-grid.c3{grid-template-columns:1fr 1fr 1fr}
-   .pp-q{margin:0}.pp-q b{font-variant-numeric:tabular-nums}.pp-opts{display:flex;flex-wrap:wrap;gap:2px 16px;margin:3px 0 0 14px;font-size:12.5px}.pp-opts.col{flex-direction:column}
+   .pp-q{margin:0}.pp-q b{font-variant-numeric:tabular-nums}.pp-opts{display:flex;flex-wrap:wrap;gap:1px 16px;margin:2px 0 0 14px;font-size:12.5px}.pp-opts.col{flex-direction:column}
    .pp-bar{height:30px;border:1.5px dashed #999;border-radius:4px;margin-top:4px;position:relative}.pp-bar span{position:absolute;left:4px;top:1px;font-size:9px;color:#999}.pp-work{height:24px}.pp-work.tall{height:34px}.pp-ln{border-bottom:1px solid #777;height:22px}.pp-ln.big{height:34px}
    .fr{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;font-size:.85em;line-height:1.1;margin:0 1px}.fr u{text-decoration:none;border-bottom:1.5px solid #222;padding:0 2px}.fr b{font-weight:600}.dpw{display:flex;align-items:flex-end;gap:2px;border-bottom:2px solid #222;margin:10px 0 2px;padding:0 4px;min-height:96px}.dpc{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end}.dpd{display:flex;flex-direction:column-reverse;gap:3px;margin-bottom:4px}.dpd i{width:12px;height:12px;border-radius:50%;background:#222;display:block}.dpt{font-size:12px;margin-top:4px;min-height:30px;display:flex;align-items:flex-start}
-.pp-sec{font-weight:800;font-size:15px;margin:8px 0 2px;border-bottom:1px solid #ccc}
+.pp-sec{font-weight:800;font-size:15px;margin:5px 0 1px;border-bottom:1px solid #ccc}
    .pp-words{display:grid;grid-template-columns:repeat(4,1fr);gap:8px 6px}.pp-w{display:flex;flex-direction:column;align-items:center;gap:3px}.pp-py{font-size:15px;letter-spacing:.3px}
    .pp-boxes{display:flex}.pp-boxes i{position:relative;width:62px;height:62px;border:1.6px solid #333;margin-left:-1.6px;background:linear-gradient(#9998,#9998) center/1px 100% no-repeat,linear-gradient(#9998,#9998) center/100% 1px no-repeat}
    .pp-boxes i em{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-style:normal;font-size:44px;font-family:"Noto Serif SC","Songti SC",serif;color:#111}
    .pp-tr{display:flex;align-items:center;gap:8px;margin:4px 0}.pp-ex{font-size:12px;color:#444}
    .pp-zh{font-size:17px;margin:0 0 7px;font-family:"Noto Serif SC","Songti SC",serif}
    .pp-story{font-size:19px;line-height:2.3;font-family:"Noto Serif SC","Songti SC",serif}.pp-story p{margin:0;text-indent:2em}.pp-story sup{font-size:9px;font-family:sans-serif;color:#555}
-   .pp-pass{font-family:Georgia,serif;font-size:14.5px;line-height:1.55}.pp-pass p{margin:0 0 6px}.pp-check{font-size:12px;margin-top:6px}.pp-key{margin:0 0 6px;font-size:12.5px;line-height:1.6}</style>`;
+   .pp-pass{font-family:Georgia,serif;font-size:13.8px;line-height:1.45}.pp-pass p{margin:0 0 4px}.pp-check{font-size:12px;margin-top:6px}.pp-key{margin:0 0 6px;font-size:12.5px;line-height:1.6}</style>`;
   document.body.appendChild(host);
   const pages=[];let cur=null;const newPage=()=>{cur=document.createElement("div");cur.className="pp";host.appendChild(cur);pages.push(cur)};newPage();
   printPages().forEach(html=>{let h=html;if(h.startsWith("<!--hard-->")){if(cur.childElementCount)newPage();h=h.slice(11)}else if(h.startsWith("<!--page-->")){const last=cur.lastElementChild;const used=last?last.getBoundingClientRect().bottom-cur.getBoundingClientRect().top:0;if(cur.childElementCount&&used>H*0.5)newPage();h=h.slice(11)}
