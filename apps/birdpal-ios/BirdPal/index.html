@@ -3,6 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta property="og:title" content="Bird Pal Buddies">
+<meta property="og:description" content="Bird Pal Buddies helps you teach your pet bird to talk. Made by Phoebie.">
+<meta property="og:image" content="https://www.phoebiewang.com/assets/og-home.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://www.phoebiewang.com/birdpal/">
+<meta property="og:url" content="https://www.phoebiewang.com/birdpal/">
+<meta property="og:type" content="website">
+
 <meta name="description" content="Bird Pal Buddies helps you teach your pet bird to talk. Made by Phoebie.">
 <meta name="theme-color" content="#FFFBF1">
 <style>*,*::before,*::after{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;-webkit-tap-highlight-color:transparent}img{max-width:100%}[hidden]{display:none!important}</style>
@@ -136,6 +144,15 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
 @keyframes hop{from{transform:translateY(0)}to{transform:translateY(-3px)}}
 @media (prefers-reduced-motion:reduce){.hearBtn.talking,.hearBtn.talking .w1,.hearBtn.talking .w2{animation:none}}
 .credit{font-size:12px;color:var(--muted);text-align:center;margin:8px 0 0}
+/* Livelier home: sky scene behind Nori, bobbing bird, floating notes */
+#home .stage{border-radius:28px;border:3px solid var(--ink);background:linear-gradient(#7CC4FF,#CFEBFF 60%,#FFF3C4);overflow:hidden;min-height:290px;padding-top:56px;box-shadow:0 6px 0 var(--ink)}
+#home .stage::before,#home .stage::after{content:"♪";position:absolute;font-weight:900;font-size:30px;color:var(--cherry);animation:float 3s ease-in-out infinite}
+#home .stage::before{left:12%;top:34%}#home .stage::after{content:"♫";right:14%;top:52%;color:var(--sky);animation-delay:-1.4s}
+#home .stage .nori{position:relative;z-index:1;animation:bob 1.8s ease-in-out infinite alternate;transform-origin:50% 100%}
+#home .stage .bubble{z-index:2;top:12px}
+#home h1{color:var(--ink)}
+#home .big:not(.soft){background:linear-gradient(#FFD968,#FFC83D)}
+@media (prefers-reduced-motion:reduce){#home .stage::before,#home .stage::after,#home .stage .nori{animation:none}}
 </style>
 </head>
 <body>
@@ -296,7 +313,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
       <div class="card">
         <h3 data-i18n="howLong">How long?</h3>
         <div class="seg" id="lengths"></div>
-        <p class="tip" style="text-align:left" data-i18n="lessonTip">A listening helper, not a replacement for time together. The app says each word 3 times, then stays quiet for 1 minute so Nori can rest and try. Then it starts again.</p>
+        <p class="tip" style="text-align:left" data-i18n="lessonTip">A listening helper, not a replacement for time together. The app says each word 3 times, then stays quiet for 10 seconds so Nori can rest and try. Then it starts again.</p>
       </div>
       <div class="card">
         <label class="switch"><input type="checkbox" id="screenOff"><span><b data-i18n="screenOffTitle">Keep playing with the screen off</b><br><span class="tip" style="text-align:left;display:block" data-i18n="screenOffSub">Turns your recorded words into one sound track, so you can lock the iPad and Nori still hears the lesson. Only recorded words are used.</span></span></label>
@@ -345,7 +362,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
     <button class="big blue" id="again">Practice again</button>
   </section>
 
-  <p class="credit"><span data-i18n="credit">Made by Phoebie</span> &middot; <span id="buildTag">v2.3.1</span></p>
+  <p class="credit"><span data-i18n="credit">Made by Phoebie</span> &middot; <span id="buildTag">v2.4</span></p>
 </main>
 
 <script>
@@ -382,7 +399,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
     step1:"Pick a word and teach Nori!",step2:"Say it clearly, tap the button, then listen quietly.",step3:"Did Nori try? Tap “Good Nori!” and give a treat.",
     iSaid:"I said it!",listenTitle:"Let's listen. Take your time, Nori.",listenSub:"Stay quiet so Nori can try.",goodNori:"Good Nori! Nori tried it!",
     lessonTitle:"Morning lesson",whichWords:"Which words?",lessonWordsAria:"Words for the lesson",howLong:"How long?",
-    lessonTip:"A listening helper, not a replacement for time together. The app says each word 3 times, then stays quiet for 1 minute so Nori can rest and try. Then it starts again.",
+    lessonTip:"A listening helper, not a replacement for time together. The app says each word 3 times, then stays quiet for 10 seconds so Nori can rest and try. Then it starts again.",
     screenOffTitle:"Keep playing with the screen off",
     screenOffSub:"Turns your recorded words into one sound track, so you can lock the iPad and Nori still hears the lesson. Only recorded words are used.",
     beforeStart:"Before you start",c1:"Plug in the phone or tablet.",c2:"Start with the volume low, and keep the phone about 2 feet (half a meter) from the cage.",
@@ -455,7 +472,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
     step1:"选一个词，来教 Nori！",step2:"说清楚，点按钮，然后安静地听。",step3:"Nori 试着说了吗？点“好棒 Nori！”，给它一个零食。",
     iSaid:"我说了！",listenTitle:"我们来听听。慢慢来，Nori。",listenSub:"保持安静，让 Nori 试一试。",goodNori:"好棒 Nori！它试着说了！",
     lessonTitle:"晨间课",whichWords:"学哪些词？",lessonWordsAria:"上课用的词",howLong:"上多久？",
-    lessonTip:"这是一个听力小帮手，不能代替你们相处的时间。应用把每个词说 3 遍，然后安静 1 分钟，让 Nori 休息、试着说。然后再从头开始。",
+    lessonTip:"这是一个听力小帮手，不能代替你们相处的时间。应用把每个词说 3 遍，然后安静 10 秒，让 Nori 休息、试着说。然后再从头开始。",
     screenOffTitle:"关屏也继续播放",
     screenOffSub:"把你录好的词做成一段音轨，这样锁上 iPad 后 Nori 还能继续听课。只会用录过音的词。",
     beforeStart:"开始之前",c1:"给手机或平板插上电。",c2:"音量先调小，手机离笼子大约 60 厘米（2 英尺）。",
@@ -528,7 +545,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
     step1:"¡Elige una palabra y enséñasela a Nori!",step2:"Dila con claridad, toca el botón y escucha en silencio.",step3:"¿Nori lo intentó? Toca «¡Bien, Nori!» y dale un premio.",
     iSaid:"¡Ya lo dije!",listenTitle:"Vamos a escuchar. Tómate tu tiempo, Nori.",listenSub:"Quédate en silencio para que Nori lo intente.",goodNori:"¡Bien, Nori! ¡Lo intentó!",
     lessonTitle:"Clase de la mañana",whichWords:"¿Qué palabras?",lessonWordsAria:"Palabras para la clase",howLong:"¿Cuánto tiempo?",
-    lessonTip:"Es una ayuda para escuchar, no reemplaza el tiempo juntos. La app dice cada palabra 3 veces y luego se queda en silencio 1 minuto para que Nori descanse y lo intente. Después empieza otra vez.",
+    lessonTip:"Es una ayuda para escuchar, no reemplaza el tiempo juntos. La app dice cada palabra 3 veces y luego se queda en silencio 10 segundos para que Nori descanse y lo intente. Después empieza otra vez.",
     screenOffTitle:"Seguir sonando con la pantalla apagada",
     screenOffSub:"Convierte tus palabras grabadas en una sola pista de sonido, así puedes bloquear el iPad y Nori sigue escuchando la clase. Solo se usan las palabras grabadas.",
     beforeStart:"Antes de empezar",c1:"Enchufa el teléfono o la tableta.",c2:"Empieza con el volumen bajo y deja el teléfono a unos 60 cm (2 pies) de la jaula.",
@@ -975,7 +992,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
   });
 
   /* ---------- morning lesson ---------- */
-  var LENGTHS=[5,10,15,30,60], QUIET=60*1000, REPS=3;
+  var LENGTHS=[5,10,15,30,60], QUIET=10*1000, REPS=3;
   var lesson={running:false,id:0,start:0,end:0,tick:null,lock:null};
   function fmt(ms){var s=Math.max(0,Math.ceil(ms/1000)),h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=s%60;
     return (h?h+":"+String(m).padStart(2,"0"):m)+":"+String(x).padStart(2,"0");}
@@ -1225,7 +1242,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
   }
 
   function setBuildTag(){var sa=(window.matchMedia&&matchMedia("(display-mode: standalone)").matches)||navigator.standalone===true;
-    $("buildTag").textContent="v2.3.1 \u00b7 "+T(framed?"tagPreview":window.BIRDPAL_NATIVE?"tagNative":sa?"tagHome":"tagBrowser");}
+    $("buildTag").textContent="v2.4 \u00b7 "+T(framed?"tagPreview":window.BIRDPAL_NATIVE?"tagNative":sa?"tagHome":"tagBrowser");}
 
   /* ---------- switching language ---------- */
   function sameList(a,b){return a.length===b.length&&a.every(function(x){return b.indexOf(x)>=0;});}
