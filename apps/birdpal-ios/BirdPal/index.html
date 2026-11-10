@@ -362,7 +362,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
     <button class="big blue" id="again">Practice again</button>
   </section>
 
-  <p class="credit"><span data-i18n="credit">Made by Phoebie</span> &middot; <span id="buildTag">v2.4</span></p>
+  <p class="credit"><span data-i18n="credit">Made by Phoebie</span> &middot; <span id="buildTag">v2.4.1</span></p>
 </main>
 
 <script>
@@ -392,6 +392,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
     delYes:"Yes, delete",delNo:"Keep it",
     blockedTitle:"This iPad is blocking sounds",
     blockedBody:"Lockdown Mode is on, so the app can't speak or record here. A grown-up can allow this one website:",
+    blockedStepsApp:"<li>Open Settings → Privacy &amp; Security → Lockdown Mode.</li><li>Tap Configure Web Browsing.</li><li>Turn off Lockdown Mode for Bird Pal.</li><li>Close Bird Pal completely and open it again.</li>",blockedBodyApp:"Lockdown Mode is on, so the app can't speak or record. A grown-up can turn it off just for Bird Pal:",
     blockedSteps:"<li>Open phoebiewang.com/birdpal in Safari.</li><li>Tap the page menu button next to the address.</li><li>Tap Website Settings, then turn off Lockdown Mode.</li><li>Close Bird Pal completely and open it again.</li>",
     whichVoice:"Which voice says the words?",voiceAria:"Voice",hearIt:"Hear it",holdRec:"Hold to record my voice",pickRec:"Record my voice",
     recTip:"Tap, say the word once, then save the recording. Nori will use your voice!",
@@ -465,6 +466,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
     delYes:"确定删除",delNo:"留着",
     blockedTitle:"这台 iPad 屏蔽了声音",
     blockedBody:"“锁定模式”已开启，所以应用在这里不能说话，也不能录音。大人可以只给这个网站开放：",
+    blockedStepsApp:"<li>打开“设置”→“隐私与安全性”→“锁定模式”。</li><li>点“配置网页浏览”。</li><li>把 Bird Pal 的锁定模式关掉。</li><li>完全关掉 Bird Pal，再重新打开。</li>",blockedBodyApp:"“锁定模式”已开启，所以应用不能说话，也不能录音。大人可以只给 Bird Pal 关掉它：",
     blockedSteps:"<li>用 Safari 打开 phoebiewang.com/birdpal。</li><li>点地址栏旁边的页面菜单按钮。</li><li>点“网站设置”，然后关闭“锁定模式”。</li><li>完全关掉 Bird Pal，再重新打开。</li>",
     whichVoice:"用哪个声音说这些词？",voiceAria:"声音",hearIt:"听一听",holdRec:"按住，录我的声音",pickRec:"录我的声音",
     recTip:"点一下，说一遍这个词，然后保存录音。Nori 会用你的声音！",
@@ -538,6 +540,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
     delYes:"Sí, borrar",delNo:"Dejarla",
     blockedTitle:"Este iPad está bloqueando los sonidos",
     blockedBody:"El Modo de Aislamiento está activado, así que la app no puede hablar ni grabar aquí. Un adulto puede permitir solo este sitio web:",
+    blockedStepsApp:"<li>Abre Ajustes → Privacidad y seguridad → Modo de Aislamiento.</li><li>Toca Configurar navegación web.</li><li>Desactiva el Modo de Aislamiento para Bird Pal.</li><li>Cierra Bird Pal por completo y vuelve a abrirla.</li>",blockedBodyApp:"El Modo de Aislamiento está activado, así que la app no puede hablar ni grabar. Un adulto puede desactivarlo solo para Bird Pal:",
     blockedSteps:"<li>Abre phoebiewang.com/birdpal en Safari.</li><li>Toca el botón del menú de la página, junto a la dirección.</li><li>Toca Ajustes del sitio web y desactiva el Modo de Aislamiento.</li><li>Cierra Bird Pal por completo y vuelve a abrirla.</li>",
     whichVoice:"¿Qué voz dice las palabras?",voiceAria:"Voz",hearIt:"Escuchar",holdRec:"Mantén presionado para grabar mi voz",pickRec:"Grabar mi voz",
     recTip:"Toca, di la palabra una vez y guarda la grabación. ¡Nori usará tu voz!",
@@ -1242,7 +1245,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
   }
 
   function setBuildTag(){var sa=(window.matchMedia&&matchMedia("(display-mode: standalone)").matches)||navigator.standalone===true;
-    $("buildTag").textContent="v2.4 \u00b7 "+T(framed?"tagPreview":window.BIRDPAL_NATIVE?"tagNative":sa?"tagHome":"tagBrowser");}
+    $("buildTag").textContent="v2.4.1 \u00b7 "+T(framed?"tagPreview":window.BIRDPAL_NATIVE?"tagNative":sa?"tagHome":"tagBrowser");}
 
   /* ---------- switching language ---------- */
   function sameList(a,b){return a.length===b.length&&a.every(function(x){return b.indexOf(x)>=0;});}
@@ -1250,6 +1253,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
     document.documentElement.lang=LANG==="zh"?"zh-CN":LANG;
     document.querySelectorAll("[data-i18n]").forEach(function(el){el.textContent=T(el.getAttribute("data-i18n"));});
     document.querySelectorAll("[data-i18n-html]").forEach(function(el){el.innerHTML=T(el.getAttribute("data-i18n-html"));});
+    if(window.BIRDPAL_NATIVE){var bs=document.querySelector('[data-i18n-html="blockedSteps"]'),bb=document.querySelector('[data-i18n="blockedBody"]');if(bs)bs.innerHTML=T("blockedStepsApp");if(bb)bb.textContent=T("blockedBodyApp");}
     document.querySelectorAll("[data-i18n-ph]").forEach(function(el){el.placeholder=T(el.getAttribute("data-i18n-ph"));});
     document.querySelectorAll("[data-i18n-aria]").forEach(function(el){el.setAttribute("aria-label",T(el.getAttribute("data-i18n-aria")));});
     document.querySelectorAll(".langbtn").forEach(function(b){b.setAttribute("aria-pressed",String(b.dataset.lang===LANG));});
