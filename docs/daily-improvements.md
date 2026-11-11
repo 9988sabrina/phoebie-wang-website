@@ -61,3 +61,23 @@
 - 没做的候选：
   1. 页脚「Affiliate Disclosure」链接：联盟/工具页已下线，这个链接和 sitemap 里的 disclosure.html 可能已多余（涉及法律声明，需老板点头再删）。
   2. practice/ 页的标签按钮 40px、「听一听」36px，chinese/ 页的按钮 41px，也略低于 44px（这两页用自己的样式表，留给以后单独修）。
+
+## 2026-11-09
+- 改了什么（修一个坏的地方）：首页「每日中文」入口卡的文案还是旧版「A 30-day course … 8 printable pages」，而 chinese/ 页面本身（11-07、11-08 老板改版后）已是「1000 characters in 90 days、每天 10 页」，首页说的和点进去看到的对不上。只改这一句文案，与 chinese/ 页 H1 和内置 TOTAL=90 一致。无 CSS/JS 改动。PR 号见当天合并记录（claude/daily-2026-11-09）。
+- 顺手核查：45 个页面站内链接无死链（go/ 和 reviews/_TEMPLATE 的占位链接属于已下线页，未动）；21 个页面 375px 无横向溢出；44 个测试全过。
+- 没做的候选：
+  1. chinese/ 页自己的 meta description 仍写「30-day course、300 characters」，和页内「90 days、1000 characters」矛盾——这页由老板的同步脚本维护，建议老板在源头改。
+  2. 首页 Bird Pal 段的「try it on the phone to the left」在手机上手机图其实在上方；且「Open it full screen」出现两次（文字链 + 按钮），可去掉一个。
+
+## 2026-11-10
+- 改了什么（修一个坏的地方）：11-08 的面包屑修复（PR #41）因为 11-08 晚上的动漫皮肤改版产生冲突，无法合并，今天在最新 main 上重做：12 个内页顶部「Home / Printables」链接手机上只有 16px 高，styles.css 加一条 `.crumb a` 规则（内边距 + 负外边距）把点击区撑到 44px，文字坐标前后逐页比对完全不变；全站 styles.css 版本号升到 `?v=20261110a`。375px 下 26 页无横向溢出、无死链，44 个测试全过。分支 claude/daily-2026-11-10；PR #41 作废。
+- 没做的候选：
+  1. 首页 Bird Pal 段落写着「try it on the phone to the left」，手机上手机样机其实在上方，改成「above」更准（一行文案，下次顺手改）。
+  2. #40（practice 页按钮 44px）、#47（每日中文卡片文案更新）两个 PR 仍待老板批准合并。
+
+## 2026-11-11
+- 改了什么（删掉一个多余的东西）：product.html 是一个没有任何页面链到的孤儿页，内容还是旧方案（「Coming soon · 需家长审核」「USD 4.99 测试价」「Payhip 交付」「[parent-managed email required]」），和现在「Etsy $1.99 即时下载」的真实卖法矛盾，却仍在 sitemap 里、允许被 Google 索引。改为 noindex 并移出 sitemap，文件保留；tests/site.test.js 的索引/noindex 清单同步更新。无 CSS/JS 改动，不需要动 ?v=。`node --test tests/*.test.js` 44/44 通过。PR #49。
+- 说明：#47、#48 三天没合并，彼此在本日志末尾冲突。今天的分支先把这两个分支合进来（已解决日志冲突），所以合并 #49 一个就等于三天的改动都上线；先单独合 #47/#48 再合 #49 也可以，不会冲突。
+- 没做的候选：
+  1. 页脚「Questions or a broken page? Message us through our Etsy shop」这条全站唯一的联系链接只有 15px 高，需要改 styles.css + 全站 ?v=，等 #48 合并后再做。
+  2. 页脚「Affiliate Disclosure」链接和 disclosure.html：联盟页已全部下线，首页的 Amazon 链接也不带联盟标签，这个声明页可能已多余（涉及法律声明，需老板点头再删）。
