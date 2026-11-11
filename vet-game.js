@@ -5,7 +5,7 @@ var state = {found:0, diag:null, step:0};
 var lang = 'zh';
 
 var T = {
-  tagLine: {zh:'WILD CASE FILES · 原型 v0.2', en:'WILD CASE FILES · Prototype v0.2', es:'WILD CASE FILES · Prototipo v0.2'},
+  tagLine: {zh:'WILD CASE FILES · 原型 v0.3', en:'WILD CASE FILES · Prototype v0.3', es:'WILD CASE FILES · Prototipo v0.3'},
   appTitle: {zh:'野生诊所', en:'Wild Case Files', es:'Casos Silvestres'},
   caseLabel: {zh:'案例 01', en:'Case 01', es:'Caso 01'},
   titleH2: {zh:'野生诊所', en:'Wild Case Files', es:'Casos Silvestres'},
@@ -44,9 +44,9 @@ var T = {
     es:'🩺 Notablemente bajo de peso, se le notan las costillas — puede que no haya comido bien últimamente.'
   },
   clue2: {
-    zh:'🩺 背部刺有几处稀疏，皮肤发红——不像是撞伤，更像是寄生虫或螨虫引起的皮肤问题。',
-    en:"🩺 Patchy, thinning spines on the back with red skin underneath — doesn't look like trauma, more like a mite or parasite skin issue.",
-    es:'🩺 Zonas de espinas ralas en la espalda con piel enrojecida — no parece un golpe, más bien un problema de piel por ácaros o parásitos.'
+    zh:'🩺 背部刺有几处稀疏，皮肤发红发痒——不像是撞伤，更像是某种皮肤问题。',
+    en:"🩺 Patchy, thinning spines on the back with red, itchy skin underneath — doesn't look like trauma, more like some kind of skin problem.",
+    es:'🩺 Zonas de espinas ralas en la espalda con piel enrojecida y con picor — no parece un golpe, más bien algún problema de piel.'
   },
   clue3: {
     zh:'🩺 脚爪干净、步态正常，没有外伤或骨折迹象。',
@@ -71,9 +71,9 @@ var T = {
   toolLabel2: {zh:'抗螨滴剂', en:'Anti-mite drops', es:'Gotas antiácaros'},
   toolLabel3: {zh:'高蛋白软食', en:'High-protein soft food', es:'Comida blanda proteica'},
   treatHint: {
-    zh:'正确顺序：先温和清洁 → 再针对性药物 → 最后补充体力。<br>（提示：真实兽医流程中，直接上药而不先清洁患处，容易让药效打折——这也是本案例想做得比市面同类App更"内行"一点的地方。）',
-    en:'Correct order: gentle cleaning first → targeted medication → then rebuild strength.<br>(Note: in real veterinary practice, applying medication before cleaning the area often reduces its effectiveness — a small detail we wanted this case to get more right than typical apps in this genre.)',
-    es:'Orden correcto: primero limpieza suave → luego medicación específica → por último reforzar las fuerzas.<br>(Nota: en la práctica veterinaria real, aplicar medicamento antes de limpiar la zona suele reducir su efecto — un detalle que quisimos cuidar mejor que las apps típicas de este género.)'
+    zh:'本案例的正确顺序：先温和清洁 → 再针对性药物 → 最后补充体力。<br>（提示：这是为了讲故事而简化的流程，不同动物、不同药物的真实兽医护理顺序并不一样——真正的宠物或野生动物生病，请一定交给专业兽医处理。）',
+    en:'Correct order in this case: gentle cleaning first → targeted medication → then rebuild strength.<br>(Note: this sequence is simplified for the story — real veterinary care varies by animal and medication. A sick or injured real animal always needs a real vet.)',
+    es:'Orden correcto en este caso: primero limpieza suave → luego medicación específica → por último reforzar las fuerzas.<br>(Nota: esta secuencia está simplificada para la historia — el cuidado veterinario real varía según el animal y el medicamento. Un animal real enfermo o herido siempre necesita un veterinario de verdad.)'
   },
   toEndBtn: {zh:'完成治疗 → 查看结局', en:'Finish treatment → See the outcome', es:'Terminar tratamiento → Ver el final'},
   endingBestBadge: {zh:'✓ 诊断正确', en:'✓ Correct diagnosis', es:'✓ Diagnóstico correcto'},
@@ -100,9 +100,9 @@ var T = {
   },
   restartBtn: {zh:'重新试玩这个案例', en:'Replay this case', es:'Volver a jugar este caso'},
   endFootnote: {
-    zh:'这是原型中的唯一一个案例。如果这个玩法方向您觉得值得做下去，<br>下一步会扩展更多异域动物案例 + 完整美术 + 分支剧情记忆系统。',
-    en:'This is the only case in the prototype. If this direction feels worth pursuing,<br>next steps are more exotic-animal cases + full art + a branching story memory system.',
-    es:'Este es el único caso del prototipo. Si esta dirección vale la pena seguir,<br>los próximos pasos son más casos de animales exóticos + arte definitivo + un sistema de memoria narrativa ramificada.'
+    zh:'这是原型中的唯一一个案例，为了讲故事做了简化。<br>如果你在现实中发现受伤的野生动物，请告诉身边的大人，并联系真正的兽医或野生动物救助机构，不要自己喂食或用药。',
+    en:'This is the only case in the prototype, simplified for the story.<br>If you find an injured wild animal in real life, tell a trusted adult and contact a real vet or wildlife rescue — never feed or medicate it yourself.',
+    es:'Este es el único caso del prototipo, simplificado para la historia.<br>Si encuentras un animal silvestre herido en la vida real, avisa a un adulto de confianza y contacta a un veterinario real o un centro de rescate — nunca le des comida ni medicinas tú mismo.'
   }
 };
 
