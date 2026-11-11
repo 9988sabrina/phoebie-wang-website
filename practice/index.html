@@ -174,6 +174,7 @@ td.num{font-variant-numeric:tabular-nums;text-align:right}
   <nav class="tabs" role="tablist" id="tabs">
     <button role="tab" data-tab="today">Today 今天</button>
     <button role="tab" data-tab="math">Math</button>
+    <button role="tab" data-tab="lib">题库 Library</button>
     <button role="tab" data-tab="chinese">中文</button>
     <button role="tab" data-tab="ela">Reading+</button>
     <button role="tab" data-tab="clubs">Choir + STEM</button>
@@ -229,7 +230,7 @@ function fresh(){
 }
 function setStatus(t){$("#saveStatus").textContent=t}
 function allDone(){const pd=S.days[TODAY];if(pd&&pd.paper)return true;return mProgress().done>=mProgress().total&&zProgress().done>=zProgress().total&&eProgress().done>=eProgress().total}
-function migrate(){S.settings=S.settings||{};S.rev=S.rev||[];S.mastered=S.mastered||[];
+function migrate(){S.lib=S.lib||{};S.settings=S.settings||{};S.rev=S.rev||[];S.mastered=S.mastered||[];
   if(!S.settings.tueV2){S.settings.tueOff=false;S.settings.tueV2=true}
   if(false){S._paper1027=1;const pd=S.days["2026-10-27"];if(pd){pd.paper=true;
     const add={"m:fracAsDiv":"10/27 paper #28 (3/4 is 0.75, not 3.4)","e:u3r3":"10/27 paper (skipped)","e:u3v0":"10/27 paper vocab","e:u3v1":"10/27 paper vocab","e:u3v2":"10/27 paper vocab","e:u3v3":"10/27 paper vocab","e:u3s0":"10/27 paper science","e:u3s1":"10/27 paper science","e:u3s2":"10/27 paper science","e:u3h2":"10/27 paper social studies"};
@@ -562,8 +563,34 @@ function focusSkills(){const wk=weekKey();
   const inRev=S.rev.filter(r=>r.k.startsWith("m:")).map(r=>r.k.slice(2)).filter(k=>ALL_M.includes(k));
   const pool=[...new Set(inRev.concat(ALL_M.slice().sort((a,b)=>score(a)-score(b))))];
   S.focus={week:wk,k:pool.slice(0,3)};return S.focus.k}
+/* ---------- math library (题库): a fixed bank per skill; each day draws problems she has not done yet ---------- */
+const LIBN=60,LIB_START="2026-11-11",LIBC={};
+function libBank(k){if(LIBC[k])return LIBC[k];const out=[],seen=new Set();
+  if(G[k])for(let i=0;i<500&&out.length<LIBN;i++){let q;try{q=G[k](rng("lib|"+k+"|"+i))}catch(e){continue}
+    if(!q||!q.prompt||seen.has(q.prompt))continue;seen.add(q.prompt);out.push(Object.assign({},q,{libI:out.length}))}
+  return LIBC[k]=out}
+function libPick(k,tag,old,taken){
+  if(TODAY<=LIB_START||!libBank(k).length)return G[k](rng(TODAY+k+old));
+  const bank=libBank(k),used=(S.lib&&S.lib[k])||{};
+  let av=bank.filter(b=>!(used[b.libI]&&used[b.libI]<TODAY)&&!taken.has(k+"#"+b.libI));
+  if(!av.length){const ord=bank.filter(b=>!taken.has(k+"#"+b.libI)).sort((a,b)=>((used[a.libI]||"")<(used[b.libI]||"")?-1:1));av=ord.slice(0,Math.max(1,Math.ceil(ord.length/3)))}  // whole bank done → start a new round with the oldest
+  if(!av.length)av=bank;
+  const b=av[Math.floor(rng(TODAY+k+tag)()*av.length)];taken.add(k+"#"+b.libI);return Object.assign({},b)}
+function vLib(){
+  const groups=[["5.OA","Operations & Algebraic Thinking 运算与代数"],["5.NBT","Number & Operations in Base Ten 多位数与小数"],["5.NF","Fractions 分数"],["5.MD","Measurement & Data 测量与数据"],["5.G","Geometry 几何"],["","Warm-ups & challenge 热身与挑战"]];
+  const keys=ALL_M.filter((k,i)=>ALL_M.indexOf(k)===i&&G[k]).concat(["olymp","cToF","div9","dh"].filter(k=>G[k]&&!ALL_M.includes(k)));
+  const gOf=k=>{const s=STD[k]||"";const i=groups.findIndex(g=>g[0]&&s.startsWith(g[0]));return i<0?groups.length-1:i};
+  let tot=0,done=0;keys.forEach(k=>{const b=libBank(k);tot+=b.length;done+=b.filter(x=>((S.lib||{})[k]||{})[x.libI]).length});
+  let h=`<div class="card"><div class="eyebrow">Math library · 数学题库</div><h3 style="margin:4px 0">${tot} problems · ${done} done · ${tot-done} new</h3>
+   <p class="small" style="margin:0">Every kind of problem the school's 5th-grade standards ask for. Each day Phoebie gets problems she has <b>not done yet</b>; when a whole set is used up it starts a new round with the oldest. (Starts tomorrow, 11/12.) Tap a skill to see all its problems and answers.</p></div>`;
+  groups.forEach((g,gi)=>{const ks=keys.filter(k=>gOf(k)===gi);if(!ks.length)return;
+    h+=`<div class="card"><div class="eyebrow">${esc(g[1])}</div>`+ks.map(k=>{const b=libBank(k),u=(S.lib||{})[k]||{},n=b.filter(x=>u[x.libI]).length,s=S.skill[k],acc=s&&s.a?Math.round(100*s.c/s.a)+"% first try":"not tried yet";
+      return `<details style="margin-top:8px"><summary><b>${esc(SK[k]||k)}</b> <span class="chip">${esc(STD[k]||"")}</span> <span class="small muted">${n}/${b.length} done · ${acc}</span></summary>
+       <ol class="small" style="margin:6px 0 0;padding-left:22px">${b.map(x=>`<li style="margin:4px 0">${u[x.libI]?`<span class="chip good">✓ ${esc(String(u[x.libI]).slice(5))}</span> `:""}${esc(x.prompt)} <b>→ ${esc(String(x.show))}</b></li>`).join("")}</ol></details>`}).join("")+`</div>`});
+  h+=`<div class="card"><div class="eyebrow">Explain It · 讲道理题</div><details><summary><b>${EXPLAINS.length} explain-your-thinking problems</b> <span class="small muted">one a day, in rotation</span></summary><ol class="small" style="padding-left:22px">${EXPLAINS.map(e=>`<li style="margin:4px 0">${esc(e.title)}</li>`).join("")}</ol></details></div>`;
+  return h}
 function mathSet(){
-  const r=rng("m"+TODAY);const due=frozen("mRev",()=>dueNow("m:").map(x=>x.k.slice(2)).filter(k=>G[k]));
+  const r=rng("m"+TODAY);const taken=new Set();const L=(k,tag,old)=>libPick(k,tag,old,taken);const due=frozen("mRev",()=>dueNow("m:").map(x=>x.k.slice(2)).filter(k=>G[k]));
   const list=[];const add=k=>{if(list.length<12)list.push(k)};
   const busy=S.settings&&S.settings.busy;const foc=focusSkills();
   add(new Date().getDate()%2?"x11":"dh");          // one warm-up (alternates)
@@ -572,18 +599,18 @@ function mathSet(){
   if(!busy)shuffle(r,ALL_M.filter(k=>!foc.includes(k)&&S.skill[k]&&S.skill[k].a)).forEach(k=>{if(!list.includes(k)&&list.length<10)add(k)});
   if(!busy)shuffle(r,ALL_M).forEach(k=>{if(!list.includes(k)&&list.length<10)add(k)});
   const easy=list.slice(0,1),rest=shuffle(r,list.slice(1));
-  const qs=easy.concat(rest).map((k,i)=>Object.assign({k,id:"q"+i},G[k](rng(TODAY+k+i))));
+  const qs=easy.concat(rest).map((k,i)=>Object.assign({k,id:"q"+i},L(k,"q"+i,i)));
   const ex=EXPLAINS[Math.floor((new Date(TODAY).getTime()/864e5))%EXPLAINS.length];
   {const weak=ALL_M.filter(k=>G[k]&&S.skill[k]&&S.skill[k].a>=4&&S.skill[k].c/S.skill[k].a<0.7).sort((x,y)=>S.skill[x].c/S.skill[x].a-S.skill[y].c/S.skill[y].a).slice(0,3);
-    weak.forEach((k,i)=>qs.push(Object.assign({k,id:"ax"+i},G[k](rng(TODAY+k+"ax"+i)))))}
+    weak.forEach((k,i)=>qs.push(Object.assign({k,id:"ax"+i},L(k,"ax"+i,"ax"+i))))}
   if(!(S.settings&&S.settings.busy)){const cut=addDays(TODAY,-45);const m=(S.mastered||[]).filter(x=>x.k.startsWith("m:")&&G[x.k.slice(2)]&&(x.chk||x.on)<=cut).sort((x,y)=>(x.chk||x.on)<(y.chk||y.on)?-1:1)[0];
-    if(m)qs.push(Object.assign({k:m.k.slice(2),id:"mc0",mc:1},G[m.k.slice(2)](rng(TODAY+m.k+"mc"))))}
+    if(m)qs.push(Object.assign({k:m.k.slice(2),id:"mc0",mc:1},L(m.k.slice(2),"mc",m.k.slice(2)+"mc")))}
   if(!(S.settings&&S.settings.busy)){const PV=["fracAdd","fracAsDiv","fracMul","scaling","fracDiv","unitFracDiv","volume","convert","expr","coord","shapes","fracReason","fracWord","pattern2","linePlot","primeFact"];const wk=Math.floor((new Date(TODAY+"T12:00")-new Date("2026-11-02T12:00"))/(7*864e5));
-    if(wk>=0){const k=PV[wk%PV.length];if(G[k])[0,1].forEach(i=>qs.push(Object.assign({k,id:"pv"+i,pv:1},G[k](rng(TODAY+k+"pv"+i)))))}}
+    if(wk>=0){const k=PV[wk%PV.length];if(G[k])[0,1].forEach(i=>qs.push(Object.assign({k,id:"pv"+i,pv:1},L(k,"pv"+i,"pv"+i))))}}
   if(!busy){const GAPS=["primeFact","pattern2","linePlot","fracWord","fracReason"];  // school standards the app did not cover before: 1 question/day until tried 6 times
     const g=GAPS.filter(k=>((S.skill[k]||{}).a||0)<6).sort((x,y)=>((S.skill[x]||{}).a||0)-((S.skill[y]||{}).a||0)||GAPS.indexOf(x)-GAPS.indexOf(y))[0];
-    if(g&&!qs.some(q=>q.k===g))qs.push(Object.assign({k:g,id:"gp0",gp:1},G[g](rng(TODAY+g+"gp0"))))}
-  {const bk=(S.bonusPlan||{})[TODAY]||(S.bonus&&S.bonus.date===TODAY?S.bonus.k:null);if(bk)bk.forEach((k,i)=>qs.push(Object.assign({k,id:"bx"+i},G[k](rng(TODAY+k+"bx"+i)))));}
+    if(g&&!qs.some(q=>q.k===g))qs.push(Object.assign({k:g,id:"gp0",gp:1},L(g,"gp0","gp0")))}
+  {const bk=(S.bonusPlan||{})[TODAY]||(S.bonus&&S.bonus.date===TODAY?S.bonus.k:null);if(bk)bk.forEach((k,i)=>qs.push(Object.assign({k,id:"bx"+i},L(k,"bx"+i,"bx"+i))));}
   const dm=(S.days[TODAY]||{}).m||{};
   qs.slice().forEach(q=>{if(dm[q.id]==="fix")qs.push(Object.assign({k:q.k,id:q.id+"b",again:q.id},G[q.k](rng(TODAY+q.k+"again"+q.id))))});
   if(!busy)qs.push({k:"explain",id:"ex",explain:ex});
@@ -970,7 +997,7 @@ function render(){
   document.querySelectorAll("#tabs button").forEach(b=>b.setAttribute("aria-selected",b.dataset.tab===TAB));
   const v=$("#view");
   if(!S){v.innerHTML=`<div class="card"><p class="muted">Opening your notebook…</p></div>`;return}
-  day();v.innerHTML=({today:vToday,math:vMath,chinese:vZh,ela:vEla,clubs:vClubs,review:vReview,parent:vParent})[TAB]();
+  day();v.innerHTML=({today:vToday,math:vMath,lib:vLib,chinese:vZh,ela:vEla,clubs:vClubs,review:vReview,parent:vParent})[TAB]();
   if(TAB==="chinese")bindCanvases();
 }
 function teachItem(){const d=S.days[TODAY]||{m:{}};const qs=getM();const miss=qs.find(q=>d.m[q.id]==="fix"&&!q.explain&&q.k);
@@ -1388,7 +1415,7 @@ document.addEventListener("click",async e=>{const b=e.target.closest("button");i
   if(ds.bedhide){const dd=day();dd.bedHide=!dd.bedHide;save();render();return}
   const qs=getM();const Q=id=>qs.find(q=>q.id===id);
   const finishQ=(q,first)=>{if(!first&&!q.again&&!getM().some(x=>x.again===q.id)){const nq=Object.assign({k:q.k,id:q.id+"b",again:q.id},G[q.k](rng(TODAY+q.k+"again"+q.id)));const ex=MSET.findIndex(x=>x.explain);MSET.splice(ex<0?MSET.length:ex,0,nq)}
-    d.m[q.id]=first?"ok":"fix";skillHit(q.k,first);if(first&&!q.again)markRight("m:"+q.k);else if(!first)markWrong("m:"+q.k,"missed "+TODAY.slice(5));if(q.mc){if(first){const mm=S.mastered.find(x=>x.k==="m:"+q.k);if(mm)mm.chk=TODAY}else S.mastered=S.mastered.filter(x=>x.k!=="m:"+q.k)}delete live[q.id];save();render();
+    d.m[q.id]=first?"ok":"fix";skillHit(q.k,first);if(q.libI!==undefined&&!q.again){S.lib=S.lib||{};(S.lib[q.k]=S.lib[q.k]||{})[q.libI]=TODAY}if(first&&!q.again)markRight("m:"+q.k);else if(!first)markWrong("m:"+q.k,"missed "+TODAY.slice(5));if(q.mc){if(first){const mm=S.mastered.find(x=>x.k==="m:"+q.k);if(mm)mm.chk=TODAY}else S.mastered=S.mastered.filter(x=>x.k!=="m:"+q.k)}delete live[q.id];save();render();
     if(first)toast("Nice! ★");const c=document.getElementById("card-"+q.id);if(c)c.classList.add("pop")};
   const judge=(q,raw)=>{const st=live[q.id]=live[q.id]||{tries:0};
     let right=false,unsimp=false;
@@ -1449,7 +1476,7 @@ document.addEventListener("click",async e=>{const b=e.target.closest("button");i
 document.addEventListener("input",e=>{if(e.target.id==="wtext"){const c=$("#wcount");if(c)c.textContent=eWords(e.target.value)+" words";const w=S.writing[TODAY]=S.writing[TODAY]||{u:getE().ui,checks:[]};w.text=e.target.value;try{localStorage.setItem(LS,JSON.stringify(S))}catch(_){}}});
 document.addEventListener("change",e=>{if(e.target.dataset&&e.target.dataset.wc!==undefined){const w=S.writing[TODAY]=S.writing[TODAY]||{u:getE().ui,text:"",checks:[]};w.checks=w.checks||[];w.checks[+e.target.dataset.wc]=e.target.checked}});
 document.addEventListener("keydown",e=>{if(e.key!=="Enter")return;const t=e.target;if(t.tagName!=="INPUT")return;const btn=t.parentElement.querySelector("button");if(btn)btn.click()});
-const h0=(location.hash||"").slice(1);if(["today","math","chinese","ela","clubs","review","parent"].includes(h0))TAB=h0;
+const h0=(location.hash||"").slice(1);if(["today","math","lib","chinese","ela","clubs","review","parent"].includes(h0))TAB=h0;
 
 
 // ================= Choir + STEM =================
