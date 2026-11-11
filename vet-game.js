@@ -328,6 +328,7 @@ function saveCare(){
 function $(id){ return document.getElementById(id); }
 function L(o){ return o[lang]; }
 function C(){ return CASES[caseIdx]; }
+function A(p){ var el = $('vetapp'); return ((el && el.getAttribute('data-base')) || '') + p; }
 
 function loadStars(){
   try { return JSON.parse(window.localStorage.getItem(STORE_KEY)) || {}; } catch (e) { return {}; }
@@ -377,9 +378,9 @@ function render(){
     $('vcaseStars'+i).className = 'case-stars' + (n ? ' done' : '');
   }
   $('vetapp').className = 'case-' + c.id + ' pet-' + CASES[care.pet].id;
-  $('vownerAv1').src = c.owner; $('vownerAv2').src = c.owner;
-  $('vimgIntro').src = c.sick; $('vimgExam').src = c.sick; $('vimgTreat').src = c.sick; $('vimgEnd').src = c.well;
-  if (state.step >= 3) $('vimgTreat').src = c.well;
+  $('vownerAv1').src = A(c.owner); $('vownerAv2').src = A(c.owner);
+  $('vimgIntro').src = A(c.sick); $('vimgExam').src = A(c.sick); $('vimgTreat').src = A(c.sick); $('vimgEnd').src = A(c.well);
+  if (state.step >= 3) $('vimgTreat').src = A(c.well);
   $('vownerName1').innerText = L(t.ownerName); $('vownerName2').innerText = L(t.ownerName);
   $('vintroOwnerLine').innerText = L(t.introOwner);
   $('vvetName1').innerText = L(UI.vetName); $('vvetName2').innerText = L(UI.vetName); $('vvetName3').innerText = L(UI.vetName);
@@ -394,7 +395,7 @@ function render(){
   $('vdiagThink').innerText = state.fb ? L(t.diagGag[state.fb.n-1]) : '';
   $('vdiagThink').className = 'thought diag-think' + (state.fb ? ' show' : '');
   $('vbonusTag').innerText = L(UI.bonusTag);
-  $('vimgBonus').src = c.well;
+  $('vimgBonus').src = A(c.well);
   $('vendBonus').innerText = L(t.bonus);
   $('vexamHint').innerText = L(UI.examHint).replace('{n}', state.found);
   for (i=1;i<=3;i++){
@@ -438,7 +439,7 @@ function renderCare(){
   var full = care.done.length >= 5, h = '';
   for (i=0;i<5;i++) h += i < care.done.length ? '❤️' : '🤍';
   $('vhearts').innerText = h;
-  $('vcareImg').src = CASES[care.pet].well;
+  $('vcareImg').src = A(CASES[care.pet].well);
   $('vacc').innerText = ACCS[care.acc[care.pet]];
   $('vfx').innerText = careUi.fx;
   $('vroom').className = 'room' + (careUi.asleep ? ' night' : '');
