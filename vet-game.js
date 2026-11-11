@@ -1,11 +1,11 @@
 (function(){
 "use strict";
 
-var state = {found:0, diag:null, step:0};
+var state = {found:0, diag:null, step:0, tries:0, fb:null, toolFb:null};
 var lang = 'zh';
 
 var T = {
-  tagLine: {zh:'WILD CASE FILES · 原型 v0.3', en:'WILD CASE FILES · Prototype v0.3', es:'WILD CASE FILES · Prototipo v0.3'},
+  tagLine: {zh:'WILD CASE FILES · 原型 v0.4', en:'WILD CASE FILES · Prototype v0.4', es:'WILD CASE FILES · Prototipo v0.4'},
   appTitle: {zh:'野生诊所', en:'Wild Case Files', es:'Casos Silvestres'},
   caseLabel: {zh:'案例 01', en:'Case 01', es:'Caso 01'},
   titleH2: {zh:'野生诊所', en:'Wild Case Files', es:'Casos Silvestres'},
@@ -56,16 +56,16 @@ var T = {
   toDiagBtn: {zh:'三条线索都找到后 → 下诊断', en:'Find all 3 clues → Make a diagnosis', es:'Encuentra las 3 pistas → Diagnosticar'},
   diagVetLine: {
     zh:'体重轻、背部皮肤发红掉刺、但脚爪和步态都正常——你觉得问题出在哪？',
-    en:"Underweight, red irritated skin with hair loss on the back, but normal paws and gait — what do you think is going on?",
+    en:"Underweight, red, itchy skin and thinning spines on the back, but normal paws and gait — what do you think is going on?",
     es:'Bajo de peso, piel enrojecida y pérdida de espinas en la espalda, pero patas y marcha normales — ¿cuál crees que es el problema?'
   },
   diagOpt1: {zh:'摔伤导致的内伤，需要立刻手术', en:'Internal injury from a fall — needs surgery right away', es:'Lesión interna por una caída — necesita cirugía inmediata'},
   diagOpt2: {zh:'螨虫感染，并伴随因不适而少食', en:'Mite infection, with reduced eating from the discomfort', es:'Infección por ácaros, con menos apetito por la molestia'},
   diagOpt3: {zh:'只是换季正常脱刺，不用处理', en:'Just normal seasonal spine shedding — no treatment needed', es:'Solo muda de espinas estacional normal — no necesita tratamiento'},
   treatIntro: {
-    zh:'判断是螨虫感染。按正确顺序使用工具完成治疗——顺序错了也没关系，只是会多花一点时间，刺猬不会有危险。',
-    en:"Diagnosed as a mite infection. Use the tools in the right order to treat it — getting the order wrong just costs a little extra time, the hedgehog won't be at risk.",
-    es:'Diagnóstico: infección por ácaros. Usa las herramientas en el orden correcto para tratarlo — si te equivocas de orden solo tardará un poco más, el erizo no corre peligro.'
+    zh:'判断是螨虫感染。按正确顺序使用工具完成治疗——顺序错了也没关系，再试一次就好，刺猬不会有危险。',
+    en:"Diagnosed as a mite infection. Use the tools in the right order to treat it — if you get the order wrong, just try again — the hedgehog won't be at risk.",
+    es:'Diagnóstico: infección por ácaros. Usa las herramientas en el orden correcto para tratarlo — si te equivocas de orden, inténtalo otra vez — el erizo no corre peligro.'
   },
   toolLabel1: {zh:'温和药浴', en:'Gentle medicated bath', es:'Baño medicinal suave'},
   toolLabel2: {zh:'抗螨滴剂', en:'Anti-mite drops', es:'Gotas antiácaros'},
@@ -76,8 +76,43 @@ var T = {
     es:'Orden correcto en este caso: primero limpieza suave → luego medicación específica → por último reforzar las fuerzas.<br>(Nota: esta secuencia está simplificada para la historia — el cuidado veterinario real varía según el animal y el medicamento. Un animal real enfermo o herido siempre necesita un veterinario de verdad.)'
   },
   toEndBtn: {zh:'完成治疗 → 查看结局', en:'Finish treatment → See the outcome', es:'Terminar tratamiento → Ver el final'},
-  endingBestBadge: {zh:'✓ 诊断正确', en:'✓ Correct diagnosis', es:'✓ Diagnóstico correcto'},
-  endingPoorBadge: {zh:'✕ 诊断有误', en:'✕ Misdiagnosed', es:'✕ Diagnóstico erróneo'},
+  diagFb1: {
+    zh:'再看看线索：脚爪和步态都正常，也没有外伤迹象——不太像摔伤。换一个答案试试？',
+    en:"Look at the clues again: the paws and gait are normal, with no sign of injury — a fall doesn't fit. Try another answer?",
+    es:'Mira otra vez las pistas: las patas y la marcha son normales, sin señales de herida — una caída no encaja. ¿Pruebas otra respuesta?'
+  },
+  diagFb3: {
+    zh:'再想想：正常换刺不会让皮肤发红发痒，体重也不会明显变轻。换一个答案试试？',
+    en:"Think again: normal spine shedding doesn't make the skin red and itchy, or cause clear weight loss. Try another answer?",
+    es:'Piénsalo otra vez: la muda normal de espinas no deja la piel roja y con picor, ni hace perder tanto peso. ¿Pruebas otra respuesta?'
+  },
+  diagFbOk: {
+    zh:'对！皮肤发红发痒加上掉刺，是螨虫的常见表现；不舒服让它吃得少，所以变瘦了。',
+    en:'Yes! Red, itchy skin with thinning spines is a common sign of mites — and feeling unwell made it eat less, so it lost weight.',
+    es:'¡Sí! La piel roja con picor y las espinas ralas son una señal común de ácaros — y al sentirse mal comió menos, por eso adelgazó.'
+  },
+  toolFbWrong: {
+    zh:'还不是这一步哦——想想提示里的顺序，再试一次。',
+    en:'Not this one yet — check the order in the hint and try again.',
+    es:'Este todavía no — revisa el orden de la pista e inténtalo otra vez.'
+  },
+  toolFb1: {
+    zh:'✓ 洗干净了，刺猬放松了一点。',
+    en:'✓ All clean — the hedgehog relaxes a little.',
+    es:'✓ Ya está limpio — el erizo se relaja un poco.'
+  },
+  toolFb2: {
+    zh:'✓ 滴剂用好了，接下来让它补充体力。',
+    en:'✓ Drops applied — now help it rebuild its strength.',
+    es:'✓ Gotas aplicadas — ahora ayúdalo a recuperar fuerzas.'
+  },
+  toolFb3: {
+    zh:'✓ 它开始小口小口吃东西了！',
+    en:"✓ It's starting to eat, one small bite at a time!",
+    es:'✓ ¡Empieza a comer, bocadito a bocadito!'
+  },
+  endingBestBadge: {zh:'★★★ 一次就诊断正确', en:'★★★ Right on the first try', es:'★★★ Acertaste a la primera'},
+  endingOkBadge: {zh:'★★ 再看一次，找到了答案', en:'★★ Looked again and got it', es:'★★ Miraste otra vez y acertaste'},
   endingBestText: {
     zh:'你判断出是螨虫感染合并营养不良，按清洁→用药→补食的顺序处理后，刺猬的状态明显放松下来，蜷缩的身体慢慢舒展开。你把它留院观察两天，背部的红肿开始消退。',
     en:"You correctly identified a mite infection combined with malnutrition. After treating it in order — clean, medicate, feed — the hedgehog visibly relaxed, slowly uncurling. You keep it for two days of observation, and the redness on its back starts to fade.",
@@ -88,15 +123,31 @@ var T = {
     en:"That's such a relief... it looks a lot less uncomfortable now. I'll keep checking the backyard for new hedgehog friends — I'll bring them straight to you if something seems wrong!",
     es:'Qué alivio... se ve mucho menos incómodo. Voy a seguir revisando el jardín por si aparecen más erizos amigos — ¡te los traeré enseguida si algo no anda bien!'
   },
-  endingPoorText: {
-    zh:'治疗方向不对，刺猬的状态没有明显好转，你又重新检查了一遍线索，才意识到问题其实出在皮肤和营养，不是外伤。好在发现得还不算晚，你立刻调整了治疗方案。',
-    en:"The treatment was off track and the hedgehog didn't visibly improve. Going back over the clues, you realize the real issue was skin and nutrition, not injury. Luckily it's not too late — you adjust the treatment plan right away.",
-    es:'El tratamiento no era el correcto y el erizo no mejora de forma visible. Al repasar las pistas, te das cuenta de que el problema real era la piel y la nutrición, no una lesión. Por suerte no es demasiado tarde — ajustas el plan de tratamiento de inmediato.'
+  endingOkText: {
+    zh:'第一个想法不太对，但你没有着急，而是回头把线索重新看了一遍，找到了真正的原因：螨虫感染合并营养不良。按清洁→用药→补食的顺序处理后，刺猬慢慢舒展开身体，背部的红肿开始消退。',
+    en:"Your first idea didn't fit, but you didn't rush — you went back over the clues and found the real cause: a mite infection combined with malnutrition. After treating it in order — clean, medicate, feed — the hedgehog slowly uncurls, and the redness on its back starts to fade.",
+    es:'Tu primera idea no encajaba, pero no te apresuraste: repasaste las pistas y encontraste la causa real: una infección por ácaros junto con desnutrición. Tras tratarlo en orden — limpiar, medicar, alimentar — el erizo se va desenrollando y el enrojecimiento de su espalda empieza a ceder.'
   },
-  endingPoorBoy: {
-    zh:'它还好吗……没事就好，医生你会一直把它治好的对吧？',
-    en:"Is it okay...? As long as it's fine. You'll keep treating it until it's better, right, doctor?",
-    es:'¿Está bien...? Mientras esté bien. Lo seguirás tratando hasta que se cure, ¿verdad, doctora?'
+  endingOkBoy: {
+    zh:'原来医生也会再检查一遍呀……还好你又看了一次！它看起来舒服多了。',
+    en:"So even doctors check twice... I'm glad you looked again! It looks so much more comfortable now.",
+    es:'Así que hasta los doctores revisan dos veces... ¡Qué bueno que miraste otra vez! Se ve mucho más cómodo.'
+  },
+  learnTitle: {zh:'今天学到的', en:'What you learned today', es:'Lo que aprendiste hoy'},
+  learn1: {
+    zh:'刺猬是夜行动物——白天躺在外面一动不动，常常是生病或虚弱的信号。',
+    en:'Hedgehogs are nocturnal — one lying still out in the open in daytime is often sick or weak.',
+    es:'Los erizos son nocturnos — uno quieto y a la vista en pleno día suele estar enfermo o débil.'
+  },
+  learn2: {
+    zh:'兽医会把几条线索放在一起看，而不是只凭一个症状下结论。',
+    en:'Vets put several clues together instead of deciding from a single symptom.',
+    es:'Los veterinarios juntan varias pistas en lugar de decidir por un solo síntoma.'
+  },
+  learn3: {
+    zh:'第一次猜错没关系——回头重新检查，本来就是看病的一部分。',
+    en:"A wrong first guess is okay — going back to re-check is part of the job.",
+    es:'Equivocarse al primer intento no pasa nada — volver a revisar es parte del trabajo.'
   },
   restartBtn: {zh:'重新试玩这个案例', en:'Replay this case', es:'Volver a jugar este caso'},
   endFootnote: {
@@ -153,6 +204,12 @@ function applyLang(){
   $('vtoEndBtn').innerText = T.toEndBtn[lang];
   $('vrestartBtn').innerText = T.restartBtn[lang];
   $('vendFootnote').innerHTML = T.endFootnote[lang];
+  $('vlearnTitle').innerText = T.learnTitle[lang];
+  $('vlearn1').innerText = T.learn1[lang];
+  $('vlearn2').innerText = T.learn2[lang];
+  $('vlearn3').innerText = T.learn3[lang];
+  showFb('vdiagFeedback', state.fb);
+  showFb('vtoolFeedback', state.toolFb);
   if ($('vscreen-end').classList.contains('active')) {
     renderEnding();
   }
@@ -175,30 +232,50 @@ function findClue(n){
   if (state.found>=3) $('vtoDiagBtn').disabled = false;
 }
 
-function pickDiag(btn,correct){
+function showFb(id, fb){
+  var el = $(id);
+  if (!fb) { el.className = 'feedback'; el.innerText = ''; return; }
+  el.innerText = T[fb.key][lang];
+  el.className = 'feedback show ' + (fb.ok ? 'ok' : 'retry');
+}
+
+function pickDiag(btn,n){
+  if (state.diag !== null) return;
+  var correct = (n === 2);
+  if (!correct) {
+    btn.disabled = true;
+    btn.classList.add('wrong');
+    state.tries++;
+    state.fb = {key:'diagFb'+n, ok:false};
+    showFb('vdiagFeedback', state.fb);
+    return;
+  }
   var opts = document.querySelectorAll('#vdiagOptions .opt-btn');
   for (var i=0;i<opts.length;i++) opts[i].disabled = true;
-  btn.classList.add(correct?'correct':'wrong');
-  state.diag = correct;
-  setTimeout(function(){ goTo('treat'); }, 700);
+  btn.classList.add('correct');
+  state.diag = (state.tries === 0);
+  state.fb = {key:'diagFbOk', ok:true};
+  showFb('vdiagFeedback', state.fb);
+  setTimeout(function(){ goTo('treat'); }, 2200);
 }
 
 function useTool(el,n){
   if (el.classList.contains('used')) return;
-  state.step++;
-  if (n === state.step) {
+  if (n === state.step + 1) {
+    state.step++;
     el.classList.add('used');
+    state.toolFb = {key:'toolFb'+n, ok:true};
   } else {
     el.classList.add('wrongflash');
     setTimeout(function(){ el.classList.remove('wrongflash'); },300);
-    state.step--;
-    return;
+    state.toolFb = {key:'toolFbWrong', ok:false};
   }
+  showFb('vtoolFeedback', state.toolFb);
   if (state.step>=3) $('vtoEndBtn').disabled = false;
 }
 
 function restart(){
-  state = {found:0, diag:null, step:0};
+  state = {found:0, diag:null, step:0, tries:0, fb:null, toolFb:null};
   var hs = document.querySelectorAll('#vetapp .hotspot');
   for (var i=0;i<hs.length;i++) hs[i].classList.remove('found');
   var chips = document.querySelectorAll('#vetapp .clue-chip');
@@ -212,6 +289,8 @@ function restart(){
   for (i=0;i<tools.length;i++) tools[i].classList.remove('used');
   $('vtoEndBtn').disabled = true;
   $('vfoundCount').innerText = '0';
+  showFb('vdiagFeedback', null);
+  showFb('vtoolFeedback', null);
   goTo('title');
 }
 
@@ -225,10 +304,10 @@ function renderEnding(){
     text.innerText = T.endingBestText[lang];
     boy.innerText = T.endingBestBoy[lang];
   } else {
-    badge.className = 'ending-badge poor';
-    badge.innerText = T.endingPoorBadge[lang];
-    text.innerText = T.endingPoorText[lang];
-    boy.innerText = T.endingPoorBoy[lang];
+    badge.className = 'ending-badge ok';
+    badge.innerText = T.endingOkBadge[lang];
+    text.innerText = T.endingOkText[lang];
+    boy.innerText = T.endingOkBoy[lang];
   }
 }
 
@@ -243,9 +322,9 @@ function init(){
   $('vhs2').addEventListener('click', function(){ findClue(2); });
   $('vhs3').addEventListener('click', function(){ findClue(3); });
   $('vtoDiagBtn').addEventListener('click', function(){ goTo('diag'); });
-  $('vdiagOpt1').addEventListener('click', function(){ pickDiag(this,false); });
-  $('vdiagOpt2').addEventListener('click', function(){ pickDiag(this,true); });
-  $('vdiagOpt3').addEventListener('click', function(){ pickDiag(this,false); });
+  $('vdiagOpt1').addEventListener('click', function(){ pickDiag(this,1); });
+  $('vdiagOpt2').addEventListener('click', function(){ pickDiag(this,2); });
+  $('vdiagOpt3').addEventListener('click', function(){ pickDiag(this,3); });
   var tools = document.querySelectorAll('#vetapp .tool');
   for (var i=0;i<tools.length;i++){
     (function(t){
