@@ -1,17 +1,17 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Wild Case Files: a free narrative vet-clinic game prototype for kids. Examine an injured hedgehog, find the clues, diagnose and treat it, then see how the story ends. In Chinese, English and Spanish."><meta name="robots" content="index, follow"><meta name="theme-color" content="#fdf6ec"><link rel="canonical" href="https://www.phoebiewang.com/vet-game.html"><meta property="og:title" content="Wild Case Files | Phoebie's Learning Lab"><meta property="og:description" content="Examine, diagnose and treat an injured hedgehog in this free narrative vet-game prototype. 中文/EN/ES."><meta property="og:type" content="website"><meta property="og:url" content="https://www.phoebiewang.com/vet-game.html"><meta property="og:image" content="https://www.phoebiewang.com/assets/og-home.jpg"><meta name="twitter:card" content="summary_large_image"><title>Wild Case Files: free vet-game prototype | Phoebie's Learning Lab</title><link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="styles.css?v=20261106a"><link rel="stylesheet" href="vet-game.css?v=3">    <link rel="stylesheet" href="anime.css?v=20261108a">
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Wild Case Files: a free narrative vet-clinic game prototype for kids. Examine a poorly hedgehog and a rabbit that stopped eating, find the clues, diagnose and treat them. In Chinese, English and Spanish."><meta name="robots" content="index, follow"><meta name="theme-color" content="#fdf6ec"><link rel="canonical" href="https://www.phoebiewang.com/vet-game.html"><meta property="og:title" content="Wild Case Files | Phoebie's Learning Lab"><meta property="og:description" content="Examine, diagnose and treat a hedgehog and a rabbit in this free story vet game. 中文/EN/ES."><meta property="og:type" content="website"><meta property="og:url" content="https://www.phoebiewang.com/vet-game.html"><meta property="og:image" content="https://www.phoebiewang.com/assets/og-home.jpg"><meta name="twitter:card" content="summary_large_image"><title>Wild Case Files: free story vet game | Phoebie's Learning Lab</title><link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="styles.css?v=20261106a"><link rel="stylesheet" href="vet-game.css?v=4">    <link rel="stylesheet" href="anime.css?v=20261108a">
 </head><body data-page="vet-game"><a class="skip-link" href="#main">Skip to content</a>
 <header class="site-header"><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">学</span><span>Phoebie's Learning Lab<small>Learn it. Try it. Explain it.</small></span></a><button class="menu-button" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button><nav id="site-nav" class="site-nav" aria-label="Main navigation"><a href="practice/">Practice <span lang="zh-CN">练习</span></a><a href="printables.html">Printables <span lang="zh-CN">打印品</span></a><a href="projects.html">Books &amp; Songs <span lang="zh-CN">书和歌</span></a><a href="about.html">About <span lang="zh-CN">关于</span></a></nav></header>
 <main id="main">
-<header class="page-hero wrap"><p class="crumb"><a href="index.html">Home</a> / Wild Case Files</p><p class="eyebrow">A story for animal lovers</p><h1>Wild Case Files</h1><p class="lede">Examine the patient, find the clues, make a diagnosis, then treat it in the right order. A one-case narrative vet-game prototype — play in Chinese, English or Spanish.</p></header>
+<header class="page-hero wrap"><p class="crumb"><a href="index.html">Home</a> / Wild Case Files</p><p class="eyebrow">A story for animal lovers</p><h1>Wild Case Files</h1><p class="lede">Examine the patient, find the clues, make a diagnosis, then treat it in the right order. Two story cases so far — a hedgehog and a rabbit — in Chinese, English or Spanish.</p></header>
 <div class="wrap vet-wrap">
 <div id="vetapp">
 
   <header>
     <div>
-      <div class="tag" id="vtagLine">WILD CASE FILES · 原型 v0.4</div>
+      <div class="tag" id="vtagLine">WILD CASE FILES · v0.5</div>
       <h2 id="vappTitle">野生诊所</h2>
     </div>
-    <div class="case-num" id="vcaseLabel">案例 01</div>
+    <button class="case-num" id="vcaseLabel" type="button">病例</button>
   </header>
   <div class="lang-switch">
     <button class="lang-btn active" id="vlangBtn-zh" type="button">中文</button>
@@ -19,142 +19,114 @@
     <button class="lang-btn" id="vlangBtn-es" type="button">ES</button>
   </div>
 
-  <!-- 0: TITLE -->
   <div class="screen active title-screen" id="vscreen-title">
-    <div class="logo">🦔</div>
     <h2 id="vtitleH2">野生诊所</h2>
-    <p id="vtitleDesc">一个关于异域/野生小动物的叙事向兽医游戏原型。<br>本案例：一只被男孩带来的受伤刺猬。</p>
-    <button class="primary-btn vet-start-btn" type="button" id="vstartBtn">开始接诊</button>
-    <div class="footnote" id="vtitleFootnote">这是一个玩法验证原型，角色/美术/文案都是占位版本，<br>用来测试"检查→诊断→治疗→故事结局"这条主线是否好玩。</div>
+    <p id="vtitleDesc"></p>
+    <div class="case-list">
+      <button class="case-card" type="button" id="vcaseBtn0">
+        <img src="assets/vet/hedgehog-sick.svg" alt="" width="96" height="72">
+        <span class="case-info"><span class="case-no" id="vcaseNo0"></span><span class="case-name" id="vcaseName0"></span><span class="case-stars" id="vcaseStars0"></span></span>
+      </button>
+      <button class="case-card" type="button" id="vcaseBtn1">
+        <img src="assets/vet/rabbit-sick.svg" alt="" width="96" height="72">
+        <span class="case-info"><span class="case-no" id="vcaseNo1"></span><span class="case-name" id="vcaseName1"></span><span class="case-stars" id="vcaseStars1"></span></span>
+      </button>
+    </div>
+    <div class="footnote" id="vtitleFootnote"></div>
   </div>
 
-  <!-- 1: INTRO -->
   <div class="screen" id="vscreen-intro">
     <div class="speaker">
-      <div class="avatar">👦</div>
-      <div><div class="name" id="vboyName1">男孩 · 小宇</div>
-      <p id="vintroBoyLine">"医生！我在后院浇花的时候看到它缩成一团一动不动……它平时晚上才出来的，白天这样是不是很不好？"</p></div>
+      <img class="avatar" id="vownerAv1" src="assets/vet/boy.svg" alt="" width="40" height="40">
+      <div><div class="name" id="vownerName1"></div>
+      <p id="vintroOwnerLine"></p></div>
     </div>
-    <div class="stage">
-      <div class="hedgehog">
-        <div class="spikes"></div>
-        <div class="body"></div>
-        <div class="leg l1"></div><div class="leg l2"></div>
-        <div class="face"></div>
-        <div class="nose"></div>
-        <div class="eye"></div>
-      </div>
-    </div>
+    <div class="stage"><img class="patient-img" id="vimgIntro" src="assets/vet/hedgehog-sick.svg" alt="" width="260" height="195"></div>
     <div class="speaker">
-      <div class="avatar vet">🩺</div>
-      <div><div class="name" id="vvetName1">你 · 兽医</div>
-      <p id="vintroVetLine">别担心，我先给它做个检查，你可以在旁边陪着它。</p></div>
+      <img class="avatar" src="assets/vet/vet.svg" alt="" width="40" height="40">
+      <div><div class="name" id="vvetName1"></div>
+      <p id="vintroVetLine"></p></div>
     </div>
-    <button class="primary-btn" type="button" id="vstartExamBtn">开始检查</button>
+    <button class="primary-btn" type="button" id="vstartExamBtn"></button>
   </div>
 
-  <!-- 2: EXAM -->
   <div class="screen" id="vscreen-exam">
     <div class="progress-steps">
       <div class="dot" id="vpd1"></div><div class="dot" id="vpd2"></div><div class="dot" id="vpd3"></div>
     </div>
-    <p class="exam-hint" id="vexamHintPre">点击刺猬身上的三个部位，找出异常线索（已找到 <span id="vfoundCount">0</span><span id="vexamSuffix">/3）</span></p>
+    <p class="exam-hint" id="vexamHint"></p>
     <div class="stage">
-      <div class="hedgehog">
-        <div class="spikes"></div>
-        <div class="body"></div>
-        <div class="leg l1"></div><div class="leg l2"></div>
-        <div class="face"></div>
-        <div class="nose"></div>
-        <div class="eye"></div>
-        <div class="hotspot hs1" id="vhs1">体重</div>
-        <div class="hotspot hs2" id="vhs2">背部</div>
-        <div class="hotspot hs3" id="vhs3">脚爪</div>
+      <div class="patient" id="vpatient">
+        <img class="patient-img" id="vimgExam" src="assets/vet/hedgehog-sick.svg" alt="" width="260" height="195">
+        <button class="hotspot hs1" id="vhs1" type="button"></button>
+        <button class="hotspot hs2" id="vhs2" type="button"></button>
+        <button class="hotspot hs3" id="vhs3" type="button"></button>
       </div>
     </div>
     <div class="clues">
-      <div class="clue-chip" id="vclue1">🩺 体重明显偏轻，肋骨能摸到——可能最近没怎么进食。</div>
-      <div class="clue-chip" id="vclue2">🩺 背部刺有几处稀疏，皮肤发红发痒——不像是撞伤，更像是某种皮肤问题。</div>
-      <div class="clue-chip" id="vclue3">🩺 脚爪干净、步态正常，没有外伤或骨折迹象。</div>
+      <div class="clue-chip" id="vclue1"></div>
+      <div class="clue-chip" id="vclue2"></div>
+      <div class="clue-chip" id="vclue3"></div>
     </div>
-    <button class="primary-btn" id="vtoDiagBtn" type="button" disabled>三条线索都找到后 → 下诊断</button>
+    <button class="primary-btn" id="vtoDiagBtn" type="button" disabled></button>
   </div>
 
-  <!-- 3: DIAGNOSIS -->
   <div class="screen" id="vscreen-diag">
     <div class="speaker">
-      <div class="avatar vet">🩺</div>
-      <div><div class="name" id="vvetName2">你 · 兽医</div>
-      <p id="vdiagVetLine">体重轻、背部皮肤发红掉刺、但脚爪和步态都正常——你觉得问题出在哪？</p></div>
+      <img class="avatar" src="assets/vet/vet.svg" alt="" width="40" height="40">
+      <div><div class="name" id="vvetName2"></div>
+      <p id="vdiagVetLine"></p></div>
     </div>
     <div class="options" id="vdiagOptions">
-      <button class="opt-btn" id="vdiagOpt1" type="button">摔伤导致的内伤，需要立刻手术</button>
-      <button class="opt-btn" id="vdiagOpt2" type="button">螨虫感染，并伴随因不适而少食</button>
-      <button class="opt-btn" id="vdiagOpt3" type="button">只是换季正常脱刺，不用处理</button>
+      <button class="opt-btn" id="vdiagOpt1" type="button"></button>
+      <button class="opt-btn" id="vdiagOpt2" type="button"></button>
+      <button class="opt-btn" id="vdiagOpt3" type="button"></button>
     </div>
     <p class="feedback" id="vdiagFeedback" role="status" aria-live="polite"></p>
+    <button class="primary-btn" id="vtoTreatBtn" type="button" disabled></button>
   </div>
 
-  <!-- 4: TREATMENT -->
   <div class="screen" id="vscreen-treat">
     <div class="speaker">
-      <div class="avatar vet">🩺</div>
-      <div><div class="name" id="vvetName3">你 · 兽医</div>
-      <p id="vtreatIntro">判断是螨虫感染。按正确顺序使用工具完成治疗——顺序错了也没关系，再试一次就好，刺猬不会有危险。</p></div>
+      <img class="avatar" src="assets/vet/vet.svg" alt="" width="40" height="40">
+      <div><div class="name" id="vvetName3"></div>
+      <p id="vtreatIntro"></p></div>
     </div>
-    <div class="stage treat-stage">
-      <div class="hedgehog">
-        <div class="spikes"></div>
-        <div class="body"></div>
-        <div class="leg l1"></div><div class="leg l2"></div>
-        <div class="face"></div>
-        <div class="nose"></div>
-        <div class="eye"></div>
-      </div>
-    </div>
+    <div class="stage treat-stage"><img class="patient-img small" id="vimgTreat" src="assets/vet/hedgehog-sick.svg" alt="" width="200" height="150"></div>
     <div class="tool-row">
-      <div class="tool" data-step="1">🧴<span id="vtoolLabel1">温和药浴</span></div>
-      <div class="tool" data-step="2">💧<span id="vtoolLabel2">抗螨滴剂</span></div>
-      <div class="tool" data-step="3">🍲<span id="vtoolLabel3">高蛋白软食</span></div>
+      <button class="tool" type="button" id="vtool1"><span class="tool-ico" id="vtoolIco1"></span><span class="tool-lbl" id="vtoolLabel1"></span></button>
+      <button class="tool" type="button" id="vtool2"><span class="tool-ico" id="vtoolIco2"></span><span class="tool-lbl" id="vtoolLabel2"></span></button>
+      <button class="tool" type="button" id="vtool3"><span class="tool-ico" id="vtoolIco3"></span><span class="tool-lbl" id="vtoolLabel3"></span></button>
     </div>
     <p class="feedback" id="vtoolFeedback" role="status" aria-live="polite"></p>
-    <p class="tool-hint" id="vtreatHint">本案例的正确顺序：先温和清洁 → 再针对性药物 → 最后补充体力。<br>（提示：这是为了讲故事而简化的流程，不同动物、不同药物的真实兽医护理顺序并不一样——真正的宠物或野生动物生病，请一定交给专业兽医处理。）</p>
-    <button class="primary-btn" id="vtoEndBtn" type="button" disabled>完成治疗 → 查看结局</button>
+    <p class="tool-hint" id="vtreatHint"></p>
+    <button class="primary-btn" id="vtoEndBtn" type="button" disabled></button>
   </div>
 
-  <!-- 5: ENDING -->
   <div class="screen" id="vscreen-end">
-    <div class="ending-badge" id="vendBadge">结局</div>
-    <div class="stage end-stage">
-      <div class="hedgehog">
-        <div class="spikes"></div>
-        <div class="body"></div>
-        <div class="leg l1"></div><div class="leg l2"></div>
-        <div class="face"></div>
-        <div class="nose"></div>
-        <div class="eye"></div>
-      </div>
-    </div>
+    <div class="ending-badge" id="vendBadge"></div>
+    <div class="stage end-stage"><img class="patient-img small" id="vimgEnd" src="assets/vet/hedgehog-well.svg" alt="" width="200" height="150"></div>
     <div class="story-text" id="vendText"></div>
     <div class="speaker">
-      <div class="avatar">👦</div>
-      <div><div class="name" id="vboyName2">男孩 · 小宇</div>
-      <p id="vboyLine"></p></div>
+      <img class="avatar" id="vownerAv2" src="assets/vet/boy.svg" alt="" width="40" height="40">
+      <div><div class="name" id="vownerName2"></div>
+      <p id="vownerEndLine"></p></div>
     </div>
     <div class="learn-card">
-      <div class="learn-title" id="vlearnTitle">今天学到的</div>
+      <div class="learn-title" id="vlearnTitle"></div>
       <ul>
         <li id="vlearn1"></li>
         <li id="vlearn2"></li>
         <li id="vlearn3"></li>
       </ul>
     </div>
-    <button class="primary-btn" id="vrestartBtn" type="button">重新试玩这个案例</button>
-    <div class="footnote" id="vendFootnote">这是原型中的唯一一个案例，为了讲故事做了简化。<br>如果你在现实中发现受伤的野生动物，请告诉身边的大人，并联系真正的兽医或野生动物救助机构，不要自己喂食或用药。</div>
+    <button class="primary-btn" id="vnextBtn" type="button"></button>
+    <button class="secondary-btn" id="vrestartBtn" type="button"></button>
+    <div class="footnote" id="vendFootnote"></div>
   </div>
 
 </div>
 </div>
-<section class="wrap vet-about"><h2>About this prototype</h2><p>Wild Case Files is a gameplay test, not a finished game: art, dialogue and the single case here are all placeholders. The idea is to find out whether an "examine → diagnose → treat → story ending" loop about exotic and wild animals is fun before investing in full art and more cases.</p></section>
+<section class="wrap vet-about"><h2>About Wild Case Files</h2><p>Each case is a short story: listen to the owner, examine the animal, put the clues together, make a diagnosis and treat it in order. A wrong first guess is fine — you get a hint and look again, just like a real vet would. The stories are simplified; a sick or injured real animal always needs a real vet.</p></section>
 </main>
-<footer class="site-footer"><div class="wrap footer-grid"><div><strong>Phoebie's Learning Lab</strong><span>Learn it. Try it. Explain it.</span></div><nav aria-label="Footer"><a href="disclosure.html">Affiliate Disclosure</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="refunds.html">Digital Product &amp; Refunds</a><button class="link-button" data-clear-progress type="button">Clear local progress</button></nav></div><p class="legal-note">© 2026 The Wang family. Made by Sabrina Zhang and Phoebie. Questions or a broken page? Message us through <a href="https://www.etsy.com/shop/PhoebieCreates" rel="noopener">our Etsy shop</a>.</p></footer><script src="content-config.js"></script><script src="common.js"></script><script src="vet-game.js?v=3"></script></body></html>
+<footer class="site-footer"><div class="wrap footer-grid"><div><strong>Phoebie's Learning Lab</strong><span>Learn it. Try it. Explain it.</span></div><nav aria-label="Footer"><a href="disclosure.html">Affiliate Disclosure</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="refunds.html">Digital Product &amp; Refunds</a><button class="link-button" data-clear-progress type="button">Clear local progress</button></nav></div><p class="legal-note">© 2026 The Wang family. Made by Sabrina Zhang and Phoebie. Questions or a broken page? Message us through <a href="https://www.etsy.com/shop/PhoebieCreates" rel="noopener">our Etsy shop</a>.</p></footer><script src="content-config.js"></script><script src="common.js"></script><script src="vet-game.js?v=4"></script></body></html>
