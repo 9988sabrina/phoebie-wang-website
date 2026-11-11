@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" role="img" aria-label="Happy rabbit next to a pot of hay">
+<ellipse cx="200" cy="266" rx="150" ry="13" fill="#3b3024" opacity="0.10"/>
+<ellipse cx="200" cy="222" rx="92" ry="48" fill="#f4efe6"/>
+<ellipse cx="282" cy="236" rx="16" ry="15" fill="#fff"/>
+<path d="M150 110 C120 40 135 5 160 8 C182 12 185 60 180 108Z" fill="#f4efe6"/><path d="M156 100 C138 50 146 25 160 26 C172 28 174 62 172 100Z" fill="#f4b8b0"/><path d="M205 108 C205 45 225 8 248 14 C270 22 250 75 232 115Z" fill="#f4efe6"/><path d="M213 104 C214 58 230 32 244 36 C256 42 242 78 228 108Z" fill="#f4b8b0"/>
+<ellipse cx="191" cy="160" rx="68" ry="58" fill="#f4efe6"/>
+<ellipse cx="191" cy="186" rx="34" ry="24" fill="#fffaf2"/>
+<circle cx="160" cy="152" r="9" fill="#2e2018"/><circle cx="163" cy="149" r="3" fill="#fff"/><circle cx="222" cy="152" r="9" fill="#2e2018"/><circle cx="225" cy="149" r="3" fill="#fff"/>
+<path d="M183 170 h16 l-8 9z" fill="#e58f84"/>
+<path d="M191 178 Q180 190 170 182 M191 178 Q202 190 212 182" stroke="#2e2018" stroke-width="3" fill="none" stroke-linecap="round"/><rect x="185" y="184" width="12" height="9" rx="2" fill="#fff" stroke="#cfc6b6" stroke-width="1.5"/><ellipse cx="143" cy="176" rx="12" ry="7" fill="#f6b6a8" opacity="0.8"/><ellipse cx="239" cy="176" rx="12" ry="7" fill="#f6b6a8" opacity="0.8"/>
+<ellipse cx="160" cy="262" rx="24" ry="11" fill="#e6dccb"/><ellipse cx="226" cy="262" rx="24" ry="11" fill="#e6dccb"/>
+<g><path d="M300 222 l34 -70 M306 226 l44 -62 M314 230 l52 -50 M296 220 l20 -74" stroke="#c9a94e" stroke-width="5" stroke-linecap="round"/><path d="M290 232 h82 l-8 30 h-66z" fill="#d97757"/></g><path d="M70 60 l5 12 12 5 -12 5 -5 12 -5 -12 -12 -5 12 -5z" fill="#e8b74b"/>
+</svg>
