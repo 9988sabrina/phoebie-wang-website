@@ -323,9 +323,10 @@ const SK={
  decWord:"Decimal word form",digitValue:"Digit value",decMul:"Decimal × decimal",cToF:"°C → °F",
  fracAdd:"Add fractions + simplify",fracDiv:"Fraction ÷ whole number",decOrder:"Order decimals",remainder:"Remainder reasoning",explain:"Explain It",
  volume:"Volume (l × w × h)",fracMul:"Fraction × fraction",unitDiv:"Whole ÷ unit fraction",expr:"Write expressions",coord:"Coordinate plane",shapes:"Classify 2-D shapes",
- decAddSub:"Add & subtract decimals",mulMulti:"Multi-digit multiplication",div2:"Divide by 2-digit numbers",decDivW:"Decimal ÷ whole number",decDivDec:"Decimal ÷ decimal",unitFracDiv:"Unit fraction ÷ whole",convert:"Convert units",pow10:"Powers of 10",scaling:"Multiplying as scaling",fracAsDiv:"Fractions as division",olymp:"Olympiad Challenge"};
+ decAddSub:"Add & subtract decimals",mulMulti:"Multi-digit multiplication",div2:"Divide by 2-digit numbers",decDivW:"Decimal ÷ whole number",decDivDec:"Decimal ÷ decimal",unitFracDiv:"Unit fraction ÷ whole",convert:"Convert units",pow10:"Powers of 10",scaling:"Multiplying as scaling",fracAsDiv:"Fractions as division",olymp:"Olympiad Challenge",
+ primeFact:"Prime factors",pattern2:"Two number patterns",linePlot:"Line plots (fractions)",fracWord:"Fraction × fraction word problems",fracReason:"Is the answer reasonable?"};
 const STD={round:"5.NBT.4",div9:"Gr 4",x11:"warm-up",dh:"warm-up",pemdas:"5.OA.1",decWord:"5.NBT.3a",digitValue:"5.NBT.1",decMul:"5.NBT.7",cToF:"science",fracAdd:"5.NF.1",fracDiv:"5.NF.7 stretch",decOrder:"5.NBT.3b",remainder:"challenge",volume:"5.MD.5",fracMul:"5.NF.4",unitDiv:"5.NF.7b",expr:"5.OA.2",coord:"5.G.1",shapes:"5.G.4",explain:"Explain",
- decAddSub:"5.NBT.7",mulMulti:"5.NBT.5",div2:"5.NBT.6",decDivW:"5.NBT.7",decDivDec:"5.NBT.7",unitFracDiv:"5.NF.7a",convert:"5.MD.1",pow10:"5.NBT.2",scaling:"5.NF.5",fracAsDiv:"5.NF.3"};
+ decAddSub:"5.NBT.7",mulMulti:"5.NBT.5",div2:"5.NBT.6",decDivW:"5.NBT.7",decDivDec:"5.NBT.7",unitFracDiv:"5.NF.7a",convert:"5.MD.1",pow10:"5.NBT.2",scaling:"5.NF.5",fracAsDiv:"5.NF.3",primeFact:"5.OA.2.1",pattern2:"5.OA.3",linePlot:"5.MD.2",fracWord:"5.NF.6",fracReason:"5.NF.2"};
 const PLACES=["tenths","hundredths","thousandths"];
 const G={
  round(r){let a,f,ds;do{a=ri(r,10,99);f=ri(r,101,989);ds=String(f).padStart(3,"0").split("")}while(new Set(ds).size<3||ds[2]==="0");
@@ -466,6 +467,29 @@ const G={
    return{prompt:`${a} pizzas are shared equally by ${b} friends. How much pizza does each friend get?`,ans:a/b,frac:[a,b],show:fracStr(a,b)+" pizza",steps:[
     {say:`Sharing ${a} pizzas among ${b} friends is which division?`,choices:[`${a} ÷ ${b}`,`${b} ÷ ${a}`],ok:`${a} ÷ ${b}`},
     {say:`A division can be written as a fraction: top ÷ bottom. Write it, and simplify or make a mixed number if you can.`}]}},
+ /* gaps found vs. school's T2 standards list (Nov 11): 5.OA.2.1, 5.OA.3, 5.MD.2, 5.NF.6, 5.NF.2 */
+ primeFact(r){const n=pick(r,[12,18,20,24,28,30,36,40,42,44,45,48,50]);const f=[];let m=n;for(let p=2;p<=m;p++)while(m%p===0){f.push(p);m/=p}
+   const ok=f.join(" × ");const bad=[[f[0]*f[1]].concat(f.slice(2)).join(" × "),f[0]+" × "+(n/f[0]),f.slice(0,-1).concat([f[f.length-1]+2]).join(" × "),n+" × 1"].filter((x,i,a)=>x!==ok&&a.indexOf(x)===i).slice(0,3);
+   return{prompt:`Write ${n} as a product of PRIME factors.`,choice:shuffle(r,[ok].concat(bad)),ans:ok,show:ok,steps:[
+    {say:`Start with the smallest prime that divides ${n}. What is it?`,input:true,ok:f[0]},
+    {say:`${n} ÷ ${f[0]} = ${n/f[0]}. Keep splitting until EVERY factor is prime (2, 3, 5, 7, 11…). Pick again.`}]}},
+ pattern2(r){const a=ri(r,2,6),k=pick(r,[2,3,4,5]);const A=[0,1,2,3,4].map(i=>i*a),B=A.map(x=>x*k);
+   return{prompt:`Rule 1: start at 0, add ${a}. Rule 2: start at 0, add ${a*k}. Rule 1 gives ${A.slice(0,4).join(", ")}… Rule 2 gives ${B.slice(0,4).join(", ")}… Each Rule 2 number is how many times the matching Rule 1 number?`,ans:k,show:`${k} times`,steps:[
+    {say:`Match the 2nd numbers: Rule 1 gives ${A[1]}, Rule 2 gives ${B[1]}. ${B[1]} ÷ ${A[1]} = ?`,input:true,ok:k},
+    {say:`Check another pair: ${B[2]} ÷ ${A[2]} is also ${k}. Write the answer.`}]}},
+ linePlot(r){const c=[ri(r,1,4),ri(r,1,4),ri(r,1,4)];const Q=c[0]+2*c[1]+3*c[2];
+   return{prompt:`A line plot shows the leaves Phoebie collected: ${c[0]} ${c[0]>1?"leaves are":"leaf is"} 1/4 inch long, ${c[1]} ${c[1]>1?"leaves are":"leaf is"} 1/2 inch, and ${c[2]} ${c[2]>1?"leaves are":"leaf is"} 3/4 inch. Laid end to end, how long is the line of leaves? (inches, simplest form)`,ans:Q/4,frac:[Q,4],show:fracStr(Q,4)+" inches",steps:[
+    {say:`Count in quarter-inches: ${c[0]} × 1 quarter, ${c[1]} × 2 quarters, ${c[2]} × 3 quarters. How many quarters in all?`,input:true,ok:Q},
+    {say:`${Q} quarters = ${Q}/4 inches. Simplify or make a mixed number, then write the answer.`}]}},
+ fracWord(r){const b=pick(r,[2,3,4,5,6,8]),d=pick(r,[2,3,4,5,6,8]);const a=ri(r,1,b-1),c=ri(r,1,d-1);
+   return{prompt:`A garden is ${a}/${b} of an acre. ${c}/${d} of the garden grows tomatoes. What fraction of an acre grows tomatoes? (simplest form)`,ans:a*c/(b*d),frac:[a*c,b*d],show:fracStr(a*c,b*d)+" acre",steps:[
+    {say:`"${c}/${d} OF ${a}/${b}" means multiply. Multiply the tops: ${a} × ${c} = ?`,input:true,ok:a*c},
+    {say:`Multiply the bottoms: ${b} × ${d} = ?`,input:true,ok:b*d},
+    {say:`${a*c}/${b*d}. Simplify if you can, then write the answer.`}]}},
+ fracReason(r){const cd=pick(r,[[1,3],[2,5],[1,4],[2,7]]);const wrong=`${1+cd[0]}/${2+cd[1]}`;const ok="Not reasonable: the sum must be more than 1/2";
+   return{prompt:`Sam says 1/2 + ${cd[0]}/${cd[1]} = ${wrong}. Is Sam's answer reasonable?`,choice:shuffle(r,[ok,"Reasonable: it is close to 1/2","Reasonable: the sum is less than 1/2","Not reasonable: the sum must be more than 1"]),ans:ok,show:ok,steps:[
+    {say:`Adding a positive fraction to 1/2 makes the number…`,choices:["bigger than 1/2","smaller than 1/2"],ok:"bigger than 1/2"},
+    {say:`Compare ${wrong} with 1/2. Pick again.`}]}},
  olymp(r){const t=ri(r,0,5);
   if(t===0){const k=ri(r,2,5),p=ri(r,105,395);const T=p*(k+1);const ans=p*k/100;
    const bar={rows:[{name:"Pen",segs:[{t:"?",u:1}]},{name:"Book",segs:Array.from({length:k},()=>({t:"?",u:1}))}],note:`All ${k+1} boxes together = $${(T/100).toFixed(2)}`};
@@ -528,12 +552,13 @@ const EXPLAINS=[
    {say:"Move both decimals one place: 86.4 ÷ 12 = ?",input:true,ok:7.2}],
   frame:["The student put the decimal point in the wrong place. The answer should be about ","[8|0.8]",", so 8.64 ÷ 1.2 = ","[7.2|0.72]","."],okf:["8","7.2"]}
 ];
-const ALL_M=["x11","round","pemdas","decWord","digitValue","decMul","fracAdd","fracDiv","decOrder","remainder","volume","fracMul","unitDiv","expr","coord","shapes","decAddSub","mulMulti","div2","decDivW","decDivDec","unitFracDiv","convert","pow10","scaling","fracAsDiv"];
+const ALL_M=["x11","round","pemdas","decWord","digitValue","decMul","fracAdd","fracDiv","decOrder","remainder","volume","fracMul","unitDiv","expr","coord","shapes","decAddSub","mulMulti","div2","decDivW","decDivDec","unitFracDiv","convert","pow10","scaling","fracAsDiv","primeFact","pattern2","linePlot","fracWord","fracReason"];
+const T1_DONE=["digitValue","pow10"]; // school T1 report: scored 4 on 5.NBT.1 and 5.NBT.2 → lower priority
 const PARENT_M=ALL_M.concat(["x11","dh","div9","cToF"]);
 function weekKey(){const d=new Date();const day=(d.getDay()+6)%7;d.setDate(d.getDate()-day);return keyOf(d)}
 function focusSkills(){const wk=weekKey();
   if(S.focus&&S.focus.week===wk&&S.focus.k.length)return S.focus.k;
-  const score=k=>{const s=S.skill[k];return s&&s.a?s.c/s.a:0.5};
+  const score=k=>{const s=S.skill[k];return (s&&s.a?s.c/s.a:0.5)+(T1_DONE.includes(k)?0.3:0)};
   const inRev=S.rev.filter(r=>r.k.startsWith("m:")).map(r=>r.k.slice(2)).filter(k=>ALL_M.includes(k));
   const pool=[...new Set(inRev.concat(ALL_M.slice().sort((a,b)=>score(a)-score(b))))];
   S.focus={week:wk,k:pool.slice(0,3)};return S.focus.k}
@@ -553,8 +578,11 @@ function mathSet(){
     weak.forEach((k,i)=>qs.push(Object.assign({k,id:"ax"+i},G[k](rng(TODAY+k+"ax"+i)))))}
   if(!(S.settings&&S.settings.busy)){const cut=addDays(TODAY,-45);const m=(S.mastered||[]).filter(x=>x.k.startsWith("m:")&&G[x.k.slice(2)]&&(x.chk||x.on)<=cut).sort((x,y)=>(x.chk||x.on)<(y.chk||y.on)?-1:1)[0];
     if(m)qs.push(Object.assign({k:m.k.slice(2),id:"mc0",mc:1},G[m.k.slice(2)](rng(TODAY+m.k+"mc"))))}
-  if(!(S.settings&&S.settings.busy)){const PV=["fracAdd","fracAsDiv","fracMul","scaling","fracDiv","unitFracDiv","volume","convert","expr","coord","shapes"];const wk=Math.floor((new Date(TODAY+"T12:00")-new Date("2026-11-02T12:00"))/(7*864e5));
+  if(!(S.settings&&S.settings.busy)){const PV=["fracAdd","fracAsDiv","fracMul","scaling","fracDiv","unitFracDiv","volume","convert","expr","coord","shapes","fracReason","fracWord","pattern2","linePlot","primeFact"];const wk=Math.floor((new Date(TODAY+"T12:00")-new Date("2026-11-02T12:00"))/(7*864e5));
     if(wk>=0){const k=PV[wk%PV.length];if(G[k])[0,1].forEach(i=>qs.push(Object.assign({k,id:"pv"+i,pv:1},G[k](rng(TODAY+k+"pv"+i)))))}}
+  if(!busy){const GAPS=["primeFact","pattern2","linePlot","fracWord","fracReason"];  // school standards the app did not cover before: 1 question/day until tried 6 times
+    const g=GAPS.filter(k=>((S.skill[k]||{}).a||0)<6).sort((x,y)=>((S.skill[x]||{}).a||0)-((S.skill[y]||{}).a||0)||GAPS.indexOf(x)-GAPS.indexOf(y))[0];
+    if(g&&!qs.some(q=>q.k===g))qs.push(Object.assign({k:g,id:"gp0",gp:1},G[g](rng(TODAY+g+"gp0"))))}
   {const bk=(S.bonusPlan||{})[TODAY]||(S.bonus&&S.bonus.date===TODAY?S.bonus.k:null);if(bk)bk.forEach((k,i)=>qs.push(Object.assign({k,id:"bx"+i},G[k](rng(TODAY+k+"bx"+i)))));}
   const dm=(S.days[TODAY]||{}).m||{};
   qs.slice().forEach(q=>{if(dm[q.id]==="fix")qs.push(Object.assign({k:q.k,id:q.id+"b",again:q.id},G[q.k](rng(TODAY+q.k+"again"+q.id))))});
