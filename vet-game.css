@@ -309,3 +309,45 @@
 #vetapp .reward .primary-btn{width:100%;padding:10px;}
 #vetapp .care-note{font-size:12px;color:#9a8c70;text-align:center;line-height:1.6;margin:10px 0 0;}
 #vetapp #vcareHomeBtn{margin-top:10px;}
+
+#vetapp{--v-inkline:#3b3024;border:3px solid var(--v-inkline);box-shadow:6px 6px 0 var(--v-inkline);}
+#vetapp header{border-bottom:3px solid var(--v-inkline);background:var(--v-gold);}
+#vetapp header .tag{color:#5a4410;font-weight:bold;}
+#vetapp header h2{color:var(--v-inkline);font-size:18px;}
+#vetapp .case-num{background:#fff;color:var(--v-inkline);border:2px solid var(--v-inkline);font-weight:bold;box-shadow:2px 2px 0 var(--v-inkline);}
+#vetapp .primary-btn{border:2.5px solid var(--v-inkline);box-shadow:3px 3px 0 var(--v-inkline);font-weight:bold;}
+#vetapp .primary-btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--v-inkline);}
+#vetapp .primary-btn:disabled{box-shadow:none;border-color:#c9bca0;}
+#vetapp .case-card,#vetapp .opt-btn,#vetapp .care-btn,#vetapp .tool,#vetapp .learn-card,#vetapp .clue-chip,#vetapp .room,#vetapp .speaker{border:2px solid var(--v-inkline);}
+#vetapp .case-card{box-shadow:3px 3px 0 var(--v-inkline);}
+#vetapp .title-screen h2{color:var(--v-inkline);font-size:26px;transform:rotate(-2deg);text-shadow:2px 2px 0 var(--v-gold);}
+#vetapp .strip{display:flex;flex-direction:column;gap:12px;margin-bottom:14px;}
+#vetapp .panel{position:relative;display:none;flex-direction:column;align-items:center;gap:8px;padding:14px 12px 12px;border:3px solid var(--v-inkline);border-radius:6px;box-shadow:4px 4px 0 var(--v-inkline);background-color:#fff8e8;background-image:radial-gradient(rgba(217,119,87,0.22) 1.5px,transparent 1.6px);background-size:10px 10px;animation:vpop .3s ease;}
+@keyframes vpop{from{opacity:0;transform:scale(.92) rotate(-1deg);}to{opacity:1;transform:scale(1) rotate(0);}}
+#vetapp .panel.p2{background-color:#eaf3f7;background-image:radial-gradient(rgba(79,124,172,0.2) 1.5px,transparent 1.6px);}
+#vetapp .panel.p3{background-color:#eef3ea;background-image:radial-gradient(rgba(125,148,113,0.25) 1.5px,transparent 1.6px);}
+#vetapp .strip.show-1 .p1,#vetapp .strip.show-2 .p1,#vetapp .strip.show-2 .p2,#vetapp .strip.show-3 .panel{display:flex;}
+#vetapp .talk{display:flex;gap:10px;align-items:flex-start;width:100%;}
+#vetapp .talk .avatar{width:48px;height:48px;border:2.5px solid var(--v-inkline);border-radius:50%;}
+#vetapp .balloon{position:relative;flex:1;background:#fff;border:2.5px solid var(--v-inkline);border-radius:16px;padding:8px 12px;}
+#vetapp .balloon::before{content:"";position:absolute;left:-11px;top:14px;border-width:7px 11px 7px 0;border-style:solid;border-color:transparent var(--v-inkline) transparent transparent;}
+#vetapp .balloon::after{content:"";position:absolute;left:-7px;top:15px;border-width:6px 9px 6px 0;border-style:solid;border-color:transparent #fff transparent transparent;}
+#vetapp .balloon .name{font-size:12px;font-weight:bold;color:#9a8c70;margin-bottom:2px;}
+#vetapp .balloon p{margin:0;font-size:14px;line-height:1.5;}
+#vetapp .sfx{position:absolute;top:-12px;right:8px;z-index:2;font-size:22px;font-weight:900;font-style:italic;color:var(--v-terracotta);transform:rotate(8deg);text-shadow:2px 2px 0 #fff,-1px -1px 0 #fff,3px 3px 0 var(--v-inkline);}
+#vetapp .p2 .sfx{color:#4f7cac;font-size:18px;transform:rotate(-6deg);right:auto;left:10px;top:auto;bottom:8px;}
+#vetapp .thought{position:relative;margin:0 0 6px;background:#fff;border:2.5px solid var(--v-inkline);border-radius:22px;padding:8px 14px;font-size:13px;line-height:1.5;text-align:center;max-width:92%;}
+#vetapp .thought::after{content:"";position:absolute;left:50%;bottom:-13px;width:9px;height:9px;margin-left:-4px;border-radius:50%;background:#fff;border:2.5px solid var(--v-inkline);}
+#vetapp .narr{margin:0;width:100%;background:var(--v-gold);border:2px solid var(--v-inkline);padding:6px 10px;font-size:13px;line-height:1.5;color:#3b3024;}
+#vetapp .exam-think,#vetapp .diag-think{display:none;}
+#vetapp .exam-think.show{display:block;position:absolute;z-index:3;top:-6px;left:50%;transform:translateX(-50%);width:max-content;max-width:94%;animation:vpop .25s ease;}
+#vetapp .screen#vscreen-exam .stage{padding-top:44px;}
+#vetapp .diag-think.show{display:block;align-self:center;margin:18px 0 0;animation:vpop .25s ease;}
+#vetapp .diag-think.show::after{bottom:auto;top:-13px;}
+#vetapp .panel.bonus{flex-direction:row;flex-wrap:wrap;justify-content:center;background-color:#fdf1e0;transform:rotate(-1deg);}
+#vetapp .panel.bonus .patient-img{width:120px;height:90px;}
+#vetapp .panel.bonus .narr{background:#fff;}
+#vetapp .bonus-tag{position:absolute;top:-12px;left:10px;background:var(--v-terracotta);color:#fff;font-size:12px;font-weight:bold;padding:2px 10px;border:2px solid var(--v-inkline);transform:rotate(-4deg);}
+#vetapp .ending-badge{border:2px solid var(--v-inkline);box-shadow:2px 2px 0 var(--v-inkline);margin-bottom:16px;}
+#vetapp .bubble{border:2.5px solid var(--v-inkline);}
+#vetapp .feedback.ok,#vetapp .feedback.retry{border-width:2px;border-color:var(--v-inkline);}

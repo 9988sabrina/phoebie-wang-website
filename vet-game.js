@@ -6,10 +6,10 @@ var lang = 'zh';
 var caseIdx = 0;
 var state = newState();
 
-function newState(){ return {found:0, solved:false, tries:0, step:0, fb:null, toolFb:null}; }
+function newState(){ return {found:0, solved:false, tries:0, step:0, fb:null, toolFb:null, panel:1, think:0}; }
 
 var UI = {
-  tagLine: {zh:'WILD CASE FILES · v0.6', en:'WILD CASE FILES · v0.6', es:'WILD CASE FILES · v0.6'},
+  tagLine: {zh:'WILD CASE FILES · v0.7', en:'WILD CASE FILES · v0.7', es:'WILD CASE FILES · v0.7'},
   appTitle: {zh:'野生诊所', en:'Wild Case Files', es:'Casos Silvestres'},
   caseHome: {zh:'选择病例', en:'Choose a case', es:'Elige un caso'},
   caseNo: {zh:'病例 0', en:'Case 0', es:'Caso 0'},
@@ -25,6 +25,11 @@ var UI = {
     es:'Las historias están simplificadas — un animal real enfermo o herido siempre necesita un veterinario de verdad.'
   },
   vetName: {zh:'你 · 兽医', en:'You · Vet', es:'Tú · Veterinaria'},
+  nextPanel: {zh:'下一格 ▶', en:'Next panel ▶', es:'Siguiente viñeta ▶'},
+  sfx1: {zh:'砰！', en:'BAM!', es:'¡PUM!'},
+  sfx2: {zh:'咕……', en:'urgh...', es:'uf...'},
+  sfx3: {zh:'叮！', en:'TA-DA!', es:'¡TACHÁN!'},
+  bonusTag: {zh:'彩蛋', en:'Bonus panel', es:'Viñeta extra'},
   startExamBtn: {zh:'开始检查', en:'Begin examination', es:'Iniciar examen'},
   examHint: {zh:'点击三个圆圈做检查，找出线索（已找到 {n}/3）', en:'Tap the three circles to examine and find the clues (found {n}/3)', es:'Toca los tres círculos para examinar y encontrar las pistas ({n}/3)'},
   toDiagBtn: {zh:'线索找齐了 → 下诊断', en:'All clues found → Make a diagnosis', es:'Pistas completas → Diagnosticar'},
@@ -55,14 +60,14 @@ var UI = {
   actWake: {zh:'起床', en:'Wake up', es:'Despertar'},
   nameHint: {zh:'（点名字可以改名）', en:'(tap the name to rename)', es:'(toca el nombre para cambiarlo)'},
   careNote: {zh:'想怎么玩都可以，没有错的玩法。做满 5 件不同的事，就能拿到一张照顾员贴纸！', en:'Play any way you like — there are no wrong moves. Do 5 different things to earn a carer sticker!', es:'Juega como quieras — no hay errores. ¡Haz 5 cosas distintas y gana una pegatina de cuidador!'},
-  hello: {zh:'今天想和我玩什么呀？', en:'What shall we play today?', es:'¿A qué jugamos hoy?'},
+  hello: {zh:'今天玩什么？我先说：我当老板。', en:"What shall we play today? Dibs on being the boss.", es:'¿A qué jugamos hoy? Me pido ser el jefe.'},
   pickFood: {zh:'我饿啦——选一样给我吧！', en:"I'm hungry — pick something for me!", es:'Tengo hambre — ¡elige algo para mí!'},
-  bBath: {zh:'泡泡好舒服，洗得香香的！', en:'Bubbles feel so nice — all clean!', es:'¡Qué ricas las burbujas — todo limpio!'},
-  bHug: {zh:'嘿嘿，最喜欢你了！', en:'Hee hee, I like you the most!', es:'Ji ji, ¡tú eres mi favorito!'},
-  bDress: {zh:'好看吗？', en:'How do I look?', es:'¿Qué tal me veo?'},
+  bBath: {zh:'泡泡帽！请叫我——云朵大王。', en:'Bubble hat! Call me... King Cloud.', es:'¡Sombrero de burbujas! Llámame... Rey Nube.'},
+  bHug: {zh:'抱抱收费：一个抱抱，换一个抱抱。', en:'Cuddles cost one cuddle each. No refunds.', es:'Los mimos cuestan un mimo cada uno. Sin devoluciones.'},
+  bDress: {zh:'好看吗？不许笑！……好吧可以笑一下。', en:'How do I look? No laughing! ...Okay, one laugh.', es:'¿Qué tal me veo? ¡Sin reírse! ...Bueno, una risita.'},
   bDressOff: {zh:'还是什么都不戴最轻松～', en:'Wearing nothing is comfy too!', es:'¡Sin nada también estoy cómodo!'},
-  bSleep: {zh:'呼……晚安……', en:'Zzz... good night...', es:'Zzz... buenas noches...'},
-  bWake: {zh:'睡饱啦，早上好！', en:'I slept so well — good morning!', es:'¡Dormí muy bien — buenos días!'},
+  bSleep: {zh:'呼……别关灯……算了关吧……呼……', en:'Zzz... leave the light on... fine, turn it off... zzz...', es:'Zzz... no apagues la luz... bueno, apágala... zzz...'},
+  bWake: {zh:'我梦见我会飞，然后就饿醒了。', en:'I dreamed I could fly. Then I got hungry and woke up.', es:'Soñé que volaba. Luego me dio hambre y me desperté.'},
   rewardText: {zh:'🏅 今天照顾得真棒！获得照顾员贴纸，一共 {n} 张', en:'🏅 Wonderful caring today! You earned a carer sticker — {n} in total', es:'🏅 ¡Qué bien lo cuidaste hoy! Ganaste una pegatina de cuidador — {n} en total'},
   newDayBtn: {zh:'☀️ 新的一天', en:'☀️ A new day', es:'☀️ Un nuevo día'},
   restartBtn: {zh:'再玩一次这个病例', en:'Replay this case', es:'Repetir este caso'}
@@ -85,6 +90,19 @@ var CASES = [
       en:"Don't worry, let me examine it first — you can stay right beside it.",
       es:'Tranquilo, primero lo voy a examinar — puedes quedarte a su lado.'
     },
+    think: {zh:'（内心）我不是仙人掌……他昨天差点给我浇水。', en:'(thinking) I am NOT a cactus... yesterday he nearly watered me.', es:'(pensando) NO soy un cactus... ayer casi me riega.'},
+    narr: {zh:'旁白：医生表面很冷静，其实很想摸一下。她忍住了——有刺。', en:'Narrator: The vet looks calm. Secretly she wants to pat it. She resists — spines.', es:'Narrador: La veterinaria parece tranquila. En secreto quiere acariciarlo. Se aguanta — tiene púas.'},
+    examGag: [
+      {zh:'数字不许念出来！', en:"Don't read the number out loud!", es:'¡No digas el número en voz alta!'},
+      {zh:'那不是秃，是……新发型。', en:"I'm not going bald. It's... a new hairstyle.", es:'No me estoy quedando calvo. Es... un peinado nuevo.'},
+      {zh:'脚很干净吧？我每天都洗——用露水。', en:'Clean feet, right? I wash every day. With dew.', es:'Patas limpias, ¿eh? Me las lavo a diario. Con rocío.'}
+    ],
+    diagGag: [
+      {zh:'手术？！我只是痒痒！', en:"Surgery?! I'm just ITCHY!", es:'¿¡Cirugía!? ¡Solo me pica!'},
+      {zh:'螨虫！我就说有东西在我背上开派对。', en:'Mites! I KNEW someone was having a party on my back.', es:'¡Ácaros! SABÍA que alguien hacía una fiesta en mi espalda.'},
+      {zh:'不用处理？那我今天白缩成球了？', en:'No treatment? So I curled into a ball for NOTHING?', es:'¿Sin tratamiento? ¿Me hice bolita para NADA?'}
+    ],
+    bonus: {zh:'出院那天，它顶走了一个药浴泡泡，坚称那是帽子。', en:'On going-home day it left wearing one bath bubble and insisted it was a hat.', es:'El día del alta se fue con una burbuja del baño en la cabeza e insistió en que era un sombrero.'},
     hs: [
       {zh:'体重', en:'Weight', es:'Peso'},
       {zh:'背部', en:'Back', es:'Espalda'},
@@ -178,6 +196,19 @@ var CASES = [
       en:"Thank you for explaining so clearly — those details really help. Let me examine Mochi first.",
       es:'Gracias por explicarlo tan bien — esos detalles ayudan mucho. Primero voy a examinar a Mochi.'
     },
+    think: {zh:'（内心）不是我不爱你，胡萝卜。是我的牙，它比我先到。', en:"(thinking) It's not you, carrot. It's my teeth. They arrive before I do.", es:'(pensando) No eres tú, zanahoria. Son mis dientes. Llegan antes que yo.'},
+    narr: {zh:'旁白：朵朵刚才那一大段话，一口气说完，没换气。本诊所新纪录。', en:'Narrator: Mia said all of that in one single breath. A new clinic record.', es:'Narrador: Mía dijo todo eso sin respirar ni una vez. Nuevo récord de la clínica.'},
+    examGag: [
+      {zh:'变轻了？那是因为我把心事放下了。', en:"Lighter? That's because I let go of my worries.", es:'¿Más ligero? Es que solté mis preocupaciones.'},
+      {zh:'这不是口水，是……我的下巴在哭。', en:"That's not drool. My chin is... crying.", es:'No es baba. Es que mi barbilla... está llorando.'},
+      {zh:'耳朵好得很——我听见你们在说我了。', en:'My ears work fine — I can hear you talking about me.', es:'Mis orejas están perfectas — los oigo hablar de mí.'}
+    ],
+    diagGag: [
+      {zh:'耳朵？！耳朵可是我全身最骄傲的地方！', en:'My ears?! They are my BEST feature!', es:'¿¡Mis orejas!? ¡Son lo MEJOR que tengo!'},
+      {zh:'终于有人懂了：牙太长，我笑都不敢笑。', en:"Finally, someone gets it — teeth this long, I don't even dare to smile.", es:'Por fin alguien me entiende — con estos dientes ni me atrevo a sonreír.'},
+      {zh:'挑食？我连纸箱都啃过！', en:'Picky? I once ate a cardboard box!', es:'¿Caprichoso? ¡Una vez me comí una caja de cartón!'}
+    ],
+    bonus: {zh:'团子现在嚼干草的声音太大，邻居以为楼上在装修。', en:'Mochi now chews hay so loudly that the neighbors think someone upstairs is drilling.', es:'Ahora Mochi mastica el heno tan fuerte que los vecinos creen que hay obras en el piso de arriba.'},
     hs: [
       {zh:'体重', en:'Weight', es:'Peso'},
       {zh:'下巴', en:'Chin', es:'Barbilla'},
@@ -353,7 +384,18 @@ function render(){
   $('vintroOwnerLine').innerText = L(t.introOwner);
   $('vvetName1').innerText = L(UI.vetName); $('vvetName2').innerText = L(UI.vetName); $('vvetName3').innerText = L(UI.vetName);
   $('vintroVetLine').innerText = L(t.introVet);
-  $('vstartExamBtn').innerText = L(UI.startExamBtn);
+  $('vstartExamBtn').innerText = state.panel < 3 ? L(UI.nextPanel) : L(UI.startExamBtn);
+  $('vintroStrip').className = 'strip show-' + state.panel;
+  $('vsfx1').innerText = L(UI.sfx1); $('vsfx2').innerText = L(UI.sfx2); $('vsfx3').innerText = L(UI.sfx3);
+  $('vintroThink').innerText = L(t.think);
+  $('vintroNarr').innerText = L(t.narr);
+  $('vexamThink').innerText = state.think ? L(t.examGag[state.think-1]) : '';
+  $('vexamThink').className = 'thought exam-think' + (state.think ? ' show' : '');
+  $('vdiagThink').innerText = state.fb ? L(t.diagGag[state.fb.n-1]) : '';
+  $('vdiagThink').className = 'thought diag-think' + (state.fb ? ' show' : '');
+  $('vbonusTag').innerText = L(UI.bonusTag);
+  $('vimgBonus').src = c.well;
+  $('vendBonus').innerText = L(t.bonus);
   $('vexamHint').innerText = L(UI.examHint).replace('{n}', state.found);
   for (i=1;i<=3;i++){
     $('vhs'+i).innerText = L(t.hs[i-1]);
@@ -500,6 +542,7 @@ function findClue(n){
   $('vclue'+n).classList.add('show');
   $('vpd'+n).classList.add('done');
   state.found++;
+  state.think = n;
   if (state.found >= 3) $('vtoDiagBtn').disabled = false;
   render();
 }
@@ -554,7 +597,9 @@ function init(){
   bind('vlangBtn-es', function(){ setLang('es'); });
   bind('vcaseBtn0', function(){ startCase(0); });
   bind('vcaseBtn1', function(){ startCase(1); });
-  bind('vstartExamBtn', function(){ goTo('exam'); });
+  bind('vstartExamBtn', function(){
+    if (state.panel < 3) { state.panel++; render(); } else { goTo('exam'); }
+  });
   [1,2,3].forEach(function(n){
     bind('vhs'+n, function(){ findClue(n); });
     bind('vdiagOpt'+n, function(){ pickDiag(n); });
