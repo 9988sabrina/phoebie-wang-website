@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Wild Case Files: a free narrative vet-clinic game prototype for kids. Examine a poorly hedgehog and a rabbit that stopped eating, find the clues, diagnose and treat them. In Chinese, English and Spanish."><meta name="robots" content="index, follow"><meta name="theme-color" content="#fdf6ec"><link rel="canonical" href="https://www.phoebiewang.com/vet-game.html"><meta property="og:title" content="Wild Case Files | Phoebie's Learning Lab"><meta property="og:description" content="Examine, diagnose and treat a hedgehog and a rabbit in this free story vet game. 中文/EN/ES."><meta property="og:type" content="website"><meta property="og:url" content="https://www.phoebiewang.com/vet-game.html"><meta property="og:image" content="https://www.phoebiewang.com/assets/og-home.jpg"><meta name="twitter:card" content="summary_large_image"><title>Wild Case Files: free story vet game | Phoebie's Learning Lab</title><link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="styles.css?v=20261106a"><link rel="stylesheet" href="vet-game.css?v=4">    <link rel="stylesheet" href="anime.css?v=20261108a">
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Wild Case Files: a free narrative vet-clinic game prototype for kids. Examine a poorly hedgehog and a rabbit that stopped eating, find the clues, diagnose and treat them. In Chinese, English and Spanish."><meta name="robots" content="index, follow"><meta name="theme-color" content="#fdf6ec"><link rel="canonical" href="https://www.phoebiewang.com/vet-game.html"><meta property="og:title" content="Wild Case Files | Phoebie's Learning Lab"><meta property="og:description" content="Examine, diagnose and treat a hedgehog and a rabbit in this free story vet game. 中文/EN/ES."><meta property="og:type" content="website"><meta property="og:url" content="https://www.phoebiewang.com/vet-game.html"><meta property="og:image" content="https://www.phoebiewang.com/assets/og-home.jpg"><meta name="twitter:card" content="summary_large_image"><title>Wild Case Files: free story vet game | Phoebie's Learning Lab</title><link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="styles.css?v=20261106a"><link rel="stylesheet" href="vet-game.css?v=5">    <link rel="stylesheet" href="anime.css?v=20261108a">
 </head><body data-page="vet-game"><a class="skip-link" href="#main">Skip to content</a>
 <header class="site-header"><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">学</span><span>Phoebie's Learning Lab<small>Learn it. Try it. Explain it.</small></span></a><button class="menu-button" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button><nav id="site-nav" class="site-nav" aria-label="Main navigation"><a href="practice/">Practice <span lang="zh-CN">练习</span></a><a href="printables.html">Printables <span lang="zh-CN">打印品</span></a><a href="projects.html">Books &amp; Songs <span lang="zh-CN">书和歌</span></a><a href="about.html">About <span lang="zh-CN">关于</span></a></nav></header>
 <main id="main">
@@ -8,7 +8,7 @@
 
   <header>
     <div>
-      <div class="tag" id="vtagLine">WILD CASE FILES · v0.5</div>
+      <div class="tag" id="vtagLine">WILD CASE FILES · v0.6</div>
       <h2 id="vappTitle">野生诊所</h2>
     </div>
     <button class="case-num" id="vcaseLabel" type="button">病例</button>
@@ -30,6 +30,10 @@
       <button class="case-card" type="button" id="vcaseBtn1">
         <img src="assets/vet/rabbit-sick.svg" alt="" width="96" height="72">
         <span class="case-info"><span class="case-no" id="vcaseNo1"></span><span class="case-name" id="vcaseName1"></span><span class="case-stars" id="vcaseStars1"></span></span>
+      </button>
+      <button class="case-card care-card" type="button" id="vcareBtn">
+        <span class="care-ico" aria-hidden="true">🏠</span>
+        <span class="case-info"><span class="case-no" id="vcareNo"></span><span class="case-name" id="vcareName"></span><span class="case-stars" id="vcareSub"></span></span>
       </button>
     </div>
     <div class="footnote" id="vtitleFootnote"></div>
@@ -121,12 +125,54 @@
       </ul>
     </div>
     <button class="primary-btn" id="vnextBtn" type="button"></button>
+    <button class="secondary-btn" id="vtoCareBtn" type="button"></button>
     <button class="secondary-btn" id="vrestartBtn" type="button"></button>
     <div class="footnote" id="vendFootnote"></div>
   </div>
 
+  <div class="screen" id="vscreen-care">
+    <div class="care-top">
+      <div class="pet-tabs">
+        <button class="pet-tab" type="button" id="vpetTab0"><img src="assets/vet/hedgehog-well.svg" alt="" width="44" height="33"></button>
+        <button class="pet-tab" type="button" id="vpetTab1"><img src="assets/vet/rabbit-well.svg" alt="" width="44" height="33"></button>
+      </div>
+      <button class="name-tag" type="button" id="vpetName"></button>
+      <div class="hearts" id="vhearts" aria-live="polite"></div>
+    </div>
+    <div class="room" id="vroom">
+      <div class="room-window" aria-hidden="true"></div>
+      <div class="room-rug" aria-hidden="true"></div>
+      <p class="bubble" id="vbubble" role="status" aria-live="polite"></p>
+      <div class="pet-wrap" id="vpetWrap">
+        <img class="care-img" id="vcareImg" src="assets/vet/hedgehog-well.svg" alt="" width="220" height="165">
+        <span class="acc" id="vacc" aria-hidden="true"></span>
+        <span class="fx" id="vfx" aria-hidden="true"></span>
+        <div class="blanket" id="vblanket" aria-hidden="true"></div>
+      </div>
+    </div>
+    <div class="care-actions">
+      <button class="care-btn" type="button" id="vactFeed"><span class="care-emo" aria-hidden="true">🍽️</span><span id="vactFeedL"></span></button>
+      <button class="care-btn" type="button" id="vactBath"><span class="care-emo" aria-hidden="true">🫧</span><span id="vactBathL"></span></button>
+      <button class="care-btn" type="button" id="vactBrush"><span class="care-emo" aria-hidden="true">🪮</span><span id="vactBrushL"></span></button>
+      <button class="care-btn" type="button" id="vactHug"><span class="care-emo" aria-hidden="true">💗</span><span id="vactHugL"></span></button>
+      <button class="care-btn" type="button" id="vactDress"><span class="care-emo" aria-hidden="true">🎀</span><span id="vactDressL"></span></button>
+      <button class="care-btn" type="button" id="vactSleep"><span class="care-emo" aria-hidden="true">🌙</span><span id="vactSleepL"></span></button>
+    </div>
+    <div class="food-row" id="vfoodRow">
+      <button class="food-btn" type="button" id="vfood1"></button>
+      <button class="food-btn" type="button" id="vfood2"></button>
+      <button class="food-btn" type="button" id="vfood3"></button>
+    </div>
+    <div class="reward" id="vreward">
+      <p id="vrewardText"></p>
+      <button class="primary-btn" type="button" id="vnewDayBtn"></button>
+    </div>
+    <p class="care-note" id="vcareNote"></p>
+    <button class="secondary-btn" type="button" id="vcareHomeBtn"></button>
+  </div>
+
 </div>
 </div>
-<section class="wrap vet-about"><h2>About Wild Case Files</h2><p>Each case is a short story: listen to the owner, examine the animal, put the clues together, make a diagnosis and treat it in order. A wrong first guess is fine — you get a hint and look again, just like a real vet would. The stories are simplified; a sick or injured real animal always needs a real vet.</p></section>
+<section class="wrap vet-about"><h2>About Wild Case Files</h2><p>Each case is a short story: listen to the owner, examine the animal, put the clues together, make a diagnosis and treat it in order. A wrong first guess is fine — you get a hint and look again, just like a real vet would. Afterwards, visit the Care Room to feed, bathe, dress up and tuck in your patients — pretend play with no wrong answers. The stories are simplified; a sick or injured real animal always needs a real vet.</p></section>
 </main>
-<footer class="site-footer"><div class="wrap footer-grid"><div><strong>Phoebie's Learning Lab</strong><span>Learn it. Try it. Explain it.</span></div><nav aria-label="Footer"><a href="disclosure.html">Affiliate Disclosure</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="refunds.html">Digital Product &amp; Refunds</a><button class="link-button" data-clear-progress type="button">Clear local progress</button></nav></div><p class="legal-note">© 2026 The Wang family. Made by Sabrina Zhang and Phoebie. Questions or a broken page? Message us through <a href="https://www.etsy.com/shop/PhoebieCreates" rel="noopener">our Etsy shop</a>.</p></footer><script src="content-config.js"></script><script src="common.js"></script><script src="vet-game.js?v=4"></script></body></html>
+<footer class="site-footer"><div class="wrap footer-grid"><div><strong>Phoebie's Learning Lab</strong><span>Learn it. Try it. Explain it.</span></div><nav aria-label="Footer"><a href="disclosure.html">Affiliate Disclosure</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="refunds.html">Digital Product &amp; Refunds</a><button class="link-button" data-clear-progress type="button">Clear local progress</button></nav></div><p class="legal-note">© 2026 The Wang family. Made by Sabrina Zhang and Phoebie. Questions or a broken page? Message us through <a href="https://www.etsy.com/shop/PhoebieCreates" rel="noopener">our Etsy shop</a>.</p></footer><script src="content-config.js"></script><script src="common.js"></script><script src="vet-game.js?v=5"></script></body></html>

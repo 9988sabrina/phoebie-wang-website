@@ -264,3 +264,48 @@
 #vetapp .options{margin-top:0;}
 #vetapp #vtoTreatBtn{margin-top:14px;}
 #vetapp .secondary-btn{font-family:inherit;}
+
+#vetapp .care-card{background:#eef3ea;border-color:#c9d6c2;}
+#vetapp .care-ico{width:96px;height:72px;display:flex;align-items:center;justify-content:center;font-size:44px;flex-shrink:0;}
+#vetapp .care-top{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+#vetapp .pet-tabs{display:flex;gap:6px;}
+#vetapp .pet-tab{width:54px;height:42px;padding:3px;border-radius:12px;border:2px solid var(--v-line);background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+#vetapp .pet-tab.active{border-color:var(--v-terracotta);background:var(--v-cream);}
+#vetapp .pet-tab img{width:44px;height:33px;display:block;}
+#vetapp .name-tag{font-family:inherit;font-size:15px;font-weight:bold;color:var(--v-ink);background:var(--v-cream);border:1.5px solid var(--v-line);border-radius:999px;padding:6px 12px;cursor:pointer;}
+#vetapp .hearts{margin-left:auto;font-size:13px;letter-spacing:1px;white-space:nowrap;}
+#vetapp .room{position:relative;height:270px;border-radius:16px;overflow:hidden;background:#fbe9d2;border:1px solid var(--v-line);margin-bottom:12px;transition:background .4s;}
+#vetapp .room::after{content:"";position:absolute;left:0;right:0;bottom:0;height:86px;background:#e9c9a0;border-top:3px solid #dcb688;}
+#vetapp .room-window{position:absolute;top:16px;right:18px;width:64px;height:58px;border-radius:10px;background:#bfe3f5;border:4px solid #fff;box-shadow:0 0 0 2px var(--v-line);}
+#vetapp .room-window::after{content:"☀️";position:absolute;top:8px;left:14px;font-size:26px;}
+#vetapp .room-rug{position:absolute;z-index:1;left:50%;bottom:14px;width:240px;height:54px;margin-left:-120px;border-radius:50%;background:var(--v-rose);opacity:.55;}
+#vetapp .bubble{position:absolute;z-index:3;top:12px;left:12px;max-width:62%;margin:0;background:#fff;border:1.5px solid var(--v-line);border-radius:14px 14px 14px 4px;padding:8px 12px;font-size:13px;line-height:1.5;}
+#vetapp .pet-wrap{position:absolute;z-index:2;left:50%;bottom:22px;width:220px;height:165px;margin-left:-110px;}
+#vetapp .pet-wrap.bounce{animation:vbounce .5s ease;}
+@keyframes vbounce{0%,100%{transform:translateY(0);}35%{transform:translateY(-16px);}70%{transform:translateY(-4px);}}
+#vetapp .care-img{display:block;width:220px;height:165px;}
+#vetapp .acc{position:absolute;font-size:34px;line-height:1;transform:translate(-50%,-50%);}
+#vetapp.pet-hedgehog .acc{left:33%;top:33%;}
+#vetapp.pet-rabbit .acc{left:48%;top:36%;}
+#vetapp .fx{position:absolute;right:6px;top:0;font-size:34px;line-height:1;animation:vfloat 1.6s ease-in-out infinite;}
+@keyframes vfloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+#vetapp .blanket{display:none;position:absolute;left:18%;right:4%;bottom:-4px;height:74px;border-radius:40px 40px 14px 14px;background:#8fb3d9;border:3px solid #fff;box-shadow:0 0 0 1.5px #6f95bd;}
+#vetapp .room.night{background:#2f3a5c;}
+#vetapp .room.night::after{background:#4a4668;border-top-color:#3d3a58;}
+#vetapp .room.night .room-window{background:#1d2440;}
+#vetapp .room.night .room-window::after{content:"🌙";}
+#vetapp .room.night .blanket{display:block;}
+#vetapp .room.night .care-img{opacity:.85;}
+#vetapp .care-actions{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+#vetapp .care-btn{font-family:inherit;color:var(--v-ink);background:var(--v-cream);border:1.5px solid var(--v-line);border-radius:14px;padding:8px 4px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:13px;transition:transform .1s;}
+#vetapp .care-btn:active{transform:scale(0.94);}
+#vetapp .care-emo{font-size:26px;line-height:1.2;}
+#vetapp .food-row{display:none;gap:8px;margin-top:8px;}
+#vetapp .food-row.show{display:flex;animation:vfade .3s ease;}
+#vetapp .food-btn{flex:1;font-family:inherit;font-size:13px;color:var(--v-ink);background:#fff;border:1.5px solid var(--v-terracotta);border-radius:12px;padding:10px 4px;cursor:pointer;}
+#vetapp .reward{display:none;margin-top:10px;background:#fdf1e0;border:1.5px solid var(--v-gold);border-radius:14px;padding:10px 12px;text-align:center;}
+#vetapp .reward.show{display:block;animation:vfade .3s ease;}
+#vetapp .reward p{margin:0 0 8px;font-size:14px;font-weight:bold;color:#8a6212;}
+#vetapp .reward .primary-btn{width:100%;padding:10px;}
+#vetapp .care-note{font-size:12px;color:#9a8c70;text-align:center;line-height:1.6;margin:10px 0 0;}
+#vetapp #vcareHomeBtn{margin-top:10px;}
