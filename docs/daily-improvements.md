@@ -74,3 +74,10 @@
 - 没做的候选：
   1. 首页 Bird Pal 段落写着「try it on the phone to the left」，手机上手机样机其实在上方，改成「above」更准（一行文案，下次顺手改）。
   2. #40（practice 页按钮 44px）、#47（每日中文卡片文案更新）两个 PR 仍待老板批准合并。
+
+## 2026-11-11
+- 改了什么（删掉一个多余的东西）：product.html 是一个没有任何页面链到的孤儿页，内容还是旧方案（「Coming soon · 需家长审核」「USD 4.99 测试价」「Payhip 交付」「[parent-managed email required]」），和现在「Etsy $1.99 即时下载」的真实卖法矛盾，却仍在 sitemap 里、允许被 Google 索引。改为 noindex 并移出 sitemap，文件保留；tests/site.test.js 的索引/noindex 清单同步更新。无 CSS/JS 改动，不需要动 ?v=。`node --test tests/*.test.js` 44/44 通过。PR #49。
+- 说明：#47、#48 三天没合并，彼此在本日志末尾冲突。今天的分支先把这两个分支合进来（已解决日志冲突），所以合并 #49 一个就等于三天的改动都上线；先单独合 #47/#48 再合 #49 也可以，不会冲突。
+- 没做的候选：
+  1. 页脚「Questions or a broken page? Message us through our Etsy shop」这条全站唯一的联系链接只有 15px 高，需要改 styles.css + 全站 ?v=，等 #48 合并后再做。
+  2. 页脚「Affiliate Disclosure」链接和 disclosure.html：联盟页已全部下线，首页的 Amazon 链接也不带联盟标签，这个声明页可能已多余（涉及法律声明，需老板点头再删）。
