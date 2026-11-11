@@ -9,7 +9,7 @@ var state = newState();
 function newState(){ return {found:0, solved:false, tries:0, step:0, fb:null, toolFb:null}; }
 
 var UI = {
-  tagLine: {zh:'WILD CASE FILES · v0.5', en:'WILD CASE FILES · v0.5', es:'WILD CASE FILES · v0.5'},
+  tagLine: {zh:'WILD CASE FILES · v0.6', en:'WILD CASE FILES · v0.6', es:'WILD CASE FILES · v0.6'},
   appTitle: {zh:'野生诊所', en:'Wild Case Files', es:'Casos Silvestres'},
   caseHome: {zh:'选择病例', en:'Choose a case', es:'Elige un caso'},
   caseNo: {zh:'病例 0', en:'Case 0', es:'Caso 0'},
@@ -41,6 +41,30 @@ var UI = {
   learnTitle: {zh:'今天学到的', en:'What you learned today', es:'Lo que aprendiste hoy'},
   nextBtn: {zh:'下一个病例 →', en:'Next case →', es:'Siguiente caso →'},
   homeBtn: {zh:'回到病例列表', en:'Back to all cases', es:'Volver a los casos'},
+  careNo: {zh:'过家家', en:'Pretend play', es:'Juego de casita'},
+  careName: {zh:'照顾小屋', en:'The Care Room', es:'La casita de cuidados'},
+  careSub: {zh:'喂饭 · 洗澡 · 打扮 · 哄睡觉', en:'Feed · Bathe · Dress up · Bedtime', es:'Comer · Baño · Disfraces · A dormir'},
+  toCareBtn: {zh:'🏠 带它去照顾小屋', en:'🏠 Take it to the Care Room', es:'🏠 Llévalo a la casita de cuidados'},
+  careHomeBtn: {zh:'回到病例列表', en:'Back to all cases', es:'Volver a los casos'},
+  actFeed: {zh:'喂饭', en:'Feed', es:'Comer'},
+  actBath: {zh:'洗澡', en:'Bath', es:'Baño'},
+  actBrush: {zh:'梳毛', en:'Brush', es:'Cepillar'},
+  actHug: {zh:'抱抱', en:'Cuddle', es:'Mimos'},
+  actDress: {zh:'打扮', en:'Dress up', es:'Disfrazar'},
+  actSleep: {zh:'睡觉', en:'Sleep', es:'Dormir'},
+  actWake: {zh:'起床', en:'Wake up', es:'Despertar'},
+  nameHint: {zh:'（点名字可以改名）', en:'(tap the name to rename)', es:'(toca el nombre para cambiarlo)'},
+  careNote: {zh:'想怎么玩都可以，没有错的玩法。做满 5 件不同的事，就能拿到一张照顾员贴纸！', en:'Play any way you like — there are no wrong moves. Do 5 different things to earn a carer sticker!', es:'Juega como quieras — no hay errores. ¡Haz 5 cosas distintas y gana una pegatina de cuidador!'},
+  hello: {zh:'今天想和我玩什么呀？', en:'What shall we play today?', es:'¿A qué jugamos hoy?'},
+  pickFood: {zh:'我饿啦——选一样给我吧！', en:"I'm hungry — pick something for me!", es:'Tengo hambre — ¡elige algo para mí!'},
+  bBath: {zh:'泡泡好舒服，洗得香香的！', en:'Bubbles feel so nice — all clean!', es:'¡Qué ricas las burbujas — todo limpio!'},
+  bHug: {zh:'嘿嘿，最喜欢你了！', en:'Hee hee, I like you the most!', es:'Ji ji, ¡tú eres mi favorito!'},
+  bDress: {zh:'好看吗？', en:'How do I look?', es:'¿Qué tal me veo?'},
+  bDressOff: {zh:'还是什么都不戴最轻松～', en:'Wearing nothing is comfy too!', es:'¡Sin nada también estoy cómodo!'},
+  bSleep: {zh:'呼……晚安……', en:'Zzz... good night...', es:'Zzz... buenas noches...'},
+  bWake: {zh:'睡饱啦，早上好！', en:'I slept so well — good morning!', es:'¡Dormí muy bien — buenos días!'},
+  rewardText: {zh:'🏅 今天照顾得真棒！获得照顾员贴纸，一共 {n} 张', en:'🏅 Wonderful caring today! You earned a carer sticker — {n} in total', es:'🏅 ¡Qué bien lo cuidaste hoy! Ganaste una pegatina de cuidador — {n} en total'},
+  newDayBtn: {zh:'☀️ 新的一天', en:'☀️ A new day', es:'☀️ Un nuevo día'},
   restartBtn: {zh:'再玩一次这个病例', en:'Replay this case', es:'Repetir este caso'}
 };
 
@@ -233,6 +257,43 @@ var CASES = [
 }
 ];
 
+var ACCS = ['', '🎀', '👑', '🌸', '🎩', '🧣'];
+var PETS = [
+  {
+    names: {zh:['栗子','球球','小刺'], en:['Chestnut','Bramble','Pip'], es:['Castaña','Bolita','Púas']},
+    brush: {zh:'刺也要轻轻梳——痒痒的，好舒服！', en:'Gentle on the spines — that tickles, so nice!', es:'Suave con las púas — ¡qué cosquillas tan ricas!'},
+    foods: [
+      {ico:'💧', ok:true, name:{zh:'清水', en:'Water', es:'Agua'}, say:{zh:'咕嘟咕嘟——清水最好啦！', en:'Glug glug — fresh water is the best!', es:'Glu glu — ¡el agua fresca es lo mejor!'}},
+      {ico:'🐛', ok:true, name:{zh:'虫虫餐', en:'Bug dinner', es:'Cena de bichitos'}, say:{zh:'脆脆的，我最爱吃虫虫！', en:'Crunchy! Bugs are my favorite!', es:'¡Crujiente! ¡Los bichitos son mis favoritos!'}},
+      {ico:'🥛', ok:false, name:{zh:'牛奶', en:'Milk', es:'Leche'}, say:{zh:'刺猬不能喝牛奶，会肚子疼——换成清水吧！', en:"Hedgehogs can't drink milk — it gives us a tummy ache. Water, please!", es:'Los erizos no podemos tomar leche — nos duele la barriga. ¡Agua, por favor!'}}
+    ]
+  },
+  {
+    names: {zh:['团子','雪球','糯米'], en:['Mochi','Snowball','Clover'], es:['Mochi','Copito','Trébol']},
+    brush: {zh:'毛梳得顺顺的，蓬蓬的！', en:'My fur is all smooth and fluffy!', es:'¡Mi pelo quedó suave y esponjoso!'},
+    foods: [
+      {ico:'🌾', ok:true, name:{zh:'干草', en:'Hay', es:'Heno'}, say:{zh:'嚼嚼嚼——顺便磨磨牙！', en:'Munch munch — and it keeps my teeth short!', es:'Ñam ñam — ¡y me desgasta los dientes!'}},
+      {ico:'🥬', ok:true, name:{zh:'青菜', en:'Leafy greens', es:'Hojas verdes'}, say:{zh:'新鲜的叶子，好吃！', en:'Fresh leaves — yummy!', es:'Hojas frescas — ¡qué ricas!'}},
+      {ico:'🥕', ok:true, name:{zh:'胡萝卜', en:'Carrot', es:'Zanahoria'}, say:{zh:'好甜！不过胡萝卜是零食，一小口就够啦。', en:'So sweet! But carrot is a treat — one little bite is enough.', es:'¡Qué dulce! Pero la zanahoria es un premio — con un bocadito basta.'}}
+    ]
+  }
+];
+var CARE_KEY = 'vetCareRoom';
+var care = loadCare();
+var careUi = {bubble:null, food:false, asleep:false, fx:''};
+
+function loadCare(){
+  var d = {pet:0, name:[0,0], acc:[0,0], done:[], stickers:0};
+  try {
+    var s = JSON.parse(window.localStorage.getItem(CARE_KEY));
+    if (s && s.name && s.acc && s.done) { for (var k in d) { if (s[k] !== undefined) d[k] = s[k]; } }
+  } catch (e) {}
+  return d;
+}
+function saveCare(){
+  try { window.localStorage.setItem(CARE_KEY, JSON.stringify(care)); } catch (e) {}
+}
+
 function $(id){ return document.getElementById(id); }
 function L(o){ return o[lang]; }
 function C(){ return CASES[caseIdx]; }
@@ -272,7 +333,7 @@ function render(){
   var onTitle = activeScreen() === 'title';
   $('vtagLine').innerText = L(UI.tagLine);
   $('vappTitle').innerText = L(UI.appTitle);
-  $('vcaseLabel').innerText = onTitle ? L(UI.caseHome) : L(UI.caseNo) + (caseIdx+1);
+  $('vcaseLabel').innerText = onTitle ? L(UI.caseHome) : (activeScreen() === 'care' ? L(UI.careName) : L(UI.caseNo) + (caseIdx+1));
   $('vtitleH2').innerText = L(UI.appTitle);
   $('vtitleDesc').innerText = L(UI.titleDesc);
   $('vtitleFootnote').innerText = L(UI.titleFootnote);
@@ -284,7 +345,7 @@ function render(){
     $('vcaseStars'+i).innerText = n ? (n >= 3 ? '★★★' : '★★☆') : L(UI.notPlayed);
     $('vcaseStars'+i).className = 'case-stars' + (n ? ' done' : '');
   }
-  $('vetapp').className = 'case-' + c.id;
+  $('vetapp').className = 'case-' + c.id + ' pet-' + CASES[care.pet].id;
   $('vownerAv1').src = c.owner; $('vownerAv2').src = c.owner;
   $('vimgIntro').src = c.sick; $('vimgExam').src = c.sick; $('vimgTreat').src = c.sick; $('vimgEnd').src = c.well;
   if (state.step >= 3) $('vimgTreat').src = c.well;
@@ -311,6 +372,8 @@ function render(){
   $('vlearnTitle').innerText = L(UI.learnTitle);
   $('vnextBtn').innerText = caseIdx < CASES.length-1 ? L(UI.nextBtn) : L(UI.homeBtn);
   $('vrestartBtn').innerText = L(UI.restartBtn);
+  $('vtoCareBtn').innerText = L(UI.toCareBtn);
+  renderCare();
   $('vendFootnote').innerText = L(t.endFootnote);
   showFb('vdiagFeedback', state.fb ? L(t.fb[state.fb.n-1]) : '', state.fb && state.fb.ok);
   showFb('vtoolFeedback', state.toolFb ? (state.toolFb.ok ? L(t.toolFb[state.toolFb.n-1]) : L(UI.toolFbWrong)) : '', state.toolFb && state.toolFb.ok);
@@ -319,6 +382,82 @@ function render(){
   $('vendBadge').innerText = L(best ? UI.endingBestBadge : UI.endingOkBadge);
   $('vendText').innerText = L(best ? t.endBest : t.endOk);
   $('vownerEndLine').innerText = L(best ? t.ownerBest : t.ownerOk);
+}
+
+function renderCare(){
+  var p = PETS[care.pet], i;
+  $('vcareNo').innerText = L(UI.careNo);
+  $('vcareName').innerText = L(UI.careName);
+  $('vcareSub').innerText = L(UI.careSub);
+  $('vpetTab0').className = 'pet-tab' + (care.pet === 0 ? ' active' : '');
+  $('vpetTab1').className = 'pet-tab' + (care.pet === 1 ? ' active' : '');
+  $('vpetName').innerText = L(p.names)[care.name[care.pet]] + ' ✎';
+  $('vpetName').title = L(UI.nameHint);
+  var full = care.done.length >= 5, h = '';
+  for (i=0;i<5;i++) h += i < care.done.length ? '❤️' : '🤍';
+  $('vhearts').innerText = h;
+  $('vcareImg').src = CASES[care.pet].well;
+  $('vacc').innerText = ACCS[care.acc[care.pet]];
+  $('vfx').innerText = careUi.fx;
+  $('vroom').className = 'room' + (careUi.asleep ? ' night' : '');
+  $('vbubble').innerText = careUi.bubble ? L(careUi.bubble) : L(UI.hello);
+  $('vactFeedL').innerText = L(UI.actFeed);
+  $('vactBathL').innerText = L(UI.actBath);
+  $('vactBrushL').innerText = L(UI.actBrush);
+  $('vactHugL').innerText = L(UI.actHug);
+  $('vactDressL').innerText = L(UI.actDress);
+  $('vactSleepL').innerText = careUi.asleep ? L(UI.actWake) : L(UI.actSleep);
+  $('vfoodRow').className = 'food-row' + (careUi.food ? ' show' : '');
+  for (i=0;i<3;i++) $('vfood'+(i+1)).innerText = p.foods[i].ico + ' ' + L(p.foods[i].name);
+  $('vreward').className = 'reward' + (full ? ' show' : '');
+  $('vrewardText').innerText = L(UI.rewardText).replace('{n}', care.stickers);
+  $('vnewDayBtn').innerText = L(UI.newDayBtn);
+  $('vcareNote').innerText = L(UI.careNote);
+  $('vcareHomeBtn').innerText = L(UI.careHomeBtn);
+}
+
+function careDone(kind){
+  if (care.done.length >= 5 || care.done.indexOf(kind) !== -1) return;
+  care.done.push(kind);
+  if (care.done.length >= 5) care.stickers++;
+}
+
+function bounce(){
+  var w = $('vpetWrap');
+  w.classList.remove('bounce');
+  void w.offsetWidth;
+  w.classList.add('bounce');
+}
+
+function careAct(kind, bubble, fx, counts){
+  if (kind !== 'sleep') careUi.asleep = false;
+  careUi.food = false;
+  careUi.bubble = bubble;
+  careUi.fx = fx;
+  if (counts !== false) careDone(kind);
+  saveCare();
+  render();
+  bounce();
+}
+
+function openCare(pet){
+  if (pet !== undefined) care.pet = pet;
+  careUi = {bubble:null, food:false, asleep:false, fx:''};
+  goTo('care');
+}
+
+function switchPet(i){
+  care.pet = i;
+  careUi = {bubble:null, food:false, asleep:false, fx:''};
+  saveCare();
+  render();
+  bounce();
+}
+
+function feed(i){
+  var f = PETS[care.pet].foods[i];
+  careAct('feed', f.say, f.ok ? f.ico : '🙅', f.ok);
+  if (!f.ok) { careUi.food = true; render(); }
 }
 
 function goTo(id){
@@ -426,6 +565,35 @@ function init(){
   bind('vtoEndBtn', finish);
   bind('vnextBtn', function(){
     if (caseIdx < CASES.length-1) { startCase(caseIdx+1); } else { resetCase(); goTo('title'); }
+  });
+  bind('vcareBtn', function(){ openCare(); });
+  bind('vtoCareBtn', function(){ openCare(caseIdx); });
+  bind('vcareHomeBtn', function(){ resetCase(); goTo('title'); });
+  bind('vpetTab0', function(){ switchPet(0); });
+  bind('vpetTab1', function(){ switchPet(1); });
+  bind('vpetName', function(){
+    care.name[care.pet] = (care.name[care.pet] + 1) % 3;
+    saveCare(); render();
+  });
+  bind('vactFeed', function(){
+    careUi.asleep = false; careUi.food = !careUi.food; careUi.fx = '';
+    careUi.bubble = UI.pickFood; render();
+  });
+  [0,1,2].forEach(function(i){ bind('vfood'+(i+1), function(){ feed(i); }); });
+  bind('vactBath', function(){ careAct('bath', UI.bBath, '🫧'); });
+  bind('vactBrush', function(){ careAct('brush', PETS[care.pet].brush, '✨'); });
+  bind('vactHug', function(){ careAct('hug', UI.bHug, '💗'); });
+  bind('vactDress', function(){
+    care.acc[care.pet] = (care.acc[care.pet] + 1) % ACCS.length;
+    careAct('dress', care.acc[care.pet] ? UI.bDress : UI.bDressOff, '');
+  });
+  bind('vactSleep', function(){
+    if (careUi.asleep) { careUi.asleep = false; careAct('wake', UI.bWake, '☀️', false); }
+    else { careUi.asleep = true; careAct('sleep', UI.bSleep, '💤'); }
+  });
+  bind('vnewDayBtn', function(){
+    care.done = []; careUi = {bubble:null, food:false, asleep:false, fx:''};
+    saveCare(); render();
   });
   bind('vcaseLabel', function(){ resetCase(); goTo('title'); });
   bind('vrestartBtn', function(){ startCase(caseIdx); });
