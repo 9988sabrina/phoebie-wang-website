@@ -363,7 +363,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
     <button class="big blue" id="again">Practice again</button>
   </section>
 
-  <p class="credit"><span data-i18n="credit">Made by Phoebie</span> &middot; <span id="buildTag">v2.5.2</span></p>
+  <p class="credit"><span data-i18n="credit">Made by Phoebie</span> &middot; <span id="buildTag">v2.5.3</span></p>
 </main>
 
 <script>
@@ -882,18 +882,18 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
     new Int16Array(b,44).set(out);
     return {blob:new Blob([b],{type:"audio/wav"}),peak:peak};
   }
-  function saveClip(blob){
+  function saveClip(blob,onDone){
     var word=state.current;
     $("voiceErr").hidden=true;
     $("voiceState").innerHTML='<span class="ok">'+esc(T("savingVoice"))+'</span>';
-    var saved=function(){renderWords();$("voiceState").insertAdjacentHTML("afterbegin",'<span class="ok">'+esc(T("savedTap"))+' </span>');};
+    var saved=function(){renderWords();$("voiceState").insertAdjacentHTML("afterbegin",'<span class="ok">'+esc(T("savedTap"))+' </span>');if(onDone)onDone(true,word);};
     var keepOriginal=function(reason){
       return rawPut(word,blob).then(function(){try{localStorage.removeItem(VKEY+word);}catch(e){}saved();})
         .catch(function(e){renderWords();$("voiceErr").textContent=T("cantSave",{c:(reason||"")+"/"+((e&&e.name)||"store")});$("voiceErr").hidden=false;});
     };
     readBuf(blob).then(decode).then(function(ab){
       var res=toWav(ab);
-      if(res.peak<0.01){renderWords();$("voiceErr").textContent=T("silent");$("voiceErr").hidden=false;return;}
+      if(res.peak<0.01){renderWords();$("voiceErr").textContent=T("silent");$("voiceErr").hidden=false;if(onDone)onDone(false,word);return;}
       rawPut(word,res.blob).then(function(){try{localStorage.removeItem(VKEY+word);}catch(e){}saved();}).catch(function(){
         var r=new FileReader();r.onload=function(){
           try{localStorage.setItem(VKEY+word,r.result);saved();}
@@ -963,7 +963,13 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
       if(!b64){setBtn("bad");showErr(T("silent"));return;}
       if(r&&Date.now()-r.start<300){setBtn();showErr(T("keepHolding"));return;}
       var bin=atob(b64),arr=new Uint8Array(bin.length);for(var i=0;i<bin.length;i++)arr[i]=bin.charCodeAt(i);
-      setBtn("ok");saveClip(new Blob([arr],{type:"audio/wav"}));
+      /* Show "Saved!" only once it is really saved, then play it straight back so you hear your word. */
+      saveClip(new Blob([arr],{type:"audio/wav"}),function(ok,word){
+        if(!ok){setBtn("bad");return;}
+        setBtn("ok");
+        $("voiceState").insertAdjacentHTML("afterbegin",'<span class="ok">'+esc(pick(T("savedLines")))+' </span>');
+        sayOnce(word);
+      });
     };
     var stopRec=function(){
       var r=recState;if(!r||r.stopped)return;r.stopped=true;
@@ -1269,7 +1275,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
   }
 
   function setBuildTag(){var sa=(window.matchMedia&&matchMedia("(display-mode: standalone)").matches)||navigator.standalone===true;
-    $("buildTag").textContent="v2.5.2 \u00b7 "+T(framed?"tagPreview":window.BIRDPAL_NATIVE?"tagNative":sa?"tagHome":"tagBrowser");}
+    $("buildTag").textContent="v2.5.3 \u00b7 "+T(framed?"tagPreview":window.BIRDPAL_NATIVE?"tagNative":sa?"tagHome":"tagBrowser");}
 
   /* ---------- switching language ---------- */
   function sameList(a,b){return a.length===b.length&&a.every(function(x){return b.indexOf(x)>=0;});}
