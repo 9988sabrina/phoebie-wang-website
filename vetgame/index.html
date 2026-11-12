@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="description" content="Wild Case Files 野生诊所: a silly comic vet game for kids. Examine, diagnose, treat and look after a hedgehog and a rabbit. 中文 / English / Español.">
+<meta name="description" content="Wild Case Files 野生诊所: a silly comic vet game for kids. Examine, diagnose, treat and look after a hedgehog, a rabbit and a guinea pig. 中文 / English / Español.">
 <meta name="theme-color" content="#e8b74b">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -18,7 +18,7 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="icon-180.png">
-<link rel="stylesheet" href="../vet-game.css?v=7">
+<link rel="stylesheet" href="../vet-game.css?v=8">
 <link rel="stylesheet" href="app.css?v=1">
 <title>野生诊所 Wild Case Files</title>
 </head>
@@ -32,7 +32,7 @@
 
   <header>
     <div>
-      <div class="tag" id="vtagLine">WILD CASE FILES · v0.7</div>
+      <div class="tag" id="vtagLine">WILD CASE FILES · v0.8</div>
       <h2 id="vappTitle">野生诊所</h2>
     </div>
     <button class="case-num" id="vcaseLabel" type="button">病例</button>
@@ -41,6 +41,7 @@
     <button class="lang-btn active" id="vlangBtn-zh" type="button">中文</button>
     <button class="lang-btn" id="vlangBtn-en" type="button">EN</button>
     <button class="lang-btn" id="vlangBtn-es" type="button">ES</button>
+    <button class="lang-btn snd-btn" id="vsndBtn" type="button" aria-label="Sound on/off">🔊</button>
   </div>
 
   <div class="screen active title-screen" id="vscreen-title">
@@ -54,6 +55,10 @@
       <button class="case-card" type="button" id="vcaseBtn1">
         <img src="../assets/vet/rabbit-sick.svg" alt="" width="96" height="72">
         <span class="case-info"><span class="case-no" id="vcaseNo1"></span><span class="case-name" id="vcaseName1"></span><span class="case-stars" id="vcaseStars1"></span></span>
+      </button>
+      <button class="case-card" type="button" id="vcaseBtn2">
+        <img src="../assets/vet/guineapig-sick.svg" alt="" width="96" height="72">
+        <span class="case-info"><span class="case-no" id="vcaseNo2"></span><span class="case-name" id="vcaseName2"></span><span class="case-stars" id="vcaseStars2"></span></span>
       </button>
       <button class="case-card care-card" type="button" id="vcareBtn">
         <span class="care-ico" aria-hidden="true">🏠</span>
@@ -182,6 +187,7 @@
       <div class="pet-tabs">
         <button class="pet-tab" type="button" id="vpetTab0"><img src="../assets/vet/hedgehog-well.svg" alt="" width="44" height="33"></button>
         <button class="pet-tab" type="button" id="vpetTab1"><img src="../assets/vet/rabbit-well.svg" alt="" width="44" height="33"></button>
+        <button class="pet-tab" type="button" id="vpetTab2"><img src="../assets/vet/guineapig-well.svg" alt="" width="44" height="33"></button>
       </div>
       <button class="name-tag" type="button" id="vpetName"></button>
       <div class="hearts" id="vhearts" aria-live="polite"></div>
@@ -199,7 +205,7 @@
     </div>
     <div class="care-actions">
       <button class="care-btn" type="button" id="vactFeed"><span class="care-emo" aria-hidden="true">🍽️</span><span id="vactFeedL"></span></button>
-      <button class="care-btn" type="button" id="vactBath"><span class="care-emo" aria-hidden="true">🫧</span><span id="vactBathL"></span></button>
+      <button class="care-btn" type="button" id="vactBath"><span class="care-emo" aria-hidden="true">🧹</span><span id="vactBathL"></span></button>
       <button class="care-btn" type="button" id="vactBrush"><span class="care-emo" aria-hidden="true">🪮</span><span id="vactBrushL"></span></button>
       <button class="care-btn" type="button" id="vactHug"><span class="care-emo" aria-hidden="true">💗</span><span id="vactHugL"></span></button>
       <button class="care-btn" type="button" id="vactDress"><span class="care-emo" aria-hidden="true">🎀</span><span id="vactDressL"></span></button>
@@ -219,7 +225,7 @@
   </div>
 
 </div>
-<script src="../vet-game.js?v=7"></script>
+<script src="../vet-game.js?v=8"></script>
 <script src="app.js?v=1"></script>
 </body>
 </html>

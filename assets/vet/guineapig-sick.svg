@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" role="img" aria-label="Unwell guinea pig with messy fur and a sore knee">
+<ellipse cx="200" cy="264" rx="150" ry="13" fill="#3b3024" opacity="0.10"/>
+<path d="M150 92 l8 -22 10 20 M200 80 l6 -24 12 22 M250 84 l10 -22 8 24 M300 100 l14 -18 4 24 M120 110 l-2 -22 16 14" stroke="#b9793f" stroke-width="7" stroke-linecap="round" fill="none"/>
+<ellipse cx="205" cy="178" rx="140" ry="86" fill="#d9954f"/>
+<path d="M190 94 C230 88 262 96 280 110 C276 160 272 220 258 262 L170 262 C160 210 168 140 190 94Z" fill="#fffaf2"/>
+<ellipse cx="282" cy="186" rx="64" ry="78" fill="#d9954f"/>
+<path d="M60 190 C56 150 84 112 130 108 C150 106 170 118 176 140 C182 180 160 220 120 226 C92 230 64 216 60 190Z" fill="#fffaf2"/>
+<path d="M112 108 C132 102 160 110 172 132 C150 126 126 124 104 130Z" fill="#d9954f"/>
+<ellipse cx="150" cy="112" rx="18" ry="13" fill="#b9793f" transform="rotate(-20 150 112)"/><ellipse cx="150" cy="114" rx="10" ry="7" fill="#f0a79b" transform="rotate(-20 150 114)"/>
+<ellipse cx="62" cy="182" rx="9" ry="7" fill="#e58f84"/>
+<path d="M106 152 Q118 162 130 152" stroke="#2e2018" stroke-width="4.5" fill="none" stroke-linecap="round"/><path d="M102 136 L128 142" stroke="#8a5a2c" stroke-width="4" stroke-linecap="round"/><path d="M72 194 Q84 186 96 193" stroke="#2e2018" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+<ellipse cx="150" cy="238" rx="17" ry="13" fill="#f2a79b"/><path d="M168 222 l8 -8 M172 232 l11 -3 M170 244 l10 4" stroke="#d9573f" stroke-width="3" stroke-linecap="round"/>
+<ellipse cx="128" cy="258" rx="22" ry="10" fill="#f3dcc0"/><ellipse cx="200" cy="262" rx="22" ry="10" fill="#f3dcc0"/><ellipse cx="290" cy="260" rx="22" ry="10" fill="#b9793f"/>
+<path d="M96 112 q-7 12 0 18 q7 -6 0 -18z" fill="#8fc3e8"/>
+</svg>
