@@ -143,6 +143,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
 @keyframes wave{from{opacity:.2}to{opacity:1}}
 @keyframes hop{from{transform:translateY(0)}to{transform:translateY(-3px)}}
 @media (prefers-reduced-motion:reduce){.hearBtn.talking,.hearBtn.talking .w1,.hearBtn.talking .w2{animation:none}}
+#holdRec{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;touch-action:none}
 .credit{font-size:12px;color:var(--muted);text-align:center;margin:8px 0 0}
 /* Livelier home: sky scene behind Nori, bobbing bird, floating notes */
 #home .stage{border-radius:28px;border:3px solid var(--ink);background:linear-gradient(#7CC4FF,#CFEBFF 60%,#FFF3C4);overflow:hidden;min-height:290px;padding-top:56px;box-shadow:0 6px 0 var(--ink)}
@@ -362,7 +363,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
     <button class="big blue" id="again">Practice again</button>
   </section>
 
-  <p class="credit"><span data-i18n="credit">Made by Phoebie</span> &middot; <span id="buildTag">v2.4.2</span></p>
+  <p class="credit"><span data-i18n="credit">Made by Phoebie</span> &middot; <span id="buildTag">v2.4.3</span></p>
 </main>
 
 <script>
@@ -953,6 +954,8 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
       if(r.stream)finishRec(r);
     };
     hb.addEventListener("contextmenu",function(e){e.preventDefault();});
+    /* Stop iOS from turning a long press into text selection (the magnifier bubble), which steals the touch. */
+    ["touchstart","touchmove","touchend","selectstart"].forEach(function(t){hb.addEventListener(t,function(e){if(e.cancelable)e.preventDefault();},{passive:false});});
     hb.addEventListener("pointerdown",async function(e){
       e.preventDefault();if(recState)return;$("voiceErr").hidden=true;$("voiceErr").classList.remove("tip");hush();
       setSession("play-and-record");
@@ -1247,7 +1250,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
   }
 
   function setBuildTag(){var sa=(window.matchMedia&&matchMedia("(display-mode: standalone)").matches)||navigator.standalone===true;
-    $("buildTag").textContent="v2.4.2 \u00b7 "+T(framed?"tagPreview":window.BIRDPAL_NATIVE?"tagNative":sa?"tagHome":"tagBrowser");}
+    $("buildTag").textContent="v2.4.3 \u00b7 "+T(framed?"tagPreview":window.BIRDPAL_NATIVE?"tagNative":sa?"tagHome":"tagBrowser");}
 
   /* ---------- switching language ---------- */
   function sameList(a,b){return a.length===b.length&&a.every(function(x){return b.indexOf(x)>=0;});}
