@@ -363,7 +363,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
     <button class="big blue" id="again">Practice again</button>
   </section>
 
-  <p class="credit"><span data-i18n="credit">Made by Phoebie</span> &middot; <span id="buildTag">v2.5</span></p>
+  <p class="credit"><span data-i18n="credit">Made by Phoebie</span> &middot; <span id="buildTag">v2.5.1</span></p>
 </main>
 
 <script>
@@ -624,6 +624,8 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
   function show(name){
     screens.forEach(function(s){$(s).hidden=(s!==name);});
     if(name!=="practice")stopPlay();
+    /* In the app: get the recorder ready on the practice page, back to steady playback elsewhere. */
+    try{if(window.BIRDPAL_NATIVE&&window.webkit&&window.webkit.messageHandlers.birdpal)window.webkit.messageHandlers.birdpal.postMessage({rec:name==="practice"?"warm":"cool"});}catch(e){}
     if(name!=="dance")stopParty();
     if(name==="lesson")renderLessonSetup();
     window.scrollTo(0,0);
@@ -959,13 +961,14 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
       var r=recState;recState=null;
       if(err==="denied"){setBtn("bad");showErr(T("micOff"));return;}
       if(!b64){setBtn("bad");showErr(T("silent"));return;}
-      if(r&&Date.now()-r.start<500){setBtn();showErr(T("keepHolding"));return;}
+      if(r&&Date.now()-r.start<300){setBtn();showErr(T("keepHolding"));return;}
       var bin=atob(b64),arr=new Uint8Array(bin.length);for(var i=0;i<bin.length;i++)arr[i]=bin.charCodeAt(i);
       setBtn("ok");saveClip(new Blob([arr],{type:"audio/wav"}));
     };
     var stopRec=function(){
       var r=recState;if(!r||r.stopped)return;r.stopped=true;
-      if(r.native){try{window.webkit.messageHandlers.birdpal.postMessage({rec:"stop"});}catch(e){}return;}
+      if(r.native){try{window.webkit.messageHandlers.birdpal.postMessage({rec:"stop"});}catch(e){}
+        setTimeout(function(){if(recState===r){recState=null;setBtn("bad");}},4000);return;}
       if(r.mr){if(r.mr.state==="recording")r.mr.stop();return;}
       if(r.stream)finishRec(r);
     };
@@ -994,7 +997,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
       setBtn("rec");
       setTimeout(function(){if(recState===r)stopRec();},6000);
     });
-    hb.addEventListener("pointerup",stopRec);hb.addEventListener("pointercancel",stopRec);hb.addEventListener("pointerleave",stopRec);
+    hb.addEventListener("pointerup",stopRec);hb.addEventListener("pointercancel",stopRec);hb.addEventListener("pointerleave",function(e){if(e.pointerType==="mouse")stopRec();});
   }
 
   var TIMES=5,playing=false,runId=0;
@@ -1266,7 +1269,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
   }
 
   function setBuildTag(){var sa=(window.matchMedia&&matchMedia("(display-mode: standalone)").matches)||navigator.standalone===true;
-    $("buildTag").textContent="v2.5 \u00b7 "+T(framed?"tagPreview":window.BIRDPAL_NATIVE?"tagNative":sa?"tagHome":"tagBrowser");}
+    $("buildTag").textContent="v2.5.1 \u00b7 "+T(framed?"tagPreview":window.BIRDPAL_NATIVE?"tagNative":sa?"tagHome":"tagBrowser");}
 
   /* ---------- switching language ---------- */
   function sameList(a,b){return a.length===b.length&&a.every(function(x){return b.indexOf(x)>=0;});}

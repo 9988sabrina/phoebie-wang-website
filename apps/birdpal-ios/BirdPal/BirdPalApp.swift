@@ -66,40 +66,86 @@ struct BirdPalView: UIViewRepresentable {
 
     final class Coordinator: NSObject, WKUIDelegate, WKNavigationDelegate, WKScriptMessageHandler {
         weak var webView: WKWebView?
-        private var recorder: AVAudioRecorder?
-        private var recordURL: URL { FileManager.default.temporaryDirectory.appendingPathComponent("birdpal-rec.wav") }
+        // Recording with the iPhone's own recorder, steadier than the web page's microphone.
+        // The recorder is made ready ("warm") when the practice page opens, so a press starts
+        // recording instantly; every stop always answers the page, so the button never sticks.
+        private var prepared: AVAudioRecorder?
+        private var recording: AVAudioRecorder?
+        private var warm = false
+        private var startWanted = false
+        private var stopWanted = false
 
-        /// "Hold to record my voice" records with the iPhone's own recorder (steadier than the
-        /// web page's microphone). The finished WAV goes back to the page, which saves it as before.
-        private func startRecording() {
-            AVAudioSession.sharedInstance().requestRecordPermission { granted in
-                DispatchQueue.main.async {
-                    guard granted else { self.finish(nil, error: "denied"); return }
-                    BirdPalApp.setAudio(record: true)
-                    let settings: [String: Any] = [
-                        AVFormatIDKey: kAudioFormatLinearPCM, AVSampleRateKey: 44100.0,
-                        AVNumberOfChannelsKey: 1, AVLinearPCMBitDepthKey: 16,
-                        AVLinearPCMIsFloatKey: false, AVLinearPCMIsBigEndianKey: false]
-                    try? FileManager.default.removeItem(at: self.recordURL)
-                    guard let rec = try? AVAudioRecorder(url: self.recordURL, settings: settings),
-                          rec.record() else {
-                        BirdPalApp.setAudio(record: false)
-                        self.finish(nil, error: "start")
-                        return
-                    }
-                    self.recorder = rec
-                }
+        private func newRecorder() -> AVAudioRecorder? {
+            let url = FileManager.default.temporaryDirectory
+                .appendingPathComponent("birdpal-\(UUID().uuidString).wav")
+            let settings: [String: Any] = [
+                AVFormatIDKey: kAudioFormatLinearPCM, AVSampleRateKey: 44100.0,
+                AVNumberOfChannelsKey: 1, AVLinearPCMBitDepthKey: 16,
+                AVLinearPCMIsFloatKey: false, AVLinearPCMIsBigEndianKey: false]
+            guard let rec = try? AVAudioRecorder(url: url, settings: settings), rec.prepareToRecord() else { return nil }
+            return rec
+        }
+
+        private func withPermission(_ done: @escaping (Bool) -> Void) {
+            let session = AVAudioSession.sharedInstance()
+            switch session.recordPermission {
+            case .granted: done(true)
+            case .denied: done(false)
+            default: session.requestRecordPermission { ok in DispatchQueue.main.async { done(ok) } }
             }
         }
 
-        private func stopRecording() {
-            guard let rec = recorder else { return }
-            rec.stop()
-            recorder = nil
+        /// Practice page opened: switch to the microphone mode and get a recorder ready.
+        private func warmUp() {
+            withPermission { ok in
+                guard ok else {
+                    if self.startWanted { self.startWanted = false; self.stopWanted = false; self.finish(nil, error: "denied") }
+                    return
+                }
+                BirdPalApp.setAudio(record: true)
+                self.warm = true
+                if self.prepared == nil { self.prepared = self.newRecorder() }
+                if self.startWanted { self.startWanted = false; self.beginRecording() }
+            }
+        }
+
+        /// Practice page closed: back to steady playback (lessons need it with the screen off).
+        private func coolDown() {
+            if recording != nil { stopRecording() }
+            prepared?.deleteRecording()
+            prepared = nil
+            warm = false
             BirdPalApp.setAudio(record: false)
-            let data = try? Data(contentsOf: recordURL)
-            try? FileManager.default.removeItem(at: recordURL)
-            finish(data, error: data == nil ? "empty" : nil)
+        }
+
+        private func startRecording() {
+            guard recording == nil else { return }
+            stopWanted = false
+            if warm, prepared != nil { beginRecording() } else { startWanted = true; warmUp() }
+        }
+
+        private func beginRecording() {
+            guard let rec = prepared ?? newRecorder() else { finish(nil, error: "start"); return }
+            prepared = nil
+            guard rec.record() else { rec.deleteRecording(); finish(nil, error: "start"); return }
+            recording = rec
+            if stopWanted { stopWanted = false; stopRecording() }
+        }
+
+        private func stopRecording() {
+            guard let rec = recording else {
+                if startWanted { stopWanted = true } else { finish(nil, error: "empty") }
+                return
+            }
+            rec.stop()
+            recording = nil
+            let url = rec.url
+            if warm { prepared = newRecorder() }   // ready for the next word right away
+            DispatchQueue.global(qos: .userInitiated).async {
+                let data = try? Data(contentsOf: url)
+                try? FileManager.default.removeItem(at: url)
+                DispatchQueue.main.async { self.finish(data, error: data == nil ? "empty" : nil) }
+            }
         }
 
         private func finish(_ data: Data?, error: String?) {
@@ -140,7 +186,14 @@ struct BirdPalView: UIViewRepresentable {
             }
             // The page asks for the microphone mode while recording, and normal playback after.
             if let rec = body["rec"] as? String {
-                DispatchQueue.main.async { rec == "start" ? self.startRecording() : self.stopRecording() }
+                DispatchQueue.main.async {
+                    switch rec {
+                    case "warm": self.warmUp()
+                    case "cool": self.coolDown()
+                    case "start": self.startRecording()
+                    default: self.stopRecording()
+                    }
+                }
             }
         }
     }
