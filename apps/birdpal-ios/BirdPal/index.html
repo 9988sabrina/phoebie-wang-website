@@ -363,7 +363,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
     <button class="big blue" id="again">Practice again</button>
   </section>
 
-  <p class="credit"><span data-i18n="credit">Made by Phoebie</span> &middot; <span id="buildTag">v2.5.4</span></p>
+  <p class="credit"><span data-i18n="credit">Made by Phoebie</span> &middot; <span id="buildTag">v2.5.5</span></p>
 </main>
 
 <script>
@@ -983,8 +983,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
     };
     hb.addEventListener("contextmenu",function(e){e.preventDefault();});
     /* Stop iOS from turning a long press into text selection (the magnifier bubble), which steals the touch. */
-    ["touchstart","touchmove","touchend","selectstart"].forEach(function(t){hb.addEventListener(t,function(e){if(e.cancelable)e.preventDefault();},{passive:false});});
-    hb.addEventListener("pointerdown",async function(e){
+    var beginRec=async function(e){
       e.preventDefault();if(recState)return;$("voiceErr").hidden=true;$("voiceErr").classList.remove("tip");hush();
       if(NATIVE_REC){nativeStart();return;}
       setSession("play-and-record");
@@ -1005,8 +1004,18 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
       }
       setBtn("rec");
       setTimeout(function(){if(recState===r)stopRec();},6000);
-    });
-    hb.addEventListener("pointerup",stopRec);hb.addEventListener("pointercancel",stopRec);hb.addEventListener("pointerleave",function(e){if(e.pointerType==="mouse")stopRec();});
+    };
+    /* Fingers: start on the button's touchstart; ANY finger lift anywhere stops it (iPhone did not
+       always send pointerup to the button, which left it stuck on "Listening..."). */
+    hb.addEventListener("touchstart",function(e){if(e.cancelable)e.preventDefault();beginRec(e);},{passive:false});
+    hb.addEventListener("touchmove",function(e){if(e.cancelable)e.preventDefault();},{passive:false});
+    hb.addEventListener("selectstart",function(e){e.preventDefault();});
+    document.addEventListener("touchend",function(){if(recState)stopRec();},{passive:true});
+    document.addEventListener("touchcancel",function(){if(recState)stopRec();},{passive:true});
+    document.addEventListener("visibilitychange",function(){if(document.hidden&&recState)stopRec();});
+    /* Mouse (computer browsers). */
+    hb.addEventListener("pointerdown",function(e){if(e.pointerType==="mouse")beginRec(e);});
+    document.addEventListener("pointerup",function(e){if(e.pointerType==="mouse"&&recState)stopRec();});
   }
 
   var TIMES=5,playing=false,runId=0;
@@ -1278,7 +1287,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
   }
 
   function setBuildTag(){var sa=(window.matchMedia&&matchMedia("(display-mode: standalone)").matches)||navigator.standalone===true;
-    $("buildTag").textContent="v2.5.4 \u00b7 "+T(framed?"tagPreview":window.BIRDPAL_NATIVE?"tagNative":sa?"tagHome":"tagBrowser");}
+    $("buildTag").textContent="v2.5.5 \u00b7 "+T(framed?"tagPreview":window.BIRDPAL_NATIVE?"tagNative":sa?"tagHome":"tagBrowser");}
 
   /* ---------- switching language ---------- */
   function sameList(a,b){return a.length===b.length&&a.every(function(x){return b.indexOf(x)>=0;});}
