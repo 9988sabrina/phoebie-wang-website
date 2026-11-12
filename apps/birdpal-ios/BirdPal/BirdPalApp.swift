@@ -67,8 +67,8 @@ struct BirdPalView: UIViewRepresentable {
     final class Coordinator: NSObject, WKUIDelegate, WKNavigationDelegate, WKScriptMessageHandler {
         weak var webView: WKWebView?
         // Recording with the iPhone's own recorder, steadier than the web page's microphone.
-        // The recorder is made ready ("warm") when the practice page opens, so a press starts
-        // recording instantly; every stop always answers the page, so the button never sticks.
+        // Microphone mode is switched on only from "start" until "stop"; the page shows "Recording"
+        // only after the iPhone confirms it started. Every stop always answers the page.
         private var prepared: AVAudioRecorder?
         private var recording: AVAudioRecorder?
         private var warm = false
@@ -122,10 +122,13 @@ struct BirdPalView: UIViewRepresentable {
                     if self.startWanted { self.startWanted = false; self.stopWanted = false; self.finish(nil, error: "denied") }
                     return
                 }
-                BirdPalApp.setAudio(record: true)
-                self.warm = true
-                if self.prepared == nil { self.prepared = self.newRecorder() }
-                if self.startWanted { self.startWanted = false; self.beginRecording() }
+                // Microphone mode only for the moment of recording; playback stays in steady
+                // "playback" mode (in microphone mode the iPhone played the words quietly or not at all).
+                if self.startWanted {
+                    self.startWanted = false
+                    BirdPalApp.setAudio(record: true)
+                    self.beginRecording()
+                }
             }
         }
 
@@ -139,18 +142,20 @@ struct BirdPalView: UIViewRepresentable {
         }
 
         private func startRecording() {
-            guard recording == nil else { return }
+            guard recording == nil, !startWanted else { return }
             stopWanted = false
-            if warm, prepared != nil { beginRecording() } else { startWanted = true; warmUp() }
+            startWanted = true
+            warmUp()
         }
 
         private func beginRecording() {
-            guard let rec = prepared ?? newRecorder() else { finish(nil, error: "start"); return }
+            guard let rec = prepared ?? newRecorder() else { BirdPalApp.setAudio(record: false); finish(nil, error: "start"); return }
             prepared = nil
-            guard rec.record() else { diag("record() failed"); rec.deleteRecording(); finish(nil, error: "start"); return }
+            guard rec.record() else { diag("record() failed"); rec.deleteRecording(); BirdPalApp.setAudio(record: false); finish(nil, error: "start"); return }
             recording = rec
             startedAt = Date(); peakDb = -160
             diag("recording…")
+            webView?.evaluateJavaScript("window.birdpalRecStarted && window.birdpalRecStarted()")
             meterTimer?.invalidate()
             meterTimer = Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true) { [weak self] _ in
                 guard let self = self, let r = self.recording else { return }
@@ -171,7 +176,7 @@ struct BirdPalView: UIViewRepresentable {
             let url = rec.url
             let size = (try? FileManager.default.attributesOfItem(atPath: url.path)[.size] as? Int) ?? 0
             diag(String(format: "%.1fs · %ld KB · loudest %.0f dB", secs, size / 1024, peakDb))
-            if warm { prepared = newRecorder() }   // ready for the next word right away
+            BirdPalApp.setAudio(record: false)   // back to steady playback before the word plays back
             DispatchQueue.global(qos: .userInitiated).async {
                 let data = try? Data(contentsOf: url)
                 try? FileManager.default.removeItem(at: url)

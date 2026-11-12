@@ -372,7 +372,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
     <button class="big blue" id="again">Practice again</button>
   </section>
 
-  <p class="credit"><span data-i18n="credit">Made by Phoebie</span> &middot; <span id="buildTag">v2.6</span></p>
+  <p class="credit"><span data-i18n="credit">Made by Phoebie</span> &middot; <span id="buildTag">v2.6.1</span></p>
 </main>
 
 <script>
@@ -436,7 +436,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
     recTipIOS:"The camera will open. Point it anywhere, tap the red button, say the word, tap stop, then tap Use Video. The app keeps only your voice.",
     recTipHold:"Tap the button, say the word, then tap again.",
     savedLines:["Yay! You saved my words. I'm learning so fast!","Good job, Phoebie! Let's hear it again!","Perfect! That one is saved. Teach me more!"],
-    recListening:"Recording… tap again to stop",recSaved:"Saved!",recTry:"Try again",
+    recListening:"Recording… tap again to stop",recReady:"Getting ready…",recSaved:"Saved!",recTry:"Try again",
     keepHolding:"Say the word a little longer, then tap again.",cantHear:"Can't hear it? Turn up the volume and flip the side switch off silent.",
     micOff:"The microphone is off. Allow the microphone for Bird Pal, then try again.",
     stop:"Stop",sayingN:"Saying it {i} of {n}",cantTalk:"This device can't talk. Say “{w}” out loud 5 times!",nowListen:"Now listen. Did your bird say it?",
@@ -510,7 +510,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
     recTipIOS:"相机会打开。随便对着哪里，点红色按钮，说这个词，点停止，再点“使用视频”。应用只保留你的声音。",
     recTipHold:"点一下按钮，说这个词，再点一下。",
     savedLines:["耶！你把我的词存好了。我学得好快！","干得好，Phoebie！再听一遍吧！","太棒了！这个存好了。再教我一个！"],
-    recListening:"正在录……再点一下停止",recSaved:"保存好了！",recTry:"再试一次",
+    recListening:"正在录……再点一下停止",recReady:"准备中……",recSaved:"保存好了！",recTry:"再试一次",
     keepHolding:"把词说得稍微长一点，再点一下。",cantHear:"听不到？把音量调大，再把侧边的静音开关拨回来。",
     micOff:"麦克风没打开。请允许 Bird Pal 使用麦克风，然后再试一次。",
     stop:"停止",sayingN:"正在说第 {i} 遍，共 {n} 遍",cantTalk:"这台设备不会说话。请你大声说“{w}”5 遍！",nowListen:"现在听一听。你的鸟儿说了吗？",
@@ -584,7 +584,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
     recTipIOS:"Se abrirá la cámara. Apunta a cualquier lado, toca el botón rojo, di la palabra, toca detener y luego Usar video. La app guarda solo tu voz.",
     recTipHold:"Toca el botón, di la palabra y vuelve a tocar.",
     savedLines:["¡Bien! Guardaste mis palabras. ¡Aprendo rapidísimo!","¡Buen trabajo, Phoebie! ¡Vamos a oírla otra vez!","¡Perfecto! Esa ya está guardada. ¡Enséñame más!"],
-    recListening:"Grabando… toca otra vez para parar",recSaved:"¡Guardado!",recTry:"Inténtalo otra vez",
+    recListening:"Grabando… toca otra vez para parar",recReady:"Preparando…",recSaved:"¡Guardado!",recTry:"Inténtalo otra vez",
     keepHolding:"Di la palabra un poco más largo y vuelve a tocar.",cantHear:"¿No se oye? Sube el volumen y quita el modo silencio con el interruptor lateral.",
     micOff:"El micrófono está apagado. Permite el micrófono para Bird Pal y vuelve a intentarlo.",
     stop:"Detener",sayingN:"Diciéndola {i} de {n}",cantTalk:"Este dispositivo no puede hablar. ¡Di «{w}» en voz alta 5 veces!",nowListen:"Ahora escucha. ¿Lo dijo tu pájaro?",
@@ -634,7 +634,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
     screens.forEach(function(s){$(s).hidden=(s!==name);});
     if(name!=="practice")stopPlay();
     /* In the app: get the recorder ready on the practice page, back to steady playback elsewhere. */
-    try{if(window.BIRDPAL_NATIVE&&window.webkit&&window.webkit.messageHandlers.birdpal)window.webkit.messageHandlers.birdpal.postMessage({rec:name==="practice"?"warm":"cool"});}catch(e){}
+
     if(name!=="dance")stopParty();
     if(name==="lesson")renderLessonSetup();
     window.scrollTo(0,0);
@@ -960,10 +960,15 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
     };
     /* In the iPhone/iPad app the recording is made by the app itself (steadier microphone). */
     var NATIVE_REC=!!(window.BIRDPAL_NATIVE&&window.webkit&&window.webkit.messageHandlers&&window.webkit.messageHandlers.birdpal);
+    /* The button turns red only once the iPhone is really recording, so the whole word is caught. */
     var nativeStart=function(){
       var r={native:true,stopped:false,start:Date.now()};recState=r;
       try{window.webkit.messageHandlers.birdpal.postMessage({rec:"start"});}catch(e){recState=null;setBtn("bad");return;}
-      setBtn("rec");
+      hb.classList.remove("rec","ok","bad");hb.textContent=T("recReady");
+      setTimeout(function(){if(recState===r&&!r.live){recState=null;setBtn("bad");logRec("no start from app");}},4000);
+    };
+    window.birdpalRecStarted=function(){
+      var r=recState;if(!r||!r.native)return;r.live=true;r.start=Date.now();setBtn("rec");
       setTimeout(function(){if(recState===r)stopRec();},6000);
     };
     /* App only: a small grey line under the button showing what the recorder did. */
@@ -1022,7 +1027,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
     hb.addEventListener("selectstart",function(e){e.preventDefault();});
     hb.addEventListener("click",function(e){
       e.preventDefault();
-      if(recState){logRec("tap → stop");stopRec();}
+      if(recState){if(recState.native&&!recState.live)return;logRec("tap → stop");stopRec();}
       else{logRec("tap → start");beginRec(e);}
     });
   }
@@ -1296,7 +1301,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
   }
 
   function setBuildTag(){var sa=(window.matchMedia&&matchMedia("(display-mode: standalone)").matches)||navigator.standalone===true;
-    $("buildTag").textContent="v2.6 \u00b7 "+T(framed?"tagPreview":window.BIRDPAL_NATIVE?"tagNative":sa?"tagHome":"tagBrowser");}
+    $("buildTag").textContent="v2.6.1 \u00b7 "+T(framed?"tagPreview":window.BIRDPAL_NATIVE?"tagNative":sa?"tagHome":"tagBrowser");}
 
   /* ---------- switching language ---------- */
   function sameList(a,b){return a.length===b.length&&a.every(function(x){return b.indexOf(x)>=0;});}
