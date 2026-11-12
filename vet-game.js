@@ -9,7 +9,7 @@ var state = newState();
 function newState(){ return {found:0, solved:false, tries:0, step:0, fb:null, toolFb:null, panel:1, think:0}; }
 
 var UI = {
-  tagLine: {zh:'WILD CASE FILES · v0.7', en:'WILD CASE FILES · v0.7', es:'WILD CASE FILES · v0.7'},
+  tagLine: {zh:'WILD CASE FILES · v0.8', en:'WILD CASE FILES · v0.8', es:'WILD CASE FILES · v0.8'},
   appTitle: {zh:'野生诊所', en:'Wild Case Files', es:'Casos Silvestres'},
   caseHome: {zh:'选择病例', en:'Choose a case', es:'Elige un caso'},
   caseNo: {zh:'病例 0', en:'Case 0', es:'Caso 0'},
@@ -48,11 +48,11 @@ var UI = {
   homeBtn: {zh:'回到病例列表', en:'Back to all cases', es:'Volver a los casos'},
   careNo: {zh:'过家家', en:'Pretend play', es:'Juego de casita'},
   careName: {zh:'照顾小屋', en:'The Care Room', es:'La casita de cuidados'},
-  careSub: {zh:'喂饭 · 洗澡 · 打扮 · 哄睡觉', en:'Feed · Bathe · Dress up · Bedtime', es:'Comer · Baño · Disfraces · A dormir'},
+  careSub: {zh:'喂饭 · 打扫 · 打扮 · 哄睡觉', en:'Feed · Tidy up · Dress up · Bedtime', es:'Comer · Limpiar · Disfraces · A dormir'},
   toCareBtn: {zh:'🏠 带它去照顾小屋', en:'🏠 Take it to the Care Room', es:'🏠 Llévalo a la casita de cuidados'},
   careHomeBtn: {zh:'回到病例列表', en:'Back to all cases', es:'Volver a los casos'},
   actFeed: {zh:'喂饭', en:'Feed', es:'Comer'},
-  actBath: {zh:'洗澡', en:'Bath', es:'Baño'},
+  actBath: {zh:'打扫小窝', en:'Tidy the nest', es:'Limpiar el nido'},
   actBrush: {zh:'梳毛', en:'Brush', es:'Cepillar'},
   actHug: {zh:'抱抱', en:'Cuddle', es:'Mimos'},
   actDress: {zh:'打扮', en:'Dress up', es:'Disfrazar'},
@@ -62,7 +62,6 @@ var UI = {
   careNote: {zh:'想怎么玩都可以，没有错的玩法。做满 5 件不同的事，就能拿到一张照顾员贴纸！', en:'Play any way you like — there are no wrong moves. Do 5 different things to earn a carer sticker!', es:'Juega como quieras — no hay errores. ¡Haz 5 cosas distintas y gana una pegatina de cuidador!'},
   hello: {zh:'今天玩什么？我先说：我当老板。', en:"What shall we play today? Dibs on being the boss.", es:'¿A qué jugamos hoy? Me pido ser el jefe.'},
   pickFood: {zh:'我饿啦——选一样给我吧！', en:"I'm hungry — pick something for me!", es:'Tengo hambre — ¡elige algo para mí!'},
-  bBath: {zh:'泡泡帽！请叫我——云朵大王。', en:'Bubble hat! Call me... King Cloud.', es:'¡Sombrero de burbujas! Llámame... Rey Nube.'},
   bHug: {zh:'抱抱收费：一个抱抱，换一个抱抱。', en:'Cuddles cost one cuddle each. No refunds.', es:'Los mimos cuestan un mimo cada uno. Sin devoluciones.'},
   bDress: {zh:'好看吗？不许笑！……好吧可以笑一下。', en:'How do I look? No laughing! ...Okay, one laugh.', es:'¿Qué tal me veo? ¡Sin reírse! ...Bueno, una risita.'},
   bDressOff: {zh:'还是什么都不戴最轻松～', en:'Wearing nothing is comfy too!', es:'¡Sin nada también estoy cómodo!'},
@@ -76,7 +75,7 @@ var UI = {
 var CASES = [
 {
   id:'hedgehog', sick:'assets/vet/hedgehog-sick.svg', well:'assets/vet/hedgehog-well.svg', owner:'assets/vet/boy.svg',
-  correct:2, icons:['🧴','💧','🍲'],
+  correct:2, icons:['💧','🧹','🍲'],
   t:{
     name: {zh:'后院里的刺猬', en:'The hedgehog in the backyard', es:'El erizo del jardín'},
     ownerName: {zh:'男孩 · 小宇', en:'Boy · Theo', es:'Niño · Teo'},
@@ -90,19 +89,19 @@ var CASES = [
       en:"Don't worry, let me examine it first — you can stay right beside it.",
       es:'Tranquilo, primero lo voy a examinar — puedes quedarte a su lado.'
     },
-    think: {zh:'（内心）我不是仙人掌……他昨天差点给我浇水。', en:'(thinking) I am NOT a cactus... yesterday he nearly watered me.', es:'(pensando) NO soy un cactus... ayer casi me riega.'},
+    think: {zh:'（内心）我不是仙人掌！再浇水我就开花了，到时候你得给我换个大花盆。', en:"(thinking) I'm a hedgehog, not a cactus! Put down that watering can!", es:'(pensando) ¡Soy un erizo, no un cactus! ¡Suelta esa regadera!'},
     narr: {zh:'旁白：医生表面很冷静，其实很想摸一下。她忍住了——有刺。', en:'Narrator: The vet looks calm. Secretly she wants to pat it. She resists — spines.', es:'Narrador: La veterinaria parece tranquila. En secreto quiere acariciarlo. Se aguanta — tiene púas.'},
     examGag: [
-      {zh:'数字不许念出来！', en:"Don't read the number out loud!", es:'¡No digas el número en voz alta!'},
-      {zh:'那不是秃，是……新发型。', en:"I'm not going bald. It's... a new hairstyle.", es:'No me estoy quedando calvo. Es... un peinado nuevo.'},
+      {zh:'轻？那是我在练轻功。数字不许念出来！', en:"Light? I'm practicing floating. Don't read the number out loud!", es:'¿Ligero? Estoy practicando flotar. ¡No digas el número en voz alta!'},
+      {zh:'那不是秃，是我故意留的通风口，夏天太热了。', en:"Missing spines? Nah. They're just on vacation!", es:'¿Púas que faltan? Qué va. ¡Están de vacaciones!'},
       {zh:'脚很干净吧？我每天都洗——用露水。', en:'Clean feet, right? I wash every day. With dew.', es:'Patas limpias, ¿eh? Me las lavo a diario. Con rocío.'}
     ],
     diagGag: [
-      {zh:'手术？！我只是痒痒！', en:"Surgery?! I'm just ITCHY!", es:'¿¡Cirugía!? ¡Solo me pica!'},
+      {zh:'手术？！喂！我是痒，不是坏了！', en:"Surgery?! Hey! I'm itchy, not broken!", es:'¿¡Cirugía!? ¡Oye! ¡Me pica, no estoy roto!'},
       {zh:'螨虫！我就说有东西在我背上开派对。', en:'Mites! I KNEW someone was having a party on my back.', es:'¡Ácaros! SABÍA que alguien hacía una fiesta en mi espalda.'},
       {zh:'不用处理？那我今天白缩成球了？', en:'No treatment? So I curled into a ball for NOTHING?', es:'¿Sin tratamiento? ¿Me hice bolita para NADA?'}
     ],
-    bonus: {zh:'出院那天，它顶走了一个药浴泡泡，坚称那是帽子。', en:'On going-home day it left wearing one bath bubble and insisted it was a hat.', es:'El día del alta se fue con una burbuja del baño en la cabeza e insistió en que era un sombrero.'},
+    bonus: {zh:'出院那天，它把新窝的小毯子披在身上走了，坚称那是披风。', en:'On going-home day it walked out wearing its new nest blanket and insisted it was a cape.', es:'El día del alta salió con la mantita del nido nuevo puesta e insistió en que era una capa.'},
     hs: [
       {zh:'体重', en:'Weight', es:'Peso'},
       {zh:'背部', en:'Back', es:'Espalda'},
@@ -134,29 +133,29 @@ var CASES = [
       es:'Es una infección por ácaros. Usa las herramientas en el orden correcto — si te equivocas de orden, inténtalo otra vez; el erizo no corre peligro.'
     },
     tools: [
-      {zh:'温和药浴', en:'Gentle medicated bath', es:'Baño medicinal suave'},
       {zh:'抗螨滴剂', en:'Anti-mite drops', es:'Gotas antiácaros'},
+      {zh:'换干净的窝', en:'Fresh clean nest', es:'Nido limpio y nuevo'},
       {zh:'高蛋白软食', en:'High-protein soft food', es:'Comida blanda proteica'}
     ],
     toolFb: [
-      {zh:'✓ 洗干净了，刺猬放松了一点。', en:'✓ All clean — the hedgehog relaxes a little.', es:'✓ Ya está limpio — el erizo se relaja un poco.'},
-      {zh:'✓ 滴剂用好了，接下来让它补充体力。', en:'✓ Drops applied — now help it rebuild its strength.', es:'✓ Gotas aplicadas — ahora ayúdalo a recuperar fuerzas.'},
+      {zh:'✓ 滴剂滴好了——螨虫的派对到此结束。', en:'✓ Drops on — the mite party is officially over.', es:'✓ Gotas puestas — se acabó la fiesta de los ácaros.'},
+      {zh:'✓ 旧垫料全换掉了，藏在里面的螨虫也一起搬走。', en:'✓ Old bedding out — any mites hiding in it go with it.', es:'✓ Fuera la cama vieja — y con ella los ácaros escondidos.'},
       {zh:'✓ 它开始小口小口吃东西了！', en:"✓ It's starting to eat, one small bite at a time!", es:'✓ ¡Empieza a comer, bocadito a bocadito!'}
     ],
     treatHint: {
-      zh:'本病例的顺序：先温和清洁 → 再针对性药物 → 最后补充体力。<br>（这是为了讲故事而简化的流程，不同动物、不同药物的真实护理顺序并不一样。）',
-      en:'Order in this case: gentle cleaning first → targeted medicine → then rebuild strength.<br>(Simplified for the story — real veterinary care varies by animal and medicine.)',
-      es:'Orden en este caso: primero limpieza suave → luego medicina específica → por último recuperar fuerzas.<br>(Simplificado para la historia — el cuidado veterinario real varía según el animal y la medicina.)'
+      zh:'本病例的顺序：先用兽医开的抗螨滴剂 → 再把窝彻底换干净（螨虫会藏在垫料里）→ 最后补充体力。<br>（用什么药、用多少，只能由兽医决定。生病的刺猬不要泡澡，会让它更紧张。）',
+      en:'Order in this case: vet-prescribed anti-mite drops first → then a completely fresh nest (mites hide in bedding) → then rebuild strength.<br>(Only a vet decides which medicine and how much. A sick hedgehog should not be bathed — it only adds stress.)',
+      es:'Orden en este caso: primero las gotas antiácaros que receta el veterinario → luego un nido totalmente limpio (los ácaros se esconden en la cama) → por último recuperar fuerzas.<br>(Solo un veterinario decide qué medicina y cuánta. A un erizo enfermo no se le baña: solo lo estresa más.)'
     },
     endBest: {
-      zh:'你判断出是螨虫感染合并营养不良，按清洁→用药→补食的顺序处理后，刺猬明显放松下来，蜷缩的身体慢慢舒展开。你把它留院观察两天，背部的红肿开始消退。',
-      en:'You spotted a mite infection together with poor nutrition. After cleaning, medicine and food — in that order — the hedgehog relaxes and slowly uncurls. You keep it in for two days, and the redness on its back starts to fade.',
-      es:'Detectaste una infección por ácaros junto con mala nutrición. Tras limpiar, medicar y alimentar — en ese orden — el erizo se relaja y se va desenrollando. Lo dejas dos días en observación y el enrojecimiento de su espalda empieza a ceder.'
+      zh:'你判断出是螨虫感染合并营养不良，用药、换窝、补食之后，刺猬明显放松下来，蜷缩的身体慢慢舒展开。你把它留院观察两天，背部的红肿开始消退。',
+      en:'You spotted a mite infection together with poor nutrition. After medicine, a fresh nest and food — in that order — the hedgehog relaxes and slowly uncurls. You keep it in for two days, and the redness on its back starts to fade.',
+      es:'Detectaste una infección por ácaros junto con mala nutrición. Tras la medicina, un nido limpio y comida — en ese orden — el erizo se relaja y se va desenrollando. Lo dejas dos días en observación y el enrojecimiento de su espalda empieza a ceder.'
     },
     endOk: {
-      zh:'第一个想法不太对，但你没有着急，而是回头把线索重新看了一遍，找到了真正的原因：螨虫感染合并营养不良。按清洁→用药→补食的顺序处理后，刺猬慢慢舒展开身体，背部的红肿开始消退。',
-      en:"Your first idea didn't fit, but you didn't rush — you went back over the clues and found the real cause: a mite infection together with poor nutrition. After cleaning, medicine and food, the hedgehog slowly uncurls and the redness on its back starts to fade.",
-      es:'Tu primera idea no encajaba, pero no te apresuraste: repasaste las pistas y encontraste la causa real: una infección por ácaros junto con mala nutrición. Tras limpiar, medicar y alimentar, el erizo se va desenrollando y el enrojecimiento empieza a ceder.'
+      zh:'第一个想法不太对，但你没有着急，而是回头把线索重新看了一遍，找到了真正的原因：螨虫感染合并营养不良。用药、换窝、补食之后，刺猬慢慢舒展开身体，背部的红肿开始消退。',
+      en:"Your first idea didn't fit, but you didn't rush — you went back over the clues and found the real cause: a mite infection together with poor nutrition. After medicine, a fresh nest and food, the hedgehog slowly uncurls and the redness on its back starts to fade.",
+      es:'Tu primera idea no encajaba, pero no te apresuraste: repasaste las pistas y encontraste la causa real: una infección por ácaros junto con mala nutrición. Tras la medicina, un nido limpio y comida, el erizo se va desenrollando y el enrojecimiento empieza a ceder.'
     },
     ownerBest: {
       zh:'太好了……它看起来没那么难受了。等它好了，我们一起把它送回后院吧！',
@@ -196,19 +195,19 @@ var CASES = [
       en:"Thank you for explaining so clearly — those details really help. Let me examine Mochi first.",
       es:'Gracias por explicarlo tan bien — esos detalles ayudan mucho. Primero voy a examinar a Mochi.'
     },
-    think: {zh:'（内心）不是我不爱你，胡萝卜。是我的牙，它比我先到。', en:"(thinking) It's not you, carrot. It's my teeth. They arrive before I do.", es:'(pensando) No eres tú, zanahoria. Son mis dientes. Llegan antes que yo.'},
-    narr: {zh:'旁白：朵朵刚才那一大段话，一口气说完，没换气。本诊所新纪录。', en:'Narrator: Mia said all of that in one single breath. A new clinic record.', es:'Narrador: Mía dijo todo eso sin respirar ni una vez. Nuevo récord de la clínica.'},
+    think: {zh:'（内心）胡萝卜，不是你的错，是我的问题。我们……先冷静几天。', en:"(thinking) It's not you, carrot. It's me. Let's just... take a break.", es:'(pensando) No eres tú, zanahoria. Soy yo. Démonos... un tiempo.'},
+    narr: {zh:'旁白：朵朵一口气叭叭说完一大段，都不喘气。本诊所新纪录。', en:'Narrator: Mia said all of that in one single breath. A new clinic record.', es:'Narrador: Mía dijo todo eso sin respirar ni una vez. Nuevo récord de la clínica.'},
     examGag: [
       {zh:'变轻了？那是因为我把心事放下了。', en:"Lighter? That's because I let go of my worries.", es:'¿Más ligero? Es que solté mis preocupaciones.'},
-      {zh:'这不是口水，是……我的下巴在哭。', en:"That's not drool. My chin is... crying.", es:'No es baba. Es que mi barbilla... está llorando.'},
+      {zh:'这不是口水，是我的下巴漏水了！', en:"That's not drool. My chin has sprung a leak!", es:'No es baba. ¡Mi barbilla tiene una gotera!'},
       {zh:'耳朵好得很——我听见你们在说我了。', en:'My ears work fine — I can hear you talking about me.', es:'Mis orejas están perfectas — los oigo hablar de mí.'}
     ],
     diagGag: [
       {zh:'耳朵？！耳朵可是我全身最骄傲的地方！', en:'My ears?! They are my BEST feature!', es:'¿¡Mis orejas!? ¡Son lo MEJOR que tengo!'},
-      {zh:'终于有人懂了：牙太长，我笑都不敢笑。', en:"Finally, someone gets it — teeth this long, I don't even dare to smile.", es:'Por fin alguien me entiende — con estos dientes ni me atrevo a sonreír.'},
+      {zh:'终于有人懂了：我的牙现在比我还高，它在跟我抢风头。', en:'Finally, someone gets it — my teeth are now taller than I am!', es:'Por fin alguien me entiende — ¡mis dientes ya son más altos que yo!'},
       {zh:'挑食？我连纸箱都啃过！', en:'Picky? I once ate a cardboard box!', es:'¿Caprichoso? ¡Una vez me comí una caja de cartón!'}
     ],
-    bonus: {zh:'团子现在嚼干草的声音太大，邻居以为楼上在装修。', en:'Mochi now chews hay so loudly that the neighbors think someone upstairs is drilling.', es:'Ahora Mochi mastica el heno tan fuerte que los vecinos creen que hay obras en el piso de arriba.'},
+    bonus: {zh:'团子啃干草咔嚓咔嚓响，邻居都戴着安全帽上门了——以为楼上在装修。', en:'Mochi crunches hay so loudly, the neighbors showed up wearing hard hats.', es:'Mochi mastica el heno tan fuerte que los vecinos llegaron con casco de obra.'},
     hs: [
       {zh:'体重', en:'Weight', es:'Peso'},
       {zh:'下巴', en:'Chin', es:'Barbilla'},
@@ -285,6 +284,112 @@ var CASES = [
       es:'Si tu conejo deja de comer o empieza a babear, llévalo pronto a un veterinario de verdad — nunca le limes los dientes ni le des medicinas tú mismo.'
     }
   }
+},
+{
+  id:'guineapig', sick:'assets/vet/guineapig-sick.svg', well:'assets/vet/guineapig-well.svg', owner:'assets/vet/kid2.svg',
+  correct:2, icons:['💊','🫑','🥣'],
+  t:{
+    name: {zh:'不爱动的豚鼠', en:"The guinea pig who won't move", es:'El conejillo de Indias que no se mueve'},
+    ownerName: {zh:'男孩 · 乐乐', en:'Boy · Leo', es:'Niño · Leo'},
+    introOwner: {
+      zh:'"医生，花生这几天缩在角落不爱动，一走路就吱吱叫。对了，它的豚鼠粮上个月吃完了，我们就一直喂它兔粮——反正长得差不多嘛……"',
+      en:'"Doctor, Peanut just sits in the corner and squeaks when he walks. Oh — we ran out of guinea pig food last month, so he\'s been eating rabbit food. They look about the same, right...?"',
+      es:'"Doctora, Maní se queda en un rincón y chilla al caminar. Ah — se nos acabó su comida el mes pasado, así que le damos comida de conejo. Total, se parecen, ¿no...?"'
+    },
+    introVet: {
+      zh:'吃了一个月兔粮？这条信息很重要。我先给花生做个检查。',
+      en:"A whole month of rabbit food? That's an important detail. Let me examine Peanut first.",
+      es:'¿Un mes entero con comida de conejo? Ese dato es importante. Primero voy a examinar a Maní.'
+    },
+    think: {zh:'（内心）我叫荷兰猪。我不是猪，也没去过荷兰。现在连饭都是兔子的？！', en:"(thinking) I'm called a guinea pig. I am not a pig. I have never been to Guinea. And now I eat RABBIT food?!", es:'(pensando) Me llaman conejillo de Indias. No soy conejo. Nunca fui a la India. ¿¡Y encima como comida de conejo!?'},
+    narr: {zh:'旁白：乐乐说"反正长得差不多"的时候，花生翻了今天的第 12 个白眼。', en:'Narrator: When Leo said "they look about the same", Peanut rolled his eyes for the 12th time today.', es:'Narrador: Cuando Leo dijo "total, se parecen", Maní puso los ojos en blanco por duodécima vez hoy.'},
+    examGag: [
+      {zh:'轻点轻点！我的膝盖今天不营业。', en:'Gently, gently! My knees are closed for business today.', es:'¡Suave, suave! Mis rodillas hoy están cerradas al público.'},
+      {zh:'这叫"刚睡醒"造型，我已经保持两周了。', en:"It's called the 'just woke up' look. I've had it for two weeks.", es:'Se llama peinado "recién levantado". Llevo dos semanas con él.'},
+      {zh:'牙很好，谢谢。上一位兔子病人的事，别往我身上套。', en:'Teeth are fine, thank you. I am NOT the rabbit from the last case.', es:'Los dientes bien, gracias. NO soy el conejo del caso anterior.'}
+    ],
+    diagGag: [
+      {zh:'又是牙？！请看清楚，我不是那只兔子！', en:'Teeth AGAIN?! Look closer — I am not that rabbit!', es:'¿¡OTRA VEZ los dientes!? Fíjate bien — ¡no soy ese conejo!'},
+      {zh:'维C！我就说最近的饭吃起来像……别人的饭。', en:"Vitamin C! I KNEW my dinner tasted like... somebody else's dinner.", es:'¡Vitamina C! SABÍA que mi cena sabía a... la cena de otro.'},
+      {zh:'懒？我这叫"节能模式"！……好吧，其实是膝盖疼。', en:"Lazy? This is called power-saving mode! ...Okay, fine, my knees hurt.", es:'¿Vago? ¡Esto se llama modo ahorro de energía! ...Bueno, vale, me duelen las rodillas.'}
+    ],
+    bonus: {zh:'花生现在一听到冰箱门响就吱吱大叫——它认定里面住着一位甜椒神。', en:'Now Peanut squeals every time the fridge opens — he is sure a Bell Pepper Fairy lives inside.', es:'Ahora Maní chilla cada vez que se abre la nevera — está seguro de que ahí dentro vive el Hada del Pimiento.'},
+    hs: [
+      {zh:'后腿', en:'Legs', es:'Patas'},
+      {zh:'毛', en:'Fur', es:'Pelo'},
+      {zh:'牙齿', en:'Teeth', es:'Dientes'}
+    ],
+    clues: [
+      {zh:'🩺 后腿关节有点肿，轻轻一碰它就缩回去——关节在疼。', en:'🩺 The back leg joints are a little swollen, and he pulls away at a gentle touch — they hurt.', es:'🩺 Las articulaciones de las patas traseras están algo hinchadas y las aparta al tocarlas — le duelen.'},
+      {zh:'🩺 毛乱糟糟的，没有光泽，还掉了一些。', en:'🩺 The fur is rough and dull, and some of it is falling out.', es:'🩺 El pelo está áspero y sin brillo, y se le cae un poco.'},
+      {zh:'🩺 门牙长度正常，上下对得整整齐齐——牙没问题。', en:'🩺 Front teeth are a normal length and meet neatly — the teeth are fine.', es:'🩺 Los dientes de delante tienen un largo normal y encajan bien — los dientes están bien.'}
+    ],
+    diagVet: {
+      zh:'关节肿痛、毛没光泽、不爱动，牙齿却正常——而且吃了一个月兔粮。你觉得问题出在哪？',
+      en:'Sore swollen joints, dull fur, not moving much, but normal teeth — and a month of rabbit food. What do you think is going on?',
+      es:'Articulaciones hinchadas y doloridas, pelo sin brillo, se mueve poco, pero dientes normales — y un mes con comida de conejo. ¿Cuál crees que es el problema?'
+    },
+    opts: [
+      {zh:'牙齿太长，吃不了东西', en:"His teeth are too long, so he can't eat", es:'Tiene los dientes muy largos y no puede comer'},
+      {zh:'缺维生素C', en:'Not enough vitamin C', es:'Le falta vitamina C'},
+      {zh:'只是懒，多运动就好了', en:'He is just lazy — more exercise will fix it', es:'Solo es vago — con más ejercicio se arregla'}
+    ],
+    fb: [
+      {zh:'再看看线索：牙齿检查是正常的，不像牙的问题。换一个答案试试？', en:"Look at the clues again: his teeth were normal, so it isn't a tooth problem. Try another answer?", es:'Mira otra vez las pistas: sus dientes estaban normales, no es cosa de dientes. ¿Pruebas otra respuesta?'},
+      {zh:'对！豚鼠和人一样，身体不会自己制造维生素C，必须从食物里吃到。兔粮里的维C不够，吃了一个月，关节和毛就出问题了。', en:"Yes! Guinea pigs — like people — can't make their own vitamin C, so it has to come from food. Rabbit food doesn't have enough, and after a month his joints and fur showed it.", es:'¡Sí! Los conejillos de Indias — como las personas — no fabrican su propia vitamina C: tiene que venir de la comida. La comida de conejo no trae suficiente, y tras un mes se le notó en las articulaciones y el pelo.'},
+      {zh:'再想想：它的关节又肿又疼，硬让它运动只会更疼。换一个答案试试？', en:'Think again: his joints are swollen and sore — making him exercise would only hurt more. Try another answer?', es:'Piénsalo otra vez: tiene las articulaciones hinchadas y doloridas — obligarlo a moverse solo le dolería más. ¿Pruebas otra respuesta?'}
+    ],
+    treatIntro: {
+      zh:'判断是缺维生素C。按正确顺序完成治疗——顺序错了也没关系，再试一次就好。',
+      en:"He isn't getting enough vitamin C. Complete the treatment in the right order — if you get it wrong, just try again.",
+      es:'Le falta vitamina C. Completa el tratamiento en el orden correcto — si te equivocas, inténtalo otra vez.'
+    },
+    tools: [
+      {zh:'兽医补维C', en:'Vitamin C from the vet', es:'Vitamina C del veterinario'},
+      {zh:'新鲜甜椒', en:'Fresh bell pepper', es:'Pimiento fresco'},
+      {zh:'换回豚鼠粮', en:'Back to guinea pig food', es:'Volver a su comida'}
+    ],
+    toolFb: [
+      {zh:'✓ 维C补上了——恢复的第一步。', en:'✓ Vitamin C given — the first step to feeling better.', es:'✓ Vitamina C lista — el primer paso para mejorar.'},
+      {zh:'✓ 花生抱着甜椒啃得咔嚓咔嚓。', en:'✓ Peanut hugs the pepper and goes crunch, crunch, crunch.', es:'✓ Maní abraza el pimiento y hace crac, crac, crac.'},
+      {zh:'✓ 豚鼠粮回来了，兔粮还给兔子！', en:'✓ Guinea pig food is back. The rabbit food goes back to the rabbits!', es:'✓ Volvió su comida. ¡La de conejo, para los conejos!'}
+    ],
+    treatHint: {
+      zh:'本病例的顺序：先由兽医补充维生素C → 每天加新鲜蔬菜（比如甜椒）→ 换回加了维C的豚鼠专用粮。<br>（补多少要听兽医的，不要自己给宠物吃人的维生素片。）',
+      en:'Order in this case: vitamin C from the vet first → fresh vegetables every day (like bell pepper) → back to proper guinea pig food with added vitamin C.<br>(The vet decides how much — never give a pet human vitamin tablets yourself.)',
+      es:'Orden en este caso: primero vitamina C del veterinario → verduras frescas cada día (como pimiento) → volver a la comida especial para conejillos de Indias, con vitamina C añadida.<br>(El veterinario decide cuánta — nunca le des a una mascota vitaminas de personas por tu cuenta.)'
+    },
+    endBest: {
+      zh:'你把"关节疼、毛粗糙、吃了一个月兔粮"连在一起，判断出是缺维生素C。补上维C、换回对的食物后，没过几天，花生又开始满屋子小跑了。',
+      en:'You linked the clues — sore joints, rough fur, a month of rabbit food — and worked out he was short of vitamin C. With vitamin C and the right food, a few days later Peanut was trotting around the room again.',
+      es:'Uniste las pistas — articulaciones doloridas, pelo áspero, un mes con comida de conejo — y descubriste que le faltaba vitamina C. Con vitamina C y la comida correcta, a los pocos días Maní volvió a corretear por la habitación.'
+    },
+    endOk: {
+      zh:'第一个想法不太对，但你回头把线索重新看了一遍，注意到"吃了一个月兔粮"，找到了真正的原因：缺维生素C。换回对的食物后，没过几天，花生又开始满屋子小跑了。',
+      en:"Your first idea didn't fit, but you went back over the clues, noticed the month of rabbit food, and found the real cause: not enough vitamin C. With the right food, a few days later Peanut was trotting around the room again.",
+      es:'Tu primera idea no encajaba, pero repasaste las pistas, te fijaste en el mes con comida de conejo y encontraste la causa real: falta de vitamina C. Con la comida correcta, a los pocos días Maní volvió a corretear.'
+    },
+    ownerBest: {
+      zh:'原来"长得差不多"不等于"吃得一样"！我回家就把兔粮还给邻居家的兔子。',
+      en:"So 'looks about the same' doesn't mean 'eats the same'! I'm giving the rabbit food back to the neighbor's rabbit.",
+      es:'¡Así que "se parecen" no significa "comen lo mismo"! Le devuelvo la comida de conejo al conejo del vecino.'
+    },
+    ownerOk: {
+      zh:'还好你又看了一次线索！原来"长得差不多"不等于"吃得一样"。',
+      en:"I'm glad you looked at the clues again! So 'looks about the same' doesn't mean 'eats the same'.",
+      es:'¡Qué bueno que miraste las pistas otra vez! Así que "se parecen" no significa "comen lo mismo".'
+    },
+    learn: [
+      {zh:'豚鼠和人一样，不能自己制造维生素C，必须每天从食物里获得。', en:"Guinea pigs, like people, can't make their own vitamin C — they need it from food every day.", es:'Los conejillos de Indias, como las personas, no fabrican vitamina C — la necesitan cada día en la comida.'},
+      {zh:'兔粮不能代替豚鼠粮——不同的动物需要的营养不一样。', en:"Rabbit food can't replace guinea pig food — different animals need different nutrition.", es:'La comida de conejo no sustituye a la de conejillo de Indias — cada animal necesita una nutrición distinta.'},
+      {zh:'甜椒这样的新鲜蔬菜，是豚鼠很好的维生素C来源。', en:'Fresh vegetables like bell pepper are a great source of vitamin C for guinea pigs.', es:'Las verduras frescas como el pimiento son una gran fuente de vitamina C para ellos.'}
+    ],
+    endFootnote: {
+      zh:'如果你的豚鼠不爱动或不吃东西，请尽快带它去看真正的兽医——不要自己给它吃人的药或维生素片。',
+      en:'If your guinea pig stops moving around or eating, take it to a real vet quickly — never give it human medicine or vitamin tablets yourself.',
+      es:'Si tu conejillo de Indias deja de moverse o de comer, llévalo pronto a un veterinario de verdad — nunca le des medicinas ni vitaminas de personas.'
+    }
+  }
 }
 ];
 
@@ -292,6 +397,7 @@ var ACCS = ['', '🎀', '👑', '🌸', '🎩', '🧣'];
 var PETS = [
   {
     names: {zh:['栗子','球球','小刺'], en:['Chestnut','Bramble','Pip'], es:['Castaña','Bolita','Púas']},
+    clean: {zh:'新窝真干净！刺猬不用常洗澡，窝干净最重要。我宣布：这里是我的城堡。', en:'What a clean nest! Hedgehogs rarely need baths — a clean nest matters most. I declare this my castle.', es:'¡Qué nido tan limpio! Los erizos casi no necesitan baños — lo importante es el nido limpio. Declaro que este es mi castillo.'},
     brush: {zh:'刺也要轻轻梳——痒痒的，好舒服！', en:'Gentle on the spines — that tickles, so nice!', es:'Suave con las púas — ¡qué cosquillas tan ricas!'},
     foods: [
       {ico:'💧', ok:true, name:{zh:'清水', en:'Water', es:'Agua'}, say:{zh:'咕嘟咕嘟——清水最好啦！', en:'Glug glug — fresh water is the best!', es:'Glu glu — ¡el agua fresca es lo mejor!'}},
@@ -301,11 +407,22 @@ var PETS = [
   },
   {
     names: {zh:['团子','雪球','糯米'], en:['Mochi','Snowball','Clover'], es:['Mochi','Copito','Trébol']},
+    clean: {zh:'窝换好啦！兔子不能泡澡，会吓坏的——干净的窝就是我的五星级酒店。', en:'Fresh nest! Rabbits must not be bathed — it really scares us. A clean nest is my five-star hotel.', es:'¡Nido nuevo! A los conejos no se nos baña — nos asusta muchísimo. Un nido limpio es mi hotel de cinco estrellas.'},
     brush: {zh:'毛梳得顺顺的，蓬蓬的！', en:'My fur is all smooth and fluffy!', es:'¡Mi pelo quedó suave y esponjoso!'},
     foods: [
       {ico:'🌾', ok:true, name:{zh:'干草', en:'Hay', es:'Heno'}, say:{zh:'嚼嚼嚼——顺便磨磨牙！', en:'Munch munch — and it keeps my teeth short!', es:'Ñam ñam — ¡y me desgasta los dientes!'}},
       {ico:'🥬', ok:true, name:{zh:'青菜', en:'Leafy greens', es:'Hojas verdes'}, say:{zh:'新鲜的叶子，好吃！', en:'Fresh leaves — yummy!', es:'Hojas frescas — ¡qué ricas!'}},
       {ico:'🥕', ok:true, name:{zh:'胡萝卜', en:'Carrot', es:'Zanahoria'}, say:{zh:'好甜！不过胡萝卜是零食，一小口就够啦。', en:'So sweet! But carrot is a treat — one little bite is enough.', es:'¡Qué dulce! Pero la zanahoria es un premio — con un bocadito basta.'}}
+    ]
+  },
+  {
+    names: {zh:['花生','年糕','可乐'], en:['Peanut','Biscuit','Pumpkin'], es:['Maní','Galleta','Calabaza']},
+    clean: {zh:'干草换新的啦！我要在里面钻一个只有我知道的秘密通道。', en:'Fresh hay bedding! I shall dig a secret tunnel only I know about.', es:'¡Heno nuevo! Voy a cavar un túnel secreto que solo conozco yo.'},
+    brush: {zh:'梳顺啦！我的"刚睡醒"造型没了，可惜。', en:"All smooth! There goes my 'just woke up' look. Shame.", es:'¡Todo liso! Adiós a mi peinado "recién levantado". Qué pena.'},
+    foods: [
+      {ico:'🫑', ok:true, name:{zh:'甜椒', en:'Bell pepper', es:'Pimiento'}, say:{zh:'维C炸弹！咔嚓！', en:'Vitamin C bomb! CRUNCH!', es:'¡Bomba de vitamina C! ¡CRAC!'}},
+      {ico:'🌾', ok:true, name:{zh:'干草', en:'Hay', es:'Heno'}, say:{zh:'干草管够，我就管嚼。', en:'You bring the hay, I bring the chewing.', es:'Tú pones el heno, yo pongo los dientes.'}},
+      {ico:'🍫', ok:false, name:{zh:'巧克力', en:'Chocolate', es:'Chocolate'}, say:{zh:'巧克力对我有毒，一口都不行——你自己吃吧！', en:"Chocolate is poisonous for me — not even one bite. You eat it!", es:'El chocolate es veneno para mí — ni un bocado. ¡Cómetelo tú!'}}
     ]
   }
 ];
@@ -314,15 +431,54 @@ var care = loadCare();
 var careUi = {bubble:null, food:false, asleep:false, fx:''};
 
 function loadCare(){
-  var d = {pet:0, name:[0,0], acc:[0,0], done:[], stickers:0};
+  var d = {pet:0, name:[0,0,0], acc:[0,0,0], done:[], stickers:0};
   try {
     var s = JSON.parse(window.localStorage.getItem(CARE_KEY));
     if (s && s.name && s.acc && s.done) { for (var k in d) { if (s[k] !== undefined) d[k] = s[k]; } }
   } catch (e) {}
+  while (d.name.length < PETS.length) d.name.push(0);
+  while (d.acc.length < PETS.length) d.acc.push(0);
+  if (!(d.pet >= 0 && d.pet < PETS.length)) d.pet = 0;
   return d;
 }
 function saveCare(){
   try { window.localStorage.setItem(CARE_KEY, JSON.stringify(care)); } catch (e) {}
+}
+
+var snd = {on:true, ctx:null};
+try { snd.on = window.localStorage.getItem('vetSound') !== '0'; } catch (e) {}
+var TUNES = {
+  tap: [[660,0,0.07]],
+  good: [[660,0,0.09],[880,0.09,0.14]],
+  bad: [[233,0,0.16]],
+  win: [[523,0,0.11],[659,0.11,0.11],[784,0.22,0.11],[1047,0.33,0.24]]
+};
+function beep(kind){
+  if (!snd.on) return;
+  try {
+    var AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return;
+    if (!snd.ctx) snd.ctx = new AC();
+    if (snd.ctx.state === 'suspended') snd.ctx.resume();
+    var now = snd.ctx.currentTime;
+    TUNES[kind].forEach(function(n){
+      var o = snd.ctx.createOscillator(), g = snd.ctx.createGain();
+      o.type = kind === 'bad' ? 'sawtooth' : 'triangle';
+      o.frequency.value = n[0];
+      g.gain.setValueAtTime(0.0001, now + n[1]);
+      g.gain.exponentialRampToValueAtTime(0.16, now + n[1] + 0.015);
+      g.gain.exponentialRampToValueAtTime(0.0001, now + n[1] + n[2]);
+      o.connect(g); g.connect(snd.ctx.destination);
+      o.start(now + n[1]); o.stop(now + n[1] + n[2] + 0.03);
+    });
+  } catch (e) {}
+}
+function pop(id){
+  var w = $(id);
+  if (!w) return;
+  w.classList.remove('bounce');
+  void w.offsetWidth;
+  w.classList.add('bounce');
 }
 
 function $(id){ return document.getElementById(id); }
@@ -364,6 +520,7 @@ function render(){
   var c = C(), t = c.t, i;
   var onTitle = activeScreen() === 'title';
   $('vtagLine').innerText = L(UI.tagLine);
+  $('vsndBtn').innerText = snd.on ? '🔊' : '🔇';
   $('vappTitle').innerText = L(UI.appTitle);
   $('vcaseLabel').innerText = onTitle ? L(UI.caseHome) : (activeScreen() === 'care' ? L(UI.careName) : L(UI.caseNo) + (caseIdx+1));
   $('vtitleH2').innerText = L(UI.appTitle);
@@ -432,8 +589,7 @@ function renderCare(){
   $('vcareNo').innerText = L(UI.careNo);
   $('vcareName').innerText = L(UI.careName);
   $('vcareSub').innerText = L(UI.careSub);
-  $('vpetTab0').className = 'pet-tab' + (care.pet === 0 ? ' active' : '');
-  $('vpetTab1').className = 'pet-tab' + (care.pet === 1 ? ' active' : '');
+  for (i=0;i<PETS.length;i++) $('vpetTab'+i).className = 'pet-tab' + (care.pet === i ? ' active' : '');
   $('vpetName').innerText = L(p.names)[care.name[care.pet]] + ' ✎';
   $('vpetName').title = L(UI.nameHint);
   var full = care.done.length >= 5, h = '';
@@ -477,7 +633,9 @@ function careAct(kind, bubble, fx, counts){
   careUi.food = false;
   careUi.bubble = bubble;
   careUi.fx = fx;
+  var before = care.done.length;
   if (counts !== false) careDone(kind);
+  beep(care.done.length >= 5 && before < 5 ? 'win' : (fx === '🙅' ? 'bad' : 'good'));
   saveCare();
   render();
   bounce();
@@ -545,7 +703,9 @@ function findClue(n){
   state.found++;
   state.think = n;
   if (state.found >= 3) $('vtoDiagBtn').disabled = false;
+  beep(state.found >= 3 ? 'good' : 'tap');
   render();
+  pop('vpatient');
 }
 
 function pickDiag(n){
@@ -556,6 +716,7 @@ function pickDiag(n){
     btn.classList.add('wrong');
     state.tries++;
     state.fb = {n:n, ok:false};
+    beep('bad');
     render();
     return;
   }
@@ -565,6 +726,7 @@ function pickDiag(n){
   state.solved = true;
   state.fb = {n:n, ok:true};
   $('vtoTreatBtn').disabled = false;
+  beep('win');
   render();
 }
 
@@ -575,10 +737,13 @@ function useTool(n){
     state.step++;
     el.classList.add('used');
     state.toolFb = {n:n, ok:true};
+    beep(state.step >= 3 ? 'win' : 'good');
+    pop('vimgTreat');
   } else {
     el.classList.add('wrongflash');
     setTimeout(function(){ el.classList.remove('wrongflash'); }, 300);
     state.toolFb = {n:n, ok:false};
+    beep('bad');
   }
   if (state.step >= 3) $('vtoEndBtn').disabled = false;
   render();
@@ -596,9 +761,9 @@ function init(){
   bind('vlangBtn-zh', function(){ setLang('zh'); });
   bind('vlangBtn-en', function(){ setLang('en'); });
   bind('vlangBtn-es', function(){ setLang('es'); });
-  bind('vcaseBtn0', function(){ startCase(0); });
-  bind('vcaseBtn1', function(){ startCase(1); });
+  CASES.forEach(function(c, i){ bind('vcaseBtn'+i, function(){ beep('tap'); startCase(i); }); });
   bind('vstartExamBtn', function(){
+    beep('tap');
     if (state.panel < 3) { state.panel++; render(); } else { goTo('exam'); }
   });
   [1,2,3].forEach(function(n){
@@ -615,8 +780,7 @@ function init(){
   bind('vcareBtn', function(){ openCare(); });
   bind('vtoCareBtn', function(){ openCare(caseIdx); });
   bind('vcareHomeBtn', function(){ resetCase(); goTo('title'); });
-  bind('vpetTab0', function(){ switchPet(0); });
-  bind('vpetTab1', function(){ switchPet(1); });
+  CASES.forEach(function(c, i){ bind('vpetTab'+i, function(){ switchPet(i); }); });
   bind('vpetName', function(){
     care.name[care.pet] = (care.name[care.pet] + 1) % 3;
     saveCare(); render();
@@ -626,7 +790,7 @@ function init(){
     careUi.bubble = UI.pickFood; render();
   });
   [0,1,2].forEach(function(i){ bind('vfood'+(i+1), function(){ feed(i); }); });
-  bind('vactBath', function(){ careAct('bath', UI.bBath, '🫧'); });
+  bind('vactBath', function(){ careAct('clean', PETS[care.pet].clean, '🧹'); });
   bind('vactBrush', function(){ careAct('brush', PETS[care.pet].brush, '✨'); });
   bind('vactHug', function(){ careAct('hug', UI.bHug, '💗'); });
   bind('vactDress', function(){
@@ -640,6 +804,12 @@ function init(){
   bind('vnewDayBtn', function(){
     care.done = []; careUi = {bubble:null, food:false, asleep:false, fx:''};
     saveCare(); render();
+  });
+  bind('vsndBtn', function(){
+    snd.on = !snd.on;
+    try { window.localStorage.setItem('vetSound', snd.on ? '1' : '0'); } catch (e) {}
+    render();
+    beep('tap');
   });
   bind('vcaseLabel', function(){ resetCase(); goTo('title'); });
   bind('vrestartBtn', function(){ startCase(caseIdx); });

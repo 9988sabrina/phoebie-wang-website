@@ -354,3 +354,17 @@
 
 .vet-install{text-align:center;margin:0 0 18px;}
 .vet-install a{display:inline-block;font-weight:bold;color:#3b3024;background:#e8b74b;border:2.5px solid #3b3024;border-radius:12px;box-shadow:3px 3px 0 #3b3024;padding:10px 16px;text-decoration:none;}
+
+#vetapp .snd-btn{margin-left:auto;font-size:14px;padding:2px 9px;}
+#vetapp.case-guineapig .hs1{left:37%;top:80%;}
+#vetapp.case-guineapig .hs2{left:58%;top:30%;}
+#vetapp.case-guineapig .hs3{left:20%;top:62%;}
+#vetapp.pet-guineapig .acc{left:31%;top:36%;}
+#vetapp .patient.bounce,#vetapp .patient-img.bounce{animation:vwiggle .45s ease;}
+@keyframes vwiggle{0%,100%{transform:rotate(0) scale(1);}25%{transform:rotate(-4deg) scale(1.04);}60%{transform:rotate(4deg) scale(1.04);}}
+#vetapp .tool.used{opacity:.45;}
+#vetapp .tool.used::after{content:"✓";position:absolute;top:2px;right:6px;font-size:14px;font-weight:bold;color:var(--v-sage);}
+#vetapp .tool{position:relative;}
+#vetapp .patient-img,#vetapp .care-img{animation:vbreathe 2.8s ease-in-out infinite;transform-origin:50% 90%;}
+@keyframes vbreathe{0%,100%{transform:scale(1,1);}50%{transform:scale(1.02,0.975);}}
+@media (prefers-reduced-motion: reduce){#vetapp .patient-img,#vetapp .care-img{animation:none;}}
