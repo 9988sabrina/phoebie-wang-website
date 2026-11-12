@@ -46,6 +46,7 @@ struct BirdPalView: UIViewRepresentable {
         config.userContentController.add(context.coordinator, name: "birdpal")
 
         let webView = WKWebView(frame: .zero, configuration: config)
+        context.coordinator.webView = webView
         webView.uiDelegate = context.coordinator
         webView.navigationDelegate = context.coordinator
         webView.isOpaque = false
@@ -64,6 +65,49 @@ struct BirdPalView: UIViewRepresentable {
     func updateUIView(_ uiView: WKWebView, context: Context) {}
 
     final class Coordinator: NSObject, WKUIDelegate, WKNavigationDelegate, WKScriptMessageHandler {
+        weak var webView: WKWebView?
+        private var recorder: AVAudioRecorder?
+        private var recordURL: URL { FileManager.default.temporaryDirectory.appendingPathComponent("birdpal-rec.wav") }
+
+        /// "Hold to record my voice" records with the iPhone's own recorder (steadier than the
+        /// web page's microphone). The finished WAV goes back to the page, which saves it as before.
+        private func startRecording() {
+            AVAudioSession.sharedInstance().requestRecordPermission { granted in
+                DispatchQueue.main.async {
+                    guard granted else { self.finish(nil, error: "denied"); return }
+                    BirdPalApp.setAudio(record: true)
+                    let settings: [String: Any] = [
+                        AVFormatIDKey: kAudioFormatLinearPCM, AVSampleRateKey: 44100.0,
+                        AVNumberOfChannelsKey: 1, AVLinearPCMBitDepthKey: 16,
+                        AVLinearPCMIsFloatKey: false, AVLinearPCMIsBigEndianKey: false]
+                    try? FileManager.default.removeItem(at: self.recordURL)
+                    guard let rec = try? AVAudioRecorder(url: self.recordURL, settings: settings),
+                          rec.record() else {
+                        BirdPalApp.setAudio(record: false)
+                        self.finish(nil, error: "start")
+                        return
+                    }
+                    self.recorder = rec
+                }
+            }
+        }
+
+        private func stopRecording() {
+            guard let rec = recorder else { return }
+            rec.stop()
+            recorder = nil
+            BirdPalApp.setAudio(record: false)
+            let data = try? Data(contentsOf: recordURL)
+            try? FileManager.default.removeItem(at: recordURL)
+            finish(data, error: data == nil ? "empty" : nil)
+        }
+
+        private func finish(_ data: Data?, error: String?) {
+            let arg = data.map { "\"" + $0.base64EncodedString() + "\"" } ?? "null"
+            let err = error.map { "\"" + $0 + "\"" } ?? "null"
+            webView?.evaluateJavaScript("window.birdpalRecDone && window.birdpalRecDone(\(arg), \(err))")
+        }
+
         // The microphone is only used for "Hold to record my voice"; iOS asks the user first.
         func webView(_ webView: WKWebView,
                      requestMediaCapturePermissionFor origin: WKSecurityOrigin,
@@ -95,8 +139,8 @@ struct BirdPalView: UIViewRepresentable {
                 DispatchQueue.main.async { UIApplication.shared.isIdleTimerDisabled = on }
             }
             // The page asks for the microphone mode while recording, and normal playback after.
-            if let mode = body["audio"] as? String {
-                BirdPalApp.setAudio(record: mode == "play-and-record")
+            if let rec = body["rec"] as? String {
+                DispatchQueue.main.async { rec == "start" ? self.startRecording() : self.stopRecording() }
             }
         }
     }

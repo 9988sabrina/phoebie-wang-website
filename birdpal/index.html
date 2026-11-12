@@ -372,7 +372,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
     <button class="big blue" id="again">Practice again</button>
   </section>
 
-  <p class="credit"><span data-i18n="credit">Made by Phoebie</span> &middot; <span id="buildTag">v2.4.3</span></p>
+  <p class="credit"><span data-i18n="credit">Made by Phoebie</span> &middot; <span id="buildTag">v2.5</span></p>
 </main>
 
 <script>
@@ -928,8 +928,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
   if(canHold){
     $("holdRec").hidden=false;$("pickRec").hidden=true;
     var hb=$("holdRec");
-    var setSession=function(t){try{if(navigator.audioSession)navigator.audioSession.type=t;}catch(e){}
-      try{if(window.BIRDPAL_NATIVE)window.webkit.messageHandlers.birdpal.postMessage({audio:t});}catch(e){}};
+    var setSession=function(t){try{if(navigator.audioSession)navigator.audioSession.type=t;}catch(e){}};
     setBtn=function(mode){
       hb.classList.remove("rec","ok","bad");
       if(mode==="rec"){hb.classList.add("rec");hb.textContent=T("recListening");}
@@ -957,8 +956,25 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
         sayOnce(word);
       }).catch(function(e){setBtn("bad");showErr(T("cantSave",{c:(e&&e.name)||"store"}));});
     };
+    /* In the iPhone/iPad app the recording is made by the app itself (steadier microphone). */
+    var NATIVE_REC=!!(window.BIRDPAL_NATIVE&&window.webkit&&window.webkit.messageHandlers&&window.webkit.messageHandlers.birdpal);
+    var nativeStart=function(){
+      var r={native:true,stopped:false,start:Date.now()};recState=r;
+      try{window.webkit.messageHandlers.birdpal.postMessage({rec:"start"});}catch(e){recState=null;setBtn("bad");return;}
+      setBtn("rec");
+      setTimeout(function(){if(recState===r)stopRec();},6000);
+    };
+    window.birdpalRecDone=function(b64,err){
+      var r=recState;recState=null;
+      if(err==="denied"){setBtn("bad");showErr(T("micOff"));return;}
+      if(!b64){setBtn("bad");showErr(T("silent"));return;}
+      if(r&&Date.now()-r.start<500){setBtn();showErr(T("keepHolding"));return;}
+      var bin=atob(b64),arr=new Uint8Array(bin.length);for(var i=0;i<bin.length;i++)arr[i]=bin.charCodeAt(i);
+      setBtn("ok");saveClip(new Blob([arr],{type:"audio/wav"}));
+    };
     var stopRec=function(){
       var r=recState;if(!r||r.stopped)return;r.stopped=true;
+      if(r.native){try{window.webkit.messageHandlers.birdpal.postMessage({rec:"stop"});}catch(e){}return;}
       if(r.mr){if(r.mr.state==="recording")r.mr.stop();return;}
       if(r.stream)finishRec(r);
     };
@@ -967,8 +983,8 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
     ["touchstart","touchmove","touchend","selectstart"].forEach(function(t){hb.addEventListener(t,function(e){if(e.cancelable)e.preventDefault();},{passive:false});});
     hb.addEventListener("pointerdown",async function(e){
       e.preventDefault();if(recState)return;$("voiceErr").hidden=true;$("voiceErr").classList.remove("tip");hush();
+      if(NATIVE_REC){nativeStart();return;}
       setSession("play-and-record");
-      if(window.BIRDPAL_NATIVE)await wait(150);
       var c=ctx(),r={chunks:[],len:0,stopped:false,start:Date.now()};recState=r;
       try{r.stream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false}});}
       catch(err){recState=null;setSession("playback");setBtn("bad");showErr(T("micOff"));return;}
@@ -1259,7 +1275,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
   }
 
   function setBuildTag(){var sa=(window.matchMedia&&matchMedia("(display-mode: standalone)").matches)||navigator.standalone===true;
-    $("buildTag").textContent="v2.4.3 \u00b7 "+T(framed?"tagPreview":window.BIRDPAL_NATIVE?"tagNative":sa?"tagHome":"tagBrowser");}
+    $("buildTag").textContent="v2.5 \u00b7 "+T(framed?"tagPreview":window.BIRDPAL_NATIVE?"tagNative":sa?"tagHome":"tagBrowser");}
 
   /* ---------- switching language ---------- */
   function sameList(a,b){return a.length===b.length&&a.every(function(x){return b.indexOf(x)>=0;});}
