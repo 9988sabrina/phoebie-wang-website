@@ -363,7 +363,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
     <button class="big blue" id="again">Practice again</button>
   </section>
 
-  <p class="credit"><span data-i18n="credit">Made by Phoebie</span> &middot; <span id="buildTag">v2.5.1</span></p>
+  <p class="credit"><span data-i18n="credit">Made by Phoebie</span> &middot; <span id="buildTag">v2.5.2</span></p>
 </main>
 
 <script>
@@ -869,9 +869,9 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
     var rate=22050,src=ab.sampleRate,ch=ab.numberOfChannels,len=ab.length,mono=new Float32Array(len);
     for(var c=0;c<ch;c++){var d=ab.getChannelData(c);for(var i=0;i<len;i++)mono[i]+=d[i]/ch;}
     var peak=0;for(i=0;i<len;i++)peak=Math.max(peak,Math.abs(mono[i]));
-    var th=Math.max(0.02,peak*0.08),s=0,e=len-1;
+    var th=Math.max(0.01,peak*0.05),s=0,e=len-1;
     while(s<len&&Math.abs(mono[s])<th)s++;while(e>s&&Math.abs(mono[e])<th)e--;
-    s=Math.max(0,s-Math.round(src*0.15));e=Math.min(len-1,e+Math.round(src*0.25));
+    s=Math.max(0,s-Math.round(src*0.3));e=Math.min(len-1,e+Math.round(src*0.35));
     if(e-s>src*6)e=s+src*6;
     var n=Math.max(1,Math.floor((e-s)*rate/src)),gain=peak>0?0.9/peak:1,out=new Int16Array(n);
     for(i=0;i<n;i++){var x=s+i*src/rate,i0=Math.floor(x),f=x-i0,v=(mono[i0]||0)*(1-f)+(mono[i0+1]||0)*f;
@@ -1269,7 +1269,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
   }
 
   function setBuildTag(){var sa=(window.matchMedia&&matchMedia("(display-mode: standalone)").matches)||navigator.standalone===true;
-    $("buildTag").textContent="v2.5.1 \u00b7 "+T(framed?"tagPreview":window.BIRDPAL_NATIVE?"tagNative":sa?"tagHome":"tagBrowser");}
+    $("buildTag").textContent="v2.5.2 \u00b7 "+T(framed?"tagPreview":window.BIRDPAL_NATIVE?"tagNative":sa?"tagHome":"tagBrowser");}
 
   /* ---------- switching language ---------- */
   function sameList(a,b){return a.length===b.length&&a.every(function(x){return b.indexOf(x)>=0;});}
