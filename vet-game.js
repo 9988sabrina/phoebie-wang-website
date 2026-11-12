@@ -9,7 +9,7 @@ var state = newState();
 function newState(){ return {found:0, solved:false, tries:0, step:0, fb:null, toolFb:null, panel:1, think:0}; }
 
 var UI = {
-  tagLine: {zh:'WILD CASE FILES · v0.8', en:'WILD CASE FILES · v0.8', es:'WILD CASE FILES · v0.8'},
+  tagLine: {zh:'WILD CASE FILES · v0.9', en:'WILD CASE FILES · v0.9', es:'WILD CASE FILES · v0.9'},
   appTitle: {zh:'野生诊所', en:'Wild Case Files', es:'Casos Silvestres'},
   caseHome: {zh:'选择病例', en:'Choose a case', es:'Elige un caso'},
   caseNo: {zh:'病例 0', en:'Case 0', es:'Caso 0'},
@@ -49,7 +49,7 @@ var UI = {
   careNo: {zh:'过家家', en:'Pretend play', es:'Juego de casita'},
   careName: {zh:'照顾小屋', en:'The Care Room', es:'La casita de cuidados'},
   careSub: {zh:'喂饭 · 打扫 · 打扮 · 哄睡觉', en:'Feed · Tidy up · Dress up · Bedtime', es:'Comer · Limpiar · Disfraces · A dormir'},
-  toCareBtn: {zh:'🏠 带它去照顾小屋', en:'🏠 Take it to the Care Room', es:'🏠 Llévalo a la casita de cuidados'},
+  toCareBtn: {zh:'🏠 它搬进照顾小屋了，去看看', en:'🏠 It moved into the Care Room — visit', es:'🏠 Se mudó a la casita — visítalo'},
   careHomeBtn: {zh:'回到病例列表', en:'Back to all cases', es:'Volver a los casos'},
   actFeed: {zh:'喂饭', en:'Feed', es:'Comer'},
   actBath: {zh:'打扫小窝', en:'Tidy the nest', es:'Limpiar el nido'},
@@ -69,6 +69,19 @@ var UI = {
   bWake: {zh:'我梦见我会飞，然后就饿醒了。', en:'I dreamed I could fly. Then I got hungry and woke up.', es:'Soñé que volaba. Luego me dio hambre y me desperté.'},
   rewardText: {zh:'🏅 今天照顾得真棒！获得照顾员贴纸，一共 {n} 张', en:'🏅 Wonderful caring today! You earned a carer sticker — {n} in total', es:'🏅 ¡Qué bien lo cuidaste hoy! Ganaste una pegatina de cuidador — {n} en total'},
   newDayBtn: {zh:'☀️ 新的一天', en:'☀️ A new day', es:'☀️ Un nuevo día'},
+  dailyNo: {zh:'今日急诊', en:"Today's walk-in", es:'Urgencia de hoy'},
+  dailyNew: {zh:'每天一位新病人 · 看完盖一个印章', en:'A new patient every day · earn a stamp', es:'Un paciente nuevo cada día · gana un sello'},
+  dailyDoneSub: {zh:'✓ 今天看完了，明天有新病人', en:'✓ Done for today — a new patient tomorrow', es:'✓ Listo por hoy — mañana hay paciente nuevo'},
+  dailyStats: {zh:'印章 {t} 个 · 连续 {s} 天', en:'{t} stamps · {s}-day streak', es:'{t} sellos · racha de {s} días'},
+  dailyCaller: {zh:'今日来电', en:"Today's caller", es:'Llamada de hoy'},
+  dailySfx: {zh:'铃铃铃！', en:'RING RING!', es:'¡RIIING!'},
+  dailyRetry: {zh:'再想想——换一个答案试试？', en:'Think again — try another answer?', es:'Piénsalo otra vez — ¿pruebas otra respuesta?'},
+  dailyDoneBtn: {zh:'盖章！回到首页', en:'Stamp it! Back to the start', es:'¡Sello! Volver al inicio'},
+  dailyUnlock: {zh:'解锁了新配饰 {e}——去照顾小屋试试！', en:'New dress-up item unlocked: {e} — try it in the Care Room!', es:'¡Nuevo accesorio desbloqueado: {e} — pruébalo en la casita!'},
+  careEmpty: {zh:'小屋还空着。治好一只小动物，它就会搬进来住！', en:'The room is still empty. Cure an animal and it will move in!', es:'La casita aún está vacía. ¡Cura a un animal y se mudará aquí!'},
+  careLocked: {zh:'它还在等你治好它呢——先去看它的病例吧。', en:"That one is still waiting for you to cure it — go and see its case first.", es:'Ese todavía espera que lo cures — ve primero a ver su caso.'},
+  careNext: {zh:'再拿 {n} 个每日印章，解锁新配饰 {e}', en:'{n} more daily stamps to unlock {e}', es:'{n} sellos diarios más para desbloquear {e}'},
+  careResidents: {zh:'治好的动物会住进来', en:'Cured animals move in here', es:'Los animales curados se mudan aquí'},
   restartBtn: {zh:'再玩一次这个病例', en:'Replay this case', es:'Repetir este caso'}
 };
 
@@ -393,7 +406,7 @@ var CASES = [
 }
 ];
 
-var ACCS = ['', '🎀', '👑', '🌸', '🎩', '🧣'];
+var ACCS = [{e:'',n:0},{e:'🎀',n:0},{e:'🌸',n:0},{e:'👑',n:1},{e:'🎩',n:2},{e:'🧣',n:3},{e:'🕶️',n:5},{e:'🎓',n:7},{e:'🪄',n:10}];
 var PETS = [
   {
     names: {zh:['栗子','球球','小刺'], en:['Chestnut','Bramble','Pip'], es:['Castaña','Bolita','Púas']},
@@ -426,6 +439,98 @@ var PETS = [
     ]
   }
 ];
+var DAILY = [
+  {pet:0, t:{zh:'太小的小刺猬', en:'The tiny hedgehog', es:'El erizo chiquitín'},
+   q:{zh:'天快冷了，我在院子里看到一只特别小的刺猬，还没我的拳头大，大白天在找吃的。', en:"It's getting cold, and there's a really tiny hedgehog in my yard — smaller than my fist — looking for food in broad daylight.", es:'Ya hace frío y hay un erizo pequeñísimo en mi jardín — más chico que mi puño — buscando comida en pleno día.'},
+   o:[{zh:'让它自己去冬眠', en:'Let it go and hibernate on its own', es:'Dejar que hiberne solo'},{zh:'联系刺猬救助站，请他们称体重、判断要不要帮忙', en:'Call a hedgehog rescue so they can weigh it and decide if it needs help', es:'Llamar a un centro de rescate para que lo pesen y decidan si necesita ayuda'},{zh:'带回家当宠物养', en:'Take it home and keep it as a pet', es:'Llevarlo a casa como mascota'}], ok:1,
+   why:{zh:'秋天出生的小刺猬常常太小，撑不过冬眠。救助站会称体重，决定要不要帮它过冬。野生刺猬不能当宠物。', en:'Hedgehogs born in autumn are often too small to get through hibernation. A rescue will weigh it and decide whether to help it through winter. Wild hedgehogs are not pets.', es:'Los erizos que nacen en otoño suelen ser demasiado pequeños para aguantar la hibernación. Un centro de rescate lo pesa y decide si ayudarlo a pasar el invierno. Los erizos silvestres no son mascotas.'},
+   gag:{zh:'我不是矮，我是……限量迷你版。', en:"I'm not small. I'm... a limited mini edition.", es:'No soy pequeño. Soy... una edición mini limitada.'}},
+  {pet:0, t:{zh:'面包和牛奶', en:'Bread and milk', es:'Pan y leche'},
+   q:{zh:'邻居每天给刺猬放面包和牛奶，说它们爱吃。可是这只刺猬拉肚子了。', en:'My neighbor leaves out bread and milk for the hedgehogs every night and says they love it. But this one has an upset tummy.', es:'Mi vecino les deja pan y leche a los erizos cada noche y dice que les encanta. Pero este tiene la barriga suelta.'},
+   o:[{zh:'继续喂，多喂一点', en:'Keep going — give it even more', es:'Seguir igual — y darle más'},{zh:'换成清水和肉味的猫粮', en:'Swap to fresh water and meaty cat food', es:'Cambiar a agua fresca y comida de gato con carne'},{zh:'换成巧克力', en:'Swap to chocolate', es:'Cambiar a chocolate'}], ok:1,
+   why:{zh:'刺猬喝牛奶会拉肚子，面包也没什么营养。想帮野生刺猬，放一碟清水和肉味猫粮就好。', en:'Milk gives hedgehogs diarrhea, and bread has little they need. To help a wild hedgehog, put out a dish of water and some meaty cat food.', es:'La leche les da diarrea a los erizos, y el pan casi no los alimenta. Para ayudar a un erizo silvestre, deja un platito de agua y comida de gato con carne.'},
+   gag:{zh:'面包配牛奶？我又不是来吃早餐的小学生。', en:'Bread and milk? Do I look like a kid at breakfast?', es:'¿Pan con leche? ¿Tengo cara de niño desayunando?'}},
+  {pet:0, t:{zh:'球网里的刺猬', en:'The hedgehog in the goal net', es:'El erizo en la red'},
+   q:{zh:'足球网里缠住了一只刺猬，它越挣扎缠得越紧！', en:'A hedgehog is tangled in our football net, and the more it wriggles, the tighter it gets!', es:'¡Un erizo se enredó en la red de fútbol y cuanto más se mueve, más se aprieta!'},
+   o:[{zh:'用力把它扯出来', en:'Pull it out as hard as you can', es:'Tirar fuerte para sacarlo'},{zh:'叫大人把周围的网剪开，连同缠着的部分一起送去救助站', en:'Get an adult to cut the net around it, then take it — net and all — to a wildlife rescue', es:'Pedir a un adulto que corte la red alrededor y llevarlo — con red y todo — a un centro de rescate'},{zh:'解开后马上放它走', en:'Untangle it and let it go right away', es:'Desenredarlo y soltarlo enseguida'}], ok:1,
+   why:{zh:'被缠住的地方可能勒伤了，要让救助站慢慢取下并检查。就算解开了，也不能直接放走。', en:'The net may have cut into its skin, so a rescue needs to remove it carefully and check for injuries. Even once it is free, it should not just be let go.', es:'La red puede haberle cortado la piel, así que un centro de rescate debe quitarla con cuidado y revisarlo. Aunque quede libre, no hay que soltarlo sin más.'},
+   gag:{zh:'我只是想当一次守门员……', en:'I only wanted to be the goalkeeper for once...', es:'Yo solo quería ser portero por una vez...'}},
+  {pet:0, t:{zh:'不买票的乘客', en:'Passengers without tickets', es:'Pasajeros sin boleto'},
+   q:{zh:'这只刺猬身上趴着几只圆鼓鼓的蜱虫。', en:'This hedgehog has a few fat round ticks stuck on it.', es:'Este erizo tiene pegadas unas garrapatas gordas y redondas.'},
+   o:[{zh:'用手指捏住硬拔', en:'Pinch them and yank them off with your fingers', es:'Arrancarlas con los dedos'},{zh:'交给兽医或救助站，用专用工具取下来', en:'Let a vet or rescue remove them with a proper tick tool', es:'Que un veterinario o centro de rescate las quite con la herramienta adecuada'},{zh:'往上面涂油闷死它们', en:'Smother them with oil', es:'Cubrirlas de aceite'}], ok:1,
+   why:{zh:'硬拔或涂油，都可能让蜱虫的嘴留在皮肤里引起感染。要用专用工具把它完整取下来。', en:"Yanking or oiling a tick can leave its mouthparts in the skin and cause an infection. It needs to come out whole, with the right tool.", es:'Arrancar o engrasar una garrapata puede dejarle la boca dentro de la piel y causar una infección. Hay que sacarla entera, con la herramienta adecuada.'},
+   gag:{zh:'这几位乘客没买票，麻烦请它们下车。', en:"These passengers didn't buy tickets. Kindly show them off the bus.", es:'Estos pasajeros no pagaron boleto. Que se bajen, por favor.'}},
+  {pet:1, t:{zh:'罢工的肚子', en:'The tummy on strike', es:'La barriga en huelga'},
+   q:{zh:'兔子从昨天起就不吃东西，笼子里也没有新的便便。', en:"My rabbit hasn't eaten since yesterday, and there are no new droppings in the cage.", es:'Mi conejo no come desde ayer y no hay caquitas nuevas en la jaula.'},
+   o:[{zh:'再等两天看看', en:'Wait two more days and see', es:'Esperar dos días más a ver'},{zh:'马上带去看兽医', en:'Take it to the vet right away', es:'Llevarlo al veterinario ya'},{zh:'喂它一块蛋糕开开胃', en:'Give it some cake to get its appetite back', es:'Darle pastel para abrirle el apetito'}], ok:1,
+   why:{zh:'兔子的肠胃要一直动才健康。一整天不吃不拉是急症，要马上看兽医，不能等。', en:"A rabbit's gut has to keep moving. A whole day with no eating and no droppings is an emergency — see a vet now, don't wait.", es:'El intestino de un conejo tiene que moverse siempre. Un día entero sin comer ni hacer caca es una urgencia — al veterinario ya, sin esperar.'},
+   gag:{zh:'我的肚子罢工了，连便便都请假了。', en:'My tummy is on strike. Even the poops called in sick.', es:'Mi barriga está en huelga. Hasta las caquitas pidieron el día libre.'}},
+  {pet:1, t:{zh:'大热天', en:'A very hot day', es:'Un día de mucho calor'},
+   q:{zh:'大热天，兔子趴着直喘气，耳朵烫烫的。', en:"It's a scorching day, and my rabbit is lying flat, panting, with very hot ears.", es:'Hace un calor terrible y mi conejo está tumbado, jadeando, con las orejas muy calientes.'},
+   o:[{zh:'把它泡进冰水里', en:'Dunk it in ice water', es:'Meterlo en agua helada'},{zh:'移到阴凉处，用凉（不冰）的湿布擦耳朵，马上联系兽医', en:'Move it to the shade, dampen its ears with cool (not icy) water, and call the vet right away', es:'Llevarlo a la sombra, mojarle las orejas con agua fresca (no helada) y llamar ya al veterinario'},{zh:'给它盖条毯子', en:'Cover it with a blanket', es:'Taparlo con una manta'}], ok:1,
+   why:{zh:'兔子靠耳朵散热，要慢慢降温——冰水会让它休克。中暑一定要看兽医。', en:'Rabbits lose heat through their ears, and they must be cooled gently — ice water can send them into shock. Heatstroke always needs a vet.', es:'Los conejos pierden calor por las orejas y hay que enfriarlos poco a poco — el agua helada puede provocarles un shock. Un golpe de calor siempre necesita veterinario.'},
+   gag:{zh:'我穿着毛大衣过夏天，你试试？', en:'You try spending summer in a fur coat.', es:'A ver, pasa tú el verano con abrigo de piel.'}},
+  {pet:1, t:{zh:'啃笼子的兔子', en:'The cage chewer', es:'El que muerde la jaula'},
+   q:{zh:'兔子整天独自待在笼子里，最近开始啃笼子的铁丝。', en:'My rabbit is alone in its cage all day, and it has started chewing the bars.', es:'Mi conejo pasa todo el día solo en la jaula y ha empezado a morder los barrotes.'},
+   o:[{zh:'把笼子换成更硬的', en:'Get a tougher cage', es:'Comprar una jaula más dura'},{zh:'多陪它，给它更大的活动空间和可以啃的东西', en:'Spend more time with it, and give it more room and safe things to chew', es:'Pasar más tiempo con él y darle más espacio y cosas seguras para morder'},{zh:'不理它，习惯就好', en:'Ignore it — it will get used to it', es:'No hacerle caso — ya se acostumbrará'}], ok:1,
+   why:{zh:'兔子是爱热闹的动物，无聊和孤单时会乱啃。它需要陪伴、活动空间和安全的啃咬玩具。', en:'Rabbits are social animals, and they chew when they are bored and lonely. They need company, space to move, and safe chew toys.', es:'Los conejos son animales sociables y muerden cuando están aburridos y solos. Necesitan compañía, espacio y juguetes seguros para morder.'},
+   gag:{zh:'我不是在啃笼子，我是在给你发求救信号。', en:"I'm not chewing the cage. I'm sending you an SOS.", es:'No estoy mordiendo la jaula. Te estoy mandando un SOS.'}},
+  {pet:1, t:{zh:'打卷的指甲', en:'The curly claws', es:'Las uñas rizadas'},
+   q:{zh:'兔子的指甲长得都打卷了，走路老被地毯勾住。', en:"My rabbit's nails have grown so long they curl, and they keep catching on the carpet.", es:'Las uñas de mi conejo están tan largas que se rizan y se enganchan en la alfombra.'},
+   o:[{zh:'让它自己磨', en:'Let it wear them down by itself', es:'Dejar que se las gaste solo'},{zh:'请兽医或有经验的大人来修剪', en:'Have a vet or an experienced adult trim them', es:'Que se las corte un veterinario o un adulto con experiencia'},{zh:'用胶带把指甲包起来', en:'Wrap the nails in tape', es:'Envolver las uñas con cinta'}], ok:1,
+   why:{zh:'家养兔子的指甲磨得不够快，要定期修剪。剪太深会流血，所以要让会剪的人来。', en:"Pet rabbits don't wear their nails down fast enough, so they need regular trims. Cutting too deep makes them bleed, so it is a job for someone who knows how.", es:'Los conejos de casa no se gastan las uñas lo bastante rápido, así que hay que cortárselas a menudo. Si se corta de más sangran, por eso lo hace alguien que sepa.'},
+   gag:{zh:'这不是指甲，这是我的登山冰爪……好吧，是指甲。', en:'These are not nails. These are my climbing spikes... okay, they are nails.', es:'No son uñas. Son mis crampones de escalada... vale, son uñas.'}},
+  {pet:2, t:{zh:'安静的豚鼠', en:'The quiet guinea pig', es:'El conejillo callado'},
+   q:{zh:'我的豚鼠一个人住，最近很安静，也不怎么叫了。', en:'My guinea pig lives alone, and lately it is very quiet and hardly squeaks.', es:'Mi conejillo de Indias vive solo, y últimamente está muy callado y casi no chilla.'},
+   o:[{zh:'给它买台小电视', en:'Buy it a tiny TV', es:'Comprarle una tele pequeñita'},{zh:'给它找一只豚鼠伙伴', en:'Find it a guinea pig friend', es:'Buscarle un amigo conejillo de Indias'},{zh:'它天生就不爱说话', en:'It is just naturally quiet', es:'Es que es callado por naturaleza'}], ok:1,
+   why:{zh:'豚鼠是群居动物，需要同类作伴。有伙伴的豚鼠更活泼、更健康。', en:'Guinea pigs are herd animals and need company of their own kind. A guinea pig with a friend is livelier and healthier.', es:'Los conejillos de Indias viven en grupo y necesitan compañía de su especie. Con un amigo están más activos y sanos.'},
+   gag:{zh:'我有好多话想说，可是没有豚鼠听得懂。', en:'I have SO much to say, and nobody here speaks guinea pig.', es:'Tengo MUCHO que contar y aquí nadie habla conejillo.'}},
+  {pet:2, t:{zh:'仓鼠跑轮', en:'The hamster wheel', es:'La rueda de hámster'},
+   q:{zh:'我给豚鼠买了仓鼠用的跑轮和跑球，想让它多运动。', en:'I bought my guinea pig a hamster wheel and an exercise ball so it can get more exercise.', es:'Le compré a mi conejillo de Indias una rueda de hámster y una bola para que haga más ejercicio.'},
+   o:[{zh:'很好，每天跑一小时', en:'Great — one hour a day', es:'Genial — una hora al día'},{zh:'不要用——给它平地、隧道和大一点的活动空间', en:"Don't use them — give it flat floor space, tunnels and more room instead", es:'No usarlas — mejor suelo plano, túneles y más espacio'},{zh:'把跑轮换成更小的', en:'Swap it for a smaller wheel', es:'Cambiarla por una rueda más pequeña'}], ok:1,
+   why:{zh:'豚鼠的背不像仓鼠那么能弯，跑轮和跑球会伤到它的脊椎和脚。在平地上跑来跑去就是最好的运动。', en:"A guinea pig's back can't bend like a hamster's, so wheels and balls can hurt its spine and feet. Running around on flat ground is the best exercise.", es:'La espalda de un conejillo de Indias no se dobla como la de un hámster: las ruedas y bolas pueden dañarle la columna y las patas. Correr por suelo plano es el mejor ejercicio.'},
+   gag:{zh:'我是豚鼠，不是仓鼠。这东西你留着自己跑吧。', en:"I'm a guinea pig, not a hamster. You run in that thing.", es:'Soy un conejillo de Indias, no un hámster. Corre tú en esa cosa.'}},
+  {pet:2, img:'well', t:{zh:'突然蹦起来', en:'The sudden jump', es:'El salto repentino'},
+   q:{zh:'我的豚鼠突然原地蹦起来，还在半空扭了一下！吓死我了。', en:'My guinea pig suddenly jumped straight up and twisted in the air! It scared me so much.', es:'¡Mi conejillo de Indias saltó de repente y se retorció en el aire! Qué susto.'},
+   o:[{zh:'它抽筋了，快按住它', en:"It's having a cramp — hold it down", es:'Le dio un calambre — hay que sujetarlo'},{zh:'它是开心——这叫"爆米花跳"', en:"It's happy — this is called popcorning", es:'Está feliz — eso se llama hacer "palomitas"'},{zh:'它被电到了', en:'It got an electric shock', es:'Le dio una descarga eléctrica'}], ok:1,
+   why:{zh:'豚鼠高兴的时候会突然蹦起来扭身子，大家叫它"爆米花跳"。它在说：我今天心情超好！', en:'Happy guinea pigs suddenly hop and twist in the air — people call it popcorning. It means: I feel GREAT today!', es:'Los conejillos de Indias felices dan saltitos y se retuercen en el aire — le dicen hacer "palomitas". Significa: ¡hoy me siento GENIAL!'},
+   gag:{zh:'别紧张，我只是开心得炸开了一下。', en:"Relax. I was just so happy that I popped.", es:'Tranquilo. Es que de tan feliz, exploté un poquito.'}},
+  {pet:2, t:{zh:'阿嚏！', en:'Achoo!', es:'¡Achís!'},
+   q:{zh:'豚鼠老是打喷嚏，它的垫料是粉尘很多的木屑。', en:'My guinea pig keeps sneezing. Its bedding is very dusty wood shavings.', es:'Mi conejillo de Indias no para de estornudar. Su cama es de virutas con mucho polvo.'},
+   o:[{zh:'给它戴个小口罩', en:'Give it a tiny face mask', es:'Ponerle una mascarilla chiquita'},{zh:'换成无尘的垫料，还打喷嚏就去看兽医', en:'Switch to dust-free bedding, and see a vet if the sneezing goes on', es:'Cambiar a una cama sin polvo y, si sigue estornudando, ir al veterinario'},{zh:'再多加点木屑', en:'Add even more shavings', es:'Echarle más virutas'}], ok:1,
+   why:{zh:'粉尘多的垫料会刺激豚鼠的鼻子和肺。换成无尘垫料；如果还打喷嚏，可能是生病了，要看兽医。', en:"Dusty bedding irritates a guinea pig's nose and lungs. Switch to dust-free bedding — and if the sneezing continues it may be ill, so see a vet.", es:'Una cama con polvo irrita la nariz y los pulmones. Cámbiala por una sin polvo — y si sigue estornudando puede estar enfermo: al veterinario.'},
+   gag:{zh:'阿嚏！这不是床，这是胡椒瓶。', en:"Achoo! This isn't a bed. It's a pepper shaker.", es:'¡Achís! Esto no es una cama. Es un pimentero.'}}
+];
+var DAILY_ORDER = [0,4,8,1,5,9,2,6,10,3,7,11];
+var DAILY_KEY = 'vetDaily';
+var dailyUi = {fb:null, solved:false, tried:{}};
+
+function todayStr(off){
+  var d = new Date(); d.setDate(d.getDate() + (off || 0));
+  return d.getFullYear() + '-' + ('0' + (d.getMonth()+1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2);
+}
+function todayCase(){
+  var d = new Date();
+  var n = Math.floor(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) / 86400000);
+  return DAILY[DAILY_ORDER[n % DAILY_ORDER.length]];
+}
+function loadDaily(){
+  var d = {last:'', streak:0, total:0};
+  try { var s = JSON.parse(window.localStorage.getItem(DAILY_KEY)); if (s && typeof s.total === 'number') d = s; } catch (e) {}
+  return d;
+}
+function dailyDone(){ return loadDaily().last === todayStr(); }
+function completeDaily(){
+  var d = loadDaily();
+  if (d.last === todayStr()) return null;
+  d.streak = d.last === todayStr(-1) ? d.streak + 1 : 1;
+  d.last = todayStr();
+  d.total++;
+  try { window.localStorage.setItem(DAILY_KEY, JSON.stringify(d)); } catch (e) {}
+  for (var i=0;i<ACCS.length;i++) if (ACCS[i].n === d.total) return ACCS[i].e;
+  return '';
+}
+function isCured(i){ return !!loadStars()[CASES[i].id]; }
 var CARE_KEY = 'vetCareRoom';
 var care = loadCare();
 var careUi = {bubble:null, food:false, asleep:false, fx:''};
@@ -518,14 +623,36 @@ function showFb(id, text, ok){
 
 function render(){
   var c = C(), t = c.t, i;
-  var onTitle = activeScreen() === 'title';
+  var scr = activeScreen(), onTitle = scr === 'title';
   $('vtagLine').innerText = L(UI.tagLine);
   $('vsndBtn').innerText = snd.on ? '🔊' : '🔇';
   $('vappTitle').innerText = L(UI.appTitle);
-  $('vcaseLabel').innerText = onTitle ? L(UI.caseHome) : (activeScreen() === 'care' ? L(UI.careName) : L(UI.caseNo) + (caseIdx+1));
+  $('vcaseLabel').innerText = onTitle ? L(UI.caseHome) : (scr === 'care' ? L(UI.careName) : (scr === 'daily' ? L(UI.dailyNo) : L(UI.caseNo) + (caseIdx+1)));
   $('vtitleH2').innerText = L(UI.appTitle);
   $('vtitleDesc').innerText = L(UI.titleDesc);
   $('vtitleFootnote').innerText = L(UI.titleFootnote);
+  var dc = todayCase(), dd = loadDaily(), ddone = dd.last === todayStr();
+  $('vdailyImg').src = A(dc.img === 'well' ? CASES[dc.pet].well : CASES[dc.pet].sick);
+  $('vdailyNo').innerText = L(UI.dailyNo);
+  $('vdailyName').innerText = L(dc.t);
+  $('vdailySub').innerText = ddone ? L(UI.dailyDoneSub) : L(UI.dailyNew);
+  $('vdailySub').className = 'case-stars' + (ddone ? ' done' : '');
+  $('vdailyStats').innerText = dd.total ? L(UI.dailyStats).replace('{t}', dd.total).replace('{s}', ddone || dd.last === todayStr(-1) ? dd.streak : 0) : '';
+  $('vdAv').src = A(CASES[dc.pet].owner);
+  $('vdImg').src = $('vdailyImg').src;
+  $('vdsfx').innerText = L(UI.dailySfx);
+  $('vdOwner').innerText = L(UI.dailyCaller);
+  $('vdQ').innerText = '"' + L(dc.q) + '"';
+  $('vdGag').innerText = L(dc.gag);
+  for (i=0;i<3;i++){
+    var ob = $('vdOpt'+(i+1));
+    ob.innerText = L(dc.o[i]);
+    ob.disabled = dailyUi.solved || !!dailyUi.tried[i];
+    ob.className = 'opt-btn' + (dailyUi.solved && i === dc.ok ? ' correct' : (dailyUi.tried[i] ? ' wrong' : ''));
+  }
+  showFb('vdFb', dailyUi.fb === 'ok' ? L(dc.why) + (dailyUi.unlock ? ' ' + L(UI.dailyUnlock).replace('{e}', dailyUi.unlock) : '') : (dailyUi.fb === 'retry' ? L(UI.dailyRetry) : ''), dailyUi.fb === 'ok');
+  $('vdDoneBtn').innerText = L(UI.dailyDoneBtn);
+  $('vdDoneBtn').disabled = !dailyUi.solved;
   var stars = loadStars();
   for (i=0;i<CASES.length;i++){
     $('vcaseNo'+i).innerText = L(UI.caseNo) + (i+1);
@@ -585,18 +712,24 @@ function render(){
 }
 
 function renderCare(){
-  var p = PETS[care.pet], i;
+  var i, any = false;
+  for (i=0;i<PETS.length;i++) if (isCured(i)) any = true;
+  if (any && !isCured(care.pet)) { for (i=0;i<PETS.length;i++) if (isCured(i)) { care.pet = i; break; } }
+  var p = PETS[care.pet];
+  $('vscreen-care').classList.toggle('empty', !any);
+  $('vcareEmptyText').innerText = L(UI.careEmpty);
+  $('vcareGoBtn').innerText = L(UI.caseHome);
   $('vcareNo').innerText = L(UI.careNo);
   $('vcareName').innerText = L(UI.careName);
-  $('vcareSub').innerText = L(UI.careSub);
-  for (i=0;i<PETS.length;i++) $('vpetTab'+i).className = 'pet-tab' + (care.pet === i ? ' active' : '');
+  $('vcareSub').innerText = any ? L(UI.careSub) : L(UI.careResidents);
+  for (i=0;i<PETS.length;i++) $('vpetTab'+i).className = 'pet-tab' + (care.pet === i && any ? ' active' : '') + (isCured(i) ? '' : ' locked');
   $('vpetName').innerText = L(p.names)[care.name[care.pet]] + ' ✎';
   $('vpetName').title = L(UI.nameHint);
   var full = care.done.length >= 5, h = '';
   for (i=0;i<5;i++) h += i < care.done.length ? '❤️' : '🤍';
   $('vhearts').innerText = h;
   $('vcareImg').src = A(CASES[care.pet].well);
-  $('vacc').innerText = ACCS[care.acc[care.pet]];
+  $('vacc').innerText = (ACCS[care.acc[care.pet]] || ACCS[0]).e;
   $('vfx').innerText = careUi.fx;
   $('vroom').className = 'room' + (careUi.asleep ? ' night' : '');
   $('vbubble').innerText = careUi.bubble ? L(careUi.bubble) : L(UI.hello);
@@ -611,7 +744,9 @@ function renderCare(){
   $('vreward').className = 'reward' + (full ? ' show' : '');
   $('vrewardText').innerText = L(UI.rewardText).replace('{n}', care.stickers);
   $('vnewDayBtn').innerText = L(UI.newDayBtn);
-  $('vcareNote').innerText = L(UI.careNote);
+  var tot = loadDaily().total, nxt = null;
+  for (i=0;i<ACCS.length;i++) if (ACCS[i].n > tot) { nxt = ACCS[i]; break; }
+  $('vcareNote').innerText = L(UI.careNote) + (nxt ? ' ' + L(UI.careNext).replace('{n}', nxt.n - tot).replace('{e}', nxt.e) : '');
   $('vcareHomeBtn').innerText = L(UI.careHomeBtn);
 }
 
@@ -648,6 +783,7 @@ function openCare(pet){
 }
 
 function switchPet(i){
+  if (!isCured(i)) { careUi.bubble = UI.careLocked; careUi.fx = '🔒'; careUi.food = false; beep('bad'); render(); return; }
   care.pet = i;
   careUi = {bubble:null, food:false, asleep:false, fx:''};
   saveCare();
@@ -794,7 +930,9 @@ function init(){
   bind('vactBrush', function(){ careAct('brush', PETS[care.pet].brush, '✨'); });
   bind('vactHug', function(){ careAct('hug', UI.bHug, '💗'); });
   bind('vactDress', function(){
-    care.acc[care.pet] = (care.acc[care.pet] + 1) % ACCS.length;
+    var tot = loadDaily().total, k = care.acc[care.pet];
+    do { k = (k + 1) % ACCS.length; } while (ACCS[k].n > tot);
+    care.acc[care.pet] = k;
     careAct('dress', care.acc[care.pet] ? UI.bDress : UI.bDressOff, '');
   });
   bind('vactSleep', function(){
@@ -805,6 +943,20 @@ function init(){
     care.done = []; careUi = {bubble:null, food:false, asleep:false, fx:''};
     saveCare(); render();
   });
+  bind('vdailyBtn', function(){ beep('tap'); dailyUi = {fb: dailyDone() ? 'ok' : null, solved: dailyDone(), tried:{}}; goTo('daily'); });
+  [0,1,2].forEach(function(i){ bind('vdOpt'+(i+1), function(){
+    var dc = todayCase();
+    if (dailyUi.solved) return;
+    if (i === dc.ok) {
+      dailyUi.solved = true; dailyUi.fb = 'ok';
+      var u = completeDaily();
+      dailyUi.unlock = u || '';
+      beep('win');
+    } else { dailyUi.tried[i] = true; dailyUi.fb = 'retry'; beep('bad'); }
+    render();
+  }); });
+  bind('vdDoneBtn', function(){ beep('tap'); goTo('title'); });
+  bind('vcareGoBtn', function(){ resetCase(); goTo('title'); });
   bind('vsndBtn', function(){
     snd.on = !snd.on;
     try { window.localStorage.setItem('vetSound', snd.on ? '1' : '0'); } catch (e) {}

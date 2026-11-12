@@ -368,3 +368,15 @@
 #vetapp .patient-img,#vetapp .care-img{animation:vbreathe 2.8s ease-in-out infinite;transform-origin:50% 90%;}
 @keyframes vbreathe{0%,100%{transform:scale(1,1);}50%{transform:scale(1.02,0.975);}}
 @media (prefers-reduced-motion: reduce){#vetapp .patient-img,#vetapp .care-img{animation:none;}}
+
+#vetapp .daily-card{background:#fdf1e0;border-color:var(--v-inkline);}
+#vetapp .daily-card .case-no{color:var(--v-terracotta);font-weight:bold;}
+#vetapp .daily-stats{font-size:11px;color:#9a8c70;}
+#vetapp .daily-done{margin-top:14px;}
+#vetapp .pet-tab.locked{opacity:.45;position:relative;}
+#vetapp .pet-tab.locked::after{content:"🔒";position:absolute;right:-4px;bottom:-6px;font-size:14px;}
+#vetapp .care-empty{display:none;flex-direction:column;align-items:center;text-align:center;gap:12px;padding:40px 10px;}
+#vetapp .care-empty-ico{font-size:64px;}
+#vetapp .care-empty p{margin:0;font-size:15px;line-height:1.7;}
+#vetapp #vscreen-care.empty .care-empty{display:flex;}
+#vetapp #vscreen-care.empty .care-top,#vetapp #vscreen-care.empty .room,#vetapp #vscreen-care.empty .care-actions,#vetapp #vscreen-care.empty .food-row,#vetapp #vscreen-care.empty .reward,#vetapp #vscreen-care.empty .care-note,#vetapp #vscreen-care.empty #vcareHomeBtn{display:none;}
