@@ -260,7 +260,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
       <button type="button" class="hearBtn" id="hearAuto"><span class="spk" aria-hidden="true"><svg viewBox="0 0 24 24" width="24" height="24"><path d="M4 9h4l5-4v14l-5-4H4z" fill="#fff" stroke="#1E2A3A" stroke-width="1.6" stroke-linejoin="round"/><path class="w1" d="M16 9.5q1.6 2.5 0 5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/><path class="w2" d="M18.6 7.5q3 4.5 0 9" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg></span><span data-i18n="hearIt">Hear it</span></button>
     </div>
     <div class="voice">
-      <button type="button" class="big blue" id="holdRec" hidden>Hold to record my voice</button>
+      <button type="button" class="big blue" id="holdRec" hidden>Tap to record my voice</button>
       <label class="big blue" for="voiceFile" id="pickRec" style="text-align:center" data-i18n="pickRec">Record my voice</label>
       <input type="file" id="voiceFile" accept="audio/*" capture>
       <span id="voiceState"></span>
@@ -363,7 +363,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
     <button class="big blue" id="again">Practice again</button>
   </section>
 
-  <p class="credit"><span data-i18n="credit">Made by Phoebie</span> &middot; <span id="buildTag">v2.5.5</span></p>
+  <p class="credit"><span data-i18n="credit">Made by Phoebie</span> &middot; <span id="buildTag">v2.6</span></p>
 </main>
 
 <script>
@@ -395,7 +395,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
     blockedBody:"Lockdown Mode is on, so the app can't speak or record here. A grown-up can allow this one website:",
     blockedStepsApp:"<li>Open Settings → Privacy &amp; Security → Lockdown Mode.</li><li>Tap Configure Web Browsing.</li><li>Turn off Lockdown Mode for Bird Pal.</li><li>Close Bird Pal completely and open it again.</li>",blockedBodyApp:"Lockdown Mode is on, so the app can't speak or record. A grown-up can turn it off just for Bird Pal:",
     blockedSteps:"<li>Open phoebiewang.com/birdpal in Safari.</li><li>Tap the page menu button next to the address.</li><li>Tap Website Settings, then turn off Lockdown Mode.</li><li>Close Bird Pal completely and open it again.</li>",
-    whichVoice:"Which voice says the words?",voiceAria:"Voice",hearIt:"Hear it",holdRec:"Hold to record my voice",pickRec:"Record my voice",
+    whichVoice:"Which voice says the words?",voiceAria:"Voice",hearIt:"Hear it",holdRec:"Tap to record my voice",pickRec:"Record my voice",
     recTip:"Tap, say the word once, then save the recording. Nori will use your voice!",
     cheer:"“You can do it!”",saidIt:"Nori said it!",sayThis:"Say this to Nori",
     step1:"Pick a word and teach Nori!",step2:"Say it clearly, tap the button, then listen quietly.",step3:"Did Nori try? Tap “Good Nori!” and give a treat.",
@@ -425,10 +425,10 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
     previewLines:["Squawk! Tap the home screen Bird Pal, Phoebie!","The chat one can't hear me. Open the real Bird Pal!","Come record on the home screen app, pretty please!"],
     recTipFramed:"To record your own voice, open the Bird Pal app from your home screen. If you don’t have it yet, open <a href=\"https://www.phoebiewang.com/birdpal/\">phoebiewang.com/birdpal</a> in Safari and tap Share, then Add to Home Screen.",
     recTipIOS:"The camera will open. Point it anywhere, tap the red button, say the word, tap stop, then tap Use Video. The app keeps only your voice.",
-    recTipHold:"Press and hold the button, say the word, then let go.",
+    recTipHold:"Tap the button, say the word, then tap again.",
     savedLines:["Yay! You saved my words. I'm learning so fast!","Good job, Phoebie! Let's hear it again!","Perfect! That one is saved. Teach me more!"],
-    recListening:"Listening... let go to save",recSaved:"Saved!",recTry:"Try again",
-    keepHolding:"Keep holding while you talk, then let go.",cantHear:"Can't hear it? Turn up the volume and flip the side switch off silent.",
+    recListening:"Recording… tap again to stop",recSaved:"Saved!",recTry:"Try again",
+    keepHolding:"Say the word a little longer, then tap again.",cantHear:"Can't hear it? Turn up the volume and flip the side switch off silent.",
     micOff:"The microphone is off. Allow the microphone for Bird Pal, then try again.",
     stop:"Stop",sayingN:"Saying it {i} of {n}",cantTalk:"This device can't talk. Say “{w}” out loud 5 times!",nowListen:"Now listen. Did your bird say it?",
     min:"{m} min",hour:"1 hour",startLen:"Start {len} lesson",
@@ -469,7 +469,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
     blockedBody:"“锁定模式”已开启，所以应用在这里不能说话，也不能录音。大人可以只给这个网站开放：",
     blockedStepsApp:"<li>打开“设置”→“隐私与安全性”→“锁定模式”。</li><li>点“配置网页浏览”。</li><li>把 Bird Pal 的锁定模式关掉。</li><li>完全关掉 Bird Pal，再重新打开。</li>",blockedBodyApp:"“锁定模式”已开启，所以应用不能说话，也不能录音。大人可以只给 Bird Pal 关掉它：",
     blockedSteps:"<li>用 Safari 打开 phoebiewang.com/birdpal。</li><li>点地址栏旁边的页面菜单按钮。</li><li>点“网站设置”，然后关闭“锁定模式”。</li><li>完全关掉 Bird Pal，再重新打开。</li>",
-    whichVoice:"用哪个声音说这些词？",voiceAria:"声音",hearIt:"听一听",holdRec:"按住，录我的声音",pickRec:"录我的声音",
+    whichVoice:"用哪个声音说这些词？",voiceAria:"声音",hearIt:"听一听",holdRec:"点一下，录我的声音",pickRec:"录我的声音",
     recTip:"点一下，说一遍这个词，然后保存录音。Nori 会用你的声音！",
     cheer:"“你一定行！”",saidIt:"Nori 说出来了！",sayThis:"对 Nori 说这个",
     step1:"选一个词，来教 Nori！",step2:"说清楚，点按钮，然后安静地听。",step3:"Nori 试着说了吗？点“好棒 Nori！”，给它一个零食。",
@@ -499,10 +499,10 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
     previewLines:["嘎嘎！Phoebie，快点主屏幕上的 Bird Pal！","聊天里的我听不见你。打开真正的 Bird Pal 吧！","来主屏幕上的应用里录音嘛，拜托拜托！"],
     recTipFramed:"要录你自己的声音，请从主屏幕打开 Bird Pal 应用。如果还没有，用 Safari 打开 <a href=\"https://www.phoebiewang.com/birdpal/\">phoebiewang.com/birdpal</a>，点“分享”，再点“添加到主屏幕”。",
     recTipIOS:"相机会打开。随便对着哪里，点红色按钮，说这个词，点停止，再点“使用视频”。应用只保留你的声音。",
-    recTipHold:"按住按钮，说这个词，然后松开。",
+    recTipHold:"点一下按钮，说这个词，再点一下。",
     savedLines:["耶！你把我的词存好了。我学得好快！","干得好，Phoebie！再听一遍吧！","太棒了！这个存好了。再教我一个！"],
-    recListening:"正在听……松开就保存",recSaved:"保存好了！",recTry:"再试一次",
-    keepHolding:"说话的时候一直按住，说完再松开。",cantHear:"听不到？把音量调大，再把侧边的静音开关拨回来。",
+    recListening:"正在录……再点一下停止",recSaved:"保存好了！",recTry:"再试一次",
+    keepHolding:"把词说得稍微长一点，再点一下。",cantHear:"听不到？把音量调大，再把侧边的静音开关拨回来。",
     micOff:"麦克风没打开。请允许 Bird Pal 使用麦克风，然后再试一次。",
     stop:"停止",sayingN:"正在说第 {i} 遍，共 {n} 遍",cantTalk:"这台设备不会说话。请你大声说“{w}”5 遍！",nowListen:"现在听一听。你的鸟儿说了吗？",
     min:"{m} 分钟",hour:"1 小时",startLen:"开始 {len} 的课",
@@ -543,7 +543,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
     blockedBody:"El Modo de Aislamiento está activado, así que la app no puede hablar ni grabar aquí. Un adulto puede permitir solo este sitio web:",
     blockedStepsApp:"<li>Abre Ajustes → Privacidad y seguridad → Modo de Aislamiento.</li><li>Toca Configurar navegación web.</li><li>Desactiva el Modo de Aislamiento para Bird Pal.</li><li>Cierra Bird Pal por completo y vuelve a abrirla.</li>",blockedBodyApp:"El Modo de Aislamiento está activado, así que la app no puede hablar ni grabar. Un adulto puede desactivarlo solo para Bird Pal:",
     blockedSteps:"<li>Abre phoebiewang.com/birdpal en Safari.</li><li>Toca el botón del menú de la página, junto a la dirección.</li><li>Toca Ajustes del sitio web y desactiva el Modo de Aislamiento.</li><li>Cierra Bird Pal por completo y vuelve a abrirla.</li>",
-    whichVoice:"¿Qué voz dice las palabras?",voiceAria:"Voz",hearIt:"Escuchar",holdRec:"Mantén presionado para grabar mi voz",pickRec:"Grabar mi voz",
+    whichVoice:"¿Qué voz dice las palabras?",voiceAria:"Voz",hearIt:"Escuchar",holdRec:"Toca para grabar mi voz",pickRec:"Grabar mi voz",
     recTip:"Toca, di la palabra una vez y guarda la grabación. ¡Nori usará tu voz!",
     cheer:"«¡Tú puedes!»",saidIt:"¡Nori lo dijo!",sayThis:"Dile esto a Nori",
     step1:"¡Elige una palabra y enséñasela a Nori!",step2:"Dila con claridad, toca el botón y escucha en silencio.",step3:"¿Nori lo intentó? Toca «¡Bien, Nori!» y dale un premio.",
@@ -573,10 +573,10 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
     previewLines:["¡Cuac! ¡Toca Bird Pal en la pantalla de inicio, Phoebie!","El del chat no me oye. ¡Abre el Bird Pal de verdad!","¡Ven a grabar en la app de la pantalla de inicio, porfa!"],
     recTipFramed:"Para grabar tu propia voz, abre la app Bird Pal desde tu pantalla de inicio. Si aún no la tienes, abre <a href=\"https://www.phoebiewang.com/birdpal/\">phoebiewang.com/birdpal</a> en Safari y toca Compartir, luego Agregar a inicio.",
     recTipIOS:"Se abrirá la cámara. Apunta a cualquier lado, toca el botón rojo, di la palabra, toca detener y luego Usar video. La app guarda solo tu voz.",
-    recTipHold:"Mantén presionado el botón, di la palabra y suelta.",
+    recTipHold:"Toca el botón, di la palabra y vuelve a tocar.",
     savedLines:["¡Bien! Guardaste mis palabras. ¡Aprendo rapidísimo!","¡Buen trabajo, Phoebie! ¡Vamos a oírla otra vez!","¡Perfecto! Esa ya está guardada. ¡Enséñame más!"],
-    recListening:"Escuchando... suelta para guardar",recSaved:"¡Guardado!",recTry:"Inténtalo otra vez",
-    keepHolding:"Mantén presionado mientras hablas y luego suelta.",cantHear:"¿No se oye? Sube el volumen y quita el modo silencio con el interruptor lateral.",
+    recListening:"Grabando… toca otra vez para parar",recSaved:"¡Guardado!",recTry:"Inténtalo otra vez",
+    keepHolding:"Di la palabra un poco más largo y vuelve a tocar.",cantHear:"¿No se oye? Sube el volumen y quita el modo silencio con el interruptor lateral.",
     micOff:"El micrófono está apagado. Permite el micrófono para Bird Pal y vuelve a intentarlo.",
     stop:"Detener",sayingN:"Diciéndola {i} de {n}",cantTalk:"Este dispositivo no puede hablar. ¡Di «{w}» en voz alta 5 veces!",nowListen:"Ahora escucha. ¿Lo dijo tu pájaro?",
     min:"{m} min",hour:"1 hora",startLen:"Empezar clase de {len}",
@@ -958,9 +958,12 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
       setTimeout(function(){if(recState===r)stopRec();},6000);
     };
     /* App only: a small grey line under the button showing what the recorder did. */
-    window.birdpalDiag=function(t){var d=$("recDiag");if(!d){d=document.createElement("p");d.id="recDiag";d.style.cssText="font-size:11px;color:#8a93a0;margin:2px 0 0;text-align:center";hb.insertAdjacentElement("afterend",d);}d.textContent=t;};
+    var recLog=[],recT0=Date.now();
+    var logRec=function(t){if(!window.BIRDPAL_NATIVE)return;recLog.push(((Date.now()-recT0)/1000).toFixed(1)+"s "+t);recLog=recLog.slice(-4);
+      var d=$("recDiag");if(!d){d=document.createElement("p");d.id="recDiag";d.style.cssText="font-size:11px;line-height:1.35;color:#8a93a0;margin:2px 0 0;text-align:center;white-space:pre-line";hb.insertAdjacentElement("afterend",d);}d.textContent=recLog.join("\n");};
+    window.birdpalDiag=function(t){logRec(t);};
     window.birdpalRecDone=function(b64,err){
-      if(err)window.birdpalDiag("error: "+err);
+      logRec(err?"error: "+err:"got recording ("+Math.round((b64||"").length*0.75/1024)+" KB)");
       var r=recState;recState=null;
       if(err==="denied"){setBtn("bad");showErr(T("micOff"));return;}
       if(!b64){setBtn("bad");showErr(T("silent"));return;}
@@ -976,7 +979,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
     };
     var stopRec=function(){
       var r=recState;if(!r||r.stopped)return;r.stopped=true;
-      if(r.native){try{window.webkit.messageHandlers.birdpal.postMessage({rec:"stop"});}catch(e){}
+      if(r.native){logRec("stop sent");try{window.webkit.messageHandlers.birdpal.postMessage({rec:"stop"});}catch(e){logRec("stop failed: "+e);}
         setTimeout(function(){if(recState===r){recState=null;setBtn("bad");}},4000);return;}
       if(r.mr){if(r.mr.state==="recording")r.mr.stop();return;}
       if(r.stream)finishRec(r);
@@ -1005,17 +1008,14 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
       setBtn("rec");
       setTimeout(function(){if(recState===r)stopRec();},6000);
     };
-    /* Fingers: start on the button's touchstart; ANY finger lift anywhere stops it (iPhone did not
-       always send pointerup to the button, which left it stuck on "Listening..."). */
-    hb.addEventListener("touchstart",function(e){if(e.cancelable)e.preventDefault();beginRec(e);},{passive:false});
-    hb.addEventListener("touchmove",function(e){if(e.cancelable)e.preventDefault();},{passive:false});
+    /* Tap to start, tap again to stop (stops by itself after 6 s). Holding a finger down was not
+       reliable on iPhone: the "let go" did not always reach the page, leaving it on "Listening...". */
     hb.addEventListener("selectstart",function(e){e.preventDefault();});
-    document.addEventListener("touchend",function(){if(recState)stopRec();},{passive:true});
-    document.addEventListener("touchcancel",function(){if(recState)stopRec();},{passive:true});
-    document.addEventListener("visibilitychange",function(){if(document.hidden&&recState)stopRec();});
-    /* Mouse (computer browsers). */
-    hb.addEventListener("pointerdown",function(e){if(e.pointerType==="mouse")beginRec(e);});
-    document.addEventListener("pointerup",function(e){if(e.pointerType==="mouse"&&recState)stopRec();});
+    hb.addEventListener("click",function(e){
+      e.preventDefault();
+      if(recState){logRec("tap → stop");stopRec();}
+      else{logRec("tap → start");beginRec(e);}
+    });
   }
 
   var TIMES=5,playing=false,runId=0;
@@ -1287,7 +1287,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
   }
 
   function setBuildTag(){var sa=(window.matchMedia&&matchMedia("(display-mode: standalone)").matches)||navigator.standalone===true;
-    $("buildTag").textContent="v2.5.5 \u00b7 "+T(framed?"tagPreview":window.BIRDPAL_NATIVE?"tagNative":sa?"tagHome":"tagBrowser");}
+    $("buildTag").textContent="v2.6 \u00b7 "+T(framed?"tagPreview":window.BIRDPAL_NATIVE?"tagNative":sa?"tagHome":"tagBrowser");}
 
   /* ---------- switching language ---------- */
   function sameList(a,b){return a.length===b.length&&a.every(function(x){return b.indexOf(x)>=0;});}
