@@ -7,14 +7,23 @@ import WebKit
 @main
 struct BirdPalApp: App {
     init() {
-        // "Play and record" keeps the microphone working for "Hold to record my voice"
-        // ("playback" alone makes every recording silent). It still lets the morning lesson
-        // keep playing with the screen off and plays sound when the side switch is on silent.
-        // defaultToSpeaker: play through the loud speaker, not the quiet phone-call earpiece.
-        try? AVAudioSession.sharedInstance().setCategory(
-            .playAndRecord, mode: .default,
-            options: [.defaultToSpeaker, .allowBluetoothA2DP, .allowAirPlay])
-        try? AVAudioSession.sharedInstance().setActive(true)
+        // Normal sound: "playback" lets the morning lesson keep playing with the screen off and
+        // plays sound even when the side switch is on silent. The page switches to the
+        // microphone mode only while "Hold to record my voice" is held (see setAudio below).
+        BirdPalApp.setAudio(record: false)
+    }
+
+    /// record: true while the microphone is in use ("play and record"), false for steady playback.
+    /// Staying in "play and record" all the time made iOS lower and shift the playback volume.
+    static func setAudio(record: Bool) {
+        let session = AVAudioSession.sharedInstance()
+        if record {
+            try? session.setCategory(.playAndRecord, mode: .default,
+                                     options: [.defaultToSpeaker, .allowBluetoothA2DP])
+        } else {
+            try? session.setCategory(.playback, mode: .default)
+        }
+        try? session.setActive(true)
     }
 
     var body: some Scene {
@@ -81,8 +90,14 @@ struct BirdPalView: UIViewRepresentable {
         // The page asks to keep the screen awake while a lesson runs.
         func userContentController(_ userContentController: WKUserContentController,
                                    didReceive message: WKScriptMessage) {
-            guard let body = message.body as? [String: Any], let on = body["keepAwake"] as? Bool else { return }
-            DispatchQueue.main.async { UIApplication.shared.isIdleTimerDisabled = on }
+            guard let body = message.body as? [String: Any] else { return }
+            if let on = body["keepAwake"] as? Bool {
+                DispatchQueue.main.async { UIApplication.shared.isIdleTimerDisabled = on }
+            }
+            // The page asks for the microphone mode while recording, and normal playback after.
+            if let mode = body["audio"] as? String {
+                BirdPalApp.setAudio(record: mode == "play-and-record")
+            }
         }
     }
 }

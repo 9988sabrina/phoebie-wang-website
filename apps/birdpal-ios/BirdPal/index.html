@@ -362,7 +362,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
     <button class="big blue" id="again">Practice again</button>
   </section>
 
-  <p class="credit"><span data-i18n="credit">Made by Phoebie</span> &middot; <span id="buildTag">v2.4.1</span></p>
+  <p class="credit"><span data-i18n="credit">Made by Phoebie</span> &middot; <span id="buildTag">v2.4.2</span></p>
 </main>
 
 <script>
@@ -918,7 +918,8 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
   if(canHold){
     $("holdRec").hidden=false;$("pickRec").hidden=true;
     var hb=$("holdRec");
-    var setSession=function(t){try{if(navigator.audioSession)navigator.audioSession.type=t;}catch(e){}};
+    var setSession=function(t){try{if(navigator.audioSession)navigator.audioSession.type=t;}catch(e){}
+      try{if(window.BIRDPAL_NATIVE)window.webkit.messageHandlers.birdpal.postMessage({audio:t});}catch(e){}};
     setBtn=function(mode){
       hb.classList.remove("rec","ok","bad");
       if(mode==="rec"){hb.classList.add("rec");hb.textContent=T("recListening");}
@@ -955,6 +956,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
     hb.addEventListener("pointerdown",async function(e){
       e.preventDefault();if(recState)return;$("voiceErr").hidden=true;$("voiceErr").classList.remove("tip");hush();
       setSession("play-and-record");
+      if(window.BIRDPAL_NATIVE)await wait(150);
       var c=ctx(),r={chunks:[],len:0,stopped:false,start:Date.now()};recState=r;
       try{r.stream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false}});}
       catch(err){recState=null;setSession("playback");setBtn("bad");showErr(T("micOff"));return;}
@@ -1245,7 +1247,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
   }
 
   function setBuildTag(){var sa=(window.matchMedia&&matchMedia("(display-mode: standalone)").matches)||navigator.standalone===true;
-    $("buildTag").textContent="v2.4.1 \u00b7 "+T(framed?"tagPreview":window.BIRDPAL_NATIVE?"tagNative":sa?"tagHome":"tagBrowser");}
+    $("buildTag").textContent="v2.4.2 \u00b7 "+T(framed?"tagPreview":window.BIRDPAL_NATIVE?"tagNative":sa?"tagHome":"tagBrowser");}
 
   /* ---------- switching language ---------- */
   function sameList(a,b){return a.length===b.length&&a.every(function(x){return b.indexOf(x)>=0;});}
