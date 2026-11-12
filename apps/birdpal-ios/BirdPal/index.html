@@ -363,7 +363,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
     <button class="big blue" id="again">Practice again</button>
   </section>
 
-  <p class="credit"><span data-i18n="credit">Made by Phoebie</span> &middot; <span id="buildTag">v2.5.3</span></p>
+  <p class="credit"><span data-i18n="credit">Made by Phoebie</span> &middot; <span id="buildTag">v2.5.4</span></p>
 </main>
 
 <script>
@@ -957,7 +957,10 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
       setBtn("rec");
       setTimeout(function(){if(recState===r)stopRec();},6000);
     };
+    /* App only: a small grey line under the button showing what the recorder did. */
+    window.birdpalDiag=function(t){var d=$("recDiag");if(!d){d=document.createElement("p");d.id="recDiag";d.style.cssText="font-size:11px;color:#8a93a0;margin:2px 0 0;text-align:center";hb.insertAdjacentElement("afterend",d);}d.textContent=t;};
     window.birdpalRecDone=function(b64,err){
+      if(err)window.birdpalDiag("error: "+err);
       var r=recState;recState=null;
       if(err==="denied"){setBtn("bad");showErr(T("micOff"));return;}
       if(!b64){setBtn("bad");showErr(T("silent"));return;}
@@ -1275,7 +1278,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
   }
 
   function setBuildTag(){var sa=(window.matchMedia&&matchMedia("(display-mode: standalone)").matches)||navigator.standalone===true;
-    $("buildTag").textContent="v2.5.3 \u00b7 "+T(framed?"tagPreview":window.BIRDPAL_NATIVE?"tagNative":sa?"tagHome":"tagBrowser");}
+    $("buildTag").textContent="v2.5.4 \u00b7 "+T(framed?"tagPreview":window.BIRDPAL_NATIVE?"tagNative":sa?"tagHome":"tagBrowser");}
 
   /* ---------- switching language ---------- */
   function sameList(a,b){return a.length===b.length&&a.every(function(x){return b.indexOf(x)>=0;});}

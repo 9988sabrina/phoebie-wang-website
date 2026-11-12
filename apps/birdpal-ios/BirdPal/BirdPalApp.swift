@@ -74,6 +74,23 @@ struct BirdPalView: UIViewRepresentable {
         private var warm = false
         private var startWanted = false
         private var stopWanted = false
+        private var peakDb: Float = -160
+        private var meterTimer: Timer?
+        private var startedAt = Date()
+
+        /// Small status line under the record button, so a screenshot shows what really happened.
+        private func diag(_ text: String) {
+            let s = AVAudioSession.sharedInstance()
+            let input = s.currentRoute.inputs.first?.portName ?? "no mic"
+            let line = "\(text) · \(s.category.rawValue.replacingOccurrences(of: "AVAudioSessionCategory", with: "")) · \(input)"
+            let js = "window.birdpalDiag && window.birdpalDiag(" + jsString(line) + ")"
+            webView?.evaluateJavaScript(js)
+        }
+        private func jsString(_ s: String) -> String {
+            let d = (try? JSONSerialization.data(withJSONObject: [s])) ?? Data("[\"\"]".utf8)
+            let a = String(data: d, encoding: .utf8) ?? "[\"\"]"
+            return String(a.dropFirst().dropLast())
+        }
 
         private func newRecorder() -> AVAudioRecorder? {
             let url = FileManager.default.temporaryDirectory
@@ -82,7 +99,9 @@ struct BirdPalView: UIViewRepresentable {
                 AVFormatIDKey: kAudioFormatLinearPCM, AVSampleRateKey: 44100.0,
                 AVNumberOfChannelsKey: 1, AVLinearPCMBitDepthKey: 16,
                 AVLinearPCMIsFloatKey: false, AVLinearPCMIsBigEndianKey: false]
-            guard let rec = try? AVAudioRecorder(url: url, settings: settings), rec.prepareToRecord() else { return nil }
+            guard let rec = try? AVAudioRecorder(url: url, settings: settings) else { diag("new recorder failed"); return nil }
+            rec.isMeteringEnabled = true
+            if !rec.prepareToRecord() { diag("prepare failed") }
             return rec
         }
 
@@ -98,6 +117,7 @@ struct BirdPalView: UIViewRepresentable {
         /// Practice page opened: switch to the microphone mode and get a recorder ready.
         private func warmUp() {
             withPermission { ok in
+                self.diag(ok ? "mic allowed" : "mic NOT allowed")
                 guard ok else {
                     if self.startWanted { self.startWanted = false; self.stopWanted = false; self.finish(nil, error: "denied") }
                     return
@@ -127,8 +147,15 @@ struct BirdPalView: UIViewRepresentable {
         private func beginRecording() {
             guard let rec = prepared ?? newRecorder() else { finish(nil, error: "start"); return }
             prepared = nil
-            guard rec.record() else { rec.deleteRecording(); finish(nil, error: "start"); return }
+            guard rec.record() else { diag("record() failed"); rec.deleteRecording(); finish(nil, error: "start"); return }
             recording = rec
+            startedAt = Date(); peakDb = -160
+            diag("recording…")
+            meterTimer?.invalidate()
+            meterTimer = Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true) { [weak self] _ in
+                guard let self = self, let r = self.recording else { return }
+                r.updateMeters(); self.peakDb = max(self.peakDb, r.peakPower(forChannel: 0))
+            }
             if stopWanted { stopWanted = false; stopRecording() }
         }
 
@@ -137,9 +164,13 @@ struct BirdPalView: UIViewRepresentable {
                 if startWanted { stopWanted = true } else { finish(nil, error: "empty") }
                 return
             }
+            meterTimer?.invalidate(); meterTimer = nil
+            let secs = Date().timeIntervalSince(startedAt)
             rec.stop()
             recording = nil
             let url = rec.url
+            let size = (try? FileManager.default.attributesOfItem(atPath: url.path)[.size] as? Int) ?? 0
+            diag(String(format: "%.1fs · %ld KB · loudest %.0f dB", secs, size / 1024, peakDb))
             if warm { prepared = newRecorder() }   // ready for the next word right away
             DispatchQueue.global(qos: .userInitiated).async {
                 let data = try? Data(contentsOf: url)
