@@ -7,9 +7,13 @@ import WebKit
 @main
 struct BirdPalApp: App {
     init() {
-        // "Playback" lets the morning lesson keep playing with the screen off,
-        // and plays sound even when the side switch is on silent.
-        try? AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
+        // "Play and record" keeps the microphone working for "Hold to record my voice"
+        // ("playback" alone makes every recording silent). It still lets the morning lesson
+        // keep playing with the screen off and plays sound when the side switch is on silent.
+        // defaultToSpeaker: play through the loud speaker, not the quiet phone-call earpiece.
+        try? AVAudioSession.sharedInstance().setCategory(
+            .playAndRecord, mode: .default,
+            options: [.defaultToSpeaker, .allowBluetoothA2DP, .allowAirPlay])
         try? AVAudioSession.sharedInstance().setActive(true)
     }
 
