@@ -217,12 +217,73 @@ struct BirdPalView: UIViewRepresentable {
             decisionHandler(.allow)
         }
 
+        // Recordings play through the iPhone's own player. The web page's player went silent
+        // after the microphone had been used ("Hello" played, the next word did not).
+        // Varispeed changes speed and pitch together, for the squeaky voice.
+        private let engine = AVAudioEngine()
+        private let playerNode = AVAudioPlayerNode()
+        private let varispeed = AVAudioUnitVarispeed()
+        private var engineBuilt = false
+        private var playToken = 0
+
+        private func playClip(_ b64: String, rate: Double, id: Int) {
+            guard let data = Data(base64Encoded: b64) else { playDone(id, ok: false, note: "bad data"); return }
+            let url = FileManager.default.temporaryDirectory.appendingPathComponent("birdpal-play-\(id).wav")
+            do {
+                try data.write(to: url)
+                let file = try AVAudioFile(forReading: url)
+                BirdPalApp.setAudio(record: false)
+                if !engineBuilt {
+                    engine.attach(playerNode); engine.attach(varispeed); engineBuilt = true
+                }
+                playerNode.stop()
+                engine.stop()
+                engine.connect(playerNode, to: varispeed, format: file.processingFormat)
+                engine.connect(varispeed, to: engine.mainMixerNode, format: file.processingFormat)
+                varispeed.rate = Float(rate)
+                try engine.start()
+                playToken += 1
+                let token = playToken
+                playerNode.scheduleFile(file, at: nil) { [weak self] in
+                    DispatchQueue.main.async {
+                        try? FileManager.default.removeItem(at: url)
+                        guard let self = self, token == self.playToken else { return }
+                        self.playDone(id, ok: true, note: nil)
+                    }
+                }
+                playerNode.play()
+                let secs = Double(file.length) / file.processingFormat.sampleRate / rate
+                diag(String(format: "playing %.1fs", secs))
+            } catch {
+                try? FileManager.default.removeItem(at: url)
+                playDone(id, ok: false, note: "\(error.localizedDescription)")
+            }
+        }
+
+        private func stopClip() {
+            playToken += 1
+            playerNode.stop()
+        }
+
+        private func playDone(_ id: Int, ok: Bool, note: String?) {
+            if let note = note { diag("play failed: " + note) }
+            webView?.evaluateJavaScript("window.birdpalPlayDone && window.birdpalPlayDone(\(id), \(ok))")
+        }
+
         // The page asks to keep the screen awake while a lesson runs.
         func userContentController(_ userContentController: WKUserContentController,
                                    didReceive message: WKScriptMessage) {
             guard let body = message.body as? [String: Any] else { return }
             if let on = body["keepAwake"] as? Bool {
                 DispatchQueue.main.async { UIApplication.shared.isIdleTimerDisabled = on }
+            }
+            if let b64 = body["play"] as? String {
+                let rate = (body["rate"] as? Double) ?? 1
+                let id = (body["id"] as? Int) ?? 0
+                DispatchQueue.main.async { self.playClip(b64, rate: rate, id: id) }
+            }
+            if body["playStop"] != nil {
+                DispatchQueue.main.async { self.stopClip() }
             }
             // The page asks for the microphone mode while recording, and normal playback after.
             if let rec = body["rec"] as? String {

@@ -363,7 +363,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
     <button class="big blue" id="again">Practice again</button>
   </section>
 
-  <p class="credit"><span data-i18n="credit">Made by Phoebie</span> &middot; <span id="buildTag">v2.6.2</span></p>
+  <p class="credit"><span data-i18n="credit">Made by Phoebie</span> &middot; <span id="buildTag">v2.7</span></p>
 </main>
 
 <script>
@@ -695,8 +695,23 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
   try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist();}catch(e){}
   function hasVoice(w){return !!(voices[w]||getVoice(w));}
   function dropVoice(w){try{localStorage.removeItem(VKEY+w);}catch(e){}return rawDel(w);}
+  /* In the iPhone/iPad app, recordings play through the iPhone's own player (steadier). */
+  var NATIVE_PLAY=!!(window.BIRDPAL_NATIVE&&window.webkit&&window.webkit.messageHandlers&&window.webkit.messageHandlers.birdpal),playWait={},playSeq=0;
+  window.birdpalPlayDone=function(id,okk){var f=playWait[id];delete playWait[id];if(f)f(okk);};
+  function toB64(buf){var u=new Uint8Array(buf),s="";for(var i=0;i<u.length;i+=0x8000)s+=String.fromCharCode.apply(null,u.subarray(i,i+0x8000));return btoa(s);}
+  function playVoiceNative(v,rate){
+    return new Promise(function(ok,bad){
+      var id=++playSeq;
+      if(!v.b64)v.b64=toB64(v.buf);
+      var t=setTimeout(function(){if(playWait[id]){delete playWait[id];ok();}},12000);
+      playWait[id]=function(fine){clearTimeout(t);if(fine)ok();else bad({name:"NativePlay"});};
+      try{window.webkit.messageHandlers.birdpal.postMessage({play:v.b64,rate:rate,id:id});}catch(e){clearTimeout(t);delete playWait[id];bad(e);}
+      if(window.birdpalDiag)window.birdpalDiag("play → app");
+    });
+  }
   function playVoice(w,rate){
     rate=rate||1;
+    if(NATIVE_PLAY&&voices[w])return playVoiceNative(voices[w],rate);
     return new Promise(function(ok,bad){
       var v=voices[w];if(!v){bad(new Error("none"));return;}
       try{if(navigator.audioSession&&navigator.audioSession.type!=="play-and-record")navigator.audioSession.type="playback";}catch(e){}
@@ -791,7 +806,8 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
     $("voiceErr").textContent=T(removed?"voiceProbRemoved":"voiceProbUsed")+T("code",{c:code||"?"});
     $("voiceErr").hidden=false;
   }
-  function hush(){try{speechSynthesis.cancel();}catch(e){}try{if(cur){cur.onended=null;cur.stop();cur=null;}}catch(e){}}
+  function hush(){try{speechSynthesis.cancel();}catch(e){}try{if(cur){cur.onended=null;cur.stop();cur=null;}}catch(e){}
+    if(NATIVE_PLAY){try{window.webkit.messageHandlers.birdpal.postMessage({playStop:true});}catch(e){}for(var k in playWait){var f=playWait[k];delete playWait[k];f(true);}}}
   function wait(ms){return new Promise(function(r){setTimeout(r,ms);});}
 
   /* ---------- practice ---------- */
@@ -1294,7 +1310,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
   }
 
   function setBuildTag(){var sa=(window.matchMedia&&matchMedia("(display-mode: standalone)").matches)||navigator.standalone===true;
-    $("buildTag").textContent="v2.6.2 \u00b7 "+T(framed?"tagPreview":window.BIRDPAL_NATIVE?"tagNative":sa?"tagHome":"tagBrowser");}
+    $("buildTag").textContent="v2.7 \u00b7 "+T(framed?"tagPreview":window.BIRDPAL_NATIVE?"tagNative":sa?"tagHome":"tagBrowser");}
 
   /* ---------- switching language ---------- */
   function sameList(a,b){return a.length===b.length&&a.every(function(x){return b.indexOf(x)>=0;});}
