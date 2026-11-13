@@ -61,3 +61,9 @@
 - 没做的候选：
   1. 页脚「Affiliate Disclosure」链接：联盟/工具页已下线，这个链接和 sitemap 里的 disclosure.html 可能已多余（涉及法律声明，需老板点头再删）。
   2. practice/ 页的标签按钮 40px、「听一听」36px，chinese/ 页的按钮 41px，也略低于 44px（这两页用自己的样式表，留给以后单独修）。
+
+## 2026-11-13
+- 改了什么（修一个坏的地方）：首页主推的 Parking Jam 页里，教程气泡的「Skip tutorial / 跳过教程」按钮只有 22px 高，「Progress code / Level map」折叠标题 36px、进度码输入框和「Restore」按钮 42px，都低于 44px 点击区标准，小朋友在手机上容易点不中。parking-jam.css 把这四处提到 ≥44px（版本 v=4 → v=5）。375px 复查无横向溢出、教程气泡布局正常，44 个测试全过。PR 号见 claude/daily-2026-11-13 合并记录。
+- 没做的候选：
+  1. 全站页头的品牌链接（logo + 站名）只有 39px 高，略低于 44px；在 styles.css 改一行即可，但影响所有页面，留到下一天单独做。
+  2. vet-game.html 的语言切换（中文/EN/ES）和「选择病例」按钮只有 28–31px 高；该页最近由另一条线持续改版（Wild Case Files v0.3–v0.9），为避免冲突暂不动。
