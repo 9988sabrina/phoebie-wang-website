@@ -15,15 +15,19 @@ struct BirdPalApp: App {
 
     /// record: true while the microphone is in use ("play and record"), false for steady playback.
     /// Staying in "play and record" all the time made iOS lower and shift the playback volume.
+    /// One audio mode for the whole app: "play and record" through the loud speaker.
+    /// Switching between playback and record modes for each recording silenced the page's
+    /// sound player afterwards (recordings saved fine but played back with no sound), so the
+    /// mode is set once and never switched. Plain "default" mode keeps the iPhone's call-style
+    /// voice processing off, and background audio still lets lessons play with the screen off.
+    private static var audioReady = false
     static func setAudio(record: Bool) {
+        guard !audioReady else { return }
         let session = AVAudioSession.sharedInstance()
-        if record {
-            try? session.setCategory(.playAndRecord, mode: .default,
-                                     options: [.defaultToSpeaker, .allowBluetoothA2DP])
-        } else {
-            try? session.setCategory(.playback, mode: .default)
-        }
+        try? session.setCategory(.playAndRecord, mode: .default,
+                                 options: [.defaultToSpeaker, .allowBluetoothA2DP, .allowAirPlay])
         try? session.setActive(true)
+        audioReady = true
     }
 
     var body: some Scene {

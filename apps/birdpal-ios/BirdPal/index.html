@@ -363,7 +363,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
     <button class="big blue" id="again">Practice again</button>
   </section>
 
-  <p class="credit"><span data-i18n="credit">Made by Phoebie</span> &middot; <span id="buildTag">v2.6.1</span></p>
+  <p class="credit"><span data-i18n="credit">Made by Phoebie</span> &middot; <span id="buildTag">v2.6.2</span></p>
 </main>
 
 <script>
@@ -969,6 +969,8 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
     window.birdpalDiag=function(t){logRec(t);};
     window.birdpalRecDone=function(b64,err){
       logRec(err?"error: "+err:"got recording ("+Math.round((b64||"").length*0.75/1024)+" KB)");
+      /* After the microphone was used, start a fresh sound player so playback is never silent. */
+      try{if(actx){logRec("sound player was "+actx.state);if(actx.state!=="running"){try{actx.close();}catch(e){}actx=null;}}}catch(e){}
       var r=recState;recState=null;
       if(err==="denied"){setBtn("bad");showErr(T("micOff"));return;}
       if(!b64){setBtn("bad");showErr(T("silent"));return;}
@@ -1292,7 +1294,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
   }
 
   function setBuildTag(){var sa=(window.matchMedia&&matchMedia("(display-mode: standalone)").matches)||navigator.standalone===true;
-    $("buildTag").textContent="v2.6.1 \u00b7 "+T(framed?"tagPreview":window.BIRDPAL_NATIVE?"tagNative":sa?"tagHome":"tagBrowser");}
+    $("buildTag").textContent="v2.6.2 \u00b7 "+T(framed?"tagPreview":window.BIRDPAL_NATIVE?"tagNative":sa?"tagHome":"tagBrowser");}
 
   /* ---------- switching language ---------- */
   function sameList(a,b){return a.length===b.length&&a.every(function(x){return b.indexOf(x)>=0;});}
