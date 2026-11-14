@@ -254,6 +254,7 @@ function migrate(){S.lib=S.lib||{};S.hz=S.hz||{c:{}};S.settings=S.settings||{};S
     Object.entries(add).forEach(([k,src])=>{const r=S.rev.find(x=>x.k===k);if(r){r.stage=0;r.due="2026-11-01";r.src=src}else S.rev.push({k,stage:0,due:"2026-11-01",src});S.mastered=S.mastered.filter(m=>m.k!==k)})}
   if(false){S._bonus1103=1;S.bonus={date:"2026-11-03",k:["mulMulti","mulMulti","mulMulti","div2","div2","div2"]}}
   if(false){S._bonus1106=1;S.bonus={date:"2026-11-06",k:["scaling","scaling","scaling"]}}
+  if(false){S._frac1114=1;S.bonusPlan=S.bonusPlan||{};S.bonusPlan["2026-11-14"]=["fracAdd","fracSub","fracMul","fracDiv","unitFracDiv"]}
   if(false){S._bonusWk1106=1;S.bonusPlan=S.bonusPlan||{};["2026-11-06","2026-11-07","2026-11-08","2026-11-09","2026-11-10","2026-11-11","2026-11-12"].forEach(d=>{S.bonusPlan[d]=["scaling","scaling","scaling"]})}
   if(false){S._adv1109=1;{const d8=day("2026-11-08");d8.paper=true;if(!d8.zDone){d8.zDone=S.zhDay;S.zhDay++}if(!d8.eDone){d8.eU=(S.eUnit||0)%UNITS.length;d8.eDone=d8.eU+1;S.eUnit=(S.eUnit||0)+1}{const d9=day(REAL_TODAY);if(!Object.keys(d9.e||{}).length){S.eUnit=UNITS.length*2-1;d9.eU=UNITS.length-1}}ZSET=null;ESET=null}}
   if(false){S._paper1107=1;day("2026-11-07").paper=true;
@@ -327,7 +328,7 @@ const dueNow=p=>S.rev.filter(r=>r.k.startsWith(p)&&r.due<=TODAY);
 const SK={
  round:"Rounding decimals",div9:"3-digit ÷ 9",x11:"×11 mental math",dh:"Double & Half",pemdas:"PEMDAS",
  decWord:"Decimal word form",digitValue:"Digit value",decMul:"Decimal × decimal",cToF:"°C → °F",
- fracAdd:"Add fractions + simplify",fracDiv:"Fraction ÷ whole number",decOrder:"Order decimals",remainder:"Remainder reasoning",explain:"Explain It",
+ fracAdd:"Add fractions + simplify",fracSub:"Subtract fractions",fracDiv:"Fraction ÷ whole number",decOrder:"Order decimals",remainder:"Remainder reasoning",explain:"Explain It",
  volume:"Volume (l × w × h)",fracMul:"Fraction × fraction",unitDiv:"Whole ÷ unit fraction",expr:"Write expressions",coord:"Coordinate plane",shapes:"Classify 2-D shapes",
  decAddSub:"Add & subtract decimals",mulMulti:"Multi-digit multiplication",div2:"Divide by 2-digit numbers",decDivW:"Decimal ÷ whole number",decDivDec:"Decimal ÷ decimal",unitFracDiv:"Unit fraction ÷ whole",convert:"Convert units",pow10:"Powers of 10",scaling:"Multiplying as scaling",fracAsDiv:"Fractions as division",olymp:"Olympiad Challenge",
  primeFact:"Prime factors",pattern2:"Two number patterns",linePlot:"Line plots (fractions)",fracWord:"Fraction × fraction word problems",fracReason:"Is the answer reasonable?"};
@@ -385,6 +386,12 @@ const G={
     {say:`${a}/${b} = ?/${d}`,input:true,ok:a*k},
     {say:`Add the tops: ${a*k} + ${c} = ?`,input:true,ok:n},
     {say:`${n}/${d}. Simplify it, and if the top is bigger, make a mixed number.`}]}},
+ fracSub(r){const b=pick(r,[2,3,4,6]),k=pick(r,b===6?[2]:b===4?[2,3]:[2,3,4]);const d=b*k;let a,c;do{a=ri(r,1,b-1);c=ri(r,1,d-1)}while(a*k<=c);
+   const n=a*k-c;return{prompt:`${a}/${b} − ${c}/${d} = ?   (simplest form)`,ans:n/d,frac:[n,d],show:fracStr(n,d),steps:[
+    {say:`What denominator can both fractions use?`,input:true,ok:d},
+    {say:`${a}/${b} = ?/${d}`,input:true,ok:a*k},
+    {say:`Subtract the tops: ${a*k} − ${c} = ?`,input:true,ok:n},
+    {say:`${n}/${d}. Simplify it if you can.`}]}},
  fracDiv(r){const w=ri(r,2,5);let b,a;do{b=ri(r,3,12);a=ri(r,1,b-1)}while(gcd(a,b)>1||gcd(a,w)>1);
    return{prompt:`${a}/${b} ÷ ${w} = ?`,ans:a/(b*w),frac:[a,b*w],show:fracStr(a,b*w),steps:[
     {say:`Dividing by ${w} is the same as multiplying by…`,choices:[`${w}`,`1/${w}`,`${w}/1`],ok:`1/${w}`},
@@ -558,7 +565,7 @@ const EXPLAINS=[
    {say:"Move both decimals one place: 86.4 ÷ 12 = ?",input:true,ok:7.2}],
   frame:["The student put the decimal point in the wrong place. The answer should be about ","[8|0.8]",", so 8.64 ÷ 1.2 = ","[7.2|0.72]","."],okf:["8","7.2"]}
 ];
-const ALL_M=["x11","round","pemdas","decWord","digitValue","decMul","fracAdd","fracDiv","decOrder","remainder","volume","fracMul","unitDiv","expr","coord","shapes","decAddSub","mulMulti","div2","decDivW","decDivDec","unitFracDiv","convert","pow10","scaling","fracAsDiv","primeFact","pattern2","linePlot","fracWord","fracReason"];
+const ALL_M=["fracSub","x11","round","pemdas","decWord","digitValue","decMul","fracAdd","fracDiv","decOrder","remainder","volume","fracMul","unitDiv","expr","coord","shapes","decAddSub","mulMulti","div2","decDivW","decDivDec","unitFracDiv","convert","pow10","scaling","fracAsDiv","primeFact","pattern2","linePlot","fracWord","fracReason"];
 const T1_DONE=["digitValue","pow10"]; // school T1 report: scored 4 on 5.NBT.1 and 5.NBT.2 → lower priority
 const PARENT_M=ALL_M.concat(["x11","dh","div9","cToF"]);
 function weekKey(){const d=new Date();const day=(d.getDay()+6)%7;d.setDate(d.getDate()-day);return keyOf(d)}
@@ -1308,7 +1315,8 @@ function printMath(){
   S_("D. Place Value & Powers of 10","",2,0,[g("decWord",1),g("digitValue",1),g("digitValue",2),g("pow10",1)]);
   S_("E. Decimals & Measurement","Line up the decimal points.",2,1,[g("decAddSub",1),g("decAddSub",2),g("decMul",1),g("convert",1)]);
   const p1=sec.length;
-  S_("F. Fractions","Always simplify. Improper fraction → mixed number.",2,1,[g("fracAdd",1),g("fracAdd",2),g("fracMul",1),g("fracDiv",1),g("unitFracDiv",1),g("fracAsDiv",1)]);
+  const fxd=((S.bonusPlan||{})[TODAY]||[]).some(k=>/^frac/.test(k));
+  S_(fxd?"F. Fractions — add, subtract, multiply, divide":"F. Fractions","Always simplify. Improper fraction → mixed number.",2,1,(fxd?[g("fracAdd",1),g("fracAdd",2),g("fracSub",1),g("fracSub",2),g("fracMul",1),g("fracMul",2),g("fracDiv",1),g("fracDiv",2),g("unitFracDiv",1),g("fracAsDiv",1)]:[g("fracAdd",1),g("fracAdd",2),g("fracMul",1),g("fracDiv",1),g("unitFracDiv",1),g("fracAsDiv",1)]));
   S_("G. Mixed Review","",2,1,[g("pemdas",1),g("volume",1),g("decOrder",1),g("scaling",1)]);
   const exs=shuffle(rng("printex"+TODAY),EXPLAINS).slice(0,2);
   sec.push({title:"H. Explain It",tip:"Answer in full sentences.",explain:exs.map(e=>({n:++n,title:e.title}))});
