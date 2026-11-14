@@ -67,3 +67,9 @@
 - 没做的候选：
   1. 全站页头的品牌链接（logo + 站名）只有 39px 高，略低于 44px；在 styles.css 改一行即可，但影响所有页面，留到下一天单独做。
   2. vet-game.html 的语言切换（中文/EN/ES）和「选择病例」按钮只有 28–31px 高；该页最近由另一条线持续改版（Wild Case Files v0.3–v0.9），为避免冲突暂不动。
+
+## 2026-11-14
+- 改了什么（修一个坏的地方）：手机上页头的品牌链接（logo + 站名）在 About、课程页、Parking Jam 等所有非首页页面只有 39px 高，低于 44px 点击区标准（首页和 projects 页因 home.css 专用规则已是 44px）。把 `.brand{min-height:44px}` 从 home.css 提到 styles.css 全站生效，home.css 删除重复规则；styles.css、home.css 均 `?v=20261114a`。375px 复查 6 个代表页品牌链接均为 44px，44 个测试全过。PR #62 已合并。
+- 没做的候选：
+  1. reviews/descript-review.html 和 reviews/best-ai-video-tools-for-creators.html 在 375px 有横向溢出（504px / 456px）；这两页已 noindex 下线，暂不修，若老板决定彻底移除可一起处理。
+  2. vet-game.html 的语言切换和「选择病例」按钮只有 28–31px 高；该页另一条线仍在改版，暂不动。
