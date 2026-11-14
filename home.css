@@ -121,7 +121,7 @@ body:is([data-page="home"],[data-page="projects"]) .t-practice p,body:is([data-p
 .sums.dark{color:var(--navy)}
 .sums.dark span{border-color:var(--navy)}
 body:is([data-page="home"],[data-page="projects"]) .t-practice p,body:is([data-page="home"],[data-page="projects"]) .t-chinese p{opacity:1}
-body:is([data-page="home"],[data-page="projects"]) .brand{min-height:44px}
+
 body:is([data-page="home"],[data-page="projects"]) .menu-button{min-height:44px;min-width:44px}
 body:is([data-page="home"],[data-page="projects"]) .site-nav a{display:inline-flex;align-items:center;min-height:44px;padding-block:0}
 body:is([data-page="home"],[data-page="projects"]) .footer-grid nav a,body:is([data-page="home"],[data-page="projects"]) .footer-grid .link-button{display:inline-flex;align-items:center;min-height:44px}
