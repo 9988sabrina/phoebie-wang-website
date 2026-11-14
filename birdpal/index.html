@@ -372,7 +372,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
     <button class="big blue" id="again">Practice again</button>
   </section>
 
-  <p class="credit"><span data-i18n="credit">Made by Phoebie</span> &middot; <span id="buildTag">v2.7</span></p>
+  <p class="credit"><span data-i18n="credit">Made by Phoebie</span> &middot; <span id="buildTag">v2.7.1</span></p>
 </main>
 
 <script>
@@ -989,7 +989,8 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
     };
     /* App only: a small grey line under the button showing what the recorder did. */
     var recLog=[],recT0=Date.now();
-    var logRec=function(t){if(!window.BIRDPAL_NATIVE)return;recLog.push(((Date.now()-recT0)/1000).toFixed(1)+"s "+t);recLog=recLog.slice(-4);
+    /* Diagnostics are kept in memory only; add #debug to the page address to show them. */
+    var logRec=function(t){if(!window.BIRDPAL_NATIVE||location.hash!=="#debug")return;recLog.push(((Date.now()-recT0)/1000).toFixed(1)+"s "+t);recLog=recLog.slice(-4);
       var d=$("recDiag");if(!d){d=document.createElement("p");d.id="recDiag";d.style.cssText="font-size:11px;line-height:1.35;color:#8a93a0;margin:2px 0 0;text-align:center;white-space:pre-line";hb.insertAdjacentElement("afterend",d);}d.textContent=recLog.join("\n");};
     window.birdpalDiag=function(t){logRec(t);};
     window.birdpalRecDone=function(b64,err){
@@ -1319,7 +1320,7 @@ h2{font-family:var(--display);font-weight:700;font-size:26px;margin:0;text-align
   }
 
   function setBuildTag(){var sa=(window.matchMedia&&matchMedia("(display-mode: standalone)").matches)||navigator.standalone===true;
-    $("buildTag").textContent="v2.7 \u00b7 "+T(framed?"tagPreview":window.BIRDPAL_NATIVE?"tagNative":sa?"tagHome":"tagBrowser");}
+    $("buildTag").textContent="v2.7.1 \u00b7 "+T(framed?"tagPreview":window.BIRDPAL_NATIVE?"tagNative":sa?"tagHome":"tagBrowser");}
 
   /* ---------- switching language ---------- */
   function sameList(a,b){return a.length===b.length&&a.every(function(x){return b.indexOf(x)>=0;});}
