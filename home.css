@@ -376,3 +376,27 @@ body:is([data-page="home"],[data-page="projects"]) h1,body:is([data-page="home"]
 .bp-chips{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0;padding:0;list-style:none}
 .bp-chips li{padding:10px 16px;border:2.5px solid var(--navy);border-radius:999px;background:#fff;font-weight:800;box-shadow:3px 3px 0 var(--sun)}
 .bp-chips li:nth-child(2){background:#DCEBFB}.bp-chips li:nth-child(3){background:#FFE3E0}.bp-chips li:nth-child(4){background:#E3F6E5}
+
+/* 2026-11-15: homepage sells Daily Chinese and kids' printables first */
+body[data-page="home"] .home-hero{align-items:center}
+body[data-page="home"] .home-hero .intro-text{display:block;max-width:40rem}
+body[data-page="home"] .home-hero .eyebrow{margin:0 0 10px;color:var(--coral-dark);font-size:.78rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+body[data-page="home"] .home-hero h1{max-width:16ch;font-size:clamp(2.35rem,5.2vw,4.15rem);text-shadow:3px 3px 0 #fff}
+body[data-page="home"] .home-hero .intro-lede{max-width:48ch;color:var(--navy)}
+body[data-page="home"] .hero-secondary{margin:16px 0 0;font-weight:800}
+body[data-page="home"] .hero-secondary a{color:var(--navy);text-underline-offset:4px;text-decoration-thickness:2px}
+body[data-page="home"] .offer-side{display:grid;gap:14px;align-content:center}
+body[data-page="home"] .offer-card{display:flex;flex-direction:column;gap:8px;padding:18px 18px 16px;border:2.5px solid var(--navy);border-radius:14px;background:#fff;color:var(--navy);text-decoration:none;box-shadow:5px 5px 0 var(--navy)}
+body[data-page="home"] .offer-card:hover{transform:translate(-2px,-2px);box-shadow:8px 8px 0 var(--navy)}
+body[data-page="home"] .offer-kicker{font-size:.75rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--coral-dark)}
+body[data-page="home"] .offer-zh strong{font-family:"Kaiti SC","STKaiti","KaiTi","BiauKai","Noto Serif CJK SC",serif;font-size:2.1rem;line-height:1.05;font-weight:700}
+body[data-page="home"] .offer-kids strong{font-family:var(--display),inherit;font-size:1.45rem;line-height:1.1}
+body[data-page="home"] .offer-card span:last-child{font-size:.98rem;line-height:1.4}
+body[data-page="home"] .h-holiday{margin-top:28px;max-width:46rem}
+.h-signup[hidden]{display:none !important}
+@media(max-width:900px){
+  body[data-page="home"] .home-hero{grid-template-columns:minmax(0,1fr)}
+  body[data-page="home"] .home-hero .intro-text{display:block}
+  body[data-page="home"] .offer-side{margin-top:22px}
+}
+@media(prefers-reduced-motion:reduce){body[data-page="home"] .offer-card:hover{transform:none}}
