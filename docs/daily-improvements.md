@@ -73,3 +73,9 @@
 - 没做的候选：
   1. reviews/descript-review.html 和 reviews/best-ai-video-tools-for-creators.html 在 375px 有横向溢出（504px / 456px）；这两页已 noindex 下线，暂不修，若老板决定彻底移除可一起处理。
   2. vet-game.html 的语言切换和「选择病例」按钮只有 28–31px 高；该页另一条线仍在改版，暂不动。
+
+## 2026-11-15
+- 改了什么（修一个坏的地方）：Daily Practice 页（/practice/）顶部的 9 个标签按钮只有 40px 高、所有「🔊 听一听 / Listen」朗读按钮只有 36px 高，低于 44px 点击区标准，是 11-06 留下的候选。该页样式写在页面内，把 `nav.tabs button` 和 `.icon-btn` 的 min-height 提到 44px（无需改 `?v=`）。375px 下 Today / 中文 / 题库 三个标签页复查无横向溢出、标签栏和卡片布局正常，44 个测试全过。PR 号见 claude/daily-2026-11-15 合并记录。
+- 没做的候选：
+  1. chinese/ 页的 1–6 数字按钮和「显示答案 / 保存」按钮 41px、「去写字」链接式按钮 19px，略低于 44px；该页也是页内样式，留到下一天单独修。
+  2. reviews/ 下两篇已下线（noindex）的测评页在 375px 有横向溢出，暂不修。
