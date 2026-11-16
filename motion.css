@@ -1,0 +1,169 @@
+/* Shared motion. Transform and opacity only. Loaded after each page's own stylesheet. */
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .h-btn, .button, .btn, .offer-card, .tile, .work-row a, .star-jam, .shop .row, .feature-card {
+    transition: transform .2s ease, box-shadow .2s ease;
+  }
+  .h-btn:hover, .button:hover, .btn:hover {
+    transform: translateY(-2px) rotate(-0.35deg);
+  }
+  .offer-card:hover, .tile:hover, .work-row a:hover, .feature-card:hover {
+    transform: translateY(-4px) rotate(-0.4deg);
+  }
+  .shop .row:hover { transform: translateY(-3px); }
+}
+
+.is-cta { position: relative; }
+.cta-shine {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+}
+.cta-shine::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 42%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.55), transparent);
+  transform: translateX(-180%);
+  animation: cta-shine 3.8s ease-in-out infinite;
+}
+@keyframes cta-shine {
+  0%, 62% { transform: translateX(-180%); }
+  100% { transform: translateX(340%); }
+}
+
+html.motion .reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity .55s ease, transform .55s ease;
+  transition-delay: var(--reveal-delay, 0ms);
+}
+html.motion .reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  html.motion .reveal.is-in.tile:hover,
+  html.motion .reveal.is-in.offer-card:hover,
+  html.motion .reveal.is-in.feature-card:hover,
+  html.motion a.reveal.is-in:hover,
+  html.motion .reveal.is-in.row:hover,
+  html.motion .reveal.is-in.figure:hover {
+    transform: translateY(-4px) rotate(-0.35deg);
+  }
+}
+
+.hanzi-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 280px);
+  gap: clamp(20px, 4vw, 48px);
+  align-items: center;
+  justify-content: start;
+  margin-top: 28px;
+}
+.flip-card {
+  width: 200px;
+  height: 250px;
+  padding: 0;
+  border: 0;
+  background: none;
+  perspective: 900px;
+  cursor: pointer;
+}
+.flip-inner {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform .55s ease;
+}
+.flip-card:hover .flip-inner,
+.flip-card:focus-visible .flip-inner,
+.flip-card.is-flipped .flip-inner {
+  transform: rotateY(180deg);
+}
+.flip-face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border: 2.5px solid #14213D;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 6px 6px 0 #FFD23F;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.flip-front b {
+  font-family: "Kaiti SC", "STKaiti", "KaiTi", "BiauKai", "Noto Serif CJK SC", serif;
+  font-size: 7.2rem;
+  font-weight: 700;
+  line-height: 1;
+  color: #14213D;
+}
+.flip-kicker { font-size: .78rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: #B01E2E; }
+.flip-back {
+  transform: rotateY(180deg);
+  background: #14213D;
+  color: #fff;
+  box-shadow: 6px 6px 0 #D62839;
+}
+.flip-back b { font-size: 2.4rem; letter-spacing: .04em; }
+.flip-back span { font-size: 1.15rem; }
+.stroke-demo { display: grid; justify-items: start; gap: 10px; }
+.stroke-stage {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+  border: 2.5px solid #14213D;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 6px 6px 0 #14213D;
+}
+.stroke-fallback {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-family: "Kaiti SC", "STKaiti", "KaiTi", "BiauKai", "Noto Serif CJK SC", serif;
+  font-size: 7.5rem;
+  line-height: 1;
+  color: rgba(20, 33, 61, .28);
+  pointer-events: none;
+}
+.stroke-stage.is-drawn .stroke-fallback { opacity: 0; }
+.stroke-stage svg { display: block; width: 200px; height: 200px; }
+.stroke-caption { margin: 0; font-weight: 800; color: #14213D; }
+.stroke-caption b { font-size: 1.25rem; }
+
+@media (max-width: 640px) {
+  .hanzi-row { grid-template-columns: 1fr; justify-items: center; }
+  .stroke-demo { justify-items: center; }
+  .flip-card { width: min(200px, 70vw); height: 230px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cta-shine { display: none; }
+  html.motion .reveal,
+  html.motion .reveal.is-in {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .h-btn, .button, .btn, .offer-card, .tile, .work-row a, .star-jam, .flip-inner {
+    transition: none;
+  }
+  .flip-card:hover .flip-inner { transform: none; }
+  .flip-card.is-flipped .flip-inner,
+  .flip-card:focus-visible .flip-inner { transform: rotateY(180deg); }
+}
