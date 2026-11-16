@@ -16,12 +16,13 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="The Chinese character 学 in a practice grid next to a cartoon girl detective">
     <meta name="twitter:card" content="summary_large_image">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; media-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self'; style-src-attr 'unsafe-inline'; img-src 'self' data:; media-src 'self'; connect-src 'self' https://cdn.jsdelivr.net; object-src 'none'; base-uri 'self'; form-action 'self'">
     <title>Daily Chinese &amp; Kids' Printables | Phoebie's Learning Lab</title>
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <link rel="preload" href="assets/fonts/poppins-bold.woff" as="font" type="font/woff" crossorigin>
     <link rel="stylesheet" href="styles.css?v=20261114a">
-    <link rel="stylesheet" href="home.css?v=20261115a">
+    <link rel="stylesheet" href="home.css?v=20261116a">
+    <link rel="stylesheet" href="motion.css?v=20261116a">
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Phoebie's Learning Lab","url":"https://www.phoebiewang.com/","description":"Free 90-day Daily Chinese for adults and printable learning packs for kids, made by Phoebie Wang and Sabrina Zhang."}</script>
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"Course","name":"每日中文 Daily Chinese","description":"A free 90-day course for adult beginners: 1,000 characters, pinyin, audio, and 10 printable pages a day. Every third day is review.","provider":{"@type":"Organization","name":"Phoebie's Learning Lab","url":"https://www.phoebiewang.com/"},"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
     <!-- ANALYTICS PLACEHOLDER: leave this comment until SITE_CONFIG.ga4Id is filled. Then paste the GA4 snippet here and allow that host in the CSP above. -->
@@ -42,12 +43,22 @@
     </header>
     <main id="main">
       <section class="intro home-hero" aria-labelledby="home-title">
+        <div class="festive" aria-hidden="true">
+          <svg class="festive-bit lantern l1" viewBox="0 0 40 56" width="40" height="56"><path d="M20 2v6" stroke="#14213D" stroke-width="1.6" fill="none"/><rect x="8" y="8" width="24" height="30" rx="10" fill="#D62839"/><path d="M14 16h12M14 24h12" stroke="#FFD23F" stroke-width="1.4"/><rect x="14" y="38" width="12" height="4" rx="1" fill="#FFD23F"/><path d="M16 42c2 6 0 10 0 10M20 42c2 8 0 12 0 12M24 42c2 6 0 10 0 10" stroke="#FFD23F" stroke-width="1.2" fill="none"/></svg>
+          <svg class="festive-bit lantern l2" viewBox="0 0 40 56" width="40" height="56"><path d="M20 2v6" stroke="#14213D" stroke-width="1.6" fill="none"/><rect x="8" y="8" width="24" height="30" rx="10" fill="#D62839"/><path d="M14 16h12M14 24h12" stroke="#FFD23F" stroke-width="1.4"/><rect x="14" y="38" width="12" height="4" rx="1" fill="#FFD23F"/><path d="M16 42c2 6 0 10 0 10M20 42c2 8 0 12 0 12M24 42c2 6 0 10 0 10" stroke="#FFD23F" stroke-width="1.2" fill="none"/></svg>
+          <svg class="festive-bit blossom b1" viewBox="0 0 36 36" width="28" height="28"><g fill="#F4A3B5"><circle cx="18" cy="8" r="5"/><circle cx="27" cy="15" r="5"/><circle cx="23" cy="26" r="5"/><circle cx="13" cy="26" r="5"/><circle cx="9" cy="15" r="5"/></g><circle cx="18" cy="18" r="3.2" fill="#FFD23F"/></svg>
+          <svg class="festive-bit blossom b2" viewBox="0 0 36 36" width="22" height="22"><g fill="#F4A3B5"><circle cx="18" cy="8" r="5"/><circle cx="27" cy="15" r="5"/><circle cx="23" cy="26" r="5"/><circle cx="13" cy="26" r="5"/><circle cx="9" cy="15" r="5"/></g><circle cx="18" cy="18" r="3.2" fill="#FFD23F"/></svg>
+          <svg class="festive-bit spark s1" viewBox="0 0 20 20" width="16" height="16"><path d="M10 1l1.6 6.2L18 9l-6.4 1.8L10 17l-1.6-6.2L2 9l6.4-1.8z" fill="#fff"/></svg>
+          <svg class="festive-bit spark s2" viewBox="0 0 20 20" width="12" height="12"><path d="M10 1l1.6 6.2L18 9l-6.4 1.8L10 17l-1.6-6.2L2 9l6.4-1.8z" fill="#FFD23F"/></svg>
+          <svg class="festive-bit spark s3" viewBox="0 0 20 20" width="14" height="14"><path d="M10 1l1.6 6.2L18 9l-6.4 1.8L10 17l-1.6-6.2L2 9l6.4-1.8z" fill="#fff"/></svg>
+        </div>
+        <img class="hero-phoebie" src="assets/cast/detective-1.png" width="156" height="283" alt="Phoebie, a cartoon girl in a yellow cap and red coat">
         <div class="intro-text">
           <p class="eyebrow">Phoebie's Learning Lab</p>
           <h1 id="home-title">The Chinese you wish you'd learned.</h1>
           <p class="intro-lede">Daily Chinese is free for adult beginners: 1,000 everyday characters in 90 days, with pinyin, audio, and 10 pages to print. Every third day is review, so the words stay. For kids ages 4 to 11, the same family makes bilingual tracing and mental-math packs.</p>
           <div class="h-cta">
-            <a class="h-btn primary" href="chinese/">Start Daily Chinese</a>
+            <a class="h-btn primary is-cta" href="chinese/">Start Daily Chinese</a>
           </div>
           <p class="hero-secondary"><a href="printables.html">See kids' printables</a></p>
         </div>
@@ -76,6 +87,26 @@
               <a class="h-btn ghost" href="https://www.etsy.com/shop/PhoebieCreates" rel="noopener">Full packs: $1.99 on Etsy</a>
               <a class="h-textlink" href="printables.html">See the printables</a>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="h-section hanzi-play" id="hanzi-play" aria-labelledby="hanzi-play-title">
+        <h2 id="hanzi-play-title">Try one character.</h2>
+        <p class="sub">Flip the card, then watch 福 written stroke by stroke. Nothing plays out loud.</p>
+        <div class="hanzi-row">
+          <button class="flip-card" type="button" aria-pressed="false" aria-label="学, xué, to learn. Activate to turn the card.">
+            <span class="flip-inner">
+              <span class="flip-face flip-front"><span class="flip-kicker">Tap to turn</span><b lang="zh-CN">学</b></span>
+              <span class="flip-face flip-back"><b>xué</b><span>to learn</span></span>
+            </span>
+          </button>
+          <div class="stroke-demo" data-stroke="福">
+            <div class="stroke-stage" id="stroke-fu" role="img" aria-label="The character 福, written one stroke at a time">
+              <span class="stroke-fallback" lang="zh-CN">福</span>
+            </div>
+            <p class="stroke-caption"><b>fú</b> · good fortune</p>
+            <button type="button" class="h-btn ghost" id="stroke-again">Watch the strokes</button>
           </div>
         </div>
       </section>
@@ -206,6 +237,6 @@
       </section>
     </main>
     <footer class="site-footer"><div class="wrap footer-grid"><div><strong>Phoebie's Learning Lab</strong><span>Learn it. Try it. Explain it.</span></div><nav aria-label="Footer"><a href="projects.html">Books &amp; Songs</a><a href="disclosure.html">Affiliate Disclosure</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="refunds.html">Digital Product &amp; Refunds</a><button class="link-button" data-clear-progress type="button">Clear local progress</button></nav></div><p class="legal-note">© 2026 The Wang family. Made by Sabrina Zhang and Phoebie Wang. Questions or a broken page? Message us through <a href="https://www.etsy.com/shop/PhoebieCreates" rel="noopener">our Etsy shop</a>.</p></footer>
-    <script src="content-config.js"></script><script src="common.js"></script><script src="birdpal-embed.js?v=20261030e"></script>
+    <script src="content-config.js"></script><script src="common.js"></script><script src="motion.js?v=20261116a"></script><script src="birdpal-embed.js?v=20261030e"></script>
   </body>
 </html>
