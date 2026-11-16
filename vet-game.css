@@ -322,10 +322,10 @@
 #vetapp .case-card{box-shadow:3px 3px 0 var(--v-inkline);}
 #vetapp .title-screen h2{color:var(--v-inkline);font-size:26px;transform:rotate(-2deg);text-shadow:2px 2px 0 var(--v-gold);}
 #vetapp .strip{display:flex;flex-direction:column;gap:12px;margin-bottom:14px;}
-#vetapp .panel{position:relative;display:none;flex-direction:column;align-items:center;gap:8px;padding:14px 12px 12px;border:3px solid var(--v-inkline);border-radius:6px;box-shadow:4px 4px 0 var(--v-inkline);background-color:#fff8e8;background-image:radial-gradient(rgba(217,119,87,0.22) 1.5px,transparent 1.6px);background-size:10px 10px;animation:vpop .3s ease;}
+#vetapp .panel{position:relative;display:none;flex-direction:column;align-items:center;gap:8px;padding:14px 12px 12px;border:3px solid var(--v-inkline);border-radius:6px;box-shadow:4px 4px 0 var(--v-inkline);background-color:#fff8e8;background-image:none;animation:vpop .3s ease;}
 @keyframes vpop{from{opacity:0;transform:scale(.92) rotate(-1deg);}to{opacity:1;transform:scale(1) rotate(0);}}
-#vetapp .panel.p2{background-color:#eaf3f7;background-image:radial-gradient(rgba(79,124,172,0.2) 1.5px,transparent 1.6px);}
-#vetapp .panel.p3{background-color:#eef3ea;background-image:radial-gradient(rgba(125,148,113,0.25) 1.5px,transparent 1.6px);}
+#vetapp .panel.p2{background-color:#eaf3f7;background-image:none}
+#vetapp .panel.p3{background-color:#eef3ea;background-image:none}
 #vetapp .strip.show-1 .p1,#vetapp .strip.show-2 .p1,#vetapp .strip.show-2 .p2,#vetapp .strip.show-3 .panel{display:flex;}
 #vetapp .talk{display:flex;gap:10px;align-items:flex-start;width:100%;}
 #vetapp .talk .avatar{width:48px;height:48px;border:2.5px solid var(--v-inkline);border-radius:50%;}

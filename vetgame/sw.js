@@ -1,7 +1,7 @@
 /* Wild Case Files offline support: the game keeps working without a connection once it has been opened. */
-const CACHE = "vetgame-v4";
+const CACHE = "vetgame-v5";
 const SHELL = ["./", "index.html", "app.css?v=1", "app.js?v=1", "manifest.webmanifest", "icon.svg", "icon-180.png", "icon-192.png", "icon-512.png",
-  "../vet-game.css?v=10", "../vet-game.js?v=10",
+  "../vet-game.css?v=11", "../vet-game.js?v=10",
   "../assets/vet/hedgehog-sick.svg", "../assets/vet/hedgehog-well.svg", "../assets/vet/rabbit-sick.svg", "../assets/vet/rabbit-well.svg",
   "../assets/vet/guineapig-sick.svg", "../assets/vet/guineapig-well.svg", "../assets/vet/kid2.svg", "../assets/vet/boy.svg", "../assets/vet/girl.svg", "../assets/vet/vet.svg"];
 
