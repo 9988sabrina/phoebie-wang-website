@@ -289,7 +289,7 @@ body:is([data-page="home"],[data-page="projects"]) h1,body:is([data-page="home"]
 .sprite{position:absolute;width:0;height:0;overflow:hidden}
 
 /* hero band: sun-yellow halftone, full width */
-.intro{position:relative;width:auto;margin:0 0 clamp(28px,4vw,52px);padding:clamp(28px,4.5vw,56px) max(20px,calc((100% - 1160px)/2)) clamp(32px,4.5vw,56px);display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr);gap:clamp(20px,3vw,40px) clamp(28px,5vw,72px);align-items:center;background-color:var(--sun);background-image:radial-gradient(rgba(20,33,61,.16) 1.6px,transparent 2px);background-size:16px 16px;border-bottom:3px solid var(--navy);overflow:hidden}
+.intro{position:relative;width:auto;margin:0 0 clamp(28px,4vw,52px);padding:clamp(28px,4.5vw,56px) max(20px,calc((100% - 1160px)/2)) clamp(32px,4.5vw,56px);display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr);gap:clamp(20px,3vw,40px) clamp(28px,5vw,72px);align-items:center;background-color:var(--sun);background-image:none;border-bottom:3px solid var(--navy);overflow:hidden}
 .intro-text{flex:none;min-width:0}
 .intro h1{font-size:clamp(2.4rem,6vw,4.7rem);line-height:1.03;max-width:12ch;text-shadow:3px 3px 0 #fff}
 .intro h1 .zh{display:inline-block;margin-top:.12em;padding:.08em .32em;border:2.5px solid var(--navy);border-radius:10px;background:var(--coral);color:#fff;font-size:.5em;line-height:1.25;letter-spacing:0;text-shadow:none;transform:rotate(-2.5deg);box-shadow:4px 4px 0 var(--navy);vertical-align:.18em}

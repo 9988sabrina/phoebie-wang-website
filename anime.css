@@ -1,14 +1,14 @@
 /* Anime skin: loaded last on every page. Pure CSS, no third-party assets. */
 :root{--pink:#FF8FB8;--grape:#7E5BEF;--lemon:#FFE45C}
 body{background:linear-gradient(180deg,#BFE8FF 0,#E8F6FF 420px,#FFF2F9 1100px,#FFF8E4 100%) fixed}
-body::before{background-image:radial-gradient(rgba(255,143,184,.30) 2px,transparent 2.6px);background-size:22px 22px;mask-image:linear-gradient(#000,transparent 60%)}
+body::before{background-image:none}
 /* falling petals */
 body::after{content:"";position:fixed;inset:0;z-index:40;pointer-events:none;opacity:.55;
 background-image:radial-gradient(ellipse 7px 4.5px at 40px 30px,#FFB3CF 92%,transparent),radial-gradient(ellipse 5px 3.5px at 190px 110px,#FFC8DC 92%,transparent),radial-gradient(ellipse 8px 5px at 320px 60px,#FFA6C6 92%,transparent),radial-gradient(ellipse 5px 3.5px at 110px 250px,#FFC8DC 92%,transparent),radial-gradient(ellipse 7px 4.5px at 260px 330px,#FFB3CF 92%,transparent),radial-gradient(ellipse 6px 4px at 380px 220px,#FFA6C6 92%,transparent);
 background-size:420px 420px;animation:petals 28s linear infinite}
 @keyframes petals{to{background-position:-420px 420px}}
 /* hero: manga speed-line burst */
-.intro{background-color:#FFD84D;background-image:radial-gradient(rgba(20,33,61,.13) 1.6px,transparent 2px),repeating-conic-gradient(from 0deg at 76% 46%,#FFE27A 0 7deg,#FFD13A 7deg 14deg);background-size:16px 16px,auto}
+.intro{background-color:#FFD23F;background-image:none}
 [data-page="home"] .intro::after{content:"✦";position:absolute;left:46%;top:14%;font-size:2.4rem;color:#fff;text-shadow:2px 2px 0 var(--navy);animation:twinkle 2.4s ease-in-out infinite}
 .intro h1{color:var(--navy);text-shadow:3px 3px 0 #fff,6px 6px 0 #FF5E8A}
 .intro h1 .zh{text-shadow:none;transform:rotate(-3deg);box-shadow:3px 3px 0 var(--navy)}
