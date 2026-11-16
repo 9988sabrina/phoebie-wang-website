@@ -254,6 +254,7 @@ function migrate(){S.lib=S.lib||{};S.hz=S.hz||{c:{}};S.settings=S.settings||{};S
     Object.entries(add).forEach(([k,src])=>{const r=S.rev.find(x=>x.k===k);if(r){r.stage=0;r.due="2026-11-01";r.src=src}else S.rev.push({k,stage:0,due:"2026-11-01",src});S.mastered=S.mastered.filter(m=>m.k!==k)})}
   if(false){S._bonus1103=1;S.bonus={date:"2026-11-03",k:["mulMulti","mulMulti","mulMulti","div2","div2","div2"]}}
   if(false){S._bonus1106=1;S.bonus={date:"2026-11-06",k:["scaling","scaling","scaling"]}}
+  if(false){S._mix1116=1;S.bonusPlan=S.bonusPlan||{};S.bonusPlan["2026-11-16"]=["fracAdd","fracSub","fracMul","fracDiv","decDivDec","primeFact","olymp"]}
   if(false){S._frac1114=1;S.bonusPlan=S.bonusPlan||{};S.bonusPlan["2026-11-14"]=["fracAdd","fracSub","fracMul","fracDiv","unitFracDiv"]}
   if(false){S._bonusWk1106=1;S.bonusPlan=S.bonusPlan||{};["2026-11-06","2026-11-07","2026-11-08","2026-11-09","2026-11-10","2026-11-11","2026-11-12"].forEach(d=>{S.bonusPlan[d]=["scaling","scaling","scaling"]})}
   if(false){S._adv1109=1;{const d8=day("2026-11-08");d8.paper=true;if(!d8.zDone){d8.zDone=S.zhDay;S.zhDay++}if(!d8.eDone){d8.eU=(S.eUnit||0)%UNITS.length;d8.eDone=d8.eU+1;S.eUnit=(S.eUnit||0)+1}{const d9=day(REAL_TODAY);if(!Object.keys(d9.e||{}).length){S.eUnit=UNITS.length*2-1;d9.eU=UNITS.length-1}}ZSET=null;ESET=null}}
@@ -1317,7 +1318,8 @@ function printMath(){
   const p1=sec.length;
   const fxd=((S.bonusPlan||{})[TODAY]||[]).some(k=>/^frac/.test(k));
   S_(fxd?"F. Fractions — add, subtract, multiply, divide":"F. Fractions","Always simplify. Improper fraction → mixed number.",2,1,(fxd?[g("fracAdd",1),g("fracAdd",2),g("fracSub",1),g("fracSub",2),g("fracMul",1),g("fracMul",2),g("fracDiv",1),g("fracDiv",2),g("unitFracDiv",1),g("fracAsDiv",1)]:[g("fracAdd",1),g("fracAdd",2),g("fracMul",1),g("fracDiv",1),g("unitFracDiv",1),g("fracAsDiv",1)]));
-  S_("G. Mixed Review","",2,1,[g("pemdas",1),g("volume",1),g("decOrder",1),g("scaling",1)]);
+  const mix=((S.bonusPlan||{})[TODAY]||[]).includes("primeFact");
+  S_("G. Mixed Review","",2,1,mix?[g("decDivDec",1),g("decMul",1),g("primeFact",1),g("pattern2",1),g("linePlot",1),g("volume",1)]:[g("pemdas",1),g("volume",1),g("decOrder",1),g("scaling",1)]);
   const exs=shuffle(rng("printex"+TODAY),EXPLAINS).slice(0,2);
   sec.push({title:"H. Explain It",tip:"Answer in full sentences.",explain:exs.map(e=>({n:++n,title:e.title}))});
   const olPick=dt=>{const o=[];for(let i=1;o.length<2&&i<40;i++){const q=G.olymp(rng("printol"+dt+i));if(!o.some(x=>x.kind===q.kind)&&!(dt===TODAY&&prevK.includes(q.kind)))o.push(q)}return o};let prevK=[];prevK=olPick(addDays(TODAY,-1)).map(q=>q.kind);if(TODAY==="2026-10-25")prevK=["rem","seq"];
