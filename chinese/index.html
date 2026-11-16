@@ -71,7 +71,7 @@ h2{font-family:var(--display);font-size:20px;margin:0 0 4px;text-wrap:balance}
 .sub{color:var(--muted);margin:0 0 16px;font-size:14px}
 .panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px}
 .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-.btn{border:1px solid var(--line);background:var(--surface);padding:9px 16px;border-radius:9px;font-weight:600;font-size:14px;display:inline-flex;align-items:center;gap:8px}
+.btn{border:1px solid var(--line);background:var(--surface);padding:9px 16px;min-height:44px;border-radius:9px;font-weight:600;font-size:14px;display:inline-flex;align-items:center;justify-content:center;gap:8px}
 .btn.pri{background:var(--jade);border-color:var(--jade);color:var(--onj)}
 .btn.ghost{background:transparent}
 .btn:disabled{opacity:.45;cursor:default}
@@ -91,11 +91,11 @@ h2{font-family:var(--display);font-size:20px;margin:0 0 4px;text-wrap:balance}
 .mk.on{background:var(--seal);border-color:var(--seal);color:#fff}
 .dchip .now{position:absolute;bottom:-7px;left:50%;transform:translateX(-50%);font-size:9px;font-weight:700;background:var(--seal);color:#fff;border-radius:4px;padding:0 4px;white-space:nowrap}
 .startset{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:13px;color:var(--muted);margin-top:12px}
-.startset select{font:inherit;padding:6px 8px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);max-width:100%;min-width:0}
+.startset select{font:inherit;padding:6px 8px;min-height:44px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);max-width:100%;min-width:0}
 .startset input{font:inherit;padding:6px 8px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink)}
 @media (max-width:640px){.todaybar .acts{width:100%}.todaybar .acts .btn{flex:1;justify-content:center}}
 /* spaced review, readings, badges */
-.linkbtn{border:0;background:none;padding:0;font:inherit;color:var(--seal);text-decoration:underline;cursor:pointer}
+.linkbtn{border:0;background:none;padding:4px 0;min-height:44px;font:inherit;color:var(--seal);text-decoration:underline;cursor:pointer}
 .pycard{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:22px}
 .pycard summary{cursor:pointer;display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px;list-style:none}
 .pycard summary::-webkit-details-marker{display:none}
@@ -133,7 +133,7 @@ h2{font-family:var(--display);font-size:20px;margin:0 0 4px;text-wrap:balance}
 .bdg{font-size:12px;padding:4px 10px;border-radius:20px;background:var(--sunk);color:var(--muted);font-weight:600}
 .bdg.on{background:color-mix(in srgb,var(--gold) 22%,var(--surface));color:var(--ink)}
 .seg{display:flex;gap:4px;background:var(--sunk);padding:4px;border-radius:10px;width:max-content;max-width:100%}
-.seg button{border:0;background:transparent;padding:7px 14px;border-radius:8px;font-weight:600;font-size:13px;color:var(--muted)}
+.seg button{border:0;background:transparent;padding:7px 14px;min-height:44px;border-radius:8px;font-weight:600;font-size:13px;color:var(--muted)}
 .seg button.on{background:var(--surface);color:var(--ink)}
 .wchip.wdue{border-color:var(--seal);background:var(--seal-soft)}
 /* pdf progress overlay */
@@ -173,7 +173,7 @@ h2{font-family:var(--display);font-size:20px;margin:0 0 4px;text-wrap:balance}
 .fc .b .w{margin-top:auto;font-family:var(--hz);font-size:28px}
 .fc .b .wp{font-size:13px}
 .fc .b .we{font-size:12px;color:var(--muted)}
-.spk{position:absolute;top:8px;right:8px;width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:var(--surface);display:grid;place-items:center;z-index:2}
+.spk{position:absolute;top:6px;right:6px;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--surface);display:grid;place-items:center;z-index:2}
 .sents{display:grid;gap:10px;margin-top:22px}
 .sent{display:flex;gap:14px;align-items:center;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
 .sent ruby{font-family:var(--hz);font-size:26px;margin:0 2px}
@@ -415,7 +415,7 @@ rt{font-family:var(--latin);font-size:10.5px;color:var(--soft);font-weight:500}
 }</style>
 
 <div class="wrap">
-  <a href="../index.html" style="display:inline-block;font-size:13px;color:var(--muted);text-decoration:none;margin-bottom:10px">← Phoebie's Learning Lab</a>
+  <a href="../index.html" style="display:inline-flex;align-items:center;min-height:44px;font-size:13px;color:var(--muted);text-decoration:none;margin-bottom:2px">← Phoebie's Learning Lab</a>
   <header class="top">
     <div class="brand"><div class="seal">每日<br>中文</div><div><h1>每日中文</h1><p>Learn the Chinese you wish you'd learned growing up · 1000 characters in 90 days</p></div></div>
     <div class="stats">
