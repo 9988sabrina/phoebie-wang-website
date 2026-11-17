@@ -85,3 +85,9 @@
 - 没做的候选：
   1. reviews/ 下两篇已下线（noindex）的测评页在 375px 有横向溢出，暂不修。
   2. vet-game.html 的语言切换和「选择病例」按钮 28–31px；该页另一条线仍在改版，暂不动。
+
+## 2026-11-17
+- 改了什么（修一个坏的地方）：Daily Practice 页（/practice/）11-15 做的 44px 点击区修复（PR #63）被 11-16 的「Tutor: clearer line-plot leaf problem wording」提交（1bb2096，从旧副本推上来）意外回退，标签按钮又变回 40px、「🔊 听一听 / Listen」又变回 36px。重新把 `nav.tabs button` 和 `.icon-btn` 的 min-height 提到 44px（页内样式，无需改 `?v=`）。375px 下 9 个标签页逐个点开复查，布局与改前一致，45 个测试全过。PR 号见 claude/daily-2026-11-17 合并记录。
+- 没做的候选：
+  1. /practice/ 的「Choir + STEM」标签页在 375px 有横向溢出（401px），改前就存在，与本次无关；留到下一天单独查。
+  2. Tutor 线的本地副本似乎落后于 main（这次回退了 #63，也把 `<meta name="robots" content="index, follow">` 去掉了，影响不大）；建议下次推 Tutor 前先 `git pull`，否则每日修复会被反复覆盖。
