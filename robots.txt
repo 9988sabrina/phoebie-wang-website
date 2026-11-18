@@ -1,6 +1,13 @@
+# phoebiewang.com — Phoebie's Learning Lab
 User-agent: *
 Allow: /
+
+# Private tutor app and unfinished affiliate stubs stay out of search results.
 Disallow: /go/
 Disallow: /tutor/
+
+# Retired AI-tool reviews, the tools directory, the old newsletter and the
+# coupon page redirect to the homepage and send noindex. They stay crawlable
+# so a search engine can see the redirect.
 
 Sitemap: https://www.phoebiewang.com/sitemap.xml

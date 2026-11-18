@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Phoebie's Learning Lab. AI-tool reviews, /go/ and /tutor/ are omitted on purpose. -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://www.phoebiewang.com/</loc></url>
   <url><loc>https://www.phoebiewang.com/about.html</loc></url>
@@ -8,7 +9,10 @@
   <url><loc>https://www.phoebiewang.com/lesson.html</loc></url>
   <url><loc>https://www.phoebiewang.com/chickens-rabbits.html</loc></url>
   <url><loc>https://www.phoebiewang.com/parking-jam.html</loc></url>
+  <url><loc>https://www.phoebiewang.com/vet-game.html</loc></url>
   <url><loc>https://www.phoebiewang.com/birdpal/</loc></url>
+  <url><loc>https://www.phoebiewang.com/vetgame/</loc></url>
+  <url><loc>https://www.phoebiewang.com/vetgame/privacy.html</loc></url>
   <url><loc>https://www.phoebiewang.com/product.html</loc></url>
   <url><loc>https://www.phoebiewang.com/play.html</loc></url>
   <url><loc>https://www.phoebiewang.com/privacy.html</loc></url>
