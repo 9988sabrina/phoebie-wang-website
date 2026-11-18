@@ -7,10 +7,27 @@ import WebKit
 @main
 struct BirdPalApp: App {
     init() {
-        // "Playback" lets the morning lesson keep playing with the screen off,
-        // and plays sound even when the side switch is on silent.
-        try? AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
-        try? AVAudioSession.sharedInstance().setActive(true)
+        // Normal sound: "playback" lets the morning lesson keep playing with the screen off and
+        // plays sound even when the side switch is on silent. The page switches to the
+        // microphone mode only while "Hold to record my voice" is held (see setAudio below).
+        BirdPalApp.setAudio(record: false)
+    }
+
+    /// record: true while the microphone is in use ("play and record"), false for steady playback.
+    /// Staying in "play and record" all the time made iOS lower and shift the playback volume.
+    /// One audio mode for the whole app: "play and record" through the loud speaker.
+    /// Switching between playback and record modes for each recording silenced the page's
+    /// sound player afterwards (recordings saved fine but played back with no sound), so the
+    /// mode is set once and never switched. Plain "default" mode keeps the iPhone's call-style
+    /// voice processing off, and background audio still lets lessons play with the screen off.
+    private static var audioReady = false
+    static func setAudio(record: Bool) {
+        guard !audioReady else { return }
+        let session = AVAudioSession.sharedInstance()
+        try? session.setCategory(.playAndRecord, mode: .default,
+                                 options: [.defaultToSpeaker, .allowBluetoothA2DP, .allowAirPlay])
+        try? session.setActive(true)
+        audioReady = true
     }
 
     var body: some Scene {
@@ -33,6 +50,7 @@ struct BirdPalView: UIViewRepresentable {
         config.userContentController.add(context.coordinator, name: "birdpal")
 
         let webView = WKWebView(frame: .zero, configuration: config)
+        context.coordinator.webView = webView
         webView.uiDelegate = context.coordinator
         webView.navigationDelegate = context.coordinator
         webView.isOpaque = false
@@ -51,6 +69,131 @@ struct BirdPalView: UIViewRepresentable {
     func updateUIView(_ uiView: WKWebView, context: Context) {}
 
     final class Coordinator: NSObject, WKUIDelegate, WKNavigationDelegate, WKScriptMessageHandler {
+        weak var webView: WKWebView?
+        // Recording with the iPhone's own recorder, steadier than the web page's microphone.
+        // Microphone mode is switched on only from "start" until "stop"; the page shows "Recording"
+        // only after the iPhone confirms it started. Every stop always answers the page.
+        private var prepared: AVAudioRecorder?
+        private var recording: AVAudioRecorder?
+        private var warm = false
+        private var startWanted = false
+        private var stopWanted = false
+        private var peakDb: Float = -160
+        private var meterTimer: Timer?
+        private var startedAt = Date()
+
+        /// Small status line under the record button, so a screenshot shows what really happened.
+        private func diag(_ text: String) {
+            let s = AVAudioSession.sharedInstance()
+            let input = s.currentRoute.inputs.first?.portName ?? "no mic"
+            let line = "\(text) · \(s.category.rawValue.replacingOccurrences(of: "AVAudioSessionCategory", with: "")) · \(input)"
+            let js = "window.birdpalDiag && window.birdpalDiag(" + jsString(line) + ")"
+            webView?.evaluateJavaScript(js)
+        }
+        private func jsString(_ s: String) -> String {
+            let d = (try? JSONSerialization.data(withJSONObject: [s])) ?? Data("[\"\"]".utf8)
+            let a = String(data: d, encoding: .utf8) ?? "[\"\"]"
+            return String(a.dropFirst().dropLast())
+        }
+
+        private func newRecorder() -> AVAudioRecorder? {
+            let url = FileManager.default.temporaryDirectory
+                .appendingPathComponent("birdpal-\(UUID().uuidString).wav")
+            let settings: [String: Any] = [
+                AVFormatIDKey: kAudioFormatLinearPCM, AVSampleRateKey: 44100.0,
+                AVNumberOfChannelsKey: 1, AVLinearPCMBitDepthKey: 16,
+                AVLinearPCMIsFloatKey: false, AVLinearPCMIsBigEndianKey: false]
+            guard let rec = try? AVAudioRecorder(url: url, settings: settings) else { diag("new recorder failed"); return nil }
+            rec.isMeteringEnabled = true
+            if !rec.prepareToRecord() { diag("prepare failed") }
+            return rec
+        }
+
+        private func withPermission(_ done: @escaping (Bool) -> Void) {
+            let session = AVAudioSession.sharedInstance()
+            switch session.recordPermission {
+            case .granted: done(true)
+            case .denied: done(false)
+            default: session.requestRecordPermission { ok in DispatchQueue.main.async { done(ok) } }
+            }
+        }
+
+        /// Practice page opened: switch to the microphone mode and get a recorder ready.
+        private func warmUp() {
+            withPermission { ok in
+                self.diag(ok ? "mic allowed" : "mic NOT allowed")
+                guard ok else {
+                    if self.startWanted { self.startWanted = false; self.stopWanted = false; self.finish(nil, error: "denied") }
+                    return
+                }
+                // Microphone mode only for the moment of recording; playback stays in steady
+                // "playback" mode (in microphone mode the iPhone played the words quietly or not at all).
+                if self.startWanted {
+                    self.startWanted = false
+                    BirdPalApp.setAudio(record: true)
+                    self.beginRecording()
+                }
+            }
+        }
+
+        /// Practice page closed: back to steady playback (lessons need it with the screen off).
+        private func coolDown() {
+            if recording != nil { stopRecording() }
+            prepared?.deleteRecording()
+            prepared = nil
+            warm = false
+            BirdPalApp.setAudio(record: false)
+        }
+
+        private func startRecording() {
+            guard recording == nil, !startWanted else { return }
+            stopWanted = false
+            startWanted = true
+            warmUp()
+        }
+
+        private func beginRecording() {
+            guard let rec = prepared ?? newRecorder() else { BirdPalApp.setAudio(record: false); finish(nil, error: "start"); return }
+            prepared = nil
+            guard rec.record() else { diag("record() failed"); rec.deleteRecording(); BirdPalApp.setAudio(record: false); finish(nil, error: "start"); return }
+            recording = rec
+            startedAt = Date(); peakDb = -160
+            diag("recording…")
+            webView?.evaluateJavaScript("window.birdpalRecStarted && window.birdpalRecStarted()")
+            meterTimer?.invalidate()
+            meterTimer = Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true) { [weak self] _ in
+                guard let self = self, let r = self.recording else { return }
+                r.updateMeters(); self.peakDb = max(self.peakDb, r.peakPower(forChannel: 0))
+            }
+            if stopWanted { stopWanted = false; stopRecording() }
+        }
+
+        private func stopRecording() {
+            guard let rec = recording else {
+                if startWanted { stopWanted = true } else { finish(nil, error: "empty") }
+                return
+            }
+            meterTimer?.invalidate(); meterTimer = nil
+            let secs = Date().timeIntervalSince(startedAt)
+            rec.stop()
+            recording = nil
+            let url = rec.url
+            let size = (try? FileManager.default.attributesOfItem(atPath: url.path)[.size] as? Int) ?? 0
+            diag(String(format: "%.1fs · %ld KB · loudest %.0f dB", secs, size / 1024, peakDb))
+            BirdPalApp.setAudio(record: false)   // back to steady playback before the word plays back
+            DispatchQueue.global(qos: .userInitiated).async {
+                let data = try? Data(contentsOf: url)
+                try? FileManager.default.removeItem(at: url)
+                DispatchQueue.main.async { self.finish(data, error: data == nil ? "empty" : nil) }
+            }
+        }
+
+        private func finish(_ data: Data?, error: String?) {
+            let arg = data.map { "\"" + $0.base64EncodedString() + "\"" } ?? "null"
+            let err = error.map { "\"" + $0 + "\"" } ?? "null"
+            webView?.evaluateJavaScript("window.birdpalRecDone && window.birdpalRecDone(\(arg), \(err))")
+        }
+
         // The microphone is only used for "Hold to record my voice"; iOS asks the user first.
         func webView(_ webView: WKWebView,
                      requestMediaCapturePermissionFor origin: WKSecurityOrigin,
@@ -74,11 +217,85 @@ struct BirdPalView: UIViewRepresentable {
             decisionHandler(.allow)
         }
 
+        // Recordings play through the iPhone's own player. The web page's player went silent
+        // after the microphone had been used ("Hello" played, the next word did not).
+        // Varispeed changes speed and pitch together, for the squeaky voice.
+        private let engine = AVAudioEngine()
+        private let playerNode = AVAudioPlayerNode()
+        private let varispeed = AVAudioUnitVarispeed()
+        private var engineBuilt = false
+        private var playToken = 0
+
+        private func playClip(_ b64: String, rate: Double, id: Int) {
+            guard let data = Data(base64Encoded: b64) else { playDone(id, ok: false, note: "bad data"); return }
+            let url = FileManager.default.temporaryDirectory.appendingPathComponent("birdpal-play-\(id).wav")
+            do {
+                try data.write(to: url)
+                let file = try AVAudioFile(forReading: url)
+                BirdPalApp.setAudio(record: false)
+                if !engineBuilt {
+                    engine.attach(playerNode); engine.attach(varispeed); engineBuilt = true
+                }
+                playerNode.stop()
+                engine.stop()
+                engine.connect(playerNode, to: varispeed, format: file.processingFormat)
+                engine.connect(varispeed, to: engine.mainMixerNode, format: file.processingFormat)
+                varispeed.rate = Float(rate)
+                try engine.start()
+                playToken += 1
+                let token = playToken
+                playerNode.scheduleFile(file, at: nil) { [weak self] in
+                    DispatchQueue.main.async {
+                        try? FileManager.default.removeItem(at: url)
+                        guard let self = self, token == self.playToken else { return }
+                        self.playDone(id, ok: true, note: nil)
+                    }
+                }
+                playerNode.play()
+                let secs = Double(file.length) / file.processingFormat.sampleRate / rate
+                diag(String(format: "playing %.1fs", secs))
+            } catch {
+                try? FileManager.default.removeItem(at: url)
+                playDone(id, ok: false, note: "\(error.localizedDescription)")
+            }
+        }
+
+        private func stopClip() {
+            playToken += 1
+            playerNode.stop()
+        }
+
+        private func playDone(_ id: Int, ok: Bool, note: String?) {
+            if let note = note { diag("play failed: " + note) }
+            webView?.evaluateJavaScript("window.birdpalPlayDone && window.birdpalPlayDone(\(id), \(ok))")
+        }
+
         // The page asks to keep the screen awake while a lesson runs.
         func userContentController(_ userContentController: WKUserContentController,
                                    didReceive message: WKScriptMessage) {
-            guard let body = message.body as? [String: Any], let on = body["keepAwake"] as? Bool else { return }
-            DispatchQueue.main.async { UIApplication.shared.isIdleTimerDisabled = on }
+            guard let body = message.body as? [String: Any] else { return }
+            if let on = body["keepAwake"] as? Bool {
+                DispatchQueue.main.async { UIApplication.shared.isIdleTimerDisabled = on }
+            }
+            if let b64 = body["play"] as? String {
+                let rate = (body["rate"] as? Double) ?? 1
+                let id = (body["id"] as? Int) ?? 0
+                DispatchQueue.main.async { self.playClip(b64, rate: rate, id: id) }
+            }
+            if body["playStop"] != nil {
+                DispatchQueue.main.async { self.stopClip() }
+            }
+            // The page asks for the microphone mode while recording, and normal playback after.
+            if let rec = body["rec"] as? String {
+                DispatchQueue.main.async {
+                    switch rec {
+                    case "warm": self.warmUp()
+                    case "cool": self.coolDown()
+                    case "start": self.startRecording()
+                    default: self.stopRecording()
+                    }
+                }
+            }
         }
     }
 }

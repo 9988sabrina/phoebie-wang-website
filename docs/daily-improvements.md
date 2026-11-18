@@ -62,8 +62,38 @@
   1. 页脚「Affiliate Disclosure」链接：联盟/工具页已下线，这个链接和 sitemap 里的 disclosure.html 可能已多余（涉及法律声明，需老板点头再删）。
   2. practice/ 页的标签按钮 40px、「听一听」36px，chinese/ 页的按钮 41px，也略低于 44px（这两页用自己的样式表，留给以后单独修）。
 
-## 2026-11-10
-- 改了什么（修一个坏的地方）：11-08 的面包屑修复（PR #41）因为 11-08 晚上的动漫皮肤改版产生冲突，无法合并，今天在最新 main 上重做：12 个内页顶部「Home / Printables」链接手机上只有 16px 高，styles.css 加一条 `.crumb a` 规则（内边距 + 负外边距）把点击区撑到 44px，文字坐标前后逐页比对完全不变；全站 styles.css 版本号升到 `?v=20261110a`。375px 下 26 页无横向溢出、无死链，44 个测试全过。分支 claude/daily-2026-11-10；PR #41 作废。
+## 2026-11-13
+- 改了什么（修一个坏的地方）：首页主推的 Parking Jam 页里，教程气泡的「Skip tutorial / 跳过教程」按钮只有 22px 高，「Progress code / Level map」折叠标题 36px、进度码输入框和「Restore」按钮 42px，都低于 44px 点击区标准，小朋友在手机上容易点不中。parking-jam.css 把这四处提到 ≥44px（版本 v=4 → v=5）。375px 复查无横向溢出、教程气泡布局正常，44 个测试全过。PR 号见 claude/daily-2026-11-13 合并记录。
 - 没做的候选：
-  1. 首页 Bird Pal 段落写着「try it on the phone to the left」，手机上手机样机其实在上方，改成「above」更准（一行文案，下次顺手改）。
-  2. #40（practice 页按钮 44px）、#47（每日中文卡片文案更新）两个 PR 仍待老板批准合并。
+  1. 全站页头的品牌链接（logo + 站名）只有 39px 高，略低于 44px；在 styles.css 改一行即可，但影响所有页面，留到下一天单独做。
+  2. vet-game.html 的语言切换（中文/EN/ES）和「选择病例」按钮只有 28–31px 高；该页最近由另一条线持续改版（Wild Case Files v0.3–v0.9），为避免冲突暂不动。
+
+## 2026-11-14
+- 改了什么（修一个坏的地方）：手机上页头的品牌链接（logo + 站名）在 About、课程页、Parking Jam 等所有非首页页面只有 39px 高，低于 44px 点击区标准（首页和 projects 页因 home.css 专用规则已是 44px）。把 `.brand{min-height:44px}` 从 home.css 提到 styles.css 全站生效，home.css 删除重复规则；styles.css、home.css 均 `?v=20261114a`。375px 复查 6 个代表页品牌链接均为 44px，44 个测试全过。PR #62 已合并。
+- 没做的候选：
+  1. reviews/descript-review.html 和 reviews/best-ai-video-tools-for-creators.html 在 375px 有横向溢出（504px / 456px）；这两页已 noindex 下线，暂不修，若老板决定彻底移除可一起处理。
+  2. vet-game.html 的语言切换和「选择病例」按钮只有 28–31px 高；该页另一条线仍在改版，暂不动。
+
+## 2026-11-15
+- 改了什么（修一个坏的地方）：Daily Practice 页（/practice/）顶部的 9 个标签按钮只有 40px 高、所有「🔊 听一听 / Listen」朗读按钮只有 36px 高，低于 44px 点击区标准，是 11-06 留下的候选。该页样式写在页面内，把 `nav.tabs button` 和 `.icon-btn` 的 min-height 提到 44px（无需改 `?v=`）。375px 下 Today / 中文 / 题库 三个标签页复查无横向溢出、标签栏和卡片布局正常，44 个测试全过。PR 号见 claude/daily-2026-11-15 合并记录。
+- 没做的候选：
+  1. chinese/ 页的 1–6 数字按钮和「显示答案 / 保存」按钮 41px、「去写字」链接式按钮 19px，略低于 44px；该页也是页内样式，留到下一天单独修。
+  2. reviews/ 下两篇已下线（noindex）的测评页在 375px 有横向溢出，暂不修。
+
+## 2026-11-16
+- 改了什么（修一个坏的地方）：每日中文页（/chinese/）在手机上的点击区偏小——所有 `.btn` 按钮（1–6 数字、显示答案、保存、Start、Listen 等）41px，闪卡角落的朗读小圆钮 34px，「认读/书写」切换 34px，语音下拉 32px，补做提示链接 38px，顶部返回首页链接 20px，均低于 44px 标准（11-15 留下的候选）。该页样式写在页面内，把这几处的 min-height / 尺寸提到 44px（无需改 `?v=`）。375px 下 学/练/写/复习/打印 五个标签页复查无横向溢出、布局与改前一致，45 个测试全过。PR 号见 claude/daily-2026-11-16 合并记录。
+- 没做的候选：
+  1. reviews/ 下两篇已下线（noindex）的测评页在 375px 有横向溢出，暂不修。
+  2. vet-game.html 的语言切换和「选择病例」按钮 28–31px；该页另一条线仍在改版，暂不动。
+
+## 2026-11-17
+- 改了什么（修一个坏的地方）：Daily Practice 页（/practice/）11-15 做的 44px 点击区修复（PR #63）被 11-16 的「Tutor: clearer line-plot leaf problem wording」提交（1bb2096，从旧副本推上来）意外回退，标签按钮又变回 40px、「🔊 听一听 / Listen」又变回 36px。重新把 `nav.tabs button` 和 `.icon-btn` 的 min-height 提到 44px（页内样式，无需改 `?v=`）。375px 下 9 个标签页逐个点开复查，布局与改前一致，45 个测试全过。PR 号见 claude/daily-2026-11-17 合并记录。
+- 没做的候选：
+  1. /practice/ 的「Choir + STEM」标签页在 375px 有横向溢出（401px），改前就存在，与本次无关；留到下一天单独查。
+  2. Tutor 线的本地副本似乎落后于 main（这次回退了 #63，也把 `<meta name="robots" content="index, follow">` 去掉了，影响不大）；建议下次推 Tutor 前先 `git pull`，否则每日修复会被反复覆盖。
+
+## 2026-11-10（PR #48，11-18 解决冲突后合并）
+- 改了什么（修一个坏的地方）：11-08 的面包屑修复（PR #41）因动漫皮肤改版冲突无法合并，在 main 上重做：12 个内页顶部「Home / Printables」链接手机上只有 16px 高，styles.css 加一条 `.crumb a` 规则（内边距 + 负外边距）把点击区撑到 44px，文字坐标逐页比对前后不变；全站 styles.css 版本号升到 `?v=20261118a`。该 PR 等待一周后又与 11-13～11-17 的改动冲突，11-18 合入 main 重新验证：375px 无横向溢出、无死链，测试全过。PR #41 作废。
+- 没做的候选：
+  1. 首页 Bird Pal 段落如仍写着「try it on the phone to the left」，手机上样机在上方，改成「above」更准。
+  2. #40（practice 页按钮 44px，已被 #63/#69 覆盖）、#41（被 #48 取代）两个旧 PR 请老板关闭。

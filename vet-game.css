@@ -1,0 +1,395 @@
+#vetapp{
+  --v-cream:#fdf6ec;
+  --v-ink:#3b3024;
+  --v-terracotta:#d97757;
+  --v-sage:#7d9471;
+  --v-gold:#e8b74b;
+  --v-rose:#c97b84;
+  --v-line:#e3d6bf;
+}
+#vetapp *{box-sizing:border-box;}
+.vet-wrap{
+  display:flex;
+  justify-content:center;
+}
+#vetapp{
+  width:100%;
+  max-width:460px;
+  min-height:70vh;
+  background:#fff;
+  box-shadow:0 0 30px rgba(0,0,0,0.08);
+  display:flex;
+  flex-direction:column;
+  position:relative;
+  overflow:hidden;
+  font-family:"Hiragino Sans GB","PingFang SC","Microsoft YaHei",sans-serif;
+  color:var(--v-ink);
+  border-radius:16px;
+  margin:0 auto 24px;
+}
+#vetapp header{
+  padding:16px 18px 10px;
+  border-bottom:1px solid var(--v-line);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+}
+#vetapp header .tag{
+  font-size:12px;
+  color:#9a8c70;
+  letter-spacing:0.05em;
+}
+#vetapp header h1,
+#vetapp header h2{
+  font-size:16px;
+  margin:2px 0 0;
+  color:var(--v-terracotta);
+}
+#vetapp .case-num{
+  font-size:12px;
+  background:var(--v-sage);
+  color:#fff;
+  padding:4px 10px;
+  border-radius:999px;
+  white-space:nowrap;
+}
+#vetapp .lang-switch{
+  display:flex;gap:4px;padding:8px 18px 0;
+}
+#vetapp .lang-btn{
+  font-size:11px;
+  border:1.5px solid var(--v-line);
+  background:#fff;
+  color:#9a8c70;
+  padding:4px 9px;
+  border-radius:999px;
+  cursor:pointer;
+}
+#vetapp .lang-btn.active{
+  background:var(--v-terracotta);
+  border-color:var(--v-terracotta);
+  color:#fff;
+}
+#vetapp .screen{
+  flex:1;
+  display:none;
+  flex-direction:column;
+  padding:18px;
+  animation:vfade .35s ease;
+}
+#vetapp .screen.active{display:flex;}
+@keyframes vfade{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+
+#vetapp .speaker{
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  background:var(--v-cream);
+  border:1px solid var(--v-line);
+  border-radius:14px;
+  padding:12px 14px;
+  margin-bottom:14px;
+}
+#vetapp .avatar{
+  width:40px;height:40px;border-radius:50%;
+  flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;
+  background:var(--v-rose);
+  color:#fff;
+}
+#vetapp .avatar.vet{background:var(--v-sage);}
+#vetapp .speaker .name{font-size:12px;font-weight:bold;color:#9a8c70;margin-bottom:2px;}
+#vetapp .speaker p{margin:0;font-size:14px;line-height:1.5;}
+
+#vetapp .stage{
+  flex:1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  margin:10px 0 16px;
+}
+
+ 
+#vetapp .hotspot{
+  position:absolute;
+  border-radius:50%;
+  border:2px dashed var(--v-terracotta);
+  background:rgba(217,119,87,0.12);
+  cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  font-size:10px;color:var(--v-terracotta);
+  animation:vpulse 1.6s infinite;
+  text-align:center;
+  line-height:1.1;
+  padding:2px;
+}
+@keyframes vpulse{0%,100%{box-shadow:0 0 0 0 rgba(217,119,87,0.25);}50%{box-shadow:0 0 0 6px rgba(217,119,87,0);}}
+#vetapp .hotspot.found{border-style:solid;background:rgba(125,148,113,0.18);border-color:var(--v-sage);color:var(--v-sage);animation:none;}
+#vetapp .treat-stage{height:140px;}
+#vetapp .end-stage{height:120px;}
+#vetapp .exam-hint{font-size:13px;color:#9a8c70;margin:0 0 10px;}
+#vetapp .tool-hint{font-size:12px;color:#9a8c70;text-align:center;}
+.vet-wrap{padding:0 16px;}
+.vet-about{max-width:620px;margin:0 auto 40px;padding:0 16px;}
+.vet-about h2{font-size:18px;}
+.vet-about p{font-size:14px;line-height:1.6;color:#5a4f3d;}
+
+#vetapp .clues{
+  display:flex;flex-direction:column;gap:8px;margin-bottom:12px;
+}
+#vetapp .clue-chip{
+  font-size:13px;background:var(--v-cream);border:1px solid var(--v-line);
+  border-radius:10px;padding:8px 12px;display:none;
+}
+#vetapp .clue-chip.show{display:block;animation:vfade .3s ease;}
+
+#vetapp .options{display:flex;flex-direction:column;gap:10px;margin-top:auto;}
+#vetapp .opt-btn{
+  text-align:left;
+  padding:12px 14px;
+  border:1.5px solid var(--v-line);
+  background:#fff;
+  border-radius:12px;
+  font-size:14px;
+  cursor:pointer;
+  transition:all .15s;
+}
+#vetapp .opt-btn:hover{border-color:var(--v-terracotta);}
+#vetapp .opt-btn:disabled{opacity:.45;cursor:default;}
+#vetapp .opt-btn.correct{border-color:var(--v-sage);background:#eef3ea;}
+#vetapp .opt-btn.wrong{border-color:var(--v-rose);background:#f8ebec;}
+
+#vetapp .tool-row{display:flex;gap:10px;justify-content:center;margin:14px 0;flex-wrap:wrap;}
+#vetapp .tool{
+  width:72px;height:72px;border-radius:14px;
+  background:var(--v-cream);border:1.5px solid var(--v-line);
+  display:flex;align-items:center;justify-content:center;
+  font-size:24px;cursor:pointer;flex-direction:column;gap:2px;
+  transition:transform .1s;
+}
+#vetapp .tool span{font-size:9px;color:#9a8c70;text-align:center;line-height:1.2;padding:0 2px;}
+#vetapp .tool:active{transform:scale(0.94);}
+#vetapp .tool.used{opacity:.3;pointer-events:none;}
+#vetapp .tool.wrongflash{border-color:var(--v-rose);}
+
+#vetapp .progress-steps{display:flex;gap:6px;justify-content:center;margin-bottom:10px;}
+#vetapp .progress-steps .dot{width:22px;height:4px;border-radius:2px;background:var(--v-line);}
+#vetapp .progress-steps .dot.done{background:var(--v-sage);}
+
+#vetapp .primary-btn{
+  margin-top:auto;
+  background:var(--v-terracotta);
+  color:#fff;
+  border:none;
+  padding:14px;
+  border-radius:12px;
+  font-size:15px;
+  cursor:pointer;
+}
+#vetapp .primary-btn.vet-start-btn{margin-top:20px;max-width:200px;align-self:center;}
+#vetapp .primary-btn:disabled{background:#e3d6bf;color:#9a8c70;}
+#vetapp .secondary-btn{
+  margin-top:10px;
+  background:none;
+  border:1.5px solid var(--v-line);
+  padding:12px;
+  border-radius:12px;
+  font-size:14px;
+  color:var(--v-ink);
+  cursor:pointer;
+}
+
+#vetapp .ending-badge{
+  align-self:center;
+  padding:6px 16px;
+  border-radius:999px;
+  font-size:13px;
+  font-weight:bold;
+  margin-bottom:10px;
+}
+#vetapp .ending-badge.best{background:#eef3ea;color:var(--v-sage);}
+#vetapp .ending-badge.ok{background:#fdf1e0;color:var(--v-gold);}
+#vetapp .ending-badge.poor{background:#f8ebec;color:var(--v-rose);}
+
+#vetapp .story-text{font-size:14px;line-height:1.7;margin-bottom:14px;}
+#vetapp .footnote{
+  font-size:11px;color:#b3a688;text-align:center;margin-top:14px;line-height:1.6;
+}
+#vetapp .title-screen{align-items:center;justify-content:center;text-align:center;gap:10px;}
+#vetapp .title-screen .logo{font-size:52px;margin-bottom:6px;}
+#vetapp .title-screen h2{font-size:22px;color:var(--v-terracotta);margin:0;}
+#vetapp .title-screen p{font-size:13px;color:#9a8c70;max-width:280px;line-height:1.6;}
+
+#vetapp .feedback{display:none;font-size:13px;line-height:1.5;border-radius:10px;padding:8px 12px;margin:10px 0 0;}
+#vetapp .feedback.show{display:block;animation:vfade .3s ease;}
+#vetapp .feedback.ok{background:#eef3ea;color:#4f6645;border:1px solid var(--v-sage);}
+#vetapp .feedback.retry{background:#fdf1e0;color:#8a6212;border:1px solid var(--v-gold);}
+#vetapp .ending-badge.ok{color:#8a6212;}
+#vetapp .learn-card{background:var(--v-cream);border:1px solid var(--v-line);border-radius:14px;padding:12px 14px;margin-bottom:14px;}
+#vetapp .learn-title{font-size:12px;font-weight:bold;color:var(--v-terracotta);margin-bottom:6px;}
+#vetapp .learn-card ul{margin:0;padding-left:18px;}
+#vetapp .learn-card li{font-size:13px;line-height:1.6;margin-bottom:4px;}
+
+#vetapp .case-num{border:none;cursor:pointer;font-family:inherit;}
+#vetapp img.avatar{background:none;display:block;}
+#vetapp .patient{position:relative;width:260px;height:195px;}
+#vetapp .patient-img{display:block;width:260px;height:195px;max-width:100%;}
+#vetapp .patient-img.small{width:200px;height:150px;}
+#vetapp .hotspot{width:46px;height:46px;border-radius:50%;font-family:inherit;transform:translate(-50%,-50%);background:rgba(255,255,255,0.78);font-size:11px;font-weight:bold;}
+#vetapp .hotspot.found{background:rgba(238,243,234,0.92);}
+#vetapp.case-hedgehog .hs1{left:47%;top:62%;}
+#vetapp.case-hedgehog .hs2{left:58%;top:34%;}
+#vetapp.case-hedgehog .hs3{left:26%;top:88%;}
+#vetapp.case-rabbit .hs1{left:68%;top:76%;}
+#vetapp.case-rabbit .hs2{left:48%;top:69%;}
+#vetapp.case-rabbit .hs3{left:61%;top:22%;}
+#vetapp .treat-stage,#vetapp .end-stage{height:auto;}
+#vetapp .case-list{display:flex;flex-direction:column;gap:12px;width:100%;margin-top:8px;}
+#vetapp .case-card{display:flex;align-items:center;gap:12px;text-align:left;width:100%;padding:10px 12px;background:var(--v-cream);border:1.5px solid var(--v-line);border-radius:14px;cursor:pointer;font-family:inherit;color:var(--v-ink);transition:border-color .15s,transform .1s;}
+#vetapp .case-card:hover{border-color:var(--v-terracotta);}
+#vetapp .case-card:active{transform:scale(0.98);}
+#vetapp .case-card img{width:96px;height:72px;flex-shrink:0;}
+#vetapp .case-info{display:flex;flex-direction:column;gap:2px;}
+#vetapp .case-no{font-size:11px;color:#9a8c70;letter-spacing:0.05em;}
+#vetapp .case-name{font-size:15px;font-weight:bold;}
+#vetapp .case-stars{font-size:12px;color:#9a8c70;}
+#vetapp .case-stars.done{color:#b8860b;font-size:14px;}
+#vetapp .title-screen{justify-content:flex-start;padding-top:24px;}
+#vetapp .tool{font-family:inherit;color:inherit;width:88px;height:84px;padding:4px;}
+#vetapp .tool .tool-ico{font-size:26px;line-height:1.1;color:inherit;}
+#vetapp .tool .tool-lbl{font-size:10px;}
+#vetapp .options{margin-top:0;}
+#vetapp #vtoTreatBtn{margin-top:14px;}
+#vetapp .secondary-btn{font-family:inherit;}
+
+#vetapp .care-card{background:#eef3ea;border-color:#c9d6c2;}
+#vetapp .care-ico{width:96px;height:72px;display:flex;align-items:center;justify-content:center;font-size:44px;flex-shrink:0;}
+#vetapp .care-top{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+#vetapp .pet-tabs{display:flex;gap:6px;}
+#vetapp .pet-tab{width:54px;height:42px;padding:3px;border-radius:12px;border:2px solid var(--v-line);background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+#vetapp .pet-tab.active{border-color:var(--v-terracotta);background:var(--v-cream);}
+#vetapp .pet-tab img{width:44px;height:33px;display:block;}
+#vetapp .name-tag{font-family:inherit;font-size:15px;font-weight:bold;color:var(--v-ink);background:var(--v-cream);border:1.5px solid var(--v-line);border-radius:999px;padding:6px 12px;cursor:pointer;}
+#vetapp .hearts{margin-left:auto;font-size:13px;letter-spacing:1px;white-space:nowrap;}
+#vetapp .room{position:relative;height:270px;border-radius:16px;overflow:hidden;background:#fbe9d2;border:1px solid var(--v-line);margin-bottom:12px;transition:background .4s;}
+#vetapp .room::after{content:"";position:absolute;left:0;right:0;bottom:0;height:86px;background:#e9c9a0;border-top:3px solid #dcb688;}
+#vetapp .room-window{position:absolute;top:16px;right:18px;width:64px;height:58px;border-radius:10px;background:#bfe3f5;border:4px solid #fff;box-shadow:0 0 0 2px var(--v-line);}
+#vetapp .room-window::after{content:"☀️";position:absolute;top:8px;left:14px;font-size:26px;}
+#vetapp .room-rug{position:absolute;z-index:1;left:50%;bottom:14px;width:240px;height:54px;margin-left:-120px;border-radius:50%;background:var(--v-rose);opacity:.55;}
+#vetapp .bubble{position:absolute;z-index:3;top:12px;left:12px;max-width:62%;margin:0;background:#fff;border:1.5px solid var(--v-line);border-radius:14px 14px 14px 4px;padding:8px 12px;font-size:13px;line-height:1.5;}
+#vetapp .pet-wrap{position:absolute;z-index:2;left:50%;bottom:22px;width:220px;height:165px;margin-left:-110px;}
+#vetapp .pet-wrap.bounce{animation:vbounce .5s ease;}
+@keyframes vbounce{0%,100%{transform:translateY(0);}35%{transform:translateY(-16px);}70%{transform:translateY(-4px);}}
+#vetapp .care-img{display:block;width:220px;height:165px;}
+#vetapp .acc{position:absolute;font-size:34px;line-height:1;transform:translate(-50%,-50%);}
+#vetapp.pet-hedgehog .acc{left:33%;top:33%;}
+#vetapp.pet-rabbit .acc{left:48%;top:36%;}
+#vetapp .fx{position:absolute;right:6px;top:0;font-size:34px;line-height:1;animation:vfloat 1.6s ease-in-out infinite;}
+@keyframes vfloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+#vetapp .blanket{display:none;position:absolute;left:18%;right:4%;bottom:-4px;height:74px;border-radius:40px 40px 14px 14px;background:#8fb3d9;border:3px solid #fff;box-shadow:0 0 0 1.5px #6f95bd;}
+#vetapp .room.night{background:#2f3a5c;}
+#vetapp .room.night::after{background:#4a4668;border-top-color:#3d3a58;}
+#vetapp .room.night .room-window{background:#1d2440;}
+#vetapp .room.night .room-window::after{content:"🌙";}
+#vetapp .room.night .blanket{display:block;}
+#vetapp .room.night .care-img{opacity:.85;}
+#vetapp .care-actions{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+#vetapp .care-btn{font-family:inherit;color:var(--v-ink);background:var(--v-cream);border:1.5px solid var(--v-line);border-radius:14px;padding:8px 4px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:13px;transition:transform .1s;}
+#vetapp .care-btn:active{transform:scale(0.94);}
+#vetapp .care-emo{font-size:26px;line-height:1.2;}
+#vetapp .food-row{display:none;gap:8px;margin-top:8px;}
+#vetapp .food-row.show{display:flex;animation:vfade .3s ease;}
+#vetapp .food-btn{flex:1;font-family:inherit;font-size:13px;color:var(--v-ink);background:#fff;border:1.5px solid var(--v-terracotta);border-radius:12px;padding:10px 4px;cursor:pointer;}
+#vetapp .reward{display:none;margin-top:10px;background:#fdf1e0;border:1.5px solid var(--v-gold);border-radius:14px;padding:10px 12px;text-align:center;}
+#vetapp .reward.show{display:block;animation:vfade .3s ease;}
+#vetapp .reward p{margin:0 0 8px;font-size:14px;font-weight:bold;color:#8a6212;}
+#vetapp .reward .primary-btn{width:100%;padding:10px;}
+#vetapp .care-note{font-size:12px;color:#9a8c70;text-align:center;line-height:1.6;margin:10px 0 0;}
+#vetapp #vcareHomeBtn{margin-top:10px;}
+
+#vetapp{--v-inkline:#3b3024;border:3px solid var(--v-inkline);box-shadow:6px 6px 0 var(--v-inkline);}
+#vetapp header{border-bottom:3px solid var(--v-inkline);background:var(--v-gold);}
+#vetapp header .tag{color:#5a4410;font-weight:bold;}
+#vetapp header h2{color:var(--v-inkline);font-size:18px;}
+#vetapp .case-num{background:#fff;color:var(--v-inkline);border:2px solid var(--v-inkline);font-weight:bold;box-shadow:2px 2px 0 var(--v-inkline);}
+#vetapp .primary-btn{border:2.5px solid var(--v-inkline);box-shadow:3px 3px 0 var(--v-inkline);font-weight:bold;}
+#vetapp .primary-btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--v-inkline);}
+#vetapp .primary-btn:disabled{box-shadow:none;border-color:#c9bca0;}
+#vetapp .case-card,#vetapp .opt-btn,#vetapp .care-btn,#vetapp .tool,#vetapp .learn-card,#vetapp .clue-chip,#vetapp .room,#vetapp .speaker{border:2px solid var(--v-inkline);}
+#vetapp .case-card{box-shadow:3px 3px 0 var(--v-inkline);}
+#vetapp .title-screen h2{color:var(--v-inkline);font-size:26px;transform:rotate(-2deg);text-shadow:2px 2px 0 var(--v-gold);}
+#vetapp .strip{display:flex;flex-direction:column;gap:12px;margin-bottom:14px;}
+#vetapp .panel{position:relative;display:none;flex-direction:column;align-items:center;gap:8px;padding:14px 12px 12px;border:3px solid var(--v-inkline);border-radius:6px;box-shadow:4px 4px 0 var(--v-inkline);background-color:#fff8e8;background-image:none;animation:vpop .3s ease;}
+@keyframes vpop{from{opacity:0;transform:scale(.92) rotate(-1deg);}to{opacity:1;transform:scale(1) rotate(0);}}
+#vetapp .panel.p2{background-color:#eaf3f7;background-image:none}
+#vetapp .panel.p3{background-color:#eef3ea;background-image:none}
+#vetapp .strip.show-1 .p1,#vetapp .strip.show-2 .p1,#vetapp .strip.show-2 .p2,#vetapp .strip.show-3 .panel{display:flex;}
+#vetapp .talk{display:flex;gap:10px;align-items:flex-start;width:100%;}
+#vetapp .talk .avatar{width:48px;height:48px;border:2.5px solid var(--v-inkline);border-radius:50%;}
+#vetapp .balloon{position:relative;flex:1;background:#fff;border:2.5px solid var(--v-inkline);border-radius:16px;padding:8px 12px;}
+#vetapp .balloon::before{content:"";position:absolute;left:-11px;top:14px;border-width:7px 11px 7px 0;border-style:solid;border-color:transparent var(--v-inkline) transparent transparent;}
+#vetapp .balloon::after{content:"";position:absolute;left:-7px;top:15px;border-width:6px 9px 6px 0;border-style:solid;border-color:transparent #fff transparent transparent;}
+#vetapp .balloon .name{font-size:12px;font-weight:bold;color:#9a8c70;margin-bottom:2px;}
+#vetapp .balloon p{margin:0;font-size:14px;line-height:1.5;}
+#vetapp .sfx{position:absolute;top:-12px;right:8px;z-index:2;font-size:22px;font-weight:900;font-style:italic;color:var(--v-terracotta);transform:rotate(8deg);text-shadow:2px 2px 0 #fff,-1px -1px 0 #fff,3px 3px 0 var(--v-inkline);}
+#vetapp .p2 .sfx{color:#4f7cac;font-size:18px;transform:rotate(-6deg);right:auto;left:10px;top:auto;bottom:8px;}
+#vetapp .thought{position:relative;margin:0 0 6px;background:#fff;border:2.5px solid var(--v-inkline);border-radius:22px;padding:8px 14px;font-size:13px;line-height:1.5;text-align:center;max-width:92%;}
+#vetapp .thought::after{content:"";position:absolute;left:50%;bottom:-13px;width:9px;height:9px;margin-left:-4px;border-radius:50%;background:#fff;border:2.5px solid var(--v-inkline);}
+#vetapp .narr{margin:0;width:100%;background:var(--v-gold);border:2px solid var(--v-inkline);padding:6px 10px;font-size:13px;line-height:1.5;color:#3b3024;}
+#vetapp .exam-think,#vetapp .diag-think{display:none;}
+#vetapp .exam-think.show{display:block;position:absolute;z-index:3;top:-6px;left:50%;transform:translateX(-50%);width:max-content;max-width:94%;animation:vpop .25s ease;}
+#vetapp .screen#vscreen-exam .stage{padding-top:44px;}
+#vetapp .diag-think.show{display:block;align-self:center;margin:18px 0 0;animation:vpop .25s ease;}
+#vetapp .diag-think.show::after{bottom:auto;top:-13px;}
+#vetapp .panel.bonus{flex-direction:row;flex-wrap:wrap;justify-content:center;background-color:#fdf1e0;transform:rotate(-1deg);}
+#vetapp .panel.bonus .patient-img{width:120px;height:90px;}
+#vetapp .panel.bonus .narr{background:#fff;}
+#vetapp .bonus-tag{position:absolute;top:-12px;left:10px;background:var(--v-terracotta);color:#fff;font-size:12px;font-weight:bold;padding:2px 10px;border:2px solid var(--v-inkline);transform:rotate(-4deg);}
+#vetapp .ending-badge{border:2px solid var(--v-inkline);box-shadow:2px 2px 0 var(--v-inkline);margin-bottom:16px;}
+#vetapp .bubble{border:2.5px solid var(--v-inkline);}
+#vetapp .feedback.ok,#vetapp .feedback.retry{border-width:2px;border-color:var(--v-inkline);}
+
+.vet-install{text-align:center;margin:0 0 18px;}
+.vet-install a{display:inline-block;font-weight:bold;color:#3b3024;background:#e8b74b;border:2.5px solid #3b3024;border-radius:12px;box-shadow:3px 3px 0 #3b3024;padding:10px 16px;text-decoration:none;}
+
+#vetapp .snd-btn{margin-left:auto;font-size:14px;padding:2px 9px;}
+#vetapp.case-guineapig .hs1{left:37%;top:80%;}
+#vetapp.case-guineapig .hs2{left:58%;top:30%;}
+#vetapp.case-guineapig .hs3{left:20%;top:62%;}
+#vetapp.pet-guineapig .acc{left:31%;top:36%;}
+#vetapp .patient.bounce,#vetapp .patient-img.bounce{animation:vwiggle .45s ease;}
+@keyframes vwiggle{0%,100%{transform:rotate(0) scale(1);}25%{transform:rotate(-4deg) scale(1.04);}60%{transform:rotate(4deg) scale(1.04);}}
+#vetapp .tool.used{opacity:.45;}
+#vetapp .tool.used::after{content:"✓";position:absolute;top:2px;right:6px;font-size:14px;font-weight:bold;color:var(--v-sage);}
+#vetapp .tool{position:relative;}
+#vetapp .patient-img,#vetapp .care-img{animation:vbreathe 2.8s ease-in-out infinite;transform-origin:50% 90%;}
+@keyframes vbreathe{0%,100%{transform:scale(1,1);}50%{transform:scale(1.02,0.975);}}
+@media (prefers-reduced-motion: reduce){#vetapp .patient-img,#vetapp .care-img{animation:none;}}
+
+#vetapp .daily-card{background:#fdf1e0;border-color:var(--v-inkline);}
+#vetapp .daily-card .case-no{color:var(--v-terracotta);font-weight:bold;}
+#vetapp .daily-stats{font-size:11px;color:#9a8c70;}
+#vetapp .daily-done{margin-top:14px;}
+#vetapp .pet-tab.locked{opacity:.45;position:relative;}
+#vetapp .pet-tab.locked::after{content:"🔒";position:absolute;right:-4px;bottom:-6px;font-size:14px;}
+#vetapp .care-empty{display:none;flex-direction:column;align-items:center;text-align:center;gap:12px;padding:40px 10px;}
+#vetapp .care-empty-ico{font-size:64px;}
+#vetapp .care-empty p{margin:0;font-size:15px;line-height:1.7;}
+#vetapp #vscreen-care.empty .care-empty{display:flex;}
+#vetapp #vscreen-care.empty .care-top,#vetapp #vscreen-care.empty .room,#vetapp #vscreen-care.empty .care-actions,#vetapp #vscreen-care.empty .food-row,#vetapp #vscreen-care.empty .reward,#vetapp #vscreen-care.empty .care-note,#vetapp #vscreen-care.empty #vcareHomeBtn{display:none;}
+
+#vetapp.case-hedgehog .hs1{left:59%;top:75%;}
+#vetapp.case-hedgehog .hs2{left:64%;top:35%;}
+#vetapp.case-hedgehog .hs3{left:41%;top:93%;}
+#vetapp.case-rabbit .hs1{left:50%;top:87%;}
+#vetapp.case-rabbit .hs2{left:45%;top:60%;}
+#vetapp.case-rabbit .hs3{left:67%;top:58%;}
+#vetapp.case-guineapig .hs1{left:29%;top:88%;}
+#vetapp.case-guineapig .hs2{left:61%;top:42%;}
+#vetapp.case-guineapig .hs3{left:52%;top:84%;}
+#vetapp.pet-hedgehog .acc{left:50%;top:30%;}
+#vetapp.pet-rabbit .acc{left:47%;top:44%;}
+#vetapp.pet-guineapig .acc{left:50%;top:44%;}
