@@ -1,0 +1,239 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Wild Case Files: a free narrative vet-clinic game prototype for kids. Examine a poorly hedgehog and a rabbit that stopped eating, find the clues, diagnose and treat them. In Chinese, English and Spanish."><meta name="robots" content="index, follow"><meta name="theme-color" content="#fdf6ec"><link rel="canonical" href="https://www.phoebiewang.com/vet-game.html"><meta property="og:title" content="Wild Case Files | Phoebie's Learning Lab"><meta property="og:description" content="Examine, diagnose and treat a hedgehog and a rabbit in this free story vet game. 中文/EN/ES."><meta property="og:type" content="website"><meta property="og:url" content="https://www.phoebiewang.com/vet-game.html"><meta property="og:image" content="https://www.phoebiewang.com/assets/og-home.jpg"><meta name="twitter:card" content="summary_large_image"><title>Wild Case Files: free story vet game | Phoebie's Learning Lab</title><link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="styles.css?v=20261118a"><link rel="stylesheet" href="motion.css?v=20261116a"><link rel="stylesheet" href="vet-game.css?v=11">    <link rel="stylesheet" href="anime.css?v=20261116b">
+</head><body data-page="vet-game"><a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header"><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">学</span><span>Phoebie's Learning Lab<small>Learn it. Try it. Explain it.</small></span></a><button class="menu-button" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button><nav id="site-nav" class="site-nav" aria-label="Main navigation"><a href="chinese/">Daily Chinese <span lang="zh-CN">每日中文</span></a><a href="printables.html">Printables <span lang="zh-CN">打印品</span></a><a href="practice/">Practice <span lang="zh-CN">练习</span></a><a href="about.html">About <span lang="zh-CN">关于</span></a></nav></header>
+<main id="main">
+<header class="page-hero wrap"><p class="crumb"><a href="index.html">Home</a> / Wild Case Files</p><p class="eyebrow">A story for animal lovers</p><h1>Wild Case Files</h1><p class="lede">Examine the patient, find the clues, make a diagnosis, then treat it in the right order. Three comic cases so far — a hedgehog, a rabbit and a guinea pig — in Chinese, English or Spanish.</p></header>
+<div class="wrap vet-wrap">
+<div id="vetapp">
+
+  <header>
+    <div>
+      <div class="tag" id="vtagLine">WILD CASE FILES · v0.10</div>
+      <h2 id="vappTitle">野生诊所</h2>
+    </div>
+    <button class="case-num" id="vcaseLabel" type="button">病例</button>
+  </header>
+  <div class="lang-switch">
+    <button class="lang-btn active" id="vlangBtn-zh" type="button">中文</button>
+    <button class="lang-btn" id="vlangBtn-en" type="button">EN</button>
+    <button class="lang-btn" id="vlangBtn-es" type="button">ES</button>
+    <button class="lang-btn snd-btn" id="vsndBtn" type="button" aria-label="Sound on/off">🔊</button>
+  </div>
+
+  <div class="screen active title-screen" id="vscreen-title">
+    <h2 id="vtitleH2">野生诊所</h2>
+    <p id="vtitleDesc"></p>
+    <div class="case-list">
+      <button class="case-card daily-card" type="button" id="vdailyBtn">
+        <img id="vdailyImg" src="assets/vet/hedgehog-sick.svg" alt="" width="96" height="72">
+        <span class="case-info"><span class="case-no" id="vdailyNo"></span><span class="case-name" id="vdailyName"></span><span class="case-stars" id="vdailySub"></span><span class="daily-stats" id="vdailyStats"></span></span>
+      </button>
+      <button class="case-card" type="button" id="vcaseBtn0">
+        <img src="assets/vet/hedgehog-sick.svg" alt="" width="96" height="72">
+        <span class="case-info"><span class="case-no" id="vcaseNo0"></span><span class="case-name" id="vcaseName0"></span><span class="case-stars" id="vcaseStars0"></span></span>
+      </button>
+      <button class="case-card" type="button" id="vcaseBtn1">
+        <img src="assets/vet/rabbit-sick.svg" alt="" width="96" height="72">
+        <span class="case-info"><span class="case-no" id="vcaseNo1"></span><span class="case-name" id="vcaseName1"></span><span class="case-stars" id="vcaseStars1"></span></span>
+      </button>
+      <button class="case-card" type="button" id="vcaseBtn2">
+        <img src="assets/vet/guineapig-sick.svg" alt="" width="96" height="72">
+        <span class="case-info"><span class="case-no" id="vcaseNo2"></span><span class="case-name" id="vcaseName2"></span><span class="case-stars" id="vcaseStars2"></span></span>
+      </button>
+      <button class="case-card care-card" type="button" id="vcareBtn">
+        <span class="care-ico" aria-hidden="true">🏠</span>
+        <span class="case-info"><span class="case-no" id="vcareNo"></span><span class="case-name" id="vcareName"></span><span class="case-stars" id="vcareSub"></span></span>
+      </button>
+    </div>
+    <div class="footnote" id="vtitleFootnote"></div>
+  </div>
+
+  <div class="screen" id="vscreen-intro">
+    <div class="strip" id="vintroStrip">
+      <div class="panel p1">
+        <span class="sfx" id="vsfx1" aria-hidden="true"></span>
+        <div class="talk">
+          <img class="avatar" id="vownerAv1" src="assets/vet/boy.svg" alt="" width="48" height="48">
+          <div class="balloon"><div class="name" id="vownerName1"></div><p id="vintroOwnerLine"></p></div>
+        </div>
+      </div>
+      <div class="panel p2">
+        <span class="sfx" id="vsfx2" aria-hidden="true"></span>
+        <p class="thought" id="vintroThink"></p>
+        <img class="patient-img" id="vimgIntro" src="assets/vet/hedgehog-sick.svg" alt="" width="260" height="195">
+      </div>
+      <div class="panel p3">
+        <div class="talk">
+          <img class="avatar" src="assets/vet/vet.svg" alt="" width="48" height="48">
+          <div class="balloon"><div class="name" id="vvetName1"></div><p id="vintroVetLine"></p></div>
+        </div>
+        <p class="narr" id="vintroNarr"></p>
+      </div>
+    </div>
+    <button class="primary-btn" type="button" id="vstartExamBtn"></button>
+  </div>
+
+  <div class="screen" id="vscreen-exam">
+    <div class="progress-steps">
+      <div class="dot" id="vpd1"></div><div class="dot" id="vpd2"></div><div class="dot" id="vpd3"></div>
+    </div>
+    <p class="exam-hint" id="vexamHint"></p>
+    <div class="stage">
+      <p class="thought exam-think" id="vexamThink" role="status" aria-live="polite"></p>
+      <div class="patient" id="vpatient">
+        <img class="patient-img" id="vimgExam" src="assets/vet/hedgehog-sick.svg" alt="" width="260" height="195">
+        <button class="hotspot hs1" id="vhs1" type="button"></button>
+        <button class="hotspot hs2" id="vhs2" type="button"></button>
+        <button class="hotspot hs3" id="vhs3" type="button"></button>
+      </div>
+    </div>
+    <div class="clues">
+      <div class="clue-chip" id="vclue1"></div>
+      <div class="clue-chip" id="vclue2"></div>
+      <div class="clue-chip" id="vclue3"></div>
+    </div>
+    <button class="primary-btn" id="vtoDiagBtn" type="button" disabled></button>
+  </div>
+
+  <div class="screen" id="vscreen-diag">
+    <div class="speaker">
+      <img class="avatar" src="assets/vet/vet.svg" alt="" width="40" height="40">
+      <div><div class="name" id="vvetName2"></div>
+      <p id="vdiagVetLine"></p></div>
+    </div>
+    <div class="options" id="vdiagOptions">
+      <button class="opt-btn" id="vdiagOpt1" type="button"></button>
+      <button class="opt-btn" id="vdiagOpt2" type="button"></button>
+      <button class="opt-btn" id="vdiagOpt3" type="button"></button>
+    </div>
+    <p class="feedback" id="vdiagFeedback" role="status" aria-live="polite"></p>
+    <p class="thought diag-think" id="vdiagThink"></p>
+    <button class="primary-btn" id="vtoTreatBtn" type="button" disabled></button>
+  </div>
+
+  <div class="screen" id="vscreen-treat">
+    <div class="speaker">
+      <img class="avatar" src="assets/vet/vet.svg" alt="" width="40" height="40">
+      <div><div class="name" id="vvetName3"></div>
+      <p id="vtreatIntro"></p></div>
+    </div>
+    <div class="stage treat-stage"><img class="patient-img small" id="vimgTreat" src="assets/vet/hedgehog-sick.svg" alt="" width="200" height="150"></div>
+    <div class="tool-row">
+      <button class="tool" type="button" id="vtool1"><span class="tool-ico" id="vtoolIco1"></span><span class="tool-lbl" id="vtoolLabel1"></span></button>
+      <button class="tool" type="button" id="vtool2"><span class="tool-ico" id="vtoolIco2"></span><span class="tool-lbl" id="vtoolLabel2"></span></button>
+      <button class="tool" type="button" id="vtool3"><span class="tool-ico" id="vtoolIco3"></span><span class="tool-lbl" id="vtoolLabel3"></span></button>
+    </div>
+    <p class="feedback" id="vtoolFeedback" role="status" aria-live="polite"></p>
+    <p class="tool-hint" id="vtreatHint"></p>
+    <button class="primary-btn" id="vtoEndBtn" type="button" disabled></button>
+  </div>
+
+  <div class="screen" id="vscreen-end">
+    <div class="ending-badge" id="vendBadge"></div>
+    <div class="strip show-3">
+      <div class="panel p1">
+        <span class="sfx" id="vsfx3" aria-hidden="true"></span>
+        <img class="patient-img small" id="vimgEnd" src="assets/vet/hedgehog-well.svg" alt="" width="200" height="150">
+        <p class="narr" id="vendText"></p>
+      </div>
+      <div class="panel p2">
+        <div class="talk">
+          <img class="avatar" id="vownerAv2" src="assets/vet/boy.svg" alt="" width="48" height="48">
+          <div class="balloon"><div class="name" id="vownerName2"></div><p id="vownerEndLine"></p></div>
+        </div>
+      </div>
+      <div class="panel p3 bonus">
+        <span class="bonus-tag" id="vbonusTag"></span>
+        <img class="patient-img small" id="vimgBonus" src="assets/vet/hedgehog-well.svg" alt="" width="120" height="90">
+        <p class="narr" id="vendBonus"></p>
+      </div>
+    </div>
+    <div class="learn-card">
+      <div class="learn-title" id="vlearnTitle"></div>
+      <ul>
+        <li id="vlearn1"></li>
+        <li id="vlearn2"></li>
+        <li id="vlearn3"></li>
+      </ul>
+    </div>
+    <button class="primary-btn" id="vnextBtn" type="button"></button>
+    <button class="secondary-btn" id="vtoCareBtn" type="button"></button>
+    <button class="secondary-btn" id="vrestartBtn" type="button"></button>
+    <div class="footnote" id="vendFootnote"></div>
+  </div>
+
+  <div class="screen" id="vscreen-daily">
+    <div class="strip show-3">
+      <div class="panel p1">
+        <span class="sfx" id="vdsfx" aria-hidden="true"></span>
+        <div class="talk">
+          <img class="avatar" id="vdAv" src="assets/vet/boy.svg" alt="" width="48" height="48">
+          <div class="balloon"><div class="name" id="vdOwner"></div><p id="vdQ"></p></div>
+        </div>
+      </div>
+      <div class="panel p2">
+        <p class="thought" id="vdGag"></p>
+        <img class="patient-img small" id="vdImg" src="assets/vet/hedgehog-sick.svg" alt="" width="200" height="150">
+      </div>
+    </div>
+    <div class="options" id="vdOptions">
+      <button class="opt-btn" id="vdOpt1" type="button"></button>
+      <button class="opt-btn" id="vdOpt2" type="button"></button>
+      <button class="opt-btn" id="vdOpt3" type="button"></button>
+    </div>
+    <p class="feedback" id="vdFb" role="status" aria-live="polite"></p>
+    <button class="primary-btn daily-done" id="vdDoneBtn" type="button" disabled></button>
+  </div>
+
+  <div class="screen" id="vscreen-care">
+    <div class="care-empty">
+      <div class="care-empty-ico" aria-hidden="true">🏠</div>
+      <p id="vcareEmptyText"></p>
+      <button class="primary-btn" type="button" id="vcareGoBtn"></button>
+    </div>
+    <div class="care-top">
+      <div class="pet-tabs">
+        <button class="pet-tab" type="button" id="vpetTab0"><img src="assets/vet/hedgehog-well.svg" alt="" width="44" height="33"></button>
+        <button class="pet-tab" type="button" id="vpetTab1"><img src="assets/vet/rabbit-well.svg" alt="" width="44" height="33"></button>
+        <button class="pet-tab" type="button" id="vpetTab2"><img src="assets/vet/guineapig-well.svg" alt="" width="44" height="33"></button>
+      </div>
+      <button class="name-tag" type="button" id="vpetName"></button>
+      <div class="hearts" id="vhearts" aria-live="polite"></div>
+    </div>
+    <div class="room" id="vroom">
+      <div class="room-window" aria-hidden="true"></div>
+      <div class="room-rug" aria-hidden="true"></div>
+      <p class="bubble" id="vbubble" role="status" aria-live="polite"></p>
+      <div class="pet-wrap" id="vpetWrap">
+        <img class="care-img" id="vcareImg" src="assets/vet/hedgehog-well.svg" alt="" width="220" height="165">
+        <span class="acc" id="vacc" aria-hidden="true"></span>
+        <span class="fx" id="vfx" aria-hidden="true"></span>
+        <div class="blanket" id="vblanket" aria-hidden="true"></div>
+      </div>
+    </div>
+    <div class="care-actions">
+      <button class="care-btn" type="button" id="vactFeed"><span class="care-emo" aria-hidden="true">🍽️</span><span id="vactFeedL"></span></button>
+      <button class="care-btn" type="button" id="vactBath"><span class="care-emo" aria-hidden="true">🧹</span><span id="vactBathL"></span></button>
+      <button class="care-btn" type="button" id="vactBrush"><span class="care-emo" aria-hidden="true">🪮</span><span id="vactBrushL"></span></button>
+      <button class="care-btn" type="button" id="vactHug"><span class="care-emo" aria-hidden="true">💗</span><span id="vactHugL"></span></button>
+      <button class="care-btn" type="button" id="vactDress"><span class="care-emo" aria-hidden="true">🎀</span><span id="vactDressL"></span></button>
+      <button class="care-btn" type="button" id="vactSleep"><span class="care-emo" aria-hidden="true">🌙</span><span id="vactSleepL"></span></button>
+    </div>
+    <div class="food-row" id="vfoodRow">
+      <button class="food-btn" type="button" id="vfood1"></button>
+      <button class="food-btn" type="button" id="vfood2"></button>
+      <button class="food-btn" type="button" id="vfood3"></button>
+    </div>
+    <div class="reward" id="vreward">
+      <p id="vrewardText"></p>
+      <button class="primary-btn" type="button" id="vnewDayBtn"></button>
+    </div>
+    <p class="care-note" id="vcareNote"></p>
+    <button class="secondary-btn" type="button" id="vcareHomeBtn"></button>
+  </div>
+
+</div>
+</div>
+<section class="wrap vet-about"><p class="vet-install"><a href="vetgame/">📱 Open the phone app version (add it to your Home Screen) · 手机 App 版</a></p><h2>About Wild Case Files</h2><p>Each case is a short, silly comic strip: listen to the owner, examine the animal, put the clues together, make a diagnosis and treat it in order. A wrong first guess is fine — you get a hint and look again, just like a real vet would. There is a new walk-in patient every day, and animals you cure move into the Care Room, where you can feed, tidy up after, dress up and tuck in your patients — pretend play with no wrong answers. The stories are simplified; a sick or injured real animal always needs a real vet.</p></section>
+</main>
+<footer class="site-footer"><div class="wrap footer-grid"><div><strong>Phoebie's Learning Lab</strong><span>Learn it. Try it. Explain it.</span></div><nav aria-label="Footer"><a href="projects.html">Books &amp; Songs</a><a href="disclosure.html">Affiliate Disclosure</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="refunds.html">Digital Product &amp; Refunds</a><button class="link-button" data-clear-progress type="button">Clear local progress</button></nav></div><p class="legal-note">© 2026 The Wang family. Made by Sabrina Zhang and Phoebie Wang. Questions or a broken page? Message us through <a href="https://www.etsy.com/shop/PhoebieCreates" rel="noopener">our Etsy shop</a>.</p></footer><script src="content-config.js"></script><script src="common.js"></script><script src="motion.js?v=20261116a"></script><script src="vet-game.js?v=10"></script></body></html>
