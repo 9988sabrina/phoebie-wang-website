@@ -91,3 +91,9 @@
 - 没做的候选：
   1. /practice/ 的「Choir + STEM」标签页在 375px 有横向溢出（401px），改前就存在，与本次无关；留到下一天单独查。
   2. Tutor 线的本地副本似乎落后于 main（这次回退了 #63，也把 `<meta name="robots" content="index, follow">` 去掉了，影响不大）；建议下次推 Tutor 前先 `git pull`，否则每日修复会被反复覆盖。
+
+## 2026-11-18
+- 改了什么（修一个坏的地方）：Daily Practice 页（/practice/）「Choir + STEM」标签页在 375px 手机上横向溢出到 401px（11-17 留下的候选），原因是 STEM 实验的「Data table」（Mark 1–4 + Average，每格输入框 ≥44px）比卡片宽。给表格套一层 `.stemwrap{overflow-x:auto}` 滚动容器，表格在卡片内左右滑、整页不再溢出（页内样式，无需改 `?v=`）。375px 下 10 个标签页逐个复查均为 375px 无溢出，45 个测试全过。PR 号见 claude/daily-2026-11-18 合并记录。
+- 没做的候选：
+  1. reviews/ 下两篇已下线（noindex）的测评页在 375px 有横向溢出，暂不修。
+  2. vet-game.html 的语言切换和「选择病例」按钮 28–31px；该页另一条线仍在改版，暂不动。
