@@ -9,7 +9,7 @@ var state = newState();
 function newState(){ return {found:0, solved:false, tries:0, step:0, fb:null, toolFb:null, panel:1, think:0}; }
 
 var UI = {
-  tagLine: {zh:'WILD CASE FILES · v0.9', en:'WILD CASE FILES · v0.9', es:'WILD CASE FILES · v0.9'},
+  tagLine: {zh:'WILD CASE FILES · v0.10', en:'WILD CASE FILES · v0.10', es:'WILD CASE FILES · v0.10'},
   appTitle: {zh:'野生诊所', en:'Wild Case Files', es:'Casos Silvestres'},
   caseHome: {zh:'选择病例', en:'Choose a case', es:'Elige un caso'},
   caseNo: {zh:'病例 0', en:'Case 0', es:'Caso 0'},

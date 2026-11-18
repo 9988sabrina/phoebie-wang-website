@@ -31,17 +31,19 @@
     button.textContent = "Local progress cleared";
   }));
   const form = document.getElementById("signup-form");
+  const signup = document.getElementById("signup");
   const siteConfig = window.SITE_CONFIG || {};
-  if (form && /^https:\/\//.test(siteConfig.emailFormAction || "")) {
-    form.action = siteConfig.emailFormAction;
+  const emailAction = siteConfig.emailFormAction || "";
+  if (form && /^https:\/\//.test(emailAction)) {
+    if (signup) signup.hidden = false;
+    form.action = emailAction;
     form.noValidate = false;
-    form.querySelectorAll("input,button").forEach((el) => { el.disabled = false; });
     const button = document.getElementById("signup-button");
     if (button) button.textContent = "Send me the page";
     const note = document.getElementById("signup-note");
     if (note) note.innerHTML = 'One email a week. See our <a href="privacy.html">privacy notice</a>.';
-  } else if (form) {
-    form.addEventListener("submit", (event) => event.preventDefault());
+  } else if (signup) {
+    signup.hidden = true;
   }
   const config = window.LEARNING_LAB_CONFIG;
   if (!config) return;
@@ -52,8 +54,9 @@
   document.querySelectorAll("[data-preview-link]").forEach((el) => { el.setAttribute("href", config.product.previewPath); });
   document.querySelectorAll("[data-buy-button]").forEach((button) => {
     const ready = config.product.status === "available" && /^https:\/\//.test(config.product.hostedProductUrl);
-    if (ready) { button.href = config.product.hostedProductUrl; button.textContent = "Buy on Payhip"; button.removeAttribute("aria-disabled"); }
-    else { button.removeAttribute("href"); button.setAttribute("aria-disabled", "true"); button.textContent = "Coming soon — parent review needed"; button.addEventListener("click", (event) => event.preventDefault()); }
+    const etsy = config.product.etsyUrl || "https://www.etsy.com/shop/PhoebieCreates";
+    if (ready) { button.href = config.product.hostedProductUrl; button.textContent = "Buy the pack"; button.removeAttribute("aria-disabled"); }
+    else { button.href = etsy; button.target = "_blank"; button.rel = "noopener"; button.removeAttribute("aria-disabled"); button.textContent = "See printables on Etsy"; }
   });
   const contact = document.querySelector("[data-contact]");
   if (contact && config.contact.publicEmail) { contact.textContent = config.contact.publicEmail; contact.href = `mailto:${config.contact.publicEmail}`; contact.classList.remove("contact-placeholder"); }
