@@ -92,6 +92,12 @@
   1. /practice/ 的「Choir + STEM」标签页在 375px 有横向溢出（401px），改前就存在，与本次无关；留到下一天单独查。
   2. Tutor 线的本地副本似乎落后于 main（这次回退了 #63，也把 `<meta name="robots" content="index, follow">` 去掉了，影响不大）；建议下次推 Tutor 前先 `git pull`，否则每日修复会被反复覆盖。
 
+## 2026-11-18
+- 改了什么（修一个坏的地方）：Daily Practice 页（/practice/）「Choir + STEM」标签页在 375px 手机上横向溢出到 401px（11-17 留下的候选），原因是 STEM 实验的「Data table」（Mark 1–4 + Average，每格输入框 ≥44px）比卡片宽。给表格套一层 `.stemwrap{overflow-x:auto}` 滚动容器，表格在卡片内左右滑、整页不再溢出（页内样式，无需改 `?v=`）。375px 下 10 个标签页逐个复查均为 375px 无溢出，45 个测试全过。PR 号见 claude/daily-2026-11-18 合并记录。
+- 没做的候选：
+  1. reviews/ 下两篇已下线（noindex）的测评页在 375px 有横向溢出，暂不修。
+  2. vet-game.html 的语言切换和「选择病例」按钮 28–31px；该页另一条线仍在改版，暂不动。
+
 ## 2026-11-11（PR #49，11-18 在最新 main 上重做）
 - 改了什么（删掉一个多余的东西）：product.html 是一个没有任何页面链到的孤儿页，内容还是旧方案（「Coming soon · 需家长审核」「USD 4.99 测试价」「Payhip 交付」「[parent-managed email required]」），和现在「Etsy $1.99 即时下载」的真实卖法矛盾，却仍在 sitemap 里、允许被 Google 索引。改为 noindex 并移出 sitemap，文件保留；tests/site.test.js 的索引/noindex 清单同步更新。无 CSS/JS 改动，不需要动 ?v=。45 个测试全过。PR #49。
 - 说明：#49 原本捆了当时未合并的 #47、#48；一周后 main 已通过其他 PR 落地了面包屑 44px 修复，首页也已改版（#66），#47/#48 已过时，可直接关闭。#49 改为只含 product.html 这一件事。
