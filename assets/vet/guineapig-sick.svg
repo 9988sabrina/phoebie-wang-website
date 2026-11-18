@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" role="img" aria-label="Unwell guinea pig with messy fur and a sore knee">
+<ellipse cx="200" cy="284" rx="150" ry="11" fill="#3b3024" opacity="0.10"/>
+<g transform="translate(200 268) scale(0.72)">
+<path d="M-120 -168 l-10 -30 M-70 -186 l-4 -34 M60 -188 l10 -32 M120 -166 l20 -26 M160 -110 l28 -10" fill="none" stroke="#b9793f" stroke-width="9" stroke-linecap="round"/>
+<ellipse cx="-110" cy="10" rx="34" ry="16" fill="#f3dcc0" stroke="#3b3024" stroke-width="7" stroke-linejoin="round" stroke-linecap="round"/><ellipse cx="110" cy="10" rx="34" ry="16" fill="#f3dcc0" stroke="#3b3024" stroke-width="7" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M-190 0 C-204 -130 -120 -190 0 -190 C120 -190 204 -130 190 0 C182 26 -182 26 -190 0Z" fill="#d9954f" stroke="#3b3024" stroke-width="7" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M-40 -188 C-30 -100 -22 -40 -34 16 L62 16 C72 -50 60 -120 50 -186Z" fill="#fffaf2"/>
+<path d="M-14 -190 q-30 -46 8 -62 q34 6 14 34 q-10 10 -18 0" fill="#d9954f" stroke="#3b3024" stroke-width="7" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="-78" cy="-92" r="30" fill="#fff" stroke="#3b3024" stroke-width="7" stroke-linejoin="round" stroke-linecap="round"/><circle cx="-84" cy="-80" r="10" fill="#3b3024"/><circle cx="84" cy="-100" r="30" fill="#fff" stroke="#3b3024" stroke-width="7" stroke-linejoin="round" stroke-linecap="round"/><circle cx="80" cy="-88" r="10" fill="#3b3024"/><path d="M-114 -128 h72 v34 h-72z" fill="#d9954f"/><path d="M48 -136 h72 v34 h-72z" fill="#d9954f"/><path d="M-110 -94 h64 M52 -102 h64" fill="none" stroke="#3b3024" stroke-width="7" stroke-linejoin="round" stroke-linecap="round"/>
+<ellipse cx="-52" cy="-28" rx="38" ry="30" fill="#fffaf2" stroke="#3b3024" stroke-width="7" stroke-linejoin="round" stroke-linecap="round"/><ellipse cx="58" cy="-28" rx="38" ry="30" fill="#fffaf2" stroke="#3b3024" stroke-width="7" stroke-linejoin="round" stroke-linecap="round"/>
+<ellipse cx="3" cy="-50" rx="12" ry="9" fill="#e58f84"/><ellipse cx="3" cy="-20" rx="14" ry="4" fill="#3b3024"/><ellipse cx="-118" cy="-6" rx="34" ry="24" fill="#f2a79b" stroke="#3b3024" stroke-linejoin="round" stroke-linecap="round" stroke-width="5"/><path d="M-170 -34 l-16 -12 M-176 -8 l-20 0 M-168 16 l-16 10" stroke="#d9573f" stroke-width="6" stroke-linecap="round"/>
+</g><path d="M92 96 q-8 14 0 21 q8 -7 0 -21z" fill="#8fc3e8"/>
+</svg>

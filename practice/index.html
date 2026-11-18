@@ -58,6 +58,10 @@ header.top{display:flex;justify-content:space-between;gap:12px;align-items:flex-
 nav.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;display:flex;gap:6px;overflow-x:auto;padding:8px 0;background:var(--bg);margin-bottom:10px}
 nav.tabs button{flex:1 0 auto;border-radius:99px;padding:7px 14px;min-height:44px;font-size:.95rem}
 nav.tabs button[aria-selected=true]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.hzg{display:grid;grid-template-columns:repeat(auto-fill,minmax(52px,1fr));gap:4px}
+.hzc{border:1px solid var(--line);border-radius:8px;text-align:center;padding:3px 0 2px;font-size:1.35rem;line-height:1.1;color:#222;background:#fff}
+.hzc small{display:block;font-size:.58rem;color:#666;margin-top:1px;overflow:hidden;white-space:nowrap}
+.hzc.k0{background:#fff1cc}.hzc.k1{background:#d9f2e3}
 .rings{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
 .ring-card{display:flex;gap:12px;align-items:center}
 .ring{width:74px;height:74px;flex:none}
@@ -130,7 +134,7 @@ nav.tabs button[aria-selected=true]{background:var(--ink);color:var(--paper);bor
 .tzg::after{top:50%;left:0;right:0;border-top:1.5px dashed var(--zh);opacity:.45}
 .tzg canvas{position:absolute;inset:0;width:100%;height:100%;z-index:2}
 .tzg .ghost{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--f-han);font-size:68px;font-weight:500;color:var(--zh);opacity:.28;z-index:1;pointer-events:none}
-.icon-btn{min-height:44px;padding:4px 10px;font-size:.85rem}
+.icon-btn{min-height:44px;padding:4px 12px;font-size:.85rem}
 .story{font-family:var(--f-han);font-size:1.25rem;line-height:2;padding:14px 16px;border-radius:12px;background:var(--zh-soft)}
 .story p{margin:0}
 .bar{height:10px;border-radius:99px;background:var(--line);overflow:hidden}
@@ -174,7 +178,10 @@ td.num{font-variant-numeric:tabular-nums;text-align:right}
   <nav class="tabs" role="tablist" id="tabs">
     <button role="tab" data-tab="today">Today 今天</button>
     <button role="tab" data-tab="math">Math</button>
+    <button role="tab" data-tab="lib">题库 Library</button>
     <button role="tab" data-tab="chinese">中文</button>
+    <button role="tab" data-tab="hz">汉字库</button>
+    <button role="tab" data-tab="plan">30天计划</button>
     <button role="tab" data-tab="ela">Reading+</button>
     <button role="tab" data-tab="clubs">Choir + STEM</button>
     <button role="tab" data-tab="review">错题本</button>
@@ -229,7 +236,7 @@ function fresh(){
 }
 function setStatus(t){$("#saveStatus").textContent=t}
 function allDone(){const pd=S.days[TODAY];if(pd&&pd.paper)return true;return mProgress().done>=mProgress().total&&zProgress().done>=zProgress().total&&eProgress().done>=eProgress().total}
-function migrate(){S.settings=S.settings||{};S.rev=S.rev||[];S.mastered=S.mastered||[];
+function migrate(){S.lib=S.lib||{};S.hz=S.hz||{c:{}};S.settings=S.settings||{};S.rev=S.rev||[];S.mastered=S.mastered||[];
   if(!S.settings.tueV2){S.settings.tueOff=false;S.settings.tueV2=true}
   if(false){S._paper1027=1;const pd=S.days["2026-10-27"];if(pd){pd.paper=true;
     const add={"m:fracAsDiv":"10/27 paper #28 (3/4 is 0.75, not 3.4)","e:u3r3":"10/27 paper (skipped)","e:u3v0":"10/27 paper vocab","e:u3v1":"10/27 paper vocab","e:u3v2":"10/27 paper vocab","e:u3v3":"10/27 paper vocab","e:u3s0":"10/27 paper science","e:u3s1":"10/27 paper science","e:u3s2":"10/27 paper science","e:u3h2":"10/27 paper social studies"};
@@ -248,7 +255,14 @@ function migrate(){S.settings=S.settings||{};S.rev=S.rev||[];S.mastered=S.master
     Object.entries(add).forEach(([k,src])=>{const r=S.rev.find(x=>x.k===k);if(r){r.stage=0;r.due="2026-11-01";r.src=src}else S.rev.push({k,stage:0,due:"2026-11-01",src});S.mastered=S.mastered.filter(m=>m.k!==k)})}
   if(false){S._bonus1103=1;S.bonus={date:"2026-11-03",k:["mulMulti","mulMulti","mulMulti","div2","div2","div2"]}}
   if(false){S._bonus1106=1;S.bonus={date:"2026-11-06",k:["scaling","scaling","scaling"]}}
+  if(false){S._mix1116=1;S.bonusPlan=S.bonusPlan||{};S.bonusPlan["2026-11-16"]=["fracAdd","fracSub","fracMul","fracDiv","decDivDec","primeFact","olymp"]}
+  if(false){S._frac1114=1;S.bonusPlan=S.bonusPlan||{};S.bonusPlan["2026-11-14"]=["fracAdd","fracSub","fracMul","fracDiv","unitFracDiv"]}
   if(false){S._bonusWk1106=1;S.bonusPlan=S.bonusPlan||{};["2026-11-06","2026-11-07","2026-11-08","2026-11-09","2026-11-10","2026-11-11","2026-11-12"].forEach(d=>{S.bonusPlan[d]=["scaling","scaling","scaling"]})}
+  if(false){S._adv1109=1;{const d8=day("2026-11-08");d8.paper=true;if(!d8.zDone){d8.zDone=S.zhDay;S.zhDay++}if(!d8.eDone){d8.eU=(S.eUnit||0)%UNITS.length;d8.eDone=d8.eU+1;S.eUnit=(S.eUnit||0)+1}{const d9=day(REAL_TODAY);if(!Object.keys(d9.e||{}).length){S.eUnit=UNITS.length*2-1;d9.eU=UNITS.length-1}}ZSET=null;ESET=null}}
+  if(false){S._paper1107=1;day("2026-11-07").paper=true;
+    const add={"m:decDivW":"11/7 paper #13 (29.4 ÷ 7 = 4.2, she wrote 4; 2nd time, also 10/28)","m:pow10":"11/7 paper #18 (6,457 ÷ 1,000 = 6.457, she wrote 0.06457; 2nd time)","m:fracMul":"11/7 paper #25 (4/7 × 3/8 = 12/56 = 3/14, simplify)","m:olymp":"11/7 paper #35 (book = 3 pens, $12.96 → pen $3.24, book $9.72; 3rd time)","e:u4h1":"11/7 paper Reading+ (Legislative/Congress makes the laws; 2nd time, also 10/28)","z:时间":"11/7 Chinese (时间 missing 间; write wrong characters twice and self-check)"};
+    Object.entries(add).forEach(([k,src])=>{const r=S.rev.find(x=>x.k===k);if(r){r.stage=0;r.due="2026-11-08";r.src=src}else S.rev.push({k,stage:0,due:"2026-11-08",src});S.mastered=S.mastered.filter(m=>m.k!==k)});
+    S.bonusPlan=S.bonusPlan||{};["2026-11-08","2026-11-09","2026-11-10"].forEach(d=>{S.bonusPlan[d]=["olymp","olymp","scaling"]})}
   if(false){S._paper1105=1;day("2026-11-05").paper=true;
     const add={"m:div2":"11/5 paper #11 (1,406 ÷ 37 = 38, she wrote the estimate 40; check by multiplying 37 × 38)","m:fracAdd":"11/5 paper #38 (4/6 + 8/12 = 2/3 + 2/3 = 4/3 = 1 1/3)","m:olymp":"11/5 paper #36 (book = 3 pens, total $9.36: 4 units → pen $2.34, book $7.02; she gave the pen's price)","e:u2r0":"11/5 paper Reading+ #1 (shadow short at lunch = Sun HIGH in the sky)","e:u2v2":"11/5 paper Reading+ #7 (left blank: angle = space between two lines that meet)"};
     Object.entries(add).forEach(([k,src])=>{const r=S.rev.find(x=>x.k===k);if(r){r.stage=0;r.due="2026-11-06";r.src=src}else S.rev.push({k,stage:0,due:"2026-11-06",src});S.mastered=S.mastered.filter(m=>m.k!==k)})}
@@ -316,11 +330,12 @@ const dueNow=p=>S.rev.filter(r=>r.k.startsWith(p)&&r.due<=TODAY);
 const SK={
  round:"Rounding decimals",div9:"3-digit ÷ 9",x11:"×11 mental math",dh:"Double & Half",pemdas:"PEMDAS",
  decWord:"Decimal word form",digitValue:"Digit value",decMul:"Decimal × decimal",cToF:"°C → °F",
- fracAdd:"Add fractions + simplify",fracDiv:"Fraction ÷ whole number",decOrder:"Order decimals",remainder:"Remainder reasoning",explain:"Explain It",
+ fracAdd:"Add fractions + simplify",fracSub:"Subtract fractions",fracDiv:"Fraction ÷ whole number",decOrder:"Order decimals",remainder:"Remainder reasoning",explain:"Explain It",
  volume:"Volume (l × w × h)",fracMul:"Fraction × fraction",unitDiv:"Whole ÷ unit fraction",expr:"Write expressions",coord:"Coordinate plane",shapes:"Classify 2-D shapes",
- decAddSub:"Add & subtract decimals",mulMulti:"Multi-digit multiplication",div2:"Divide by 2-digit numbers",decDivW:"Decimal ÷ whole number",decDivDec:"Decimal ÷ decimal",unitFracDiv:"Unit fraction ÷ whole",convert:"Convert units",pow10:"Powers of 10",scaling:"Multiplying as scaling",fracAsDiv:"Fractions as division",olymp:"Olympiad Challenge"};
+ decAddSub:"Add & subtract decimals",mulMulti:"Multi-digit multiplication",div2:"Divide by 2-digit numbers",decDivW:"Decimal ÷ whole number",decDivDec:"Decimal ÷ decimal",unitFracDiv:"Unit fraction ÷ whole",convert:"Convert units",pow10:"Powers of 10",scaling:"Multiplying as scaling",fracAsDiv:"Fractions as division",olymp:"Olympiad Challenge",
+ primeFact:"Prime factors",pattern2:"Two number patterns",linePlot:"Line plots (fractions)",fracWord:"Fraction × fraction word problems",fracReason:"Is the answer reasonable?"};
 const STD={round:"5.NBT.4",div9:"Gr 4",x11:"warm-up",dh:"warm-up",pemdas:"5.OA.1",decWord:"5.NBT.3a",digitValue:"5.NBT.1",decMul:"5.NBT.7",cToF:"science",fracAdd:"5.NF.1",fracDiv:"5.NF.7 stretch",decOrder:"5.NBT.3b",remainder:"challenge",volume:"5.MD.5",fracMul:"5.NF.4",unitDiv:"5.NF.7b",expr:"5.OA.2",coord:"5.G.1",shapes:"5.G.4",explain:"Explain",
- decAddSub:"5.NBT.7",mulMulti:"5.NBT.5",div2:"5.NBT.6",decDivW:"5.NBT.7",decDivDec:"5.NBT.7",unitFracDiv:"5.NF.7a",convert:"5.MD.1",pow10:"5.NBT.2",scaling:"5.NF.5",fracAsDiv:"5.NF.3"};
+ decAddSub:"5.NBT.7",mulMulti:"5.NBT.5",div2:"5.NBT.6",decDivW:"5.NBT.7",decDivDec:"5.NBT.7",unitFracDiv:"5.NF.7a",convert:"5.MD.1",pow10:"5.NBT.2",scaling:"5.NF.5",fracAsDiv:"5.NF.3",primeFact:"5.OA.2.1",pattern2:"5.OA.3",linePlot:"5.MD.2",fracWord:"5.NF.6",fracReason:"5.NF.2"};
 const PLACES=["tenths","hundredths","thousandths"];
 const G={
  round(r){let a,f,ds;do{a=ri(r,10,99);f=ri(r,101,989);ds=String(f).padStart(3,"0").split("")}while(new Set(ds).size<3||ds[2]==="0");
@@ -373,6 +388,12 @@ const G={
     {say:`${a}/${b} = ?/${d}`,input:true,ok:a*k},
     {say:`Add the tops: ${a*k} + ${c} = ?`,input:true,ok:n},
     {say:`${n}/${d}. Simplify it, and if the top is bigger, make a mixed number.`}]}},
+ fracSub(r){const b=pick(r,[2,3,4,6]),k=pick(r,b===6?[2]:b===4?[2,3]:[2,3,4]);const d=b*k;let a,c;do{a=ri(r,1,b-1);c=ri(r,1,d-1)}while(a*k<=c);
+   const n=a*k-c;return{prompt:`${a}/${b} − ${c}/${d} = ?   (simplest form)`,ans:n/d,frac:[n,d],show:fracStr(n,d),steps:[
+    {say:`What denominator can both fractions use?`,input:true,ok:d},
+    {say:`${a}/${b} = ?/${d}`,input:true,ok:a*k},
+    {say:`Subtract the tops: ${a*k} − ${c} = ?`,input:true,ok:n},
+    {say:`${n}/${d}. Simplify it if you can.`}]}},
  fracDiv(r){const w=ri(r,2,5);let b,a;do{b=ri(r,3,12);a=ri(r,1,b-1)}while(gcd(a,b)>1||gcd(a,w)>1);
    return{prompt:`${a}/${b} ÷ ${w} = ?`,ans:a/(b*w),frac:[a,b*w],show:fracStr(a,b*w),steps:[
     {say:`Dividing by ${w} is the same as multiplying by…`,choices:[`${w}`,`1/${w}`,`${w}/1`],ok:`1/${w}`},
@@ -461,6 +482,29 @@ const G={
    return{prompt:`${a} pizzas are shared equally by ${b} friends. How much pizza does each friend get?`,ans:a/b,frac:[a,b],show:fracStr(a,b)+" pizza",steps:[
     {say:`Sharing ${a} pizzas among ${b} friends is which division?`,choices:[`${a} ÷ ${b}`,`${b} ÷ ${a}`],ok:`${a} ÷ ${b}`},
     {say:`A division can be written as a fraction: top ÷ bottom. Write it, and simplify or make a mixed number if you can.`}]}},
+ /* gaps found vs. school's T2 standards list (Nov 11): 5.OA.2.1, 5.OA.3, 5.MD.2, 5.NF.6, 5.NF.2 */
+ primeFact(r){const n=pick(r,[12,18,20,24,28,30,36,40,42,44,45,48,50]);const f=[];let m=n;for(let p=2;p<=m;p++)while(m%p===0){f.push(p);m/=p}
+   const ok=f.join(" × ");const bad=[[f[0]*f[1]].concat(f.slice(2)).join(" × "),f[0]+" × "+(n/f[0]),f.slice(0,-1).concat([f[f.length-1]+2]).join(" × "),n+" × 1"].filter((x,i,a)=>x!==ok&&a.indexOf(x)===i).slice(0,3);
+   return{prompt:`Write ${n} as a product of PRIME factors.`,choice:shuffle(r,[ok].concat(bad)),ans:ok,show:ok,steps:[
+    {say:`Start with the smallest prime that divides ${n}. What is it?`,input:true,ok:f[0]},
+    {say:`${n} ÷ ${f[0]} = ${n/f[0]}. Keep splitting until EVERY factor is prime (2, 3, 5, 7, 11…). Pick again.`}]}},
+ pattern2(r){const a=ri(r,2,6),k=pick(r,[2,3,4,5]);const A=[0,1,2,3,4].map(i=>i*a),B=A.map(x=>x*k);
+   return{prompt:`Rule 1: start at 0, add ${a}. Rule 2: start at 0, add ${a*k}. Rule 1 gives ${A.slice(0,4).join(", ")}… Rule 2 gives ${B.slice(0,4).join(", ")}… Each Rule 2 number is how many times the matching Rule 1 number?`,ans:k,show:`${k} times`,steps:[
+    {say:`Match the 2nd numbers: Rule 1 gives ${A[1]}, Rule 2 gives ${B[1]}. ${B[1]} ÷ ${A[1]} = ?`,input:true,ok:k},
+    {say:`Check another pair: ${B[2]} ÷ ${A[2]} is also ${k}. Write the answer.`}]}},
+ linePlot(r){const c=[ri(r,1,4),ri(r,1,4),ri(r,1,4)];const Q=c[0]+2*c[1]+3*c[2];
+   return{prompt:`Phoebie measured ${c[0]+c[1]+c[2]} leaves. ${c[0]} ${c[0]>1?"leaves are each":"leaf is"} 1/4 inch long, ${c[1]} ${c[1]>1?"leaves are each":"leaf is"} 1/2 inch long, and ${c[2]} ${c[2]>1?"leaves are each":"leaf is"} 3/4 inch long. Laid end to end, how long is the line of leaves? (inches, simplest form)`,ans:Q/4,frac:[Q,4],show:fracStr(Q,4)+" inches",steps:[
+    {say:`Count in quarter-inches: ${c[0]} × 1 quarter, ${c[1]} × 2 quarters, ${c[2]} × 3 quarters. How many quarters in all?`,input:true,ok:Q},
+    {say:`${Q} quarters = ${Q}/4 inches. Simplify or make a mixed number, then write the answer.`}]}},
+ fracWord(r){const b=pick(r,[2,3,4,5,6,8]),d=pick(r,[2,3,4,5,6,8]);const a=ri(r,1,b-1),c=ri(r,1,d-1);
+   return{prompt:`A garden is ${a}/${b} of an acre. ${c}/${d} of the garden grows tomatoes. What fraction of an acre grows tomatoes? (simplest form)`,ans:a*c/(b*d),frac:[a*c,b*d],show:fracStr(a*c,b*d)+" acre",steps:[
+    {say:`"${c}/${d} OF ${a}/${b}" means multiply. Multiply the tops: ${a} × ${c} = ?`,input:true,ok:a*c},
+    {say:`Multiply the bottoms: ${b} × ${d} = ?`,input:true,ok:b*d},
+    {say:`${a*c}/${b*d}. Simplify if you can, then write the answer.`}]}},
+ fracReason(r){const cd=pick(r,[[1,3],[2,5],[1,4],[2,7]]);const wrong=`${1+cd[0]}/${2+cd[1]}`;const ok="Not reasonable: the sum must be more than 1/2";
+   return{prompt:`Sam says 1/2 + ${cd[0]}/${cd[1]} = ${wrong}. Is Sam's answer reasonable?`,choice:shuffle(r,[ok,"Reasonable: it is close to 1/2","Reasonable: the sum is less than 1/2","Not reasonable: the sum must be more than 1"]),ans:ok,show:ok,steps:[
+    {say:`Adding a positive fraction to 1/2 makes the number…`,choices:["bigger than 1/2","smaller than 1/2"],ok:"bigger than 1/2"},
+    {say:`Compare ${wrong} with 1/2. Pick again.`}]}},
  olymp(r){const t=ri(r,0,5);
   if(t===0){const k=ri(r,2,5),p=ri(r,105,395);const T=p*(k+1);const ans=p*k/100;
    const bar={rows:[{name:"Pen",segs:[{t:"?",u:1}]},{name:"Book",segs:Array.from({length:k},()=>({t:"?",u:1}))}],note:`All ${k+1} boxes together = $${(T/100).toFixed(2)}`};
@@ -523,17 +567,101 @@ const EXPLAINS=[
    {say:"Move both decimals one place: 86.4 ÷ 12 = ?",input:true,ok:7.2}],
   frame:["The student put the decimal point in the wrong place. The answer should be about ","[8|0.8]",", so 8.64 ÷ 1.2 = ","[7.2|0.72]","."],okf:["8","7.2"]}
 ];
-const ALL_M=["x11","round","pemdas","decWord","digitValue","decMul","fracAdd","fracDiv","decOrder","remainder","volume","fracMul","unitDiv","expr","coord","shapes","decAddSub","mulMulti","div2","decDivW","decDivDec","unitFracDiv","convert","pow10","scaling","fracAsDiv"];
+const ALL_M=["fracSub","x11","round","pemdas","decWord","digitValue","decMul","fracAdd","fracDiv","decOrder","remainder","volume","fracMul","unitDiv","expr","coord","shapes","decAddSub","mulMulti","div2","decDivW","decDivDec","unitFracDiv","convert","pow10","scaling","fracAsDiv","primeFact","pattern2","linePlot","fracWord","fracReason"];
+const T1_DONE=["digitValue","pow10"]; // school T1 report: scored 4 on 5.NBT.1 and 5.NBT.2 → lower priority
 const PARENT_M=ALL_M.concat(["x11","dh","div9","cToF"]);
 function weekKey(){const d=new Date();const day=(d.getDay()+6)%7;d.setDate(d.getDate()-day);return keyOf(d)}
 function focusSkills(){const wk=weekKey();
   if(S.focus&&S.focus.week===wk&&S.focus.k.length)return S.focus.k;
-  const score=k=>{const s=S.skill[k];return s&&s.a?s.c/s.a:0.5};
+  const score=k=>{const s=S.skill[k];return (s&&s.a?s.c/s.a:0.5)+(T1_DONE.includes(k)?0.3:0)};
   const inRev=S.rev.filter(r=>r.k.startsWith("m:")).map(r=>r.k.slice(2)).filter(k=>ALL_M.includes(k));
   const pool=[...new Set(inRev.concat(ALL_M.slice().sort((a,b)=>score(a)-score(b))))];
   S.focus={week:wk,k:pool.slice(0,3)};return S.focus.k}
+const HZA='天tiān,地dì/de,人rén,你nǐ,我wǒ,他tā/tuó,一yī/yí/yì,二èr,三sān,四sì,五wǔ,上shàng/shǎng,下xià,口kǒu,耳ěr/réng,目mù,手shǒu,足zú/jù,站zhàn/zhān,坐zuò,日rì,月yuè/rù,水shuǐ,火huǒ/huō,山shān,石shí/dàn,田tián,禾hé,对duì,云yún,雨yǔ/yù,风fēng,花huā,鸟niǎo/diǎo,虫chóng/huǐ,六liù/lù,七qī/qí,八bā/bá,九jiǔ/jiū,十shí,爸bà,妈mā,棋qí/jī,鸡jī,马mǎ,土tǔ/dù/chǎ/tú,不bù/fǒu/fōu/fū/bú,字zì,词cí,语yǔ/yù,句jù/gōu/gòu/qú,子zi/zǐ,画huà,打dǎ/dá,桌zhuō,纸zhǐ,文wén,数shù/shǔ/shuò,学xué,音yīn,乐lè/yuè,妹mèi,奶nǎi,白bái/bó,草cǎo/zào,家jiā/jia/jià/jie/gū,是shì/tí,小xiǎo,桥qiáo,台tái/tāi/yí/sì,车chē/jū,路lù/luò,灯dēng/dīng,走zǒu,雪xuě,儿ér/er/rén,秋qiū,气qì/qǐ,了le/liǎo/liào,树shù,叶yè/xié,片piàn/piān/pàn,大dà/dài/tài,飞fēi,会huì/kuài,个gè/gě/gàn,的de/dī/dí/dì,船chuán,两liǎng,头tóu/tou,在zài,里lǐ/li,看kàn/kān,见jiàn/xiàn,闪shǎn,星xīng,江jiāng,南nán/nā,可kě/kè/gē,采cǎi/cài,莲lián,鱼yú,东dōng,西xī,北běi/bèi,尖jiān,说shuō/shuì/yuè,春chūn/chǔn,青qīng/jīng,蛙wā/jué,夏xià/jiǎ,弯wān,皮pí,冬dōng,男nán,女nǚ/nǜ/rǔ,开kāi,关guān,正zhèng/zhēng,反fǎn/fàn,远yuǎn,有yǒu/yòu/wěi,色sè/shǎi,近jìn,听tīng/yǐn/yí,无wú/mó,声shēng/qìng,去qù/qū,还hái/huán/fú,来lái,多duō,少shǎo/shào,黄huáng,牛niú,只zhǐ/zhī,猫māo/miáo/máo,边biān/bian,鸭yā,苹píng/pēng,果guǒ/luǒ/guàn,杏xìng,桃táo/tiāo/zhào,书shū,包bāo/páo/fú,尺chǐ/chě,作zuò/zuō/zuó,业yè,本běn/bēn,笔bǐ,刀dāo/diāo,课kè,早zǎo,校xiào/jiào/jiǎo/qiāo,明míng/mèng,力lì,尘chén,从cóng/zòng,众zhòng/yín,双shuāng,木mù,林lín,森sēn,条tiáo,心xīn,升shēng,国guó,旗qí,中zhōng/zhòng,红hóng/gōng,歌gē,起qǐ,么me/yāo/mó/ma,美měi,丽lì/lí,立lì/wèi,午wǔ,晚wǎn,昨zuó,今jīn,年nián/nìng,影yǐng,前qián/jiǎn,后hòu,黑hēi,狗gǒu,左zuǒ,右yòu,它tā/tuó/yí,好hǎo/hào,朋péng,友yǒu,比bǐ/bì/pí/pǐ,尾wěi/yǐ,巴bā,谁shuí/shéi,长zhǎng/cháng,短duǎn,把bǎ/bà/pá,伞sǎn,兔tù/tú/chān,最zuì/cuō,公gōng,写xiě/xiè,诗shī,点diǎn,要yào/yāo/yǎo,过guò/guō,给gěi/jǐ,当dāng/dàng,串chuàn/guàn/quàn,们men/mén,以yǐ/sì,成chéng,彩cǎi,半bàn/pàn,空kōng/kòng/kǒng,问wèn,到dào,方fāng/fáng/fǎng/páng/wǎng,没méi/mò/me,更gèng/gēng,绿lǜ/lù,出chū,睡shuì,那nà/nā/nuó/nuò/nèi,海hǎi,真zhēn,老lǎo,师shī,吗ma/má/mǎ,同tóng/tòng,什shén/shí,才cái/zāi,亮liàng/liáng,时shí,候hòu,觉jué/jiào,得dé/de/děi,自zì,己jǐ/qǐ,很hěn,穿chuān/chuàn/yuān,衣yī/yì,服fú/fù/bì/bó,门mén,快kuài,蓝lán/la,又yòu,笑xiào,着zhe/zhāo/zháo/zhuó,向xiàng,和hé/hè/hú/huó/huò,贝bèi,娃wá/wā/guì,挂guà,活huó/guō,金jīn/jìn,哥gē,姐jiě/jù/xù/zū,弟dì/tì/tuí,叔shū,爷yé,群qún,竹zhú,牙yá/yà,用yòng,几jǐ/jī,步bù,为wèi/wéi,参cān/cēn/shēn,加jiā,洞dòng/tóng,乌wū/wù,鸦yā,处chù/chǔ,找zhǎo/huá,办bàn,旁páng/pēng/bēng/bàng,许xǔ/hǔ,法fǎ,放fàng/fǎng/fāng,进jìn,高gāo/gào,住zhù,孩hái,玩wán,吧ba/bā/pā,发fā/fà,芽yá,爬pá,呀ya/yā/xiā,久jiǔ,回huí,全quán,变biàn,工gōng,厂chǎng/hǎn/yán/ān,医yī/yì,院yuàn,生shēng',HZB='乙yǐ/yì/jué,丁dīng/zhēng,卜bo/bǔ/pū,入rù,乃nǎi/ǎi,干gàn/gān/àn,于yú/wéi/yū/xū,亏kuī/yú,士shì,寸cùn/cǔn,丈zhàng,与yǔ/yù/yú,万wàn/mò,巾jīn,千qiān,川chuān,亿yì,夕xī/yì,凡fán,丸wán,及jí,广guǎng/yǎn/ān,亡wáng/wú,义yì,之zhī/zhū/zhì,尸shī,已yǐ/sì,弓gōng,卫wèi,也yě/yí,习xí,叉chā/chá/chǎ/chà,乡xiāng,丰fēng,王wáng/wàng/yù,井jǐng/jìng,夫fū/fú,元yuán,专zhuān,扎zhā/zā/zhá/zhǎ,艺yì,支zhī/zhì/qí,厅tīng,犬quǎn,太tài/tā,区qū/ōu,历lì,尤yóu,匹pǐ,巨jù/qú,戈gē,互hù,切qiè/qiē/qì,瓦wǎ/wà,止zhǐ,曰yuē,内nèi/nà/ruì,毛máo/mào,仁rén,化huà/huā/huò,仇chóu/qiú/jū,币bì/yìn,仍réng,仅jǐn/fù/nú/jìn,斤jīn,爪zhǎo/zhuǎ,介jiè/gè,父fù/fǔ,凶xiōng,分fēn/fèn/fén,乏fá,仓cāng,氏shì/zhī/jīng,欠qiàn,丹dān,匀yún/jūn/yùn,勾gōu/gòu,凤fèng,斗dòu/dǒu/zhǔ,忆yì,计jì,订dìng,户hù,认rèn,引yǐn,丑chǒu,孔kǒng,队duì,允yǔn/yuán,予yǔ/yú/zhù,邓dèng/shān,劝quàn,幻huàn,玉yù,刊kān,未wèi,末mò/me,示shì/qí/zhì/shí,击jī,巧qiǎo,扑pū/pì,功gōng,扔rēng/rèng,甘gān/hān,世shì,艾ài/yì,古gǔ/gù/kū,节jié/jiē,术shù/zhú/shú,丙bǐng/bìng,厉lì,布bù,龙lóng,平píng/pián/bìng/bēng,灭miè,卡kǎ/qiǎ,占zhàn/zhān/tiē,卢lú,旧jiù,帅shuài,归guī,旦dàn,且qiě/jū/cú,甲jiǎ,申shēn,叮dīng,电diàn,号hào/háo/xiāo,由yóu/yāo,叭bā/pā/ba,史shǐ,央yāng/yīng,兄xiōng/kuàng,叫jiào,另lìng,叹tàn/yǐ/yòu,凹āo/wā,失shī/yì,丘qiū,付fù,仗zhàng,代dài,仙xiān/xiǎn,仪yí,仔zǎi/zǐ/zī,斥chì/chè/zhè,瓜guā,乎hū,丛cóng,令lìng/líng/lǐng/lián,甩shuǎi,印yìn/yì,尔ěr,匆cōng,册cè/zhà,犯fàn,外wài,务wù,饥jī,主zhǔ/zhù,市shì/fú,冯féng/píng,玄xuán/xuàn,兰lán,汁zhī/xié/shí,汇huì,汉hàn,宁níng/nìng/zhù,穴xué/jué,讨tǎo,让ràng,礼lǐ,训xùn,议yì,必bì,讯xùn,记jì,永yǒng,司sī/cí/sì,尼ní/nǐ,民mín,弗fú,辽liáo,奴nú,召zhào/shào,孕yùn,圣shèng/kū,矛máo,纠jiū,母mǔ/mú/wǔ/wú,幼yòu/yào,丝sī,邦bāng,式shì/tè,刑xíng,动dòng,寺sì/shì,吉jí,扣kòu,考kǎo,托tuō,巩gǒng,圾jī/jí/jié,执zhí,扩kuò,扫sǎo/sào,场chǎng/cháng,扬yáng,共gòng/gōng/gǒng/hóng,芒máng/huāng/huǎng/wáng,亚yà,芝zhī,朽xiǔ,朴pǔ/piáo/pò/pū/pō,机jī/wèi,权quán,臣chén,再zài,协xié,压yā/yà,厌yàn,百bǎi/bó/mò,存cún,而ér/néng,页yè,匠jiàng,夸kuā/kuà/kuǎ,夺duó,灰huī,达dá/tì/tà,列liè/lì,死sǐ,夹jiā/gā/jiá,夷yí,轨guǐ,划huà/huá/guò/guǒ/huai,迈mài,毕bì,至zhì/dié,此cǐ,劣liè,光guāng/guàng,吁xū/yū/yù,吐tǔ/tù,吓xià/hè/hà,曲qū/qǔ,团tuán/qiú,吊diào,吃chī/qī,因yīn,吸xī,岁suì,帆fān/fán/fàn,岂qǐ/kǎi,则zé,刚gāng,网wǎng,肉ròu/rù,朱zhū/shū,先xiān,丢diū,廷tíng,舌shé/guā,迁qiān,乔qiáo,伟wěi,传chuán/zhuàn,休xiū/xù,伍wǔ,伏fú/fù,优yōu/yóu,伐fá,延yán,仲zhòng,件jiàn/móu,任rèn/rén/lìn,伤shāng,价jià/jie/jiè,伦lún,份fèn/bīn,华huá/huà/huā,仰yǎng/áng,仿fǎng/páng,伙huǒ/huo,伪wěi,伊yī,血xuè/xiě,似shì/sì,行xíng/háng/héng/xìng/hàng,舟zhōu,杀shā,合hé/gě,兆zhào,企qǐ,创chuàng/chuāng,肌jī/jì,朵duǒ,杂zá/duǒ,危wēi,旨zhǐ,负fù,匈xiōng,名míng/mìng,各gè/gě,争zhēng,壮zhuàng,冲chōng/chòng,冰bīng/níng,庄zhuāng/péng,庆qìng,亦yì,刘liú,齐qí/jì,交jiāo,次cì/zī/cí,产chǎn,决jué,充chōng,闭bì,闯chuǎng,羊yáng,并bìng/bīng,米mǐ,州zhōu,汗hàn/hán/gān,污wū,池chí/tuó/chè,汤tāng/shāng,忙máng,兴xīng/xìng,宇yǔ,守shǒu/shòu,宅zhái/chè/dù,安ān,讲jiǎng,军jūn,论lùn/lún,农nóng,设shè,访fǎng,寻xún/xín,迅xùn,尽jǐn/jìn,导dǎo,异yì/yí,孙sūn,阵zhèn,阳yáng,收shōu,阶jiē,阴yīn,防fáng,如rú,妇fù,她tā/jiě/chí,戏xì/hū,羽yǔ/hù,观guān/guàn,欢huān,买mǎi,纤xiān/qiàn,约yuē/yāo,级jí,纪jì/jǐ,驰chí,巡xún/yán/shùn,寿shòu,弄nòng/lòng,麦mài,玛mǎ,形xíng,戒jiè,吞tūn/tiān,违wéi,运yùn/yǔn,扶fú/pú,抚fǔ,坛tán,技jì/qí,坏huài/pī/péi,扰rǎo/yòu,拒jù/jǔ,批pī/pí,址zhǐ,扯chě,抄chāo/suō/chào/chǎo,贡gòng,坝bà,攻gōng,赤chì,折zhé/shé/zhē/tí,抓zhuā,扮bàn/fěn/fēn/huǒ,抢qiǎng/qiāng,孝xiào,均jūn/yùn,抑yì,抛pāo,投tóu/dòu,坟fén,坑kēng/kàng,抗kàng/gāng,坊fāng/fáng,抖dǒu,护hù,壳ké/qiào,志zhì,块kuài/yué,扭niǔ/chǒu/zhǒu/zhòu,报bào,拟nǐ,却què,抒shū,劫jié,芬fēn,苍cāng,芳fāng,严yán,芦lú/lǔ/hù,劳láo,克kè,苏sū,杆gān/gǎn/gàn,杜dù/dǔ/tú,材cái,村cūn,杉shān/shā,极jí,李lǐ,杨yáng,求qiú,束shù,吾wú/yú/yá,豆dòu,励lì,否fǒu/pǐ,连lián,坚jiān,旱hàn,盯dīng/chéng,呈chéng/kuáng/chěng,吴wú/tūn,助zhù/chú,县xiàn,呆dāi/bǎo/ái,园yuán/wán,围wéi,吨dūn/tún/tǔn,邮yóu,困kùn,吵chǎo/chāo/miǎo/chào,员yuán/yùn/yún,吟yín/yǐn/jìn,吻wěn,吹chuī/chuì,吼hǒu,别bié/biè,岗gǎng/gāng,帐zhàng,财cái,针zhēn,钉dīng/dìng,牡mǔ,告gào/jū/gù,乱luàn,利lì,秀xiù,私sī,每měi,兵bīng,估gū/gù,体tǐ/tī/bèn/cuì,何hé/hè,但dàn/tǎn/yàn,伸shēn,伯bó/bǎi/mò/bà,低dī,位wèi/lì,伴bàn/pàn,身shēn/juān,皂zào,佛fú/fó/bó/bì,彻chè,役yì,返fǎn,余yú/tú/xú/yù,希xī,谷gǔ/lù/yù,妥tuǒ,含hán/hàn,邻lín,肝gān,肚dù/dǔ,肠cháng,龟guī/jūn/qiū,免miǎn/wèn/wǎn,狂kuáng/jué,犹yóu/yòu,角jiǎo/jué/lù/gǔ,卵luǎn/kūn,岛dǎo,迎yíng/yìng,饭fàn,饮yǐn/yìn,系xì/jì,言yán/yàn/yín,冻dòng,状zhuàng,亩mǔ,况kuàng,床chuáng,库kù,疗liáo,应yīng/yìng,这zhè/zhèi,冷lěng/líng/lǐng,序xù,辛xīn,弃qì,冶yě,忘wàng/wáng,闲xián,间jiān/jiàn,闷mèn/mēn,判pàn,灶zào,灿càn,汪wāng/wǎng/hóng,沙shā/shà/suō,汽qì/gài/yǐ,沃wò,泛fàn/fěng/fá,沟gōu,沉chén,怀huái/fù,忧yōu/yòu,完wán/kuān,宋sòng,宏hóng,牢láo/lào/lóu,究jiū/jiù,穷qióng,灾zāi,良liáng/liǎng,证zhèng,启qǐ,评píng,补bǔ,初chū,社shè,识shí/shì/zhì,诉sù,罕hǎn/hàn,诊zhěn,译yì,君jūn,灵líng,即jí,层céng,屁pì,尿niào/suī,迟chí,局jú,改gǎi,张zhāng,忌jì,际jì,陆lù/liù,阿ā/ē/ě/ǎ/à,陈chén,阻zǔ/zhù,附fù/bù/fū,妙miào/miǎo,妨fáng/fāng,努nǔ,忍rěn/rèn,劲jìn/jìng,矣yǐ/xián,纬wěi,驱qū,纯chún,纱shā,纲gāng,纳nà,驳bó,纵zòng,纷fēn,纹wén/wèn,纺fǎng,驴lǘ,纽niǔ,奉fèng,环huán,武wǔ,责zé,现xiàn,玫méi,表biǎo,规guī,抹mǒ/mā/mò,拓tuò/tà/zhí,拢lǒng,拔bá/bō/bié/fá/bèi,坦tǎn,担dān/dàn/dǎn/jiē,抽chōu,拐guǎi,拖tuō/chǐ,者zhě,拍pāi/bó,顶dǐng,拆chāi/chè/chì/cā,拥yōng,抵dǐ/zhǐ/qí,势shì,抱bào/pāo/pǒu,垃lā/la,拉lā/lá/lǎ/là/la,拦lán,幸xìng/niè,招zhāo/qiáo/sháo,坡pō,披pī,拨bō,择zé/zhái,抬tái/chī,拇mǔ,其qí/jī/jì,取qǔ/qū,苦kǔ/gǔ/hù,若ruò/ré/rè/rě,茂mào,苗miáo,英yīng/yāng,范fàn,直zhí,茄jiā/qié,茎jīng,茅máo,枝zhī/qí,杯bēi,枢shū,柜guì/jǔ,枚méi,析xī/sī,板bǎn,松sōng,枪qiāng,枫fēng,构gòu,杭háng/kàng/kāng,杰jié,述shù,枕zhěn/chén,丧sàng/sāng,或huò/yù,卧wò,事shì/zì,刺cì/cī/qì,枣zǎo,卖mài,郁yù,矿kuàng,码mǎ,奈nài,奔bēn/bèn/fèn,奇qí/jī/ǎi/yǐ,奋fèn/kǎng,态tài,欧ōu,垄lǒng,妻qī/qì,轰hōng,顷qǐng,转zhuǎn/zhuàn/zhuǎi,轮lún,软ruǎn,非fēi/fěi,歧qí,肯kěn,齿chǐ,些xiē/suò/suō,虎hǔ/hù,肾shèn,贤xián,尚shàng/cháng,旺wàng,具jù,味wèi/mèi,昆kūn/hún/kùn,哎āi,咕gū/gu,昌chāng/chàng,呵hē/hā/ā/a/kē,畅chàng,易yì,昂áng/yàng,迪dí,典diǎn/tiǎn,固gù,忠zhōng,呼hū/xiāo/xū/hè/xià,鸣míng,呢ne/ní/nǐ/nī,岸àn,岩yán,罗luó/luō,帕pà/mò,岭lǐng/líng,凯kǎi,败bài,账zhàng,贩fàn,购gòu,贮zhù,图tú,钓diào,制zhì,知zhī/zhì,垂chuí/zhuì,牧mù,物wù,刮guā,季jì,委wěi/wēi/wèi,佳jiā,侍shì,岳yuè,供gōng/gòng,使shǐ,例lì/liè,版bǎn,侦zhēn,侧cè/zè/zhāi,凭píng,佩pèi,货huò,依yī/yǐ,卑bēi/bǐ/bì/pí/bān,迫pò/pǎi,质zhì,欣xīn,征zhēng,往wǎng/wàng,彼bǐ,径jìng,所suǒ,舍shě/shè/shì,刹shā/chà,命mìng,受shòu/dào,乳rǔ,贪tān,念niàn,贫pín,肤fū,肺fèi/pèi,肢zhī/shì,肿zhǒng,胀zhàng,股gǔ,肪fáng,肥féi/bǐ,胁xié,周zhōu,昏hūn/hùn,狐hú,忽hū,备bèi,饰shì,饱bǎo,饲sì,京jīng,享xiǎng,庞páng,店diàn,夜yè,庙miào,府fǔ,底dǐ/de,剂jì,郊jiāo,废fèi,净jìng/chēng,盲máng,刻kè/kēi,育yù/zhòu/yō,闹nào,郑zhèng,券quàn/xuàn,卷juǎn/juàn/quán/quān/gǔn,单dān/chán/shàn,炒chǎo,炕kàng/hāng,炎yán/yàn/tán,炉lú,沫mò,浅qiǎn/jiān,泄xiè/yì,河hé,沾zhān/tiān/diàn/chān,泪lèi,油yóu/yòu,泊pō/bó/pò,沿yán/yǎn/yàn,泡pào/pāo/páo,注zhù/zhòu,泻xiè,泌mì/bì,泳yǒng,泥ní/nì/nǐ/niè/nìng,沸fèi/fú,波bō/bēi/bì,泼pō,泽zé,治zhì/chí,性xìng,怕pà/bó,怜lián/líng/lǐng,怪guài,宝bǎo,宗zōng,定dìng,宜yí,审shěn,宙zhòu,官guān,帘lián/chén,实shí,试shì,郎láng/làng,肩jiān/xián,房fáng/páng,诚chéng,衬chèn,衫shān,视shì,话huà,诞dàn,询xún,该gāi,详xiáng,建jiàn,肃sù,录lù,隶lì/dài/yì/dì,居jū/jī,届jiè,刷shuā/shuà,屈qū/jué/què/jú,弥mí,弦xián,承chéng/zhěng/zhèng,孟mèng,陌mò,孤gū,陕shǎn,降jiàng/xiáng/xiàng,函hán,限xiàn/wěn,姑gū,姓xìng/shēng,始shǐ,姆mǔ,驾jià,艰jiān,线xiàn,练liàn,组zǔ,细xì,驶shǐ,织zhī,终zhōng,驻zhù,驼tuó,绍shào,经jīng/jìng,贯guàn,契qì/xiè/qiè/jié,奏zòu/còu,帮bāng,珍zhēn,玲líng,珊shān,玻bō,毒dú/dài,型xíng,封fēng/biǎn,持chí,拱gǒng/jú,项xiàng,城chéng,政zhèng/zhēng,赴fù,赵zhào,挡dǎng/dàng,挺tǐng/tíng,括kuò/guā,拾shí/shè/jiè,挑tiāo/tiǎo/táo/diào/tiáo,指zhǐ/zhī/zhí,垫diàn,挣zhēng/zhèng,挤jǐ,拼pīn/bìng,挖wā,按àn,挥huī,挪nuó,某mǒu/méi,甚shèn/shén,革gé/jí,巷xiàng/hàng,带dài,茶chá,荒huāng/huǎng/kāng/huáng,茫máng/huǎng,荡dàng,荣róng,故gù,胡hú,药yào,标biāo,枯kū/gū,柄bǐng,相xiāng/xiàng,查chá/zhā/chái,柏bǎi/bó/bò,柳liǔ,柱zhù/zhǔ,栏lán,勃bó,咸xián/jiǎn/jiān,威wēi,歪wāi/wǎi,研yán/yàn/xíng,砖zhuān,厘lí/chán,厚hòu,砌qì/qiè,砂shā,砍kǎn,面miàn,耐nài/néng,耍shuǎ,牵qiān,残cán,轴zhóu/zhòu,轻qīng,皆jiē,背bèi/bēi,战zhàn,临lín,览lǎn,竖shù,省shěng/xǐng/xiǎn,削xuē/xiāo/qiào/shào,尝cháng,盼pàn/fén,眨zhǎ,哇wa/wā/guī/huá/wá,哄hǒng/hōng/hòng,哑yǎ/yā,显xiǎn,冒mào/mò,映yìng/yǎng,胃wèi,贵guì,界jiè,虹hóng/jiàng/hòng/gòng,虾xiā/há,蚁yǐ,思sī/sāi,蚂mǎ/mà/mā,虽suī,品pǐn,咽yàn/yān/yè/yuān,骂mà,哗huā/huá,咱zán/zá/zǎ/zan,响xiǎng,哈hā/hǎ/hà/hē/hé,咬yǎo/jiāo/yāo/jiǎo,咳ké/hāi/hái/gāi,哪nǎ/na/né/nuó/nǎi,哟yō/yo,炭tàn,峡xiá,罚fá,贴tiē,骨gǔ/gū/gú,幽yōu,钙gài,钟zhōng,钢gāng/gàng,钠nà,钥yào/yuè,钩gōu,卸xiè,缸gāng,拜bài/bái,矩jǔ,氢qīng,怎zěn,牲shēng,选xuǎn,适shì/kuò,秒miǎo,香xiāng,种zhǒng/chóng/zhòng,科kē/kè,重zhòng/chóng/tóng,复fù,段duàn,便biàn/pián/biān,俩liǎ/liǎng,顺shùn,修xiū,保bǎo,促cù/chuò,俄é,俗sú,信xìn/shēn,皇huáng/wǎng,泉quán,鬼guǐ,侵qīn/qǐn,侯hóu/hòu,追zhuī/duī/tuī,俊jùn/shùn/dūn,盾dùn/shǔn/yǔn,待dài/dāi,衍yǎn/yán,律lǜ,须xū,叙xù,剑jiàn,逃táo,食shí/sì/yì,盆pén,胚pēi,胆dǎn/tán/tǎn/dá,胜shèng/xīng/qìng/shēng,胞bāo/páo/pào,胖pàng/pán/pàn,脉mài/mò,胎tāi,勉miǎn,狭xiá,狮shī,独dú,狱yù,狠hěn/yán/kěn/hǎng,贸mào,怨yuàn/yùn,急jí,饶ráo,蚀shí,饼bǐng,将jiāng/jiàng/qiāng,奖jiǎng,哀āi,亭tíng,度dù/duó/zhái,迹jì/jī,庭tíng,疯fēng,疫yì,姿zī/zì,亲qīn/qìng,帝dì,施shī/yì/shǐ,闻wén,阀fá,阁gé,差chà/chā/chāi/cī/chài,养yǎng,姜jiāng,叛pàn,送sòng,类lèi,迷mí/mì,籽zǐ,首shǒu,逆nì,兹zī/cí,总zǒng,炼liàn,炸zhà/zhá,炮pào/bāo/páo,烂làn,洁jié/jí,洪hóng,洒sǎ/xǐ/xiǎn/sěn/cuǐ,浇jiāo,测cè,洗xǐ/xiǎn,派pài/mài/bài/pā,染rǎn,洛luò,济jì/jǐ,洋yáng/xiáng/yǎng,洲zhōu,浑hún,浓nóng,津jīn,恒héng,恢huī,恰qià,恼nǎo,恨hèn,举jǔ,宣xuān,室shì,宫gōng,宪xiàn/xiòng,突tū,窃qiè,客kè/qià,冠guān/guàn,扁biǎn/piān/biān/pián,祖zǔ/jiē,神shén/shēn,祝zhù/zhòu/chù,误wù,诱yòu,退tuì,既jì/xì,屋wū,屏píng/bǐng/bìng/bīng,费fèi,陡dǒu,眉méi,除chú/zhù/shū,险xiǎn,姨yí,娇jiāo,娜nà/nuó,怒nù,架jià,贺hè,盈yíng,勇yǒng,柔róu,绒róng,结jié/jiē,绕rào/rǎo,骄jiāo,绘huì,骆luò,络luò/lào,绝jué,统tǒng,耕gēng,耗hào/máo/mào,艳yàn,泰tài,秦qín,珠zhū,班bān,素sù,蚕cán/tiǎn,顽wán,捞lāo,栽zāi/zài,捕bǔ,振zhèn/zhēn/zhěn,载zài/zǎi,赶gǎn/qián,盐yán,捏niē,埋mái/mán,捉zhuō,损sǔn,袁yuán,都dōu/dū,哲zhé,逝shì,换huàn,挽wǎn,热rè,恐kǒng,壶hú,埃āi/zhì,挨āi/ái,恭gōng,莱lái,莫mò/mù,莉lì/lí/chí,荷hé/hè/hē,获huò,晋jìn,恶è/ě/wù/wū,桂guì,栖qī/xī,桐tóng/tōng/dòng,株zhū,桦huà,格gé/luò/hè/gē,桩zhuāng,核hé/hú/gāi/kài,样yàng/yáng,根gēn,索suǒ,速sù,贾jiǎ/gǔ,配pèi,翅chì,辱rǔ,唇chún/zhēn/zhèn,砸zá,础chǔ,破pò,原yuán,套tào/tǎo,逐zhú/dí/zhòu/tún,烈liè,殊shū,顾gù,轿jiào,较jiào,顿dùn/dú,致zhì/zhuì,柴chái/cī/zhài/zì,虑lǜ/bì,监jiān/jiàn,紧jǐn,党dǎng,晒shài,眠mián/miǎn/mǐn,晓xiǎo,晃huǎng/huàng,晕yūn/yùn,蚊wén,蚓yǐn,哨shào/sāo/xiāo/xiào/sào,哩lī/li/lì/lǐ/mái,哭kū,哦ó/é/ò,恩ēn,唤huàn,哼hēng/hng,啊a/ā/á/ǎ/à,唉āi/ài/ǎi,罢bà/ba,峰fēng,圆yuán,峻jùn,贼zéi,钱qián,钻zuān/zuàn,钾jiǎ,铁tiě,铃líng,铅qiān/yán,缺quē/kuǐ,氧yǎng,氨ān,特tè,牺xī,造zào/cào/cāo,乘chéng/shèng,敌dí/huá,租zū/jū,积jī/zhǐ,称chēng/chèn/chèng,秘mì/bì/bié,透tòu/shū,笋sǔn,债zhài,借jiè,值zhí,俺ǎn/yàn,倾qīng,倒dào/dǎo,俱jù/jū,倡chàng/chāng,倍bèi/péi,倦juàn,健jiàn,臭chòu/xiù,射shè/yè/yì,息xī,徒tú,徐xú,舰jiàn,舱cāng,般bān/pán/bǎn/bō,航háng,途tú,拿ná,耸sǒng,爹diē,爱ài,豹bào,颁bān,颂sòng,翁wēng/wěng,脆cuì,脂zhī/zhǐ,胸xiōng,胳gē/gé/gā,脏zàng/zāng,胶jiāo/xiáo,脑nǎo,狼láng/lǎng/làng/hǎng,逢féng/péng/páng,留liú/liù/liǔ,皱zhòu,饿è,凌líng/lìng,恋liàn,浆jiāng/jiàng,衰shuāi/suō/cuī,郭guō/guó,席xí,准zhǔn,座zuò,症zhèng/zhēng,病bìng,疾jí,疼téng,疲pí,脊jí/jǐ,效xiào,离lí/chī,唐táng,瓷cí,资zī,凉liáng/liàng,剖pōu/pǒ,竞jìng,部bù/pǒu,旅lǚ,畜chù/xù,阅yuè,羞xiū,瓶píng,拳quán,粉fěn,料liào/liáo,益yì,兼jiān,烤kǎo,烦fán,烧shāo,烛zhú/chóng,烟yān/yīn,递dì,涛tāo,浙zhè,浦pǔ,酒jiǔ,涉shè/dié,消xiāo,浩hào/gǎo/gé,涂tú/chú/yé,浴yù,浮fú,流liú,润rùn,浪làng/láng,浸jìn/qīn,涨zhǎng/zhàng,涌yǒng/chōng,悟wù,悄qiāo/qiǎo/qiào,悔huǐ,悦yuè,害hài/hé,宽kuān,宴yàn,宾bīn,窄zhǎi,容róng/yǒng,宰zǎi,案àn,请qǐng,朗lǎng,诸zhū,诺nuò,读dú/dòu,扇shàn/shān,袖xiù,被bèi/bì/pī/pì,祥xiáng,调diào/tiáo,谈tán,谊yì,剥bō/bāo/pū,展zhǎn,剧jù,屑xiè,弱ruò,陵líng,陶táo/yáo/dào,陷xiàn,陪péi,娱yú,娘niáng,通tōng/tòng,能néng/tái/nái/nài/xióng,难nán/nàn,预yù,桑sāng,绣xiù,验yàn,继jì,球qiú,理lǐ,捧pěng/fèng,堵dǔ/zhě/dū,措cuò/zé/cì,描miáo/mào,域yù,掩yǎn/yàn,捷jié/qiè/chā,排pái/pǎi/bài,掉diào/nuó,堆duī/zuī,推tuī,掀xiān/hén,授shòu,教jiào/jiāo,掏tāo/táo,掠lüè/lüě,培péi/pǒu/pī,接jiē/xié/shà/chā,控kòng/kōng/qiāng,探tàn/xián,据jù/jū,掘jué/kū,职zhí,基jī,聊liáo/liú,娶qǔ/jū/shū,著zhù/zhe/zhuó/chú/zhāo,勒lēi/lè/lei,菲fēi/fěi/fèi,萌méng/míng,萝luó,菌jūn/jùn,萎wēi/wěi/wèi,菜cài,萄táo,菊jú,萍píng,营yíng,萧xiāo,萨sà,菇gū,械xiè,梦mèng,梢shāo/shào/xiāo/sào,梅méi,检jiǎn,梯tī/tí,桶tǒng,救jiù/jiū,曹cáo,副fù/pì,票piào/piāo,厢xiāng,戚qī/cù,硅guī/hè,爽shuǎng/shuāng,袭xí,盛shèng/chéng,辅fǔ,辆liàng,虚xū,雀què/qiāo/qiǎo,堂táng,常cháng,匙shi/chí,晨chén,睁zhēng,眼yǎn/wěn,悬xuán,野yě/shù,啦la/lā,曼màn,啡fēi/pèi/pái/pēi/bài,距jù,趾zhǐ,跃yuè,略lüè,蚯qiū,蛇shé/yí/tuó/chí,累lèi/léi/lěi/lǜ/liè,唱chàng,患huàn,唾tuò,唯wéi/wěi,啥shá/shà,崖yá,逻luó,崩bēng,崇chóng,婴yīng,圈quān/juān/juàn/quán/juǎn,铝lǚ,铜tóng,银yín,甜tián,梨lí,犁lí,移yí/chǐ/yì,笼lóng/lǒng,笛dí,符fú,第dì,敏mǐn,做zuò,袋dài,悠yōu,偿cháng,偶ǒu,偷tōu,您nín,售shòu/shú,停tíng,偏piān,躯qū,假jiǎ/jià/jie/xià/xiá,衔xián,盘pán,斜xié/xiá/chá/yé,盒hé/ān,鸽gē,悉xī,欲yù,领lǐng,脚jiǎo/jué,脖bó/bō,脸liǎn,脱tuō/tuì,象xiàng,够gòu,逸yì,猜cāi,猪zhū,猎liè/xī/què,猛měng,馆guǎn,凑còu,减jiǎn,毫háo,麻má/mā,痒yǎng/yáng,痕hén/gèn,廊láng,康kāng/kàng,鹿lù/lǘ,盗dào,章zhāng/zhàng,竟jìng,商shāng,族zú/sǒu/còu/zòu,旋xuán/xuàn,望wàng,率lǜ/shuài/lüè,阐chǎn,羚líng,盖gài/gě,粘zhān/nián,粗cū,粒lì,断duàn,剪jiǎn,兽shòu,清qīng/qìng,添tiān/tiàn,鸿hóng,淋lín/lìn,淹yān/yǎn,渐jiàn/jiān,混hùn/gǔn/hún/kūn,淮huái,渔yú,淘táo,液yè/shì,淡dàn/yàn/tán,淀diàn,深shēn,婆pó,梁liáng,渗shèn,情qíng,惜xī,惧jù,惟wéi/wěi,惊jīng/liáng,惨cǎn,惯guàn,寄jì,寂jì,宿sù/xiǔ/xiù/qī,密mì,谋móu,谐xié,祸huò,谓wèi,谜mí/mèi,逮dǎi/dài/dì,敢gǎn,屠tú,弹dàn/tán,随suí,蛋dàn,隆lóng/lōng,隐yǐn,婚hūn,婶shěn,颇pǒ/pō,颈jǐng/gěng,绩jì/jī,绪xù,续xù,骑qí,绳shéng,维wéi,绵mián,绸chóu,综zōng/zèng,巢cháo/chào,琴qín,斑bān,替tì,款kuǎn/xīn,堪kān/chěn,塔tǎ/dā/da,搭dā/tà,越yuè/huó,趁chèn/zhēn/chén/niǎn/zhěn,趋qū,超chāo/chǎo/chào/tiào,堤dī/tí/dǐ/shí/wéi,提tí/dī/chí/shí/dǐ,博bó,揭jiē/qì/hé,喜xǐ/xī/chì,插chā/zhǎ,搜sōu/xiāo/sòu/shǎo,煮zhǔ,援yuán/huàn,裁cái,搅jiǎo,握wò/òu,斯sī/shǐ,期qī/jī,欺qī,联lián,葫hú,散sàn/sǎn/sān,惹rě/ruò,葬zàng,葛gé/gě,葡pú/bèi,敬jìng,葱cōng/chuāng,蒋jiǎng,落luò/là/lào/luō,韩hán,朝cháo/zhāo/zhū,葵kuí,棒bàng,植zhí,椅yǐ/yī,棵kē/kuǎn/kě,棍gùn/hùn/āo/gǔn,棉mián,棚péng,棕zōng,惠huì,惑huò,逼bī,厨chú,厦shà/xià,硬yìng/gěng,硝xiāo/qiào,确què,硫liú/chù,雁yàn,殖zhí/shi/shì,裂liè/liě,雄xióng,暂zàn,雅yǎ/yā/yá,辈bèi,悲bēi,紫zǐ,辉huī,赏shǎng,掌zhǎng,晴qíng,暑shǔ,晰xī,量liàng/liáng,喷pēn/pèn,晶jīng,喇lǎ/lá/lā/la,遇yù/yóng/ǒu,喊hǎn/kàn/jiān,景jǐng/yǐng,践jiàn,跌diē/dié/tú,跑pǎo/páo/bó,遗yí/wèi,蛛zhū,蜓tíng/diàn,喝hē/hè/yè/kài,喂wèi,喘chuǎn,喉hóu,喻yù/yú,啼tí,幅fú/bī,帽mào,赋fù,赌dǔ,赔péi,铺pù/pū,链liàn,销xiāo,锁suǒ,锅guō,锋fēng,锐ruì,智zhì/zhī,氮dàn,氯lǜ,鹅é,剩shèng,稍shāo/shào,程chéng,稀xī,税shuì/tuō/tuì/tuàn,等děng,筑zhù/zhú,策cè,筒tǒng/dòng/tóng,答dá/dā,筋jīn/qián,傲ào/áo,傅fù/fū,牌pái,堡bǎo/bǔ/pù,集jí,焦jiāo/qiáo,傍bàng/páng/bēng/péng,储chǔ,奥ào/yù/yōu,街jiē,惩chéng,御yù/yà,循xún,艇tǐng,舒shū/yù,番fān/pān/fán/bō/pó,释shì,禽qín,腊là/xī,脾pí/pái/bì/pì,腔qiāng/kòng,鲁lǔ,猩xīng,猴hóu,然rán,装zhuāng,蛮mán,就jiù,敦dūn/duī/tuán/diāo/dùn,痛tòng,童tóng/zhōng,阔kuò,善shàn,翔xiáng,普pǔ,粪fèn,尊zūn,道dào/dǎo,遂suì/suí,曾céng/zēng,焰yàn,港gǎng/hòng,湖hú,湘xiāng,渣zhā,湿shī,温wēn/yùn,渴kě/jié/kài/hé,溃kuì/huì,滑huá/gǔ,湾wān,渡dù,游yóu/liú,滋zī/cí/xuán,溉gài/xiè,愤fèn,慌huāng/huǎng/huang,愣lèng,愧kuì,愉yú/tōu/yǔ,慨kǎi,割gē,寒hán,富fù,寓yù,窝wō,窗chuāng/cōng,遍biàn,裕yù,裤kù,裙qún,谢xiè,谦qiān,属shǔ/zhǔ,强qiáng/jiàng/qiǎng,疏shū,隔gé/rǒng/jī,隙xì,媒méi/mèi,嫂sǎo,登dēng/dé,缓huǎn,骗piàn,编biān,缘yuán,瑞ruì,魂hún,摄shè,摸mō/mó,填tián/tiǎn/chén/zhèn,搏bó,塌tā/dā,鼓gǔ,摆bǎi,携xié,搬bān/sù,摇yáo,搞gǎo/qiāo/kào,塘táng,摊tān,蒜suàn,勤qín/qí,鹊què,墓mù,幕mù/màn,蓬péng/pèng,蓄xù,蒲pú/bó,蒙méng/mēng/měng,蒸zhēng,献xiàn,禁jìn/jīn,楚chǔ,想xiǎng,楼lóu,概gài/guì/jié,赖lài,酬chóu,感gǎn/hàn,碍ài,碑bēi,碎suì,碰pèng,碗wǎn,碌lù/liù/luò,雷léi/lèi,零líng/lián,雾wù,辐fú,辑jí,输shū,督dū,频pín,龄líng,鉴jiàn,睛jīng/jǐng,愚yú,暖nuǎn/xuān,盟méng/mèng/míng,歇xiē/yà,暗àn,照zhào,跨kuà/kù/kuā/kuǎ,跳tiào/diào/táo,跟gēn,遣qiǎn/qiàn,蜂fēng,嗅xiù,嗓sǎng,署shǔ,置zhì,罪zuì,罩zhào,错cuò,锡xī,锤chuí,锦jǐn,键jiàn,矮ǎi,辞cí,愁chóu/qiǎo/jiū,筹chóu,签qiān,简jiǎn,毁huǐ/huì,舅jiù,鼠shǔ,催cuī,傻shǎ,像xiàng,躲duǒ,微wēi,愈yù,遥yáo,腰yāo,腹fù,腺xiàn,鹏péng,腾téng,腿tuǐ,触chù,解jiě/jiè/xiè,廉lián,新xīn,韵yùn,意yì/yī,粮liáng,塑sù,慈cí,煤méi,煌huáng,满mǎn,漠mò,源yuán,滤lǜ,滥làn,溪xī/qī,溜liū/liù/liú,滚gǔn,溢yì,滨bīn,溶róng,滩tān,慎shèn/zhèn,誉yù,塞sāi/sài/sè,裸luǒ,福fú/fù,殿diàn,辟pì/bì/mǐ/pī,障zhàng/zhāng,媳xí,嫌xián,嫁jià,叠dié,缝fèng/féng,缠chán,静jìng,碧bì,璃lí,熬áo/āo,墙qiáng,嘉jiā,赫hè/shì,截jié,境jìng,摘zhāi,摔shuāi,聚jù,慕mù,蔡cài/sà/cā,蔽bì/biē/piē,熙xī/yí,模mó/mú,遭zāo,酷kù,酿niàng/niáng,酸suān,碱jiǎn/xián,碳tàn,磁cí,愿yuàn,需xū/nuò/rú/ruǎn,辖xiá,雌cí,颗kē,瞅chǒu,蜡là/qù/zhà/jí,蝇yíng,蜘zhī,嘛ma/má,赚zhuàn/zuàn,锻duàn,舞wǔ,稳wěn,算suàn,管guǎn,僚liáo/liǎo/lǎo,僧sēng/céng,鼻bí,貌mào/mò,膜mó,膊bó/pò/liè,膀bǎng/pāng/páng/bàng/pǎng,鲜xiān/xiǎn,疑yí/níng,孵fū,裹guǒ,敲qiāo,豪háo,遮zhē,腐fǔ,瘦shòu,辣là,竭jié,端duān,精jīng/qíng/jìng,熔róng,漆qī/qiè,漂piāo/piào/piǎo/biāo,漫màn,滴dī,演yǎn/yàn,漏lòu/lóu,慢màn/mán,赛sài,察chá/cuì,蜜mì,褐hè,谱pǔ,嫩nèn,翠cuì,熊xióng,凳dèng,缩suō/sù,慧huì,撕sī/xī,撒sā/sǎ,趣qù/cù/qū/cǒu/zōu,趟tàng/zhēng/zhèng/chéng/tāng,撑chēng,播bō/bǒ,撞zhuàng,撤chè,增zēng/zèng/céng,聪cōng,鞋xié/wā,蔬shū/shǔ,蕴yùn,横héng/hèng/guāng/guàng/huáng,槽cáo/zāo,橡xiàng,飘piāo,醇chún,醉zuì,震zhèn/shēn,霉méi,题tí,暴bào/pù/bó,瞎xiā,嘻xī,踢tī/dié,踏tà/tā,踩cǎi/kuí,踪zōng,蝶dié/tiē,蝴hú,蝠fú,蝙biān/pián,嘿hēi/mò/mù,嘱zhǔ,墨mò/mèi,镇zhèn,靠kào,稻dào,黎lí,稿gǎo,稼jià,箱xiāng,箭jiàn,篇piān,僵jiāng,躺tǎng/tàng,德dé,艘sōu,膝xī,鲤lǐ,熟shú/shóu,摩mó/mā/mí,瘤liú,颜yán,毅yì,糊hú/hū/hù,遵zūn,潜qián,潮cháo,潭tán/xún/yǐn/dàn,澳ào/yù,懂dǒng,额é,鹤hè,慰wèi,履lǚ,豫yù/xiè/shū,操cāo,燕yàn/yān,蕾lěi,薯shǔ,薄báo/bó/bò/bù,颠diān,橙chéng/dèng/chén,橘jú,整zhěng,融róng,瓢piáo,醒xǐng/chéng/jīng,霍huò/hè/suǒ,餐cān/sūn,嘴zuǐ,蹄tí/dì,器qì,噪zào,赠zèng,默mò,镜jìng,赞zàn,穆mù,篮lán,儒rú,邀yāo,衡héng,膨péng/pèng,雕diāo,鲸jīng,磨mó/mò,凝níng,辨biàn/biǎn/bàn/piàn,辩biàn,糖táng,燃rán,激jī/jiào/jiāo,懒lǎn,壁bì,避bì,戴dài,擦cā,藏cáng/zàng/zāng,礁jiāo,磷lín/lìn/lǐn/líng,霜shuāng,霞xiá,瞧qiáo,瞬shùn,瞪dèng,蹈dǎo,螺luó,穗suì,魏wèi/wéi/wēi,繁fán/pó/pán,徽huī,鳄è,癌ái/yán,赢yíng,糟zāo,燥zào/sào,臂bì/bei,翼yì,骤zhòu,鞭biān,藤téng,覆fù,翻fān,鹰yīng,警jǐng,蘑mó,藻zǎo,攀pān,蹲dūn/zún/cún/zūn/cǔn,蟹xiè,颤chàn/zhàn,瓣bàn,爆bào/bó,疆jiāng/jiàng,壤rǎng,耀yào,躁zào,嚼jué/jiáo/jiào,嚷rǎng/rāng,籍jí/jiè,魔mó,灌guàn/huàn,譬pì,霸bà/pò,露lù/lòu,髓suǐ,囊náng/nāng,罐guàn',HZC='匕bǐ/pìn,刁diāo,乞qǐ/qì,勺sháo/shuò/zhuó/dì,丫yā,巳sì/yǐ,刃rèn,丐gài,歹dǎi/è/dāi,屯tún/zhūn,冈gāng,壬rén,夭yāo/wò/wāi,仆pū/pú,仑lún,勿wù/mò,亢kàng/gāng/gēng,冗rǒng,讥jī,卉huì,扒bā/pá/bài/bié,夯hāng/bèn,戊wù,轧yà/zhá/gá,凸tū,叽jī/jiào,叼diāo,叩kòu,叨dāo/dáo/tāo,冉rǎn/nán/dān,皿mǐn/mǐng,囚qiú,矢shǐ,乍zhà/zuò,卯mǎo,弘hóng,迂yū,戎róng/rēng,扛káng/gāng,芋yù/yú/xū/yǔ,吏lì,戌xū/qu,邪xié/yá/yé/xú/shé,尧yáo,贞zhēn,吕lǚ,吆yāo,屿yǔ,屹yì/gē,迄qì,乒pīng,乓pāng,臼jiù,肋lē/lèi/lè/jīn,旬xún/jūn,旭xù,妆zhuāng,亥hài/jiē,妄wàng/wáng,汛xùn,汝rǔ,讳huì,讶yà,讹é,讼sòng,讽fěng/fèng,诀jué,弛chí,奸jiān/gān,妃fēi/pèi,驮tuó/duò,驯xùn/xún,纫rèn,玖jiǔ,韧rèn,抠kōu,扼è,汞gǒng,扳bān/pān,抡lūn/lún,坎kǎn/kàn,芙fú,芜wú,苇wěi,芹qín,芥jiè/gài,芯xīn/xìn,芭bā/pā,杠gāng/gàng/gōng,杖zhàng,巫wū,甫fǔ/fū/pǔ,匣xiá,酉yǒu,辰chén,尬gà,歼jiān,轩xuān,卤lǔ/xī,肖xiào/xiāo,吱zhī/zī/qì,吠fèi,呕ǒu/ōu/òu,旷kuàng,呐nà/nè/na/nuò/ne,吩fēn/pèn,呛qiāng/qiàng,呜wū,吭kēng/háng/hàng,邑yì/è,囤dùn/tún,吮shǔn,岖qū,秃tū,佐zuǒ,佑yòu,佃diàn/tián,伶líng,佣yōng/yòng,伺cì/sì,囱cōng/chuāng,岔chà,肛gāng,肘zhǒu,甸diān/diàn/tián/shèng/yìng,狈bèi,删shān,彤tóng,灸jiǔ,刨páo/bào,庇bì/pí/pǐ,吝lìn,庐lú,闰rùn,兑duì/ruì/duó,灼zhuó,沐mù,沛pèi,汰tài,沥lì,沦lún,汹xiōng,沧cāng,沪hù,沈shěn/chén/tán,沁qìn,忱chén/dàn,祀sì,诈zhà,坠zhuì,妓jì/jī,妖yāo/jiǎo,姊zǐ,妒dù,卦guà,坷kě/kē/jiōng,坯pī/huài,坪píng,拣jiǎn,坤kūn,押yā/xiá/jiǎ,拎līn/līng,拘jū/gōu/jǔ/jú,拄zhǔ,拌bàn/pān,拧níng/nǐng/nìng,拂fú/bì/pì/fèi,拙zhuō,拗ǎo/ào/niù/yù,茉mò,昔xī/cuò,苛kē/hē,苟gǒu/gōu,苑yuàn/yuān/yù/yùn,苞bāo/páo/biāo,茁zhuó/zhú,苔tái/tāi,枉wǎng/kuáng,矾fán,厕cè/si,殴ōu,斩zhǎn,卓zhuó/zhuō,虏lǔ,咙lóng,呻shēn,咒zhòu,咋zǎ/zé/zhā/zhà,咐fù/fú,咏yǒng,咄duō,咖kā/gā/jiā,帖tiē/tiě/tiè,帜zhì,贬biǎn,迭dié/yì/dá,氛fēn,乖guāi,秆gǎn,秉bǐng,侠xiá,侥jiǎo/yáo,侄zhí,侣lǚ,侨qiáo,侈chǐ,肴yáo,斧fǔ,觅mì,忿fèn,肮āng/háng/gāng,狞níng,疟nüè/yào,疙gē/yì,疚jiù,卒zú/cù/cuì,庚gēng,氓máng/méng,闸zhá,炬jù,炊chuī,沽gū/gǔ,沮jǔ/jū/jù/jiān/zǔ,泣qì/lì/sè,泞nìng/zhù,沼zhǎo,怔zhēng/zhèng,怯qiè,怖bù,怡yí,宠chǒng,宛wǎn/yuān/yǔn/yù,祈qí/guǐ,诡guǐ,帚zhǒu,屉tì,弧hú,陋lòu,妮nī/ní,迢tiáo,叁sān,绅shēn,驹jū,绊bàn,绎yì,贰èr,玷diàn/diān,拭shì,拷kǎo,垮kuǎ,挎kuà/kū/kōu,挟xié/jiā,挠náo,拽zhuāi/zhuài/yè,哉zāi,垢gòu,拴shuān/quán,垛duǒ/duò,拯zhěng,荆jīng,茸rōng/róng/rǒng,茬chá/chí,荐jiàn,茧jiǎn/chóng,茵yīn,荤hūn/xūn,荧yíng,荫yīn/yìn,荔lì,栈zhàn,柑gān/qián,栋dòng,栅zhà/shān/cè,柿shì,柠níng/chǔ/zhù,柬jiǎn,泵bèng/pìn/liú,砚yàn,鸥ōu,殃yāng,韭jiǔ,虐nüè,昧mèi/wěn/mò,盹dǔn/zhūn,咧liě/liē/liè/lié/lie,昭zhāo/zhào,畏wèi/wēi/wěi,趴pā,勋xūn,哆duō/chǐ/zhà/chì/duò,咪mī/mǐ/miē/mǎi,贱jiàn,贻yí,钝dùn,钞chāo,钦qīn,钧jūn,钮niǔ,毡zhān,竿gān/gàn/gǎn,贷dài,俏qiào/xiào/xiāo,俐lì,侮wǔ,俭jiǎn,俘fú,禹yǔ,徊huái/huí,胧lóng,狰zhēng,狡jiǎo/xiào,饵ěr,饺jiǎo,峦luán,疮chuāng,疤bā,咨zī,闺guī,闽mǐn,娄lóu,烁shuò,炫xuàn,剃tì,洼wā/guī,柒qī,浊zhuó,洽qià/hé,浏liú,恃shì/zhì,恍huǎng/guāng,恬tián,恤xù,宦huàn,诫jiè,诬wū,袄ǎo,祠cí/sì,诲huì,诵sòng,垦kěn/yín,昼zhòu,屎shǐ/xī,逊xùn,陨yǔn,姥lǎo/mǔ,姻yīn,姚yáo/tiào/táo/yào,怠dài/yí,癸guǐ,蚤zǎo/zhǎo,垒lěi,绑bǎng,绚xuàn,绞jiǎo,骇hài,耘yún,耙bà/pá,匿nì/tè,盏zhǎn,匪fěi/fēi/fēn,埂gěng,捂wǔ/wú,捎shāo/shào/shǎo/xiāo/qiào,捍hàn/xiàn/gǎn,捆kǔn/hún,捐juān/yuán,捌bā/bié,捡jiǎn,挫cuò/zuò,挚zhì,捣dǎo,捅tǒng,耻chǐ,耿gěng,耽dān,聂niè,莽mǎng/máng,莹yíng,莺yīng,框kuāng/kuàng/kuáng,梆bāng,桔jú/jié/xié,档dàng,栓shuān/shuàn/quán,逗dòu/zhù/tóu/qí,栗lì/liè,酌zhuó,砰pēng/pīng/pèng,砾lì,殉xùn,毙bì,逞chěng/yíng,哮xiāo/xiào/xuē,唠láo/lào,哺bǔ/bū/fǔ,晌shǎng,剔tī/tì,蚌bàng/bèng/pí/fēng,畔pàn,蚣gōng/zhōng,蚪dǒu,圃pǔ,鸯yāng,唁yàn,唧jī/jié,唆suō/shuà,峭qiào,峨é,贿huì,赂lù,赃zāng,钳qián,秤chèng/chēng/píng,秧yāng,秩zhì,倚yǐ/jī/yī,倘tǎng/cháng,赁lìn,俯fǔ,躬gōng,倔jué/juè,殷yīn/yān/yǐn,舀yǎo,豺chái,胰yí,脐qí,脓nóng,逛guàng/kuáng,狸lí,卿qīng,鸵tuó,鸳yuān,馁něi,凄qī,桨jiǎng,衷zhōng/zhòng,斋zhāi,疹zhěn/chèn,紊wěn/wèn,羔gāo,烘hōng,烙lào/luò,涝lào,涡wō/guō,涣huàn/huì,涤dí,涧jiàn,涕tì,烫tàng,涩sè,悖bèi/běi,悍hàn,悯mǐn,宵xiāo,窍qiào,诽fěi,袜wà/mò,袍páo/bào,冥míng/mián/miàn,冤yuān,谅liàng,谆zhūn,恳kěn,祟suì,娟juān,恕shù,娥é,绢juàn,骏jùn,琐suǒ,琉liú,琅láng/làng,捺nà,焉yān/yí,捶chuí/duǒ,赦shè/cè,埠bù,捻niǎn/niē/niān,掐qiā,掂diān,掷zhì/zhī,掺càn/chān/shǎn,聆líng,勘kān,菱líng,菩pú/bèi/bó,菠bō,萤yíng,乾qián/gān,彬bīn/bān,婪lán/lǎn,梗gěng,梧wú/wù/yǔ,梳shū,梭suō/xùn,酝yùn,酗xù,硕shuò,奢shē,盔kuī,聋lóng,匾biǎn,颅lú,彪biāo,眶kuàng,眯mī/mí/mǐ/mì,啪pā,晦huì,啄zhuó/zhòu,啃kěn,蛀zhù,唬hǔ/xiāo/guó/xià/háo,鄂è,啰luō/luó/luo,啤pí,啸xiào,崎qí/qǐ/yī,崭zhǎn,崔cuī,帷wéi,崛jué/yù,铐kào,铛dāng/chēng,铭míng,铲chǎn,矫jiǎo/jiáo,秸jiē/jí,秽huì,笨bèn,笙shēng,偎wēi,兜dōu,衅xìn,徘pái,徙xǐ/sī,舶bó,舵duò,敛liǎn,脯pú/fǔ,豚tún/dūn/dùn,凰huáng,猖chāng,祭jì/zhài,馅xiàn,烹pēng,庶shù/zhù/zhē,庵ān/yǎn/è,痊quán,庸yōng/yóng,阎yán,眷juàn,焊hàn,焕huàn,涯yá,渠qú/jù,淑shū/chù,淌tǎng/chàng/chǎng,淆xiáo,渊yuān,淫yín/yàn/yáo,淳chún/zhūn/zhǔn,淤yū,涮shuàn/shuā,涵hán/hàn,惭cán,悼dào,惕tì,惦diàn,悴cuì,惋wǎn,寇kòu,寅yín,窒zhì/dié,窑yáo,谍dié,谎huǎng,袱fú,祷dǎo,谚yàn,尉wèi/yù/yùn,隋suí/duò/tuǒ/tuō,堕duò/huī,隅yú,婉wǎn,绰chuò/chāo,绷bēng/běng/bèng,绽zhàn,缀zhuì,琳lín,琢zuó/zhuó,琼qióng,揍zòu/còu,堰yàn,揩kāi/jiá,揽lǎn,彭péng/páng/bāng/pēng,揣chuāi/chuǎi/chuài/duǒ/zhuī,揪jiū,搀chān,搁gē/gé,搓cuō/cuǒ/chāi,搂lǒu/lōu,壹yī/yīn,搔sāo/sào,揉róu,募mù/bó,董dǒng/zhǒng,蒂dì,辜gū,棱léng/lēng/líng/lèng/chēng,椰yē,焚fén/fèn,椒jiāo,椎chuí/zhuī,棺guān/guàn,榔láng/lǎng,椭tuǒ,粟sù,棘jí,酣hān/hàn,酥sū,颊jiá,雳lì,翘qiào/qiáo,凿záo/zuò,敞chǎng/chèng/zhèng,棠táng,睐lài,鼎dǐng/zhēn,喳zhā/chā/zha,遏è,晾liàng,畴chóu,跋bá/bèi,跛bǒ/bì/pō,蜒yán/yàn/dàn,蛤há/gé/hā/é,鹃juān,喧xuān/xuǎn,嵌qiàn/hǎn/kàn,赎shú,赐cì,铸zhù,锄chú,锈xiù,锌xīn,甥shēng,掰bāi,毯tǎn,筐kuāng,筛shāi,筏fá,筝zhēng,皓hào/huī,皖wǎn/huàn,粤yuè,逾yú/dòu,腋yè,腕wàn,猬wèi,猾huá,惫bèi,馈kuì,馋chán,斌bīn,痘dòu,痢lì,痪huàn/tuǎn,竣jùn,羡xiàn/yán/yí,奠diàn/tíng/dìng/zhèng/zūn,滞zhì,渤bó,渺miǎo,溅jiàn/jiān,湃pài/bá,渝yú/yū,渲xuàn,惰duò/tuó,愕è,惶huáng,窜cuàn,窖jiào/zào,窘jiǒng,雇gù/hù,禅chán/shàn,禄lù,谣yáo,谤bàng,犀xī,屡lǚ,粥zhōu/yù,隘ài/è,絮xù/chù/nǜ/nà,媚mèi,婿xù,缅miǎn,缆lǎn,缉jī/qī,缎duàn,缔dì,缕lǚ,骚sāo,瑟sè,鹉wǔ,瑰guī,瑙nǎo,肆sì/tì,聘pìn/pìng,斟zhēn,靴xuē,靶bǎ/bà,蓉róng,椿chūn,楷kǎi/jiē/jiè,榄lǎn,槐huái,榆yú,酪lào/luò/lù,碘diǎn,尴gān,雹báo,睹dǔ,睦mù,瞄miáo,睫jié/shè,睬cǎi,嗜shì,鄙bǐ,嗦suo/suō,暇xiá/xià/jiǎ,畸jī/qí,跷qiāo,跺duò,跪guì,跤jiāo/qiāo,蜈wú,蜗wō,蛾é/yǐ,蜕tuì/yuè,嗡wēng/wěng,蜀shǔ,幌huǎng,锚máo,锣luó,锥zhuī,锯jù/jū,锰měng,稚zhì,稠chóu/tiáo/diào,颓tuí,筷kuài,魁kuí/kuǐ/kuài,衙yá/yú/yù,腻nì,腥xīng,腮sāi,鲍bào,猿yuán,颖yǐng,煞shā/shà,雏chú,馍mó,馏liú/liù,酱jiàng,禀bǐng,痹bì,廓kuò,痴chī,痰tán,靖jìng,誊téng,煎jiān/jiàn/jiǎn,滇diān/tián/zhēn,滔tāo,漓lí,溯sù/shuò,溺nì/ruò/niào,粱liáng,寞mò,窥kuī,窟kū,寝qǐn,谨jǐn,褂guà,谬miù,嫉jí,缚fù,缤bīn,剿jiǎo/chāo,赘zhuì,墟xū,摧cuī/zuì/cuò,誓shì,撇piē/piě/biē,暮mù,摹mó/mō,蔓màn/mán/wàn,蔑miè,蔗zhè,蔼ǎi,蔚wèi/yù,兢jīng,槛kǎn/jiàn,榴liú,榜bǎng/bēng/bàng/páng/péng,榨zhà,榕róng,酵jiào,碟dié/shé,辗niǎn/zhǎn,裳shang/cháng,墅shù/yě,嗽sòu/shuò/shù,踊yǒng,蜻qīng/jīng,蝉chán,嘀dí/zhé/dī,锹qiāo,镀dù,舔tiǎn/tān,熏xūn/xùn,箕jī,箩luó,箫xiāo,舆yú,魄pò/bó/tuò,魅mèi,馒mán,膏gāo/gào,瘩dā/da/dá,瘟wēn/wò/yūn,彰zhāng,粹cuì/suì,歉qiàn,弊bì,熄xī,煽shān,潇xiāo,漱shù,漾yàng,慷kāng,寨zhài/sè/qiān,寡guǎ,寥liáo,谭tán,肇zhào,褪tuì/tùn,隧suì/zhuì,骡luó,撵niǎn,撩liāo/liáo/liǎo/lào/liào,撮cuō/zuǒ/zuì/zuān/chuā,撬qiào,擒qín,墩dūn,撰zhuàn/xuǎn/suàn,鞍ān,蕉jiāo/qiáo/qiāo,蕊ruǐ/juǎn,樱yīng,樟zhāng,橄gǎn,敷fū,豌wān,醋cù/zuò,磕kē/kě,磊lěi,磅bàng/páng/pāng,碾niǎn,霄xiāo/xiào,瞒mán,嘶sī,嘲cháo/zhāo,嘹liáo/liào,蝎xiē/hé,蝌kē,蝗huáng,幢chuáng/zhuàng,镐gǎo/hào,镑bàng,稽jī/qǐ,篓lǒu,僻pì,膛táng/tāng,鲫jì,褒bāo,瘪biě/biē,瘫tān,凛lǐn,憋biē,澎pēng/péng,鲨shā,潘pān/pàn/bō/pán/fān,澈chè,澜lán,澄chéng/dèng,憔qiáo,懊ào/yù,憎zēng,翩piān,褥rù/nù,谴qiǎn,憨hān,劈pī/pǐ,缭liáo,撼hàn,擂léi/lèi/lēi,擅shàn,薛xuē,薇wēi,擎qíng,薪xīn,翰hàn,噩è,橱chú,霎shà,辙zhé,冀jì,踱duó/chuò,蹂róu/rǒu,蟆má/mò,螃páng/bǎng,鹦yīng,黔qián,篡cuàn,篷péng,篱lí,瘾yǐn,瘸qué,糙cāo,糕gāo,濒bīn,澡zǎo/cāo,憾hàn/dàn,懈xiè,窿lóng,缰jiāng,缴jiǎo/zhuó,藉jí/jiè,鞠jū/qū/qiōng,藐miǎo/mò,檬méng,檐yán/dān,檀tán/shàn,瞭liǎo/liào,瞳tóng,瞩zhǔ,曙shǔ,蹋tà,蟋xī,蟀shuài,嚎háo,赡shàn,簧huáng,簇cù/chuò/còu,爵jué,朦méng/mǎng,臊sāo/sào,辫biàn,糠kāng,懦nuò,豁huō/huò/huá,臀tún,藕ǒu,瞻zhān,蹦bèng,嚣xiāo/áo,镰lián,鳍qí,瀑pù/bào/bó,襟jīn,璧bì,戳chuō,孽niè,曝pù/bào,蹭cèng/céng,蹬dēng/dèng,巅diān,簸bǒ/bò,簿bù/bó,靡mí/mǐ/má,癣xuǎn,羹gēng/láng,鳖biē,鬓bìn,馨xīn,蠕rú,巍wēi,鳞lín,糯nuò,蠢chǔn,霹pī,躏lìn,黯àn/ān,赣gàn,镶xiāng,瓤ráng,矗chù',HZT1='一乙二十丁厂七卜八人入儿几九了刀力乃又三干于亏工土士才下寸大丈与万上小口山巾千川亿个夕久么凡丸及广亡门义之尸己已弓子卫也女飞习叉马乡丰王开井天夫元无云专扎艺木五支厅不犬太区历友尤匹车巨牙戈比互切瓦止少曰日中贝内水见午牛手气毛升长仁什片化仇币仍仅斤爪反介父从今凶分乏公仓月氏欠风丹匀乌勾凤六文方火为斗忆计订户认心尺引丑巴孔队办以允予邓劝双书幻玉刊未末示击打巧正扑功扔去甘世艾古节本术可丙左厉石右布龙平灭东卡北占卢业旧帅归旦目且叶甲申叮电号田由只叭史央兄叫另叹凹四生失丘付仗代仙们仪白仔他斥瓜乎丛令用甩印尔乐句匆册犯外处冬鸟务包饥主市立冯玄闪兰半汁汇头汉宁穴它讨写让礼训议必讯记永司尼民弗出辽奶奴召加皮边孕发圣对台矛纠母幼丝邦式刑动寺吉扣考托老巩圾执扩扫地场扬耳共芒亚芝朽朴机权过臣再协西压厌在百有存而页匠夸夺灰达列死成夹夷轨划迈毕至此师尘尖劣光当早吁吐吓虫曲团同吊吃因吸吗岁帆回岂则刚网肉年朱先丢廷舌竹迁乔伟传休伍伏优伐延仲件任伤价伦份华仰仿伙伪自伊血向似后行舟全会杀合兆企众爷伞创肌朵杂危旨负匈名各多争色壮冲冰庄庆亦刘齐交衣次产决充闭问闯羊并关米灯州汗污江池汤忙兴宇守宅字安讲军许论农设访寻那迅尽导异孙阵阳收阶阴防如妇好她妈戏羽观欢买红纤约级纪驰巡寿弄麦玛形进戒吞远违运扶抚坛技坏扰拒找批址扯走抄贡坝攻赤折抓扮抢孝均抑抛投坟坑抗坊抖护壳志块扭声把报拟却抒劫芽花芬苍芳严芦劳克苏杆杜材村杏杉极李杨求更束吾豆两丽医励否还来连步坚旱盯呈时吴助县里呆园围呀吨足邮男困吵串员听吟吻吹吧吼别岗帐财针钉牡告我乱利秀私每兵估体何但伸作伯低你住位伴身皂佛近彻役返余希坐谷妥含邻肝肚肠龟免狂犹角条卵岛迎饭饮系言冻状亩况床库疗应这冷序辛弃冶忘闲间闷判灶灿弟汪沙汽沃泛没沟沉怀忧快完宋宏牢究穷灾良证启评补初社识诉罕诊词译君灵即层屁尿尾迟局改张忌际陆阿陈阻附妙妨努忍劲矣鸡纬驱纯纱纲纳驳纵纷纸纹纺驴纽奉玩环武青责现玫表规抹拓拢拔坦担抽拐拖者拍顶拆拥抵势抱垃拉拦幸招坡披拨择抬拇其取苦若茂苹苗英范直茄茎茅林枝杯枢柜枚析板松枪枫构杭杰述枕丧或画卧事刺枣雨卖郁矿码奈奔奇奋态欧垄妻轰顷转轮软到非叔歧肯齿些虎肾贤尚旺具味果昆国哎咕昌呵畅明易昂迪典固忠呼鸣呢岸岩罗帕岭凯败账贩购贮图钓制知垂牧物刮和季委佳侍岳供使例版侦侧凭佩货依卑的迫质欣征往爬彼径所舍金刹命爸采受乳贪念贫肤肺肢肿胀朋股肪肥服胁周昏鱼兔狐忽狗备饰饱饲变京享庞店夜庙府底剂郊废净盲放刻育闹郑券卷单炒炕炎炉沫浅法泄河沾泪油泊沿泡注泻泌泳泥沸波泼泽治性怕怜怪学宝宗定宜审宙官空帘实试郎诗肩房诚衬衫视话诞询该详建肃录隶居届刷屈弥弦承孟陌孤陕降函限妹姑姐姓始姆驾参艰线练组细驶织终驻驼绍经贯契奏春帮珍玲珊玻毒型挂封持拱项城政赴赵挡挺括拾挑指垫挣挤拼挖按挥挪某甚革巷带草茶荒茫荡荣故胡南药标枯柄相查柏柳柱栏树勃要咸威歪研砖厘厚砌砂砍面耐耍牵残轴轻鸦皆背战点临览竖省削尝是盼眨哇哄哑显冒映星昨胃贵界虹虾蚁思蚂虽品咽骂哗咱响哈咬咳哪哟炭峡罚贴骨幽钙钟钢钠钥钩卸缸拜看矩氢怎牲选适秒香种秋科重复段便俩顺修保促俄俗信皇泉鬼侵侯追俊盾待衍律很须叙剑逃食盆胚胆胜胞胖脉胎勉狭狮独狱狠贸怨急饶蚀饼弯将奖哀亭亮度迹庭疯疫姿亲音帝施闻阀阁差养美姜叛送类迷籽前首逆兹总炼炸炮烂洁洪洒浇洞测洗活派染洛济洋洲浑浓津恒恢恰恼恨举觉宣室宫宪突穿窃客冠语扁祖神祝误诱说退既屋屏费陡眉孩除险院娃姨娇娜怒架贺盈勇柔绒结绕骄绘给骆络绝统耕耗艳泰秦珠班素蚕顽捞栽捕振载赶起盐捏埋捉损袁都哲逝换挽热恐壶埃挨恭莱莲莫莉荷获晋恶真桂栖桐株桥桦桃格桩校核样根索哥速贾配翅辱唇夏砸础破原套逐烈殊顾轿较顿致柴桌虑监紧党晒眠晓鸭晃晕蚊蚓哨哩哭哦恩唤哼啊唉罢峰圆峻贼钱钻钾铁铃铅缺氧氨特牺造乘敌租积称秘透笔笑笋债借值俺倾倒俱倡候倍倦健臭射息徒徐舰舱般航途拿耸爹爱豹颁颂翁脆脂胸胳脏胶脑狼逢留皱饿凌恋浆衰高郭席准座症病疾疼疲脊效离唐瓷资凉站剖竞部旁旅畜阅羞瓶拳粉料益兼烤烦烧烛烟递涛浙浦酒涉消浩海涂浴浮流润浪浸涨涌悟悄悔悦害宽家宴宾窄容宰案请朗诸诺读扇袖被祥课谁调谈谊剥展剧屑弱陵陶陷陪娱娘通能难预桑绣验继球理捧堵措描域掩捷排掉堆推掀授教掏掠培接控探据掘职基聊娶著勒黄菲萌萝菌萎菜萄菊萍营萧萨菇械梦梢梅检梯桶救曹副票厢戚硅爽袭盛雪辅辆虚雀堂常匙晨睁眼悬野啦曼晚啡距趾跃略蚯蛇累唱患唾唯啥崖逻崩崇婴圈铝铜银甜梨犁移笼笛符第敏做袋悠偿偶偷您售停偏躯假得衔盘船斜盒鸽悉欲彩领脚脖脸脱象够逸猜猪猎猫猛馆凑减毫麻痒痕廊康鹿盗章竟商族旋望率阐着羚盖粘粗粒断剪兽清添鸿淋淹渐混淮渔淘液淡淀深婆梁渗情惜惧惟惊惨惯寄寂宿密谋谐祸谓谜逮敢屠弹随蛋隆隐婚婶颇颈绩绪续骑绳维绵绸综绿巢琴斑替款堪塔搭越趁趋超堤提博揭喜插搜煮援裁搅握斯期欺联葫散惹葬葛葡敬葱蒋落韩朝葵棒棋植森椅棵棍棉棚棕惠惑逼厨厦硬硝确硫雁殖裂雄暂雅辈悲紫辉赏掌晴暑最晰量喷晶喇遇喊景践跌跑遗蛙蛛蜓喝喂喘喉喻啼幅帽赋赌赔黑铺链销锁锅锋锐短智氮氯鹅剩稍程稀税等筑策筒答筋傲傅牌堡集焦傍储奥街惩御循艇舒番释禽腊脾腔鲁猩猴然装蛮就敦痛童阔善翔普粪尊道遂曾焰港湖湘渣湿温渴溃滑湾渡游滋溉愤慌愣愧愉慨割寒富寓窝窗遍裕裤裙谢谦属强疏隔隙媒嫂登缓骗编缘瑞魂摄摸填搏塌鼓摆携搬摇搞塘摊蒜勤鹊蓝墓幕蓬蓄蒲蒙蒸献禁楚想楼概赖酬感碍碑碎碰碗碌雷零雾辐辑输督频龄鉴睛睡愚暖盟歇暗照跨跳路跟遣蜂嗅嗓署置罪罩错锡锤锦键矮辞愁筹签简毁舅鼠催傻像躲微愈遥腰腹腺鹏腾腿触解廉新韵意粮数塑慈煤煌满漠源滤滥溪溜滚溢滨溶滩慎誉塞裸福群殿辟障媳嫌嫁叠缝缠静碧璃熬墙嘉赫截境摘摔聚慕蔡蔽熙模歌遭酷酿酸碱碳磁愿需辖雌颗瞅蜡蝇蜘嘛赚锻舞稳算管僚僧鼻貌膜膊膀鲜疑孵裹敲豪遮腐瘦辣竭端旗精熔漆漂漫滴演漏慢赛察蜜褐谱嫩翠熊凳缩慧撕撒趣趟撑播撞撤增聪鞋蔬蕴横槽橡飘醇醉震霉题暴瞎嘻影踢踏踩踪蝶蝴蝠蝙嘿嘱墨镇靠稻黎稿稼箱箭篇僵躺德艘膝鲤熟摩瘤颜毅糊遵潜潮潭澳懂额鹤慰履豫操燕蕾薯薄颠橙橘整融瓢醒霍餐嘴蹄器噪赠默镜赞穆篮儒邀衡膨雕鲸磨凝辨辩糖燃激懒壁避戴擦藏礁磷霜霞瞧瞬瞪蹈螺穗魏繁徽鳄癌赢糟燥臂翼骤鞭藤覆翻鹰警蘑藻攀蹲蟹颤瓣爆疆壤耀躁嚼嚷籍魔灌譬霸露髓囊罐';
+/* ---------- 汉字库: every character a primary student must know (义务教育语文课程常用字表: 字表一 2500 = read+write, 字表二 1000 = read) ---------- */
+const HZ_CACHE={};
+function hzAll(){if(HZ_CACHE.all)return HZ_CACHE.all;
+  const mk=(raw,g)=>raw.split(",").map(e=>{const p=e.slice(1).split("/");return{c:e[0],py:p[0],alt:p.slice(1),g,w:HZT1.includes(e[0])}});
+  const all=mk(HZA,"A").concat(mk(HZB,"B"),mk(HZC,"C"));HZ_CACHE.all=all;HZ_CACHE.m=Object.fromEntries(all.map(x=>[x.c,x]));return all}
+const hzBase=p=>p.normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase();
+function hzOpts(x,r){const ok=[x.py].concat(x.alt),b=hzBase(x.py);
+  if(!HZ_CACHE.pys)HZ_CACHE.pys=[...new Set(hzAll().map(y=>y.py))];
+  const sc={};HZ_CACHE.pys.forEach(p=>{sc[p]=(hzBase(p)===b?0:p[0]===b[0]?1:2)+r()*0.9});
+  const ds=HZ_CACHE.pys.filter(p=>!ok.includes(p)).sort((a,c)=>sc[a]-sc[c]).slice(0,3);return shuffle(r,[x.py].concat(ds))}
+function hzToday(){hzAll();S.hz=S.hz||{c:{}};const st=S.hz.c,d=day();
+  if(!d.hzN){const n=(S.settings&&S.settings.busy)?3:5;d.hzN=HZ_CACHE.all.filter(x=>!st[x.c]).slice(0,n).map(x=>x.c);
+    d.hzN.forEach(c=>{st[c]={d:TODAY,s:0,due:TODAY,n:0,k:0}})}
+  if(!d.hzR){const n=(S.settings&&S.settings.busy)?3:5;d.hzR=Object.keys(st).filter(c=>st[c].d<TODAY&&st[c].due<=TODAY&&!d.hzN.includes(c)).sort((a,b)=>st[a].due<st[b].due?-1:1).slice(0,n)}
+  return{n:d.hzN.map(c=>HZ_CACHE.m[c]),r:d.hzR.map(c=>HZ_CACHE.m[c]).filter(Boolean)}}
+function hzProgress(){const t=hzToday(),d=day(),h=d.hz||{};const all=t.n.concat(t.r);return{done:all.filter(x=>h[x.c]).length,total:all.length,ok:all.filter(x=>h[x.c]==="ok").length}}
+function hzAnswer(c,pick){const x=HZ_CACHE.m[c];if(!x)return;const d=day();d.hz=d.hz||{};if(d.hz[c])return;
+  const ok=[x.py].concat(x.alt).includes(pick);d.hz[c]=ok?"ok":"fix";
+  const s=S.hz.c[c]=S.hz.c[c]||{d:TODAY,s:0,due:TODAY,n:0,k:0};const first=s.n===0;s.n++;
+  if(ok){s.k++;s.s=first?2:Math.min(s.s+1,4)}else s.s=0;s.due=addDays(TODAY,[1,2,5,12,30][s.s]);s.last=TODAY;save();render()}
+function hzCard(x,isNew,r){const d=day(),res=(d.hz||{})[x.c];const opts=hzOpts(x,r);
+  const words=POOL.filter(w=>w[0].includes(x.c)).slice(0,3);
+  return `<div class="card"><div class="row" style="gap:12px;align-items:center"><div style="font-size:3.2rem;line-height:1;font-weight:700">${esc(x.c)}</div>
+   <div style="flex:1"><span class="chip ${isNew?"zh":"ela"}">${isNew?"新字":"复习"}</span> <span class="chip">${x.w?"会认 + 会写":"会认"}</span>${x.g==="A"?` <span class="chip">一年级上册</span>`:""}
+   <div class="small muted" style="margin-top:4px">这个字怎么读？${x.alt.length?" (多音字)":""}</div></div><button class="icon-btn" data-say="${esc(x.c)}">🔊</button></div>
+   ${res?`<div style="margin-top:8px">${res==="ok"?`<span class="chip good">✓ 对了</span>`:`<span class="chip warn">明天再来一次</span>`} <b>${esc(x.py)}</b>${x.alt.length?` <span class="small muted">也读 ${esc(x.alt.join("、"))}</span>`:""}
+    ${words.length?`<div class="small" style="margin-top:4px">${words.map(w=>esc(w[0])+" "+esc(w[1])).join(" · ")}</div>`:""}<div class="small muted" style="margin-top:4px">在纸上写两遍。</div></div>`
+   :`<div class="row" style="gap:8px;margin-top:10px;flex-wrap:wrap">${opts.map(o=>`<button data-hzpick="${esc(x.c)}|${esc(o)}">${esc(o)}</button>`).join("")}</div>`}</div>`}
+function vHz(){const all=hzAll(),t=hzToday(),p=hzProgress(),st=S.hz.c;const r=rng("hz"+TODAY);
+  const seen=Object.keys(st).length,known=Object.values(st).filter(s=>s.s>=2).length;
+  let h=`<div class="card"><div class="eyebrow">汉字库 · Hanzi library</div><h3 style="margin:4px 0">${all.length} characters · ${seen} seen · ${known} known</h3>
+   <p class="small" style="margin:0">Every character a primary student must know: <b>字表一 2500</b> (read + write) and <b>字表二 1000</b> (read). The 300 from the textbook 一年级上册 come first, then the rest from simple to complex. Each day: ${t.n.length} new characters + ${t.r.length} to review. A character she gets right on the first try moves on quickly; a miss comes back tomorrow.</p>
+   <div class="bar" style="margin:8px 0"><i style="width:${Math.round(100*p.done/Math.max(1,p.total))}%;background:var(--good)"></i></div><div class="small muted">Today: ${p.done}/${p.total} done · ${p.ok} right</div></div>`;
+  h+=t.n.map(x=>hzCard(x,true,r)).join("")+t.r.map(x=>hzCard(x,false,r)).join("");
+  if(!t.n.length&&!t.r.length)h+=`<div class="card"><p class="small muted">Nothing due today. 🎉</p></div>`;
+  const grp=[["A","一年级上册 识字表 (300)"],["B","字表一 · 会认 + 会写 (其余)"],["C","字表二 · 会认 (其余)"]];
+  grp.forEach(g=>{const xs=all.filter(x=>x.g===g[0]);const k=xs.filter(x=>(st[x.c]||{}).s>=2).length;
+   h+=`<div class="card"><details><summary><b>${g[1]}</b> <span class="small muted">${xs.length} chars · ${k} known</span></summary><div class="hzg" style="margin-top:8px">${xs.map(x=>{const s=st[x.c];return `<span class="hzc ${s?(s.s>=2?"k1":"k0"):""}" title="${esc([x.py].concat(x.alt).join(" / "))}">${esc(x.c)}<small>${esc(x.py)}</small></span>`}).join("")}</div></details></div>`});
+  h+=`<p class="small muted">Source: 义务教育语文课程常用字表 (字表一/字表二, a 2011-era list: the 2022 standard differs slightly). Pinyin is the most common reading; characters with more than one reading show the others.</p>`;
+  return h}
+
+/* ---------- math library (题库): a fixed bank per skill; each day draws problems she has not done yet ---------- */
+const LIBN=60,LIB_START="2026-11-11",LIBC={};
+function libBank(k){if(LIBC[k])return LIBC[k];const out=[],seen=new Set();
+  if(G[k])for(let i=0;i<500&&out.length<LIBN;i++){let q;try{q=G[k](rng("lib|"+k+"|"+i))}catch(e){continue}
+    if(!q||!q.prompt||seen.has(q.prompt))continue;seen.add(q.prompt);out.push(Object.assign({},q,{libI:out.length}))}
+  return LIBC[k]=out}
+function libPick(k,tag,old,taken){
+  if(TODAY<=LIB_START||!libBank(k).length)return G[k](rng(TODAY+k+old));
+  const bank=libBank(k),used=(S.lib&&S.lib[k])||{};
+  let av=bank.filter(b=>!(used[b.libI]&&used[b.libI]<TODAY)&&!taken.has(k+"#"+b.libI));
+  if(!av.length){const ord=bank.filter(b=>!taken.has(k+"#"+b.libI)).sort((a,b)=>((used[a.libI]||"")<(used[b.libI]||"")?-1:1));av=ord.slice(0,Math.max(1,Math.ceil(ord.length/3)))}  // whole bank done → start a new round with the oldest
+  if(!av.length)av=bank;
+  const b=av[Math.floor(rng(TODAY+k+tag)()*av.length)];taken.add(k+"#"+b.libI);return Object.assign({},b)}
+let PLANSEL=null;
+function vPlan(){const done=Math.min(30,S.eUnit||0);const cur=Math.min(30,done+1);const sel=PLANSEL||cur;const i=(sel-1)%UNITS.length,u=UNITS[i];
+  const strip=Array.from({length:30},(_,k)=>{const n=k+1;const st=n<=done?"done":n===cur?"now":"";return `<button data-plan="${n}" style="min-width:58px;flex:0 0 auto;border-radius:12px;padding:8px 6px;border:2px solid ${n===sel?"#1f6e5a":"#ddd"};background:${st==="done"?"#cfe8df":st==="now"?"#1f6e5a":"#fff"};color:${st==="now"?"#fff":"#222"};font-weight:700">DAY<br><span style="font-size:20px">${n}</span>${st==="now"?'<div style="font-size:11px">today</div>':st==="done"?'<div style="font-size:11px">✓</div>':""}</button>`}).join("");
+  const row=(ic,lab,txt)=>`<div style="margin-top:12px"><div class="eyebrow">${ic} ${lab}</div><div style="font-size:17px;margin-top:2px">${esc(txt)}</div></div>`;
+  return `<div class="card" style="background:#d8ebe5;border:2px solid #7fb5a4"><div class="eyebrow">English 30-day plan · Reading · Writing · Science · Social Studies</div>
+   <h3 style="margin:4px 0">${done}/30 days done</h3><div class="bar"><i style="width:${Math.round(done/30*100)}%;background:var(--good)"></i></div>
+   <p class="small muted" style="margin:6px 0 0">One new unit every day: a story, questions, a writing task, plus a science and a social studies idea. Finish a unit in Reading+ to tick the day.</p></div>
+   <div style="display:flex;gap:8px;overflow-x:auto;padding:10px 2px">${strip}</div>
+   <div class="card"><div class="eyebrow">Day ${sel}${sel===cur?" · today":sel<=done?" · done":""}</div><h3 style="margin:4px 0">${esc(u.t)}</h3>
+   ${row("📖","Reading","Read the story \""+u.t+"\" and answer the questions")}
+   ${row("✍️","Writing · "+u.w.type,u.w.prompt)}
+   ${row("🔬","Science",u.sci)}
+   ${row("🌎","Social Studies",u.ss)}
+   ${sel===cur?`<button class="ela" data-go="ela" style="margin-top:14px">Start today's unit</button>`:""}</div>`}
+document.addEventListener("click",e=>{const b=e.target.closest("button[data-plan]");if(!b||!S)return;PLANSEL=+b.dataset.plan;render()});
+function vLib(){
+  const groups=[["5.OA","Operations & Algebraic Thinking 运算与代数"],["5.NBT","Number & Operations in Base Ten 多位数与小数"],["5.NF","Fractions 分数"],["5.MD","Measurement & Data 测量与数据"],["5.G","Geometry 几何"],["","Warm-ups & challenge 热身与挑战"]];
+  const keys=ALL_M.filter((k,i)=>ALL_M.indexOf(k)===i&&G[k]).concat(["olymp","cToF","div9","dh"].filter(k=>G[k]&&!ALL_M.includes(k)));
+  const gOf=k=>{const s=STD[k]||"";const i=groups.findIndex(g=>g[0]&&s.startsWith(g[0]));return i<0?groups.length-1:i};
+  let tot=0,done=0;keys.forEach(k=>{const b=libBank(k);tot+=b.length;done+=b.filter(x=>((S.lib||{})[k]||{})[x.libI]).length});
+  let h=`<div class="card"><div class="eyebrow">Math library · 数学题库</div><h3 style="margin:4px 0">${tot} problems · ${done} done · ${tot-done} new</h3>
+   <p class="small" style="margin:0">Every kind of problem the school's 5th-grade standards ask for. Each day Phoebie gets problems she has <b>not done yet</b>; when a whole set is used up it starts a new round with the oldest. (Starts tomorrow, 11/12.) Tap a skill to see all its problems and answers.</p></div>`;
+  groups.forEach((g,gi)=>{const ks=keys.filter(k=>gOf(k)===gi);if(!ks.length)return;
+    h+=`<div class="card"><div class="eyebrow">${esc(g[1])}</div>`+ks.map(k=>{const b=libBank(k),u=(S.lib||{})[k]||{},n=b.filter(x=>u[x.libI]).length,s=S.skill[k],acc=s&&s.a?Math.round(100*s.c/s.a)+"% first try":"not tried yet";
+      return `<details style="margin-top:8px"><summary><b>${esc(SK[k]||k)}</b> <span class="chip">${esc(STD[k]||"")}</span> <span class="small muted">${n}/${b.length} done · ${acc}</span></summary>
+       <ol class="small" style="margin:6px 0 0;padding-left:22px">${b.map(x=>`<li style="margin:4px 0">${u[x.libI]?`<span class="chip good">✓ ${esc(String(u[x.libI]).slice(5))}</span> `:""}${esc(x.prompt)} <b>→ ${esc(String(x.show))}</b></li>`).join("")}</ol></details>`}).join("")+`</div>`});
+  h+=`<div class="card"><div class="eyebrow">Explain It · 讲道理题</div><details><summary><b>${EXPLAINS.length} explain-your-thinking problems</b> <span class="small muted">one a day, in rotation</span></summary><ol class="small" style="padding-left:22px">${EXPLAINS.map(e=>`<li style="margin:4px 0">${esc(e.title)}</li>`).join("")}</ol></details></div>`;
+  return h}
 function mathSet(){
-  const r=rng("m"+TODAY);const due=frozen("mRev",()=>dueNow("m:").map(x=>x.k.slice(2)).filter(k=>G[k]));
+  const r=rng("m"+TODAY);const taken=new Set();const L=(k,tag,old)=>libPick(k,tag,old,taken);const due=frozen("mRev",()=>dueNow("m:").map(x=>x.k.slice(2)).filter(k=>G[k]));
   const list=[];const add=k=>{if(list.length<12)list.push(k)};
   const busy=S.settings&&S.settings.busy;const foc=focusSkills();
   add(new Date().getDate()%2?"x11":"dh");          // one warm-up (alternates)
@@ -542,15 +670,18 @@ function mathSet(){
   if(!busy)shuffle(r,ALL_M.filter(k=>!foc.includes(k)&&S.skill[k]&&S.skill[k].a)).forEach(k=>{if(!list.includes(k)&&list.length<10)add(k)});
   if(!busy)shuffle(r,ALL_M).forEach(k=>{if(!list.includes(k)&&list.length<10)add(k)});
   const easy=list.slice(0,1),rest=shuffle(r,list.slice(1));
-  const qs=easy.concat(rest).map((k,i)=>Object.assign({k,id:"q"+i},G[k](rng(TODAY+k+i))));
+  const qs=easy.concat(rest).map((k,i)=>Object.assign({k,id:"q"+i},L(k,"q"+i,i)));
   const ex=EXPLAINS[Math.floor((new Date(TODAY).getTime()/864e5))%EXPLAINS.length];
   {const weak=ALL_M.filter(k=>G[k]&&S.skill[k]&&S.skill[k].a>=4&&S.skill[k].c/S.skill[k].a<0.7).sort((x,y)=>S.skill[x].c/S.skill[x].a-S.skill[y].c/S.skill[y].a).slice(0,3);
-    weak.forEach((k,i)=>qs.push(Object.assign({k,id:"ax"+i},G[k](rng(TODAY+k+"ax"+i)))))}
+    weak.forEach((k,i)=>qs.push(Object.assign({k,id:"ax"+i},L(k,"ax"+i,"ax"+i))))}
   if(!(S.settings&&S.settings.busy)){const cut=addDays(TODAY,-45);const m=(S.mastered||[]).filter(x=>x.k.startsWith("m:")&&G[x.k.slice(2)]&&(x.chk||x.on)<=cut).sort((x,y)=>(x.chk||x.on)<(y.chk||y.on)?-1:1)[0];
-    if(m)qs.push(Object.assign({k:m.k.slice(2),id:"mc0",mc:1},G[m.k.slice(2)](rng(TODAY+m.k+"mc"))))}
-  if(!(S.settings&&S.settings.busy)){const PV=["fracAdd","fracAsDiv","fracMul","scaling","fracDiv","unitFracDiv","volume","convert","expr","coord","shapes"];const wk=Math.floor((new Date(TODAY+"T12:00")-new Date("2026-11-02T12:00"))/(7*864e5));
-    if(wk>=0){const k=PV[wk%PV.length];if(G[k])[0,1].forEach(i=>qs.push(Object.assign({k,id:"pv"+i,pv:1},G[k](rng(TODAY+k+"pv"+i)))))}}
-  {const bk=(S.bonusPlan||{})[TODAY]||(S.bonus&&S.bonus.date===TODAY?S.bonus.k:null);if(bk)bk.forEach((k,i)=>qs.push(Object.assign({k,id:"bx"+i},G[k](rng(TODAY+k+"bx"+i)))));}
+    if(m)qs.push(Object.assign({k:m.k.slice(2),id:"mc0",mc:1},L(m.k.slice(2),"mc",m.k.slice(2)+"mc")))}
+  if(!(S.settings&&S.settings.busy)){const PV=["fracAdd","fracAsDiv","fracMul","scaling","fracDiv","unitFracDiv","volume","convert","expr","coord","shapes","fracReason","fracWord","pattern2","linePlot","primeFact"];const wk=Math.floor((new Date(TODAY+"T12:00")-new Date("2026-11-02T12:00"))/(7*864e5));
+    if(wk>=0){const k=PV[wk%PV.length];if(G[k])[0,1].forEach(i=>qs.push(Object.assign({k,id:"pv"+i,pv:1},L(k,"pv"+i,"pv"+i))))}}
+  if(!busy){const GAPS=["primeFact","pattern2","linePlot","fracWord","fracReason"];  // school standards the app did not cover before: 1 question/day until tried 6 times
+    const g=GAPS.filter(k=>((S.skill[k]||{}).a||0)<6).sort((x,y)=>((S.skill[x]||{}).a||0)-((S.skill[y]||{}).a||0)||GAPS.indexOf(x)-GAPS.indexOf(y))[0];
+    if(g&&!qs.some(q=>q.k===g))qs.push(Object.assign({k:g,id:"gp0",gp:1},L(g,"gp0","gp0")))}
+  {const bk=(S.bonusPlan||{})[TODAY]||(S.bonus&&S.bonus.date===TODAY?S.bonus.k:null);if(bk)bk.forEach((k,i)=>qs.push(Object.assign({k,id:"bx"+i},L(k,"bx"+i,"bx"+i))));}
   const dm=(S.days[TODAY]||{}).m||{};
   qs.slice().forEach(q=>{if(dm[q.id]==="fix")qs.push(Object.assign({k:q.k,id:q.id+"b",again:q.id},G[q.k](rng(TODAY+q.k+"again"+q.id))))});
   if(!busy)qs.push({k:"explain",id:"ex",explain:ex});
@@ -563,14 +694,81 @@ const POOL=[["找到","zhǎo dào"],["放下","fàng xià"],["书包","shū bāo
  ["中午","zhōng wǔ"],["吃饭","chī fàn"],["一起","yì qǐ"],["帮忙","bāng máng"],["谢谢","xiè xie"],["回家","huí jiā"],["每天","měi tiān"],["学校","xué xiào"],
  ["写字","xiě zì"],["听见","tīng jiàn"],["星星","xīng xing"],["月亮","yuè liang"],["天空","tiān kōng"],["红色","hóng sè"],["东西","dōng xi"],["时间","shí jiān"],
  ["木头","mù tou"],["白天","bái tiān"],["田地","tián dì"],["手心","shǒu xīn"],["开门","kāi mén"],["山上","shān shàng"],["上山","shàng shān"],["花草","huā cǎo"],
- ["秋天","qiū tiān"],["南瓜","nán guā"],["看见","kàn jiàn"],["小车","xiǎo chē"],["开心","kāi xīn"],["打开","dǎ kāi"]];
+ ["秋天","qiū tiān"],["南瓜","nán guā"],["看见","kàn jiàn"],["小车","xiǎo chē"],["开心","kāi xīn"],["打开","dǎ kāi"],
+ /* from the 部编版 一年级上册 character lists (识字表/写字表) */
+ ["树叶","shù yè"],
+ ["小船","xiǎo chuán"],
+ ["春天","chūn tiān"],
+ ["夏天","xià tiān"],
+ ["冬天","dōng tiān"],
+ ["青蛙","qīng wā"],
+ ["小桥","xiǎo qiáo"],
+ ["雪地","xuě dì"],
+ ["白云","bái yún"],
+ ["路灯","lù dēng"],
+ ["走路","zǒu lù"],
+ ["爸爸","bà ba"],
+ ["妈妈","mā ma"],
+ ["妹妹","mèi mei"],
+ ["奶奶","nǎi nai"],
+ ["哥哥","gē ge"],
+ ["姐姐","jiě jie"],
+ ["弟弟","dì di"],
+ ["爷爷","yé ye"],
+ ["叔叔","shū shu"],
+ ["苹果","píng guǒ"],
+ ["桃子","táo zi"],
+ ["小猫","xiǎo māo"],
+ ["鸭子","yā zi"],
+ ["黄牛","huáng niú"],
+ ["尺子","chǐ zi"],
+ ["本子","běn zi"],
+ ["作业","zuò yè"],
+ ["早上","zǎo shang"],
+ ["校门","xiào mén"],
+ ["老师","lǎo shī"],
+ ["同学","tóng xué"],
+ ["明天","míng tiān"],
+ ["森林","sēn lín"],
+ ["红旗","hóng qí"],
+ ["国旗","guó qí"],
+ ["中国","zhōng guó"],
+ ["歌声","gē shēng"],
+ ["美丽","měi lì"],
+ ["今天","jīn tiān"],
+ ["昨天","zuó tiān"],
+ ["晚上","wǎn shang"],
+ ["影子","yǐng zi"],
+ ["兔子","tù zi"],
+ ["公鸡","gōng jī"],
+ ["雨点","yǔ diǎn"],
+ ["大海","dà hǎi"],
+ ["睡觉","shuì jiào"],
+ ["衣服","yī fu"],
+ ["蓝天","lán tiān"],
+ ["竹子","zhú zi"],
+ ["乌鸦","wū yā"],
+ ["小孩","xiǎo hái"],
+ ["回来","huí lái"],
+ ["医生","yī shēng"],
+ ["工人","gōng rén"],
+ ["医院","yī yuàn"],
+ ["绿色","lǜ sè"],
+ ["出门","chū mén"],
+ ["红花","hóng huā"],
+ ["好玩","hǎo wán"],
+ ["爬山","pá shān"]];
 const PY=Object.fromEntries(POOL);
 const CHOICE=[
  {k:"c:手水",s:"我用（　）写字。",o:["手","水"],a:"手"},{k:"c:手水",s:"我要喝一杯（　）。",o:["手","水"],a:"水"},
  {k:"c:木目",s:"（　）头可以做桌子。",o:["木","目"],a:"木"},{k:"c:先再",s:"我先洗手，（　）吃饭。",o:["再","先"],a:"再"},
  {k:"c:先再",s:"（　）做作业，再去公园玩。",o:["先","再"],a:"先"},{k:"c:找到",s:"我终于（　）到了书包。",o:["找","到"],a:"找"},
  {k:"c:放",s:"我把书（　）在桌子上。",o:["放","找"],a:"放"},{k:"c:山上",s:"我们爬到了（　），看见很多大树。",o:["山上","上山"],a:"山上"},
- {k:"c:田地",s:"爷爷在（　）里种菜。",o:["田地","天地"],a:"田地"},{k:"c:听看",s:"我（　）见小鸟在叫。",o:["听","看"],a:"听"}];
+ {k:"c:田地",s:"爷爷在（　）里种菜。",o:["田地","天地"],a:"田地"},{k:"c:听看",s:"我（　）见小鸟在叫。",o:["听","看"],a:"听"},
+ {k:"c:日目",s:"我用（　）看书，用耳朵听歌。",o:["目","日"],a:"目"},{k:"c:日目",s:"太阳也叫（　）头。",o:["日","目"],a:"日"},
+ {k:"c:大太",s:"这个南瓜很（　）。",o:["大","太"],a:"大"},{k:"c:人入",s:"他是一个好（　）。",o:["人","入"],a:"人"},{k:"c:人入",s:"小鸟飞（　）树林里。",o:["入","人"],a:"入"},
+ {k:"c:在再",s:"书（　）桌子上。",o:["在","再"],a:"在"},{k:"c:在再",s:"请你（　）说一遍。",o:["再","在"],a:"再"},
+ {k:"c:左右",s:"过马路要先看（　）边，再看右边。",o:["左","右"],a:"左"},{k:"c:口日",s:"我张开（　）说话。",o:["口","日"],a:"口"}];
 const STORIES=[
  {t:"雨天的书包",p:["今天下雨了。小雨放学回家，书包里有一本新书。","她先把雨伞放在门边，再打开书包。书有一点湿了！","妈妈说：“不要急，我们把书放在桌子上，等一等。”","到了中午，书干了。小雨笑着说：“下雨天，我要先把书放进袋子里。”"],
   q:[["今天天气怎么样？",["下雨","晴天","下雪"],0],["小雨回家后，先做了什么？",["把雨伞放在门边","打开书包","看新书"],0],["书湿了，妈妈让她怎么做？",["放在桌子上等一等","马上看完","放回书包"],0]],
@@ -583,7 +781,25 @@ const STORIES=[
   oral:"你在家会帮家人做什么？用“我先……再……”说一说。"},
  {t:"秋天捡南瓜",p:["秋天到了，风轻轻地吹。我和朋友去田里捡(jiǎn)南瓜。","南瓜黄黄的，圆圆的，很大。","我先看见一个大南瓜，再蹲(dūn)下来抱(bào)它。我抱不动，朋友来帮我。","我们把南瓜放到小车上，开开心心地拉回家。晚上可以喝南瓜汤(tāng)啦！"],
   q:[["我和朋友去哪里捡南瓜？",["田里","公园","学校"],0],["南瓜是什么样子的？",["黄黄的，圆圆的","红红的，长长的","小小的，绿绿的"],0],["抱不动大南瓜的时候，谁来帮“我”？",["朋友","妈妈","老师"],0]],
-  oral:"捡南瓜的时候，你会先做什么，再做什么？用“我先……再……”说一说。"}
+  oral:"捡南瓜的时候，你会先做什么，再做什么？用“我先……再……”说一说。"}  ,
+ {t:"月亮船",p:["晚上，我坐在窗(chuāng)前看月亮。月亮弯弯的，像一条小船。","星星在天上一闪一闪。我想：“我能坐上这条小船吗？”","我睡着了。梦(mèng)里，我坐着月亮船，看见了很多星星。"],
+  q:[["“我”在哪里看月亮？",["窗前","学校","公园"],0],["月亮像什么？",["一条小船","一个苹果","一朵花"],0],["“我”在梦里看见了什么？",["很多星星","大海","老师"],0]],
+  oral:"你看见过月亮吗？它像什么？用完整的句子说一说。"},
+ {t:"四个季节",p:["春天到了，小草发芽，花儿开了。","夏天很热，我们吃西瓜(xī guā)，还去游泳(yóu yǒng)。","秋天，树叶黄了，一片一片飞下来。冬天，我们在雪地里玩。"],
+  q:[["哪个季节小草发芽？",["春天","夏天","冬天"],0],["夏天，我们会做什么？",["吃西瓜，游泳","堆雪人","捡树叶"],0],["树叶什么时候变黄？",["秋天","春天","夏天"],0]],
+  oral:"你最喜欢哪个季节？说一说你在那个季节会做什么。"},
+ {t:"我的小书包",p:["我有一个红色的小书包。里面有书、本子、尺子和笔。","早上，妈妈帮我检查(jiǎn chá)书包。我先放书，再放本子。","老师说：“好学生要自己整理(zhěng lǐ)书包。”我点点头。"],
+  q:[["书包是什么颜色的？",["红色的","黑色的","蓝色的"],0],["“我”先放什么？",["书","笔","尺子"],0],["老师说好学生要怎么样？",["自己整理书包","不带书包","帮同学背书包"],0]],
+  oral:"你的书包里有什么？用“我先……再……”说一说你怎么整理书包。"},
+ {t:"星期一升国旗",p:["星期一早上，同学们站在操场(cāo chǎng)上，看红旗升起来。","我们站得直直的，心里很美。","老师说：“五星红旗是中国的国旗，要爱护它。”"],
+  q:[["星期一早上，同学们做什么？",["看升国旗","去公园","吃早饭"],0],["同学们站得怎么样？",["直直的","弯弯的","坐着"],0],["红旗是哪个国家的国旗？",["中国","美国","日本"],0]],
+  oral:"你看见过国旗吗？在哪里看见的？说一说。"},
+ {t:"我的影子",p:["太阳出来了，我走到哪里，影子就跟(gēn)到哪里。","我走得快，它也快；我停下来，它也停下来。","我跳一跳，影子也跳一跳。影子是我的好朋友。"],
+  q:[["影子是什么时候出来的？",["太阳出来的时候","下雨的时候","晚上睡觉的时候"],0],["我停下来，影子怎么样？",["也停下来","走开了","变大了"],0],["“我”觉得影子像什么？",["好朋友","小鸟","小船"],0]],
+  oral:"你和影子玩过游戏吗？用完整的句子说一说。"},
+ {t:"雪地上的脚印",p:["下雪了！我和爸爸去雪地里玩。","我们走一步，雪地上就多一个脚印(yìn)。我的脚印小，爸爸的脚印大。","我们还看见一串(chuàn)小小的脚印，是小狗走过留下的。"],
+  q:[["“我”和谁去雪地里玩？",["爸爸","老师","同学"],0],["谁的脚印大？",["爸爸的","“我”的","小狗的"],0],["一串小小的脚印是谁留下的？",["小狗","小鸟","兔子"],0]],
+  oral:"你在雪地或沙地上留下过脚印吗？说一说。"}
 ];
 function extraWords(z){const have=new Set(z.ws),out=[];const push=w=>{if(PY[w]&&!have.has(w)&&!out.includes(w))out.push(w)};
   dueNow("z:").map(x=>x.k.slice(2)).forEach(push);
@@ -599,7 +815,7 @@ function zhSet(){
   for(let i=0;ws.length<(S.settings.busy?6:12)&&i<fresh.length;i++)ws.push(fresh[(start+i)%fresh.length]);
   const dueC=frozen("cRev",()=>dueNow("c:").map(x=>x.k));
   const cs=shuffle(r,CHOICE.filter(c=>dueC.includes(c.k))).concat(shuffle(r,CHOICE.filter(c=>!dueC.includes(c.k)))).slice(0,4);
-  const st=STORIES[((S.zhDay||53)-53)%STORIES.length];
+  const off=(S.zhDay||53)-53,st=STORIES[off<12?off%4:4+((off-12)%(STORIES.length-4))];
   return{ws,cs,st};
 }
 
@@ -750,7 +966,32 @@ const UNITS=[
      ["What challenged their hope for an easy water route to the Pacific?",["Large mountain ranges between the river systems","The Atlantic Ocean was too shallow","The Great Plains were all forest"]],
      ["Why was Sacagawea important to the expedition?",["Her language skills and connections helped them communicate and travel","She was the President","She bought the Louisiana Territory"]]],
  w:{type:"Opinion",prompt:"Which was MORE important to the success of the Lewis and Clark expedition: knowing geography or cooperating with other people? Use at least two facts from the passage.",
-    check:["I clearly answered the question","Two accurate facts from the passage","I explained how each fact supports my claim","Linking words (because, also, for example, therefore)","Complete sentences, capitals and punctuation"]}}
+    check:["I clearly answered the question","Two accurate facts from the passage","I explained how each fact supports my claim","Linking words (because, also, for example, therefore)","Complete sentences, capitals and punctuation"]}},
+{t:"Gold! The Rush to California",sci:"Properties of materials (why gold is special)",ss:"The California Gold Rush",
+ facts:["Gold is very dense: a cup of gold would weigh about 19 times as much as a cup of water.","Gold is soft and bends or flattens when pressed. Fool's gold (pyrite) is hard and brittle, and it breaks into pieces.","People who came to California in 1849 were called forty-niners.","California became the 31st state of the United States in 1850."],
+ p:["On a cold morning in January 1848, a carpenter named James Marshall was building a sawmill for John Sutter on the American River in California. He noticed something shiny in the water. It was gold! At first, the men tried to keep the secret, but news spreads fast. By 1849, people all over the country and around the world were hurrying to California to look for gold. They were called forty-niners.",
+    "Most gold seekers used a simple tool called a pan. A miner scooped sand and gravel from a stream into a wide metal pan, added water, and swirled it gently. Gold is very dense, which means a small piece of it is much heavier than a piece of rock the same size. The lighter sand and gravel washed over the edge, and the heavy gold stayed behind at the bottom of the pan.",
+    "Miners also had to avoid being fooled. Pyrite, or \"fool's gold,\" looks shiny and golden, but it is a different material. Real gold is soft, so it bends or flattens when it is pressed. Pyrite is hard and brittle, so it breaks into pieces. A careful miner could test a shiny rock to learn which one he had found.",
+    "The Gold Rush changed California quickly. San Francisco grew from a small village of about a thousand people into a busy city of tens of thousands. In 1850, California became the 31st state. But the Gold Rush also brought great hardship to the Native peoples of California, who lost land, food sources and, too often, their lives. And while a few miners got rich, most did not. Often the people who earned the most money were the ones who sold the miners food, tools and clothing.",
+    "Today, the Gold Rush is still part of California's story. California's nickname is the Golden State, and the Gold Rush is a reminder of how one discovery can change the lives of millions of people, in both good ways and painful ways."],
+ rq:[["What is the main idea of the passage?",["The discovery of gold in 1848 brought thousands of people to California and changed the state quickly.","James Marshall built the biggest sawmill in California.","Pyrite is more valuable than gold."]],
+     ["In paragraph 2, \"dense\" means…",["having a lot of matter packed into a small space","very bright","easy to see through"]],
+     ["Why did the heavy gold stay in the pan while the sand washed away?",["Gold is denser than sand and gravel, so it sinks and settles.","Gold is lighter than sand.","The miners picked the gold out with their hands first."]],
+     ["Which sentence from the passage is the best evidence that most miners did not get rich?",["\"And while a few miners got rich, most did not.\"","\"He noticed something shiny in the water.\"","\"California's nickname is the Golden State.\""]],
+     ["Why does the author include paragraph 3?",["To show how a miner could tell real gold from fool's gold.","To explain how San Francisco grew.","To describe how James Marshall built the sawmill."]],
+     ["Which sentence is the best summary of the passage?",["Gold was found in California in 1848, miners used the dense, soft metal's properties to find it, and the Gold Rush changed California, helping some people and hurting others.","James Marshall was a carpenter who worked for John Sutter.","Fool's gold is a mineral that is hard and brittle."]]],
+ v:[["dense","having a lot of matter packed into a small space",["very shiny","easy to bend"]],
+    ["brittle","hard but easily broken into pieces",["soft and flat","very heavy"]],
+    ["hardship","a time of great difficulty or suffering",["a kind of tool","a happy celebration"]],
+    ["discovery","finding something for the first time",["losing something","building something"]]],
+ sq:[["Which property of gold helps a miner separate it from sand in a pan?",["Gold is dense, so it sinks and stays at the bottom.","Gold is magnetic.","Gold dissolves in water."]],
+     ["A shiny rock breaks into pieces when you hit it. What does this show?",["It is probably pyrite (fool's gold), not real gold.","It is definitely real gold.","It is made of water."]],
+     ["Which is a physical property of a material?",["how hard or soft it is","who found it","how much a miner paid for it"]]],
+ hq:[["Where was gold found in 1848?",["On the American River in California","In the Rocky Mountains","On the Atlantic coast"]],
+     ["Who were the forty-niners?",["People who came to California in 1849 to look for gold","Soldiers in the Revolutionary War","The 49 members of the first Congress"]],
+     ["Why did many people who sold food, tools and clothing to miners earn more than the miners?",["Many miners needed supplies, but only a few found a lot of gold.","The miners did not need supplies.","The government gave them gold."]]],
+ w:{type:"Opinion",prompt:"Was the California Gold Rush mostly good or mostly bad for California? Give your opinion and two reasons. Use at least one fact from the passage.",
+    check:["My first sentence says my opinion","Reason 1 with a fact","Reason 2","Linking words (because, also, for example)","A conclusion sentence"]}}
 ];
 /* Flat question index: id → {q, opts(correct first), sub} */
 const EQ={};
@@ -827,7 +1068,7 @@ function render(){
   document.querySelectorAll("#tabs button").forEach(b=>b.setAttribute("aria-selected",b.dataset.tab===TAB));
   const v=$("#view");
   if(!S){v.innerHTML=`<div class="card"><p class="muted">Opening your notebook…</p></div>`;return}
-  day();v.innerHTML=({today:vToday,math:vMath,chinese:vZh,ela:vEla,clubs:vClubs,review:vReview,parent:vParent})[TAB]();
+  day();v.innerHTML=({today:vToday,math:vMath,lib:vLib,hz:vHz,plan:vPlan,chinese:vZh,ela:vEla,clubs:vClubs,review:vReview,parent:vParent})[TAB]();
   if(TAB==="chinese")bindCanvases();
 }
 function teachItem(){const d=S.days[TODAY]||{m:{}};const qs=getM();const miss=qs.find(q=>d.m[q.id]==="fix"&&!q.explain&&q.k);
@@ -895,6 +1136,7 @@ function vToday(){
   ${bedtimeCard()}
   ${ttCard()}
   ${BONUS[TODAY]?`<div class="card"><div class="row" style="justify-content:space-between"><div><div class="eyebrow">Bonus review</div><h3>${esc(BONUS[TODAY].title)}</h3></div><button class="math" data-go="math">Go</button></div><p class="small muted" style="margin:6px 0 0">At the bottom of the Math page.</p></div>`:""}
+  ${(()=>{const hp=hzProgress();return `<div class="card"><div class="row" style="justify-content:space-between"><div><div class="eyebrow">汉字库 · today's characters</div><h3>${hp.done}/${hp.total} done</h3></div><button class="zh" data-go="hz">${hp.done?"Keep going":"Start"}</button></div></div>`})()}
   ${vPet()}
   ${vTeach()}
   <div class="card"><div class="eyebrow">This week's focus</div><div class="row" style="margin-top:6px">${focusSkills().map(k=>`<span class="chip math">${SK[k]}</span>`).join("")}</div>
@@ -1090,8 +1332,10 @@ function printMath(){
   S_("D. Place Value & Powers of 10","",2,0,[g("decWord",1),g("digitValue",1),g("digitValue",2),g("pow10",1)]);
   S_("E. Decimals & Measurement","Line up the decimal points.",2,1,[g("decAddSub",1),g("decAddSub",2),g("decMul",1),g("convert",1)]);
   const p1=sec.length;
-  S_("F. Fractions","Always simplify. Improper fraction → mixed number.",2,1,[g("fracAdd",1),g("fracAdd",2),g("fracMul",1),g("fracDiv",1),g("unitFracDiv",1),g("fracAsDiv",1)]);
-  S_("G. Mixed Review","",2,1,[g("pemdas",1),g("volume",1),g("decOrder",1),g("scaling",1)]);
+  const fxd=((S.bonusPlan||{})[TODAY]||[]).some(k=>/^frac/.test(k));
+  S_(fxd?"F. Fractions — add, subtract, multiply, divide":"F. Fractions","Always simplify. Improper fraction → mixed number.",2,1,(fxd?[g("fracAdd",1),g("fracAdd",2),g("fracSub",1),g("fracSub",2),g("fracMul",1),g("fracMul",2),g("fracDiv",1),g("fracDiv",2),g("unitFracDiv",1),g("fracAsDiv",1)]:[g("fracAdd",1),g("fracAdd",2),g("fracMul",1),g("fracDiv",1),g("unitFracDiv",1),g("fracAsDiv",1)]));
+  const mix=((S.bonusPlan||{})[TODAY]||[]).includes("primeFact");
+  S_("G. Mixed Review","",2,1,mix?[g("decDivDec",1),g("decMul",1),g("primeFact",1),g("pattern2",1),g("linePlot",1),g("volume",1)]:[g("pemdas",1),g("volume",1),g("decOrder",1),g("scaling",1)]);
   const exs=shuffle(rng("printex"+TODAY),EXPLAINS).slice(0,2);
   sec.push({title:"H. Explain It",tip:"Answer in full sentences.",explain:exs.map(e=>({n:++n,title:e.title}))});
   const olPick=dt=>{const o=[];for(let i=1;o.length<2&&i<40;i++){const q=G.olymp(rng("printol"+dt+i));if(!o.some(x=>x.kind===q.kind)&&!(dt===TODAY&&prevK.includes(q.kind)))o.push(q)}return o};let prevK=[];prevK=olPick(addDays(TODAY,-1)).map(q=>q.kind);if(TODAY==="2026-10-25")prevK=["rem","seq"];
@@ -1141,7 +1385,7 @@ function printPages(){
   B.push(`<div class="pp-pass">${u.p.map((x,i)=>`<p><sup>${i+1}</sup> ${esc(x)}</p>`).join("")}</div>`);
   let n=0;const mc=id=>{const q=EQ[id];const o=shuffle(rng(TODAY+id),q.o);return `<div class="pp-q"><b>${++n}.</b> ${esc(q.q)}<div class="pp-opts col">${o.map((c,j)=>`<span>${"ABC"[j]}. ${esc(c)}</span>`).join("")}</div></div>`};
   [["Reading",e.r],["Vocabulary",e.v],["Science · "+u.sci,e.s],["Social Studies · "+u.ss,e.h]].forEach(([t,ids])=>{ids.forEach((id,i)=>B.push((i?"":`<div class="pp-sec">${esc(t)}</div>`)+mc(id)))});
-  B.push(`<div class="pp-sec">Writing · ${esc(u.w.type)}</div><div class="pp-q">${esc(u.w.prompt)}${"<div class='pp-ln'></div>".repeat(8)}<div class="pp-check">${u.w.check.map(c=>"□ "+esc(c)).join("&nbsp;&nbsp; ")}</div></div>`);
+  B.push(`<div class="pp-sec">Writing · ${esc(u.w.type)}</div><div class="pp-q">${esc(u.w.prompt)}${"<div class='pp-ln'></div>".repeat(5)}<div class="pp-check">${u.w.check.map(c=>"□ "+esc(c)).join("&nbsp;&nbsp; ")}</div></div>`);
   // ---- Data & Patterns (5.MD.2 line plot with fractions, 5.OA.3 number patterns): new numbers every day ----
   const DP=(()=>{const r=rng(TODAY+"dp"),g=(a,b)=>b?g(b,a%b):a;
     const F=(n,d)=>{if(n===0)return"0";const k=g(n,d);n/=k;d/=k;if(d===1)return String(n);const w=Math.floor(n/d),m=n%d;const f=`<span class="fr"><u>${m}</u><b>${d}</b></span>`;return w?`${w} ${f}`:(m?f:String(w))};
@@ -1160,20 +1404,54 @@ function printPages(){
      <div class="pp-q"><b>1.</b> How many have ${T(q1,d)}? <span class="pp-ln" style="display:inline-block;width:70px"></span></div>
      <div class="pp-q"><b>2.</b> How many have more than ${T(q2,d)}? <span class="pp-ln" style="display:inline-block;width:70px"></span></div>
      <div class="pp-q"><b>3.</b> The two amounts with the most dots are different. What is the difference between them? <span class="pp-ln" style="display:inline-block;width:90px"></span></div>
-     <div class="pp-q"><b>4.</b> If all the ${T(q4,d)}s were put together, how much would there be in all? <span class="pp-ln" style="display:inline-block;width:90px"></span></div></div>
+     <div class="pp-q"><b>4.</b> If all the ${T(q4,d)}s were put together, how much would there be in all? <span class="pp-ln" style="display:inline-block;width:90px"></span></div></div><!--split-->
      <div class="pp-box"><div class="pp-bh"><b>K. Number patterns</b><span>5.OA.3 · Two rules, then compare</span></div>
      <div class="pp-q">Rule A: start at 0, <b>add ${a}</b>. &nbsp; Rule B: start at 0, <b>add ${b}</b>.</div>
      <div class="pp-q"><b>1.</b> Fill in the first 4 terms of each pattern:<br>A: 0, ${a}, ____, ____ &nbsp;&nbsp; B: 0, ${b}, ____, ____</div>
      <div class="pp-q"><b>2.</b> Write the ordered pairs (A, B) for the terms: (0, 0), (${a}, ${b}), ( ___ , ___ ), ( ___ , ___ )</div>
      <div class="pp-q"><b>3.</b> Each B number is ______ times the A number next to it.</div>
      <div class="pp-q"><b>4.</b> If A is ${N}, what is B? <span class="pp-ln" style="display:inline-block;width:70px"></span></div>
-     <div class="pp-q"><b>5.</b> Explain the pattern you see. Use the words “times” and “add”.</div><div class="pp-ln"></div><div class="pp-ln"></div><div class="pp-ln"></div></div>`;
+     <div class="pp-q"><b>5.</b> Explain the pattern you see. Use the words “times” and “add”.</div><div class="pp-ln"></div><div class="pp-ln"></div></div>`;
     const key=`<b>J.</b> 1. ${cnt[q1]} &nbsp; 2. ${above} &nbsp; 3. ${F(diff,d)} &nbsp; 4. ${F(cnt[q4]*q4,d)} &nbsp;&nbsp; <b>K.</b> 1. A: ${A.slice(0,4).join(", ")} &nbsp; B: ${Bn.slice(0,4).join(", ")} &nbsp; 2. (${A[2]}, ${Bn[2]}), (${A[3]}, ${Bn[3]}) &nbsp; 3. ${k} &nbsp; 4. ${N*k}`;
     return{html,key}})();
-  B.push("<!--page-->"+hdr("Data & Patterns","New numbers every day · Line plots with fractions and number patterns")+DP.html);
+  {const parts=DP.html.split("<!--split-->");B.push("<!--page-->"+hdr("Data & Patterns","New numbers every day · Line plots with fractions and number patterns"));parts.forEach(x=>B.push(x))}
+  let pianoKey="";
+  // ---- Piano: 5-line staff practice (one page every day) ----
+  const STF=(()=>{const NAMES="EFGABCDEFGAB";const L=["C","D","E","F","G","A","B"];
+    const stepOf=n=>{const l=n[0],o=+n.slice(-1);return (o-4)*7+L.indexOf(l)-L.indexOf("E")};  // E4 = 0 = bottom line
+    const clef=`<g fill="none" stroke="#111" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M13 88 C8 94 18 96 20 88 C22 78 25 52 24 30 C23 14 31 8 33 18 C35 28 24 40 17 50 C9 61 12 74 24 73 C36 72 37 57 27 54 C19 52 14 60 20 64"/></g>`;
+    const svg=(items,{lab=false,names=false,W=700,und=false}={})=>{const n=Math.max(items.length,1),x0=68,dx=(W-x0-14)/n;let s=`<svg viewBox="0 0 ${W} 108" width="100%" style="display:block;margin:2px 0" xmlns="http://www.w3.org/2000/svg">`;
+      for(let i=0;i<5;i++)s+=`<line x1="4" x2="${W-4}" y1="${30+i*10}" y2="${30+i*10}" stroke="#222" stroke-width="1.2"/>`;
+      s+=`<line x1="4" x2="4" y1="30" y2="70" stroke="#222" stroke-width="1.4"/><line x1="${W-4}" x2="${W-4}" y1="30" y2="70" stroke="#222" stroke-width="2.4"/>`+clef;
+      items.forEach((it,i)=>{const x=x0+dx*(i+.5);
+        if(it.note){const st=stepOf(it.note),y=70-st*5;
+          for(let k=-2;k>=st;k-=2){const ly=70-k*5;s+=`<line x1="${x-11}" x2="${x+11}" y1="${ly}" y2="${ly}" stroke="#222" stroke-width="1.2"/>`}
+          for(let k=10;k<=st;k+=2){const ly=70-k*5;s+=`<line x1="${x-11}" x2="${x+11}" y1="${ly}" y2="${ly}" stroke="#222" stroke-width="1.2"/>`}
+          s+=`<ellipse cx="${x}" cy="${y}" rx="6.2" ry="4.6" fill="#111" transform="rotate(-18 ${x} ${y})"/>`;
+          s+=st<4?`<line x1="${x+5.6}" x2="${x+5.6}" y1="${y-1}" y2="${y-26}" stroke="#111" stroke-width="1.6"/>`:`<line x1="${x-5.6}" x2="${x-5.6}" y1="${y+1}" y2="${y+26}" stroke="#111" stroke-width="1.6"/>`}
+        if(it.label)s+=`<text x="${x}" y="100" text-anchor="middle" font-size="17" font-weight="700" fill="#111" font-family="Inter,Arial,sans-serif">${it.label}</text>`;
+        if(it.line)s+=`<line x1="${x-14}" x2="${x+14}" y1="98" y2="98" stroke="#555" stroke-width="1"/>`});
+      return s+`</svg>`};
+    return{svg,stepOf}})();
+  {const r=rng("stf"+TODAY);const pool=["C4","D4","E4","F4","G4","A4","B4","C5","D5","E5"];
+    const A8=[];while(A8.length<8){const n=pool[Math.floor(r()*pool.length)];if(!A8.length||A8[A8.length-1]!==n)A8.push(n)}
+    const C8=[];while(C8.length<6){const n=pool[Math.floor(r()*7)];if(!C8.length||C8[C8.length-1]!==n)C8.push(n)}
+    S.piano=S.piano||{n:0,last:""};const pi=Math.max(0,(S.piano.last===TODAY?S.piano.n-1:S.piano.n))%PLESSONS.length,PL=PLESSONS[pi];
+    const melN=PL.mel.split(/\s+/).filter(x=>/^[A-G]#?\d$/.test(x)&&!x.includes("#")).slice(0,10);
+    const letter=n=>n[0];
+    B.push("<!--hard-->"+hdr("Piano · Staff practice 五线谱","Treble clef · five lines · about 10 minutes · pencil"));
+    B.push(`<div class="pp-box"><div class="pp-bh"><b>Remember</b><span>Notes go UP the staff as they get higher</span></div>
+      <div class="pp-q"><b>Lines</b> (bottom to top): E G B D F — “<i>Every Good Boy Does Fine</i>”. &nbsp; <b>Spaces</b>: F A C E — “<i>FACE</i>”. &nbsp; <b>Middle C</b> sits on a little line below the staff.</div>
+      ${STF.svg(["E4","G4","B4","D5","F5","F4","A4","C5","E5","C4"].map(n=>({note:n,label:n[0]})))}</div>`);
+    B.push(`<div class="pp-box"><div class="pp-bh"><b>A. Name the notes</b><span>Write the letter on the line under each note</span></div>${STF.svg(A8.map(n=>({note:n,line:1})))}</div>`);
+    B.push(`<div class="pp-box"><div class="pp-bh"><b>B. Draw the notes</b><span>Draw a note head on the right line or space</span></div>${STF.svg(C8.map(n=>({label:letter(n)})),{})}</div>`);
+    B.push(`<div class="pp-box"><div class="pp-bh"><b>C. Today's piano song</b><span>${esc(PL.t)}</span></div><div class="pp-q">Write the first notes of today's lesson on the staff. Then play it from your drawing!</div>${STF.svg(melN.map(n=>({label:letter(n)})))}</div>`);
+    B.push(`<div class="pp-box"><div class="pp-bh"><b>D. Make your own tune</b><span>Draw 6 notes you like. Write each letter on the line.</span></div>${STF.svg(Array.from({length:6},()=>({line:1})))}</div>`);
+    pianoKey=`<div class="pp-key"><b>Piano A:</b> ${A8.map(letter).join(" ")}</div>`}
   // ---- Answer key ----
-  B.push("<!--page-->"+hdr("Answer key (for parents)","Check without telling her the answer first. If one is wrong, ask her for the first small step."));
+  B.push("<!--hard-->"+hdr("Answer key (for parents)","Check without telling her the answer first. If one is wrong, ask her for the first small step."));
   M.sec.forEach(sc=>{if(sc.explain)B.push(`<div class="pp-key"><b>${sc.title}:</b> answers vary — look for a clear reason that uses numbers.</div>`);else B.push(`<div class="pp-key"><b>${sc.title}:</b> ${sc.list.map(q=>`${q.n}. ${esc(q.show)}`).join(" &nbsp;·&nbsp; ")}</div>`)});
+  if(pianoKey)B.push(pianoKey);
   B.push(`<div class="pp-key"><b>中文 一:</b> ${z.ws.map(esc).join("　")} &nbsp; <b>三:</b> ${z.cs.map((c,i)=>`${i+1}. ${esc(c.a)}`).join("　")} &nbsp; <b>六:</b> ${z.st.q.map((q,i)=>`${i+1}. ${esc(q[1][q[2]])}`).join("　")} &nbsp; <b>八（加练）:</b> ${extraWords(z).map(esc).join("　")}</div>`);
   B.push(`<div class="pp-key"><b>Data & Patterns:</b> ${DP.key}</div>`);
   n=0;B.push(`<div class="pp-key"><b>Reading+:</b> ${[...e.r,...e.v,...e.s,...e.h].map(id=>{const q=EQ[id];const o=shuffle(rng(TODAY+id),q.o);return `${++n}. ${"ABC"[o.indexOf(q.o[0])]}`}).join(" &nbsp; ")}</div>`);
@@ -1187,25 +1465,25 @@ async function makePdf(btn){
   btn.disabled=true;say("Making the PDF…");
   const W=816,H=1056,PAD=48;
   const host=document.createElement("div");host.style.cssText="position:fixed;left:-10000px;top:0;";
-  host.innerHTML=`<style>.pp{width:${W}px;height:${H}px;padding:40px 44px;box-sizing:border-box;background:#fff;color:#111;font:13.5px/1.4 "DejaVu Sans",Nunito,"PingFang SC",sans-serif;overflow:hidden;display:flex;flex-direction:column;gap:8px}.pp>*{flex-shrink:0}
+  host.innerHTML=`<style>.pp{width:${W}px;height:${H}px;padding:40px 44px;box-sizing:border-box;background:#fff;color:#111;font:13.5px/1.4 "DejaVu Sans",Nunito,"PingFang SC",sans-serif;overflow:hidden;display:flex;flex-direction:column;gap:6px}.pp>*{flex-shrink:0}
    .pp-h{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:2.5px solid #111;padding-bottom:5px;font-size:12px;text-align:right}.pp-h b{font-size:20px}.pp-h .pp-sub{font-size:11.5px;color:#333;text-align:left;margin-top:2px}
    .pp-box{border:1.5px solid #222;border-radius:8px;padding:6px 10px 8px}.pp-box.exit{border-style:dashed;border-width:2.5px}.pp-box.dash{border-style:dashed;font-size:12.5px}
    .pp-bh{display:flex;justify-content:space-between;gap:10px;margin-bottom:5px}.pp-bh b{font-size:14px}.pp-bh span{font-size:11px;color:#444;text-align:right}
    .pp-grid{display:grid;gap:5px 18px}.pp-grid.c2{grid-template-columns:1fr 1fr}.pp-grid.c3{grid-template-columns:1fr 1fr 1fr}
-   .pp-q{margin:0}.pp-q b{font-variant-numeric:tabular-nums}.pp-opts{display:flex;flex-wrap:wrap;gap:2px 16px;margin:3px 0 0 14px;font-size:12.5px}.pp-opts.col{flex-direction:column}
+   .pp-q{margin:0}.pp-q b{font-variant-numeric:tabular-nums}.pp-opts{display:flex;flex-wrap:wrap;gap:1px 16px;margin:2px 0 0 14px;font-size:12.5px}.pp-opts.col{flex-direction:column}
    .pp-bar{height:30px;border:1.5px dashed #999;border-radius:4px;margin-top:4px;position:relative}.pp-bar span{position:absolute;left:4px;top:1px;font-size:9px;color:#999}.pp-work{height:24px}.pp-work.tall{height:34px}.pp-ln{border-bottom:1px solid #777;height:22px}.pp-ln.big{height:34px}
-   .fr{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;font-size:.85em;line-height:1.1;margin:0 1px}.fr u{text-decoration:none;border-bottom:1.5px solid #222;padding:0 2px}.fr b{font-weight:600}.dpw{display:flex;align-items:flex-end;gap:2px;border-bottom:2px solid #222;margin:10px 0 2px;padding:0 4px;min-height:120px}.dpc{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end}.dpd{display:flex;flex-direction:column-reverse;gap:3px;margin-bottom:4px}.dpd i{width:12px;height:12px;border-radius:50%;background:#222;display:block}.dpt{font-size:12px;margin-top:4px;min-height:30px;display:flex;align-items:flex-start}
-.pp-sec{font-weight:800;font-size:15px;margin:8px 0 2px;border-bottom:1px solid #ccc}
+   .fr{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;font-size:.85em;line-height:1.1;margin:0 1px}.fr u{text-decoration:none;border-bottom:1.5px solid #222;padding:0 2px}.fr b{font-weight:600}.dpw{display:flex;align-items:flex-end;gap:2px;border-bottom:2px solid #222;margin:10px 0 2px;padding:0 4px;min-height:96px}.dpc{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end}.dpd{display:flex;flex-direction:column-reverse;gap:3px;margin-bottom:4px}.dpd i{width:12px;height:12px;border-radius:50%;background:#222;display:block}.dpt{font-size:12px;margin-top:4px;min-height:30px;display:flex;align-items:flex-start}
+.pp-sec{font-weight:800;font-size:15px;margin:5px 0 1px;border-bottom:1px solid #ccc}
    .pp-words{display:grid;grid-template-columns:repeat(4,1fr);gap:8px 6px}.pp-w{display:flex;flex-direction:column;align-items:center;gap:3px}.pp-py{font-size:15px;letter-spacing:.3px}
    .pp-boxes{display:flex}.pp-boxes i{position:relative;width:62px;height:62px;border:1.6px solid #333;margin-left:-1.6px;background:linear-gradient(#9998,#9998) center/1px 100% no-repeat,linear-gradient(#9998,#9998) center/100% 1px no-repeat}
    .pp-boxes i em{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-style:normal;font-size:44px;font-family:"Noto Serif SC","Songti SC",serif;color:#111}
    .pp-tr{display:flex;align-items:center;gap:8px;margin:4px 0}.pp-ex{font-size:12px;color:#444}
    .pp-zh{font-size:17px;margin:0 0 7px;font-family:"Noto Serif SC","Songti SC",serif}
    .pp-story{font-size:19px;line-height:2.3;font-family:"Noto Serif SC","Songti SC",serif}.pp-story p{margin:0;text-indent:2em}.pp-story sup{font-size:9px;font-family:sans-serif;color:#555}
-   .pp-pass{font-family:Georgia,serif;font-size:14.5px;line-height:1.55}.pp-pass p{margin:0 0 6px}.pp-check{font-size:12px;margin-top:6px}.pp-key{margin:0 0 6px;font-size:12.5px;line-height:1.6}</style>`;
+   .pp-pass{font-family:Georgia,serif;font-size:13.8px;line-height:1.45}.pp-pass p{margin:0 0 4px}.pp-check{font-size:12px;margin-top:6px}.pp-key{margin:0 0 6px;font-size:12.5px;line-height:1.6}</style>`;
   document.body.appendChild(host);
   const pages=[];let cur=null;const newPage=()=>{cur=document.createElement("div");cur.className="pp";host.appendChild(cur);pages.push(cur)};newPage();
-  printPages().forEach(html=>{let h=html;if(h.startsWith("<!--page-->")){if(cur.childElementCount)newPage();h=h.slice(11)}
+  printPages().forEach(html=>{let h=html;if(h.startsWith("<!--hard-->")){if(cur.childElementCount)newPage();h=h.slice(11)}else if(h.startsWith("<!--page-->")){const last=cur.lastElementChild;const used=last?last.getBoundingClientRect().bottom-cur.getBoundingClientRect().top:0;if(cur.childElementCount&&used>H*0.5)newPage();h=h.slice(11)}
     const t=document.createElement("div");t.innerHTML=h;const nodes=[...t.childNodes];nodes.forEach(nd=>cur.appendChild(nd));
     if(cur.scrollHeight>H&&cur.childElementCount>nodes.length){nodes.forEach(nd=>nd.remove());newPage();nodes.forEach(nd=>cur.appendChild(nd))}});
   
@@ -1241,11 +1519,12 @@ document.addEventListener("click",async e=>{const b=e.target.closest("button");i
   if(ds.tab){TAB=ds.tab;try{history.replaceState(null,"","#"+TAB)}catch(_){}render();window.scrollTo(0,0);return}
   if(ds.go){TAB=ds.go;render();window.scrollTo(0,0);return}
   if(!S)return;
+  if(ds.hzpick){const [hc,hp]=ds.hzpick.split("|");hzAll();hzAnswer(hc,hp);return}
   if(ds.bedok){const dd=day();dd.bed=dd.bed||{};dd.bed[ds.bedok]=!dd.bed[ds.bedok];save();render();const all=document.querySelector(".bednight");if(all)toast("🌟 晚安！");return}
   if(ds.bedhide){const dd=day();dd.bedHide=!dd.bedHide;save();render();return}
   const qs=getM();const Q=id=>qs.find(q=>q.id===id);
   const finishQ=(q,first)=>{if(!first&&!q.again&&!getM().some(x=>x.again===q.id)){const nq=Object.assign({k:q.k,id:q.id+"b",again:q.id},G[q.k](rng(TODAY+q.k+"again"+q.id)));const ex=MSET.findIndex(x=>x.explain);MSET.splice(ex<0?MSET.length:ex,0,nq)}
-    d.m[q.id]=first?"ok":"fix";skillHit(q.k,first);if(first&&!q.again)markRight("m:"+q.k);else if(!first)markWrong("m:"+q.k,"missed "+TODAY.slice(5));if(q.mc){if(first){const mm=S.mastered.find(x=>x.k==="m:"+q.k);if(mm)mm.chk=TODAY}else S.mastered=S.mastered.filter(x=>x.k!=="m:"+q.k)}delete live[q.id];save();render();
+    d.m[q.id]=first?"ok":"fix";skillHit(q.k,first);if(q.libI!==undefined&&!q.again){S.lib=S.lib||{};(S.lib[q.k]=S.lib[q.k]||{})[q.libI]=TODAY}if(first&&!q.again)markRight("m:"+q.k);else if(!first)markWrong("m:"+q.k,"missed "+TODAY.slice(5));if(q.mc){if(first){const mm=S.mastered.find(x=>x.k==="m:"+q.k);if(mm)mm.chk=TODAY}else S.mastered=S.mastered.filter(x=>x.k!=="m:"+q.k)}delete live[q.id];save();render();
     if(first)toast("Nice! ★");const c=document.getElementById("card-"+q.id);if(c)c.classList.add("pop")};
   const judge=(q,raw)=>{const st=live[q.id]=live[q.id]||{tries:0};
     let right=false,unsimp=false;
@@ -1306,7 +1585,7 @@ document.addEventListener("click",async e=>{const b=e.target.closest("button");i
 document.addEventListener("input",e=>{if(e.target.id==="wtext"){const c=$("#wcount");if(c)c.textContent=eWords(e.target.value)+" words";const w=S.writing[TODAY]=S.writing[TODAY]||{u:getE().ui,checks:[]};w.text=e.target.value;try{localStorage.setItem(LS,JSON.stringify(S))}catch(_){}}});
 document.addEventListener("change",e=>{if(e.target.dataset&&e.target.dataset.wc!==undefined){const w=S.writing[TODAY]=S.writing[TODAY]||{u:getE().ui,text:"",checks:[]};w.checks=w.checks||[];w.checks[+e.target.dataset.wc]=e.target.checked}});
 document.addEventListener("keydown",e=>{if(e.key!=="Enter")return;const t=e.target;if(t.tagName!=="INPUT")return;const btn=t.parentElement.querySelector("button");if(btn)btn.click()});
-const h0=(location.hash||"").slice(1);if(["today","math","chinese","ela","clubs","review","parent"].includes(h0))TAB=h0;
+const h0=(location.hash||"").slice(1);if(["today","math","lib","chinese","hz","plan","ela","clubs","review","parent"].includes(h0))TAB=h0;
 
 
 // ================= Choir + STEM =================
