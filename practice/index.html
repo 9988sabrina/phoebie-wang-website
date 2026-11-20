@@ -256,6 +256,7 @@ function migrate(){S.lib=S.lib||{};S.hz=S.hz||{c:{}};S.settings=S.settings||{};S
     Object.entries(add).forEach(([k,src])=>{const r=S.rev.find(x=>x.k===k);if(r){r.stage=0;r.due="2026-11-01";r.src=src}else S.rev.push({k,stage:0,due:"2026-11-01",src});S.mastered=S.mastered.filter(m=>m.k!==k)})}
   if(false){S._bonus1103=1;S.bonus={date:"2026-11-03",k:["mulMulti","mulMulti","mulMulti","div2","div2","div2"]}}
   if(false){S._bonus1106=1;S.bonus={date:"2026-11-06",k:["scaling","scaling","scaling"]}}
+  if(false){S._m1119=1;S.bonusPlan=S.bonusPlan||{};S.bonusPlan["2026-11-19"]=["fracAdd","fracAdd","fracSub","fracSub","fracMul","fracMul","fracDiv","fracDiv","unitFracDiv","fracAsDiv","mulMulti","mulMulti","div2","div2"]}
   if(false){S._mix1116=1;S.bonusPlan=S.bonusPlan||{};S.bonusPlan["2026-11-16"]=["fracAdd","fracSub","fracMul","fracDiv","decDivDec","primeFact","olymp"]}
   if(false){S._frac1114=1;S.bonusPlan=S.bonusPlan||{};S.bonusPlan["2026-11-14"]=["fracAdd","fracSub","fracMul","fracDiv","unitFracDiv"]}
   if(false){S._bonusWk1106=1;S.bonusPlan=S.bonusPlan||{};["2026-11-06","2026-11-07","2026-11-08","2026-11-09","2026-11-10","2026-11-11","2026-11-12"].forEach(d=>{S.bonusPlan[d]=["scaling","scaling","scaling"]})}
@@ -288,7 +289,7 @@ function resolveWorkDay(){migrate();
   TODAY=REAL_TODAY;MSET=null;ZSET=null;ESET=null;
   const w=S.workDay;
   if(w&&w<REAL_TODAY&&S.skipCarry!==REAL_TODAY){TODAY=w;MSET=null;ZSET=null;ESET=null;
-    if(allDone()||leftovers().n<=4||(new Date(REAL_TODAY)-new Date(w))/864e5>=2){if(!day().paper)leftovers().keys.forEach(k=>{if(!revOf(k))S.rev.push({k,stage:0,due:REAL_TODAY,src:"unfinished "+w.slice(5)})});{const dw=day();if(!dw.eDone&&typeof dw.eU==="number"&&dw.eU===(S.eUnit||0)%UNITS.length){dw.eDone=dw.eU+1;S.eUnit=(S.eUnit||0)+1}if(!dw.zDone&&(dw.paper||zProgress().done>=zProgress().total-2)){dw.zDone=S.zhDay;S.zhDay++}}TODAY=REAL_TODAY;MSET=null;ZSET=null;ESET=null}}
+    if(allDone()||leftovers().n<=4||(new Date(REAL_TODAY)-new Date(w))/864e5>=1){if(!day().paper)leftovers().keys.forEach(k=>{if(!revOf(k))S.rev.push({k,stage:0,due:REAL_TODAY,src:"unfinished "+w.slice(5)})});{const dw=day();if(!dw.eDone&&typeof dw.eU==="number"&&dw.eU===(S.eUnit||0)%UNITS.length){dw.eDone=dw.eU+1;S.eUnit=(S.eUnit||0)+1}if(!dw.zDone){dw.zDone=S.zhDay;S.zhDay++}}TODAY=REAL_TODAY;MSET=null;ZSET=null;ESET=null}}
   if(S.skipCarry===REAL_TODAY){}else delete S.skipCarry;
   S.workDay=TODAY;
 }
@@ -1329,7 +1330,8 @@ function printMath(){
   const S_=(title,tip,cols,work,list)=>sec.push({title,tip,cols,work,list});
   S_("A. Quick Wins","×11 and Double & Half — mental math",3,0,[g("x11",1),g("x11",2),g("x11",3),g("dh",1),g("dh",2),g("dh",3)]);
   S_("B. Rounding","Underline the digit in the place. Look one place to the right.",2,0,[1,2,3,4].map(i=>g("round",i)));
-  S_("C. Division","Estimate first. Check by multiplying.",2,1,[g("div2",1),g("div2",2),g("decDivW",1),g("decDivW",2)]);
+  const mm=((S.bonusPlan||{})[TODAY]||[]).includes("mulMulti");
+  S_(mm?"C. Multi-digit × and ÷":"C. Division",mm?"Show your work. Estimate first, check by multiplying.":"Estimate first. Check by multiplying.",2,1,mm?[g("mulMulti",1),g("mulMulti",2),g("div2",1),g("div2",2)]:[g("div2",1),g("div2",2),g("decDivW",1),g("decDivW",2)]);
   S_("D. Place Value & Powers of 10","",2,0,[g("decWord",1),g("digitValue",1),g("digitValue",2),g("pow10",1)]);
   S_("E. Decimals & Measurement","Line up the decimal points.",2,1,[g("decAddSub",1),g("decAddSub",2),g("decMul",1),g("convert",1)]);
   const p1=sec.length;
