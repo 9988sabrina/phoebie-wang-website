@@ -103,3 +103,9 @@
 - 没做的候选：
   1. Tutor 线推送前仍需 `git pull`（已核对：#70 的 `.stemwrap` 修复未受 b1ce4fe 影响）；建议老板提醒 Tutor 线每次先同步 main，否则每日修复会被反复覆盖。
   2. vet-game.html 的语言切换和「选择病例」按钮 28–31px；该页另一条线仍在改版，暂不动。
+
+## 2026-11-20
+- 改了什么（修一个坏的地方）：Daily Practice 页（/practice/）又被 Tutor 线覆盖了——11-19 的「Tutor: 11/19 math」提交（eccc95b）同时回退了 #70 的 STEM「Data table」滚动容器（`.stemwrap`，375px 又横向溢出到 401px）和 #71 的 44px 点击区（标签按钮 40px、「🔊 听一听 / Listen」36px），main 上 #71 加的回归测试因此是红的。保留 Tutor 的内容改动，只把这两处修复重新放回去（页内样式，无需改 `?v=`），并把回归测试扩到 `.stemwrap`，以后任一处被覆盖 `node --test` 都会报错。375px 下 10 个标签页逐个点开均为 375px 无溢出、标签 44px、朗读按钮 44px，46 个测试全过。PR 号见 claude/daily-2026-11-20 合并记录。
+- 没做的候选：
+  1. Tutor 线已连续四天从旧副本推送（每次都覆盖当天修复）；建议老板让 Tutor 线每次推送前先 `git pull` 并本地跑 `node --test tests/*.test.js`，否则这条回归测试会一直红。
+  2. vet-game.html 的语言切换和「选择病例」按钮 28–31px；该页另一条线仍在改版，暂不动。
