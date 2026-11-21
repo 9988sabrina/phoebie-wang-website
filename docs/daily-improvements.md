@@ -110,6 +110,12 @@
   1. Tutor 线已连续四天从旧副本推送（每次都覆盖当天修复）；建议老板让 Tutor 线每次推送前先 `git pull` 并本地跑 `node --test tests/*.test.js`，否则这条回归测试会一直红。
   2. vet-game.html 的语言切换和「选择病例」按钮 28–31px；该页另一条线仍在改版，暂不动。
 
+## 2026-11-21
+- 改了什么（修一个坏的地方）：课程页、商品页、Times Table、5/9 速算、鸡兔同笼、感恩节、Parking Jam、找笑脸、Vet Game、隐私/条款/退款等 13 个页面顶部的面包屑链接（「Home / Printables」）只有 16px 高，低于 44px 点击区标准，手机上很难点中返回首页。在 styles.css 给 `.crumb a` 加上下 14px 的内边距并用负外边距抵消，点击区变为 47×50px，页面布局和视觉完全不变；20 个页面的 styles.css 升到 `?v=20261121a`。375px 下 13 个页面复查均无横向溢出，46 个测试全过。PR 号见 claude/daily-2026-11-21 合并记录。另：Tutor 线这次推送前已同步 main，/practice/ 的 44px 与 `.stemwrap` 修复均在，回归测试绿。
+- 没做的候选：
+  1. 全站页脚「Message us through our Etsy shop」等正文内链接只有 15–20px 高，属于段落内文字链接，按惯例不强求 44px，暂不动。
+  2. vet-game.html 的语言切换和「选择病例」按钮 28–31px；该页另一条线仍在改版，暂不动。
+
 ## 2026-11-11（PR #49，11-18 在最新 main 上重做）
 - 改了什么（删掉一个多余的东西）：product.html 是一个没有任何页面链到的孤儿页，内容还是旧方案（「Coming soon · 需家长审核」「USD 4.99 测试价」「Payhip 交付」「[parent-managed email required]」），和现在「Etsy $1.99 即时下载」的真实卖法矛盾，却仍在 sitemap 里、允许被 Google 索引。改为 noindex 并移出 sitemap，文件保留；tests/site.test.js 的索引/noindex 清单同步更新。无 CSS/JS 改动，不需要动 ?v=。45 个测试全过。PR #49。
 - 说明：#49 原本捆了当时未合并的 #47、#48；一周后 main 已通过其他 PR 落地了面包屑 44px 修复，首页也已改版（#66），#47/#48 已过时，可直接关闭。#49 改为只含 product.html 这一件事。

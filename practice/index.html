@@ -1031,7 +1031,11 @@ function vEla(){const e=getE(),u=e.u,p=eProgress();const w=(S.writing=S.writing|
   h+=`<div class="card q" style="border-left-color:var(--ela)"><div class="qhead"><h3>Writing</h3><span class="chip ela">${u.w.type}</span></div>
    <p style="margin:8px 0">${esc(u.w.prompt)}</p>
    ${w.done?`<div class="sentence" style="white-space:pre-wrap;font-weight:600">${esc(w.text)}</div><div class="fb ok" style="margin-top:6px">✓ Saved · ${eWords(w.text)} words. A parent can read it in the Parent tab.</div>`:
-   `<textarea id="wtext" rows="8" placeholder="Write 5–7 sentences here…">${esc(w.text)}</textarea>
+   `${u.w.type==="Opinion"?`<div class="steps" style="background:var(--ela-soft);margin-bottom:8px"><div class="eyebrow">OREO plan · Opinion writing</div>
+     <div class="small"><b>O</b>pinion — "I think … should …" (say what you believe)</div>
+     <div class="small"><b>R</b>eason — "First, …" / "One reason is …"</div>
+     <div class="small"><b>E</b>xample — a fact from the passage: "For example, …" / "The passage says …"</div>
+     <div class="small"><b>O</b>pinion again — "That is why …" (say it a new way)</div></div>`:""}<textarea id="wtext" rows="8" placeholder="Write 5–7 sentences here…">${esc(w.text)}</textarea>
    <div class="small muted" id="wcount">${eWords(w.text)} words</div>
    <div class="stack" style="gap:6px;margin-top:8px">${u.w.check.map((c,i)=>`<label class="row" style="gap:8px;flex-wrap:nowrap"><input type="checkbox" data-wc="${i}" ${w.checks&&w.checks[i]?"checked":""}><span>${esc(c)}</span></label>`).join("")}</div>
    <div class="row" style="margin-top:10px"><button class="ela" data-wsave="1">Save my writing</button><span class="fb hint" id="wmsg">${live.wmsg||""}</span></div>`}</div>`;
