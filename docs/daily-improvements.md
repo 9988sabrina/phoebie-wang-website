@@ -62,6 +62,12 @@
   1. 页脚「Affiliate Disclosure」链接：联盟/工具页已下线，这个链接和 sitemap 里的 disclosure.html 可能已多余（涉及法律声明，需老板点头再删）。
   2. practice/ 页的标签按钮 40px、「听一听」36px，chinese/ 页的按钮 41px，也略低于 44px（这两页用自己的样式表，留给以后单独修）。
 
+## 2026-11-12
+- 改了什么（修一个坏的地方）：首页 Bird Pal 段落写着「try it on the phone to the left」，但 900px 以下（手机）手机样机排在文字上方，说「左边」是错的。改成「try it on the phone right here on this page」，桌面和手机都对。只改 index.html 一句文案，无 CSS/JS 改动，不需要动 ?v=。Playwright 375px 复查：手机样机确实在文字上方、无横向溢出；`node --test tests/*.test.js` 44/44 通过。PR #60。（11-18 补记：#60 待批准期间，老板 11-14 的首页改版 #66 已把这句改成「Try it in the phone frame on this page」，等于已修好；#60 合并 main 后只剩这段日志，无代码改动。）
+- 说明：#40、#47、#48、#49 四个每日 PR 仍待老板批准合并（#41 已被 #48 取代；#49 与最新 main 有冲突，需要重做或先合 #47/#48）。本次再次尝试合并被权限系统拒绝，未绕过。
+- 没做的候选：
+  1. 同一段里「Open it full screen」出现两次（手机样机下方的文字链 + 右侧按钮），可去掉一个。
+  2. 页脚「Message us through our Etsy shop」联系链接只有 15px 高，要改 styles.css + 全站 ?v=，等 #48 合并后再做以免冲突。
 ## 2026-11-13
 - 改了什么（修一个坏的地方）：首页主推的 Parking Jam 页里，教程气泡的「Skip tutorial / 跳过教程」按钮只有 22px 高，「Progress code / Level map」折叠标题 36px、进度码输入框和「Restore」按钮 42px，都低于 44px 点击区标准，小朋友在手机上容易点不中。parking-jam.css 把这四处提到 ≥44px（版本 v=4 → v=5）。375px 复查无横向溢出、教程气泡布局正常，44 个测试全过。PR 号见 claude/daily-2026-11-13 合并记录。
 - 没做的候选：
