@@ -109,3 +109,9 @@
 - 没做的候选：
   1. Tutor 线已连续四天从旧副本推送（每次都覆盖当天修复）；建议老板让 Tutor 线每次推送前先 `git pull` 并本地跑 `node --test tests/*.test.js`，否则这条回归测试会一直红。
   2. vet-game.html 的语言切换和「选择病例」按钮 28–31px；该页另一条线仍在改版，暂不动。
+
+## 2026-11-21
+- 改了什么（修一个坏的地方）：课程页、商品页、Times Table、5/9 速算、鸡兔同笼、感恩节、Parking Jam、找笑脸、Vet Game、隐私/条款/退款等 13 个页面顶部的面包屑链接（「Home / Printables」）只有 16px 高，低于 44px 点击区标准，手机上很难点中返回首页。在 styles.css 给 `.crumb a` 加上下 14px 的内边距并用负外边距抵消，点击区变为 47×50px，页面布局和视觉完全不变；20 个页面的 styles.css 升到 `?v=20261121a`。375px 下 13 个页面复查均无横向溢出，46 个测试全过。PR 号见 claude/daily-2026-11-21 合并记录。另：Tutor 线这次推送前已同步 main，/practice/ 的 44px 与 `.stemwrap` 修复均在，回归测试绿。
+- 没做的候选：
+  1. 全站页脚「Message us through our Etsy shop」等正文内链接只有 15–20px 高，属于段落内文字链接，按惯例不强求 44px，暂不动。
+  2. vet-game.html 的语言切换和「选择病例」按钮 28–31px；该页另一条线仍在改版，暂不动。
