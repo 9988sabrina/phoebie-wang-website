@@ -116,6 +116,12 @@
   1. 全站页脚「Message us through our Etsy shop」等正文内链接只有 15–20px 高，属于段落内文字链接，按惯例不强求 44px，暂不动。
   2. vet-game.html 的语言切换和「选择病例」按钮 28–31px；该页另一条线仍在改版，暂不动。
 
+## 2026-11-22
+- 改了什么（修一个坏的地方）：Bird Pal 鸟语页（/birdpal/，首页和 Books & Songs 页都有「Open it full screen」入口）右上角的 EN / 中文 / ES 语言切换按钮只有 34px 高，低于 44px 点击区标准，小朋友在手机上容易点不中。该页样式写在页面内，把 `.langbtn` 的 min-height 提到 44px、左右内边距微调到 14px（无需改 `?v=`）。375px 下复查三个按钮为 51×44 / 60×44 / 50×44，页面无横向溢出、布局与改前一致，46 个测试全过。全站 23 个可索引页面扫描：无死链、无横向溢出（vetgame/ 除外，见下）。PR 号见 claude/daily-2026-11-22 合并记录。
+- 没做的候选：
+  1. apps/birdpal-ios/BirdPal/index.html 是 iOS 壳子里的同一页副本，语言按钮同样 34px；属于 App 发布线的文件，留给 Bird Pal 线下次发版时一起改。
+  2. vetgame/index.html 在 375px 横向溢出到 378px，且语言切换 / 「选择病例」按钮只有 26–31px；该页另一条线仍在改版，暂不动。
+
 ## 2026-11-11（PR #49，11-18 在最新 main 上重做）
 - 改了什么（删掉一个多余的东西）：product.html 是一个没有任何页面链到的孤儿页，内容还是旧方案（「Coming soon · 需家长审核」「USD 4.99 测试价」「Payhip 交付」「[parent-managed email required]」），和现在「Etsy $1.99 即时下载」的真实卖法矛盾，却仍在 sitemap 里、允许被 Google 索引。改为 noindex 并移出 sitemap，文件保留；tests/site.test.js 的索引/noindex 清单同步更新。无 CSS/JS 改动，不需要动 ?v=。45 个测试全过。PR #49。
 - 说明：#49 原本捆了当时未合并的 #47、#48；一周后 main 已通过其他 PR 落地了面包屑 44px 修复，首页也已改版（#66），#47/#48 已过时，可直接关闭。#49 改为只含 product.html 这一件事。
