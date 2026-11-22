@@ -115,3 +115,9 @@
 - 没做的候选：
   1. 全站页脚「Message us through our Etsy shop」等正文内链接只有 15–20px 高，属于段落内文字链接，按惯例不强求 44px，暂不动。
   2. vet-game.html 的语言切换和「选择病例」按钮 28–31px；该页另一条线仍在改版，暂不动。
+
+## 2026-11-22
+- 改了什么（修一个坏的地方）：Bird Pal 鸟语页（/birdpal/，首页和 Books & Songs 页都有「Open it full screen」入口）右上角的 EN / 中文 / ES 语言切换按钮只有 34px 高，低于 44px 点击区标准，小朋友在手机上容易点不中。该页样式写在页面内，把 `.langbtn` 的 min-height 提到 44px、左右内边距微调到 14px（无需改 `?v=`）。375px 下复查三个按钮为 51×44 / 60×44 / 50×44，页面无横向溢出、布局与改前一致，46 个测试全过。全站 23 个可索引页面扫描：无死链、无横向溢出（vetgame/ 除外，见下）。PR 号见 claude/daily-2026-11-22 合并记录。
+- 没做的候选：
+  1. apps/birdpal-ios/BirdPal/index.html 是 iOS 壳子里的同一页副本，语言按钮同样 34px；属于 App 发布线的文件，留给 Bird Pal 线下次发版时一起改。
+  2. vetgame/index.html 在 375px 横向溢出到 378px，且语言切换 / 「选择病例」按钮只有 26–31px；该页另一条线仍在改版，暂不动。
