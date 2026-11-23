@@ -401,22 +401,6 @@ body[data-page="home"] .h-holiday{margin-top:28px;max-width:46rem}
 }
 @media(prefers-reduced-motion:reduce){body[data-page="home"] .offer-card:hover{transform:none}}
 
-/* paperback sits under the hero, above the printables band */
-.book-band{background:#fff;border-bottom:3px solid var(--navy)}
-.book-inner{width:var(--wrap);margin:0 auto;padding:clamp(28px,4vw,48px) 0;display:grid;grid-template-columns:minmax(140px,220px) minmax(0,1fr);gap:clamp(18px,4vw,40px);align-items:center}
-.book-inner img{display:block;width:100%;height:auto;border:2.5px solid var(--navy);background:#fff;box-shadow:6px 6px 0 var(--navy)}
-.book-kicker{margin:0 0 6px;font-size:.78rem;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--coral-dark)}
-.book-band h2{font-size:clamp(1.8rem,4vw,2.6rem);line-height:1.05}
-.book-band p{margin:10px 0 0;max-width:42ch}
-.book-meta{color:var(--muted);font-size:.98rem}
-.book-buy{background:var(--navy);color:#fff;box-shadow:4px 4px 0 var(--sun);font-size:1.05rem}
-.book-buy:hover{background:var(--coral);color:#fff}
-@media(max-width:560px){
-  .book-inner{grid-template-columns:1fr}
-  .book-inner img{width:min(200px,62%)}
-}
-@media(prefers-reduced-motion:reduce){.book-buy:hover{transform:none}}
-
 /* 2026-11-16: hero entrance, idle character, festive drift. Transform and opacity only. */
 body[data-page="home"] .home-hero{position:relative;overflow:hidden}
 body[data-page="home"] .home-hero .intro-text,
