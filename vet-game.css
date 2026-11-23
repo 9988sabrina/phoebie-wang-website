@@ -50,7 +50,9 @@
   font-size:12px;
   background:var(--v-sage);
   color:#fff;
-  padding:4px 10px;
+  padding:4px 12px;
+  min-height:44px;
+  display:inline-flex;align-items:center;
   border-radius:999px;
   white-space:nowrap;
 }
@@ -62,7 +64,9 @@
   border:1.5px solid var(--v-line);
   background:#fff;
   color:#9a8c70;
-  padding:4px 9px;
+  padding:4px 12px;
+  min-height:44px;
+  min-width:44px;
   border-radius:999px;
   cursor:pointer;
 }
