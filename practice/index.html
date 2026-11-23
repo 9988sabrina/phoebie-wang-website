@@ -1444,17 +1444,70 @@ function printPages(){
     const A8=[];while(A8.length<8){const n=pool[Math.floor(r()*pool.length)];if(!A8.length||A8[A8.length-1]!==n)A8.push(n)}
     const C8=[];while(C8.length<6){const n=pool[Math.floor(r()*7)];if(!C8.length||C8[C8.length-1]!==n)C8.push(n)}
     S.piano=S.piano||{n:0,last:""};const pi=Math.max(0,(S.piano.last===TODAY?S.piano.n-1:S.piano.n))%PLESSONS.length,PL=PLESSONS[pi];
-    const melN=PL.mel.split(/\s+/).filter(x=>/^[A-G]#?\d$/.test(x)&&!x.includes("#")).slice(0,10);
     const letter=n=>n[0];
-    B.push("<!--hard-->"+hdr("Piano · Staff practice 五线谱","Treble clef · five lines · about 10 minutes · pencil"));
-    B.push(`<div class="pp-box"><div class="pp-bh"><b>Remember</b><span>Notes go UP the staff as they get higher</span></div>
-      <div class="pp-q"><b>Lines</b> (bottom to top): E G B D F — “<i>Every Good Boy Does Fine</i>”. &nbsp; <b>Spaces</b>: F A C E — “<i>FACE</i>”. &nbsp; <b>Middle C</b> sits on a little line below the staff.</div>
-      ${STF.svg(["E4","G4","B4","D5","F5","F4","A4","C5","E5","C4"].map(n=>({note:n,label:n[0]})))}</div>`);
-    B.push(`<div class="pp-box"><div class="pp-bh"><b>A. Name the notes</b><span>Write the letter on the line under each note</span></div>${STF.svg(A8.map(n=>({note:n,line:1})))}</div>`);
-    B.push(`<div class="pp-box"><div class="pp-bh"><b>B. Draw the notes</b><span>Draw a note head on the right line or space</span></div>${STF.svg(C8.map(n=>({label:letter(n)})),{})}</div>`);
-    B.push(`<div class="pp-box"><div class="pp-bh"><b>C. Today's piano song</b><span>${esc(PL.t)}</span></div><div class="pp-q">Write the first notes of today's lesson on the staff. Then play it from your drawing!</div>${STF.svg(melN.map(n=>({label:letter(n)})))}</div>`);
-    B.push(`<div class="pp-box"><div class="pp-bh"><b>D. Make your own tune</b><span>Draw 6 notes you like. Write each letter on the line.</span></div>${STF.svg(Array.from({length:6},()=>({line:1})))}</div>`);
-    pianoKey=`<div class="pp-key"><b>Piano A:</b> ${A8.map(letter).join(" ")}</div>`}
+    const box=(t,s,b)=>`<div class="pp-box"><div class="pp-bh"><b>${t}</b><span>${s}</span></div>${b}</div>`;
+    const bl=w=>`<span class="pp-ln" style="display:inline-block;width:${w||80}px"></span>`;
+    const Q=a=>a.map((q,i)=>`<div class="pp-q"><b>${i+1}.</b> ${q}</div>`).join("");
+    const nameBox=()=>box("A. Name the notes","Write the letter on the line under each note",STF.svg(A8.map(n=>({note:n,line:1}))));
+    const drawBox=()=>box("B. Draw the notes","Draw a note head on the right line or space",STF.svg(C8.map(n=>({label:letter(n)})),{}));
+    const KN=[
+     {t:"Staff & treble clef 五线谱",
+      learn:box("Remember","Notes go UP the staff as they get higher",`<div class="pp-q"><b>Lines</b> (bottom to top): E G B D F — “<i>Every Good Boy Does Fine</i>”. &nbsp; <b>Spaces</b>: F A C E — “<i>FACE</i>”. &nbsp; <b>Middle C</b> sits on a little line below the staff.</div>${STF.svg(["E4","G4","B4","D5","F5","F4","A4","C5","E5","C4"].map(n=>({note:n,label:n[0]})))}`),
+      ex:nameBox()+drawBox(),key:A8.map(letter).join(" ")},
+     {t:"Note values 音符时值",
+      learn:box("Remember","Count the beats (quarter note = 1 beat)",`<div class="pp-q"><b>whole note</b> = 4 beats &nbsp; <b>dotted half</b> = 3 &nbsp; <b>half</b> = 2 &nbsp; <b>quarter</b> = 1 &nbsp; <b>eighth</b> = ½ (two eighths = 1 beat) &nbsp; <b>sixteenth</b> = ¼. A <b>dot</b> adds half of the note's value.</div>`),
+      ex:box("Count it","Write the number of beats",Q([`quarter + quarter + half = ${bl(50)} beats`,`dotted half + quarter = ${bl(50)} beats`,`1 whole note = ${bl(40)} quarter notes`,`1 half note = ${bl(40)} eighth notes`,`A dotted half note = a half note + a ${bl(90)} note`,`In 4/4: half note + quarter note + ${bl(50)} = 4 beats`])),
+      key:"1) 4  2) 4  3) 4  4) 4  5) quarter  6) a quarter note (1 beat)"},
+     {t:"Rests & dots 休止符",
+      learn:box("Remember","A rest is silence — it still counts",`<div class="pp-q"><b>whole rest</b> hangs under a line (4 beats; also a whole bar of silence). &nbsp; <b>half rest</b> sits on a line (2 beats). &nbsp; <b>quarter rest</b> = 1 beat. &nbsp; <b>eighth rest</b> = ½ beat. A <b>tie</b> joins two notes of the same pitch into one long sound.</div>`),
+      ex:box("Count it","Write the number of beats",Q([`half rest = ${bl(50)} beats`,`quarter note + quarter rest + half note = ${bl(50)} beats`,`In 3/4: quarter note + ${bl(90)} = 3 beats (use a half rest)`,`A half note tied to a quarter note = ${bl(50)} beats`,`Which rest hangs <u>under</u> a line, the whole rest or the half rest? ${bl(90)}`,`Two eighth rests = one ${bl(90)} rest`])),
+      key:"1) 2  2) 4  3) half rest (2 beats)  4) 3  5) whole rest  6) quarter"},
+     {t:"Time signatures 拍号",
+      learn:box("Remember","Top number = beats in a bar · bottom 4 = quarter note gets the beat",`<div class="pp-q"><b>2/4</b>: 2 beats (strong–weak, a march). <b>3/4</b>: 3 beats (strong–weak–weak, a waltz). <b>4/4</b>: 4 beats (strong–weak–medium–weak). Barlines split the music into <b>bars</b> (measures). Count out loud: “1 &amp; 2 &amp;” for eighth notes.</div>`),
+      ex:box("Think","Write the answer",Q([`In 3/4 there are ${bl(40)} quarter-note beats in every bar.`,`A bar has a half note and a quarter note. The time signature is ${bl(50)}.`,`In 4/4, ${bl(40)} eighth notes fill one bar.`,`Which time signature feels like a waltz? ${bl(50)}`,`In 2/4, half note = ${bl(40)} beats (a whole bar).`,`Clap and count one bar of 4/4: quarter, quarter, half. Did it work? □ yes □ I'll try again`])),
+      key:"1) 3  2) 3/4  3) 8  4) 3/4  5) 2"},
+     {t:"Half steps & sharps/flats 半音全音",
+      learn:box("Remember","On the keyboard: right = higher, left = lower",`<div class="pp-q">A <b>half step</b> = the very next key (black or white). A <b>whole step</b> = two half steps. <b>E–F</b> and <b>B–C</b> are half steps (no black key between). A <b>sharp</b> (#) raises a note by a half step, a <b>flat</b> (b) lowers it, a <b>natural</b> cancels both.</div>`),
+      ex:box("Find the note","Write the note name (use # for sharp, b for flat)",Q([`A half step above C is ${bl(50)}.`,`A whole step above C is ${bl(50)}.`,`A half step below B is ${bl(50)}.`,`E to F is a ${bl(80)} step.`,`F to G is a ${bl(80)} step.`,`A whole step above E is ${bl(50)}.`])),
+      key:"1) C#  2) D  3) Bb  4) half  5) whole  6) F#"},
+     {t:"Major scales 大调音阶",
+      learn:box("Remember","Major scale = W W H W W W H",`<div class="pp-q"><b>C major</b>: C D E F G A B C — no sharps or flats. The half steps are <b>E–F</b> and <b>B–C</b> (steps 3–4 and 7–8). Same pattern starting on G: G A B C D E <b>F#</b> G — the F must be sharp to keep the pattern.</div>`),
+      ex:box("Fill in","Use W (whole) and H (half)",Q([`The pattern of a major scale: W W ${bl(30)} W W W ${bl(30)}`,`Write the C major scale: C ${bl(30)} ${bl(30)} ${bl(30)} ${bl(30)} ${bl(30)} ${bl(30)} C`,`In G major, which note is sharp? ${bl(50)}`,`Between which two notes of C major is a half step? E–${bl(30)} and B–${bl(30)}`,`The 5th note of C major is ${bl(40)}.`,`Play C major with RH fingering 1 2 3 1 2 3 4 5. Hands relaxed? □ yes`])),
+      key:"1) H … H  2) D E F G A B  3) F#  4) F and C  5) G"},
+     {t:"Key signatures 调号",
+      learn:box("Remember","The key signature sits right after the clef",`<div class="pp-q"><b>C</b>: none. <b>G</b>: F#. <b>D</b>: F# C#. <b>A</b>: F# C# G#. <b>F</b>: Bb. Minor keys share them: <b>A minor</b> = none, <b>E minor</b> = F#, <b>D minor</b> = Bb. Order of sharps: <i>Father Charles Goes Down And Ends Battle</i> (F C G D A E B).</div>`),
+      ex:box("Think","Write the answer",Q([`One sharp (F#) means the major key is ${bl(60)}.`,`D major has two sharps. They are ${bl(40)} and ${bl(40)}.`,`F major has one flat. It is ${bl(40)}.`,`The key with no sharps or flats (major) is ${bl(60)}.`,`The relative minor of C major is ${bl(60)}.`,`The first sharp is always ${bl(40)}.`])),
+      key:"1) G major  2) F#, C#  3) Bb  4) C major  5) A minor  6) F#"},
+     {t:"Intervals 音程",
+      learn:box("Remember","Count the letter names, including the first and last",`<div class="pp-q">C up to D = <b>2nd</b>. C up to E = <b>3rd</b>. C up to G = <b>5th</b>. C up to C = <b>octave (8th)</b>. On the staff: line→next line (or space→space) = a 3rd; line→space next to it = a 2nd.</div>`),
+      ex:box("Name the interval","Write 2nd, 3rd, 4th, 5th, 6th or 8th",Q([`C up to F = ${bl(60)}`,`D up to F = ${bl(60)}`,`A up to E = ${bl(60)}`,`C up to A = ${bl(60)}`,`F up to F = ${bl(60)}`,`G up to B = ${bl(60)}`])),
+      key:"1) 4th  2) 3rd  3) 5th  4) 6th  5) 8th  6) 3rd"},
+     {t:"Triads 三和弦",
+      learn:box("Remember","Triad = 3 notes: skip a letter each time",`<div class="pp-q">Root, 3rd, 5th. <b>C</b> triad: C E G. <b>G</b> triad: G B D. <b>F</b> triad: F A C. <b>A minor</b>: A C E. Play the notes together = a <b>chord</b>; one after another = a <b>broken chord</b> (arpeggio).</div>`),
+      ex:box("Build it","Write the three letter names (letters only)",Q([`C triad: C ${bl(30)} ${bl(30)}`,`G triad: G ${bl(30)} ${bl(30)}`,`F triad: F ${bl(30)} ${bl(30)}`,`D triad: D ${bl(30)} ${bl(30)} (in D major the middle note is F#)`,`E triad: E ${bl(30)} ${bl(30)}`,`Playing the notes of a chord one at a time is called a ${bl(120)} chord.`])),
+      key:"1) E G  2) B D  3) A C  4) F A  5) G B  6) broken"},
+     {t:"Dynamics & touch 力度触键",
+      learn:box("Remember","Loud/soft and smooth/short",`<div class="pp-q"><b>p</b> soft · <b>mp</b> medium soft · <b>mf</b> medium loud · <b>f</b> loud · <b>cresc.</b> gradually louder · <b>dim.</b> gradually softer · <b>legato</b> (slur) smooth · <b>staccato</b> (dot) short · <b>accent</b> (&gt;) stress the note.</div>`),
+      ex:box("Match the meaning","Write the meaning",Q([`p = ${bl(130)}`,`f = ${bl(130)}`,`cresc. = ${bl(170)}`,`dim. = ${bl(170)}`,`legato = ${bl(150)}`,`staccato = ${bl(150)}`])),
+      key:"1) soft  2) loud  3) gradually louder  4) gradually softer  5) smooth, connected  6) short, detached"},
+     {t:"Tempo & terms 速度术语",
+      learn:box("Remember","Italian words on the music",`<div class="pp-q"><b>Allegro</b> fast · <b>Moderato</b> moderate · <b>Andante</b> walking speed · <b>Adagio</b> slow · <b>rit.</b> (ritardando) slow down · <b>a tempo</b> back to the first speed · <b>fermata</b> hold the note longer · <b>repeat sign</b> play the section again.</div>`),
+      ex:box("Match the meaning","Write the meaning",Q([`Allegro = ${bl(130)}`,`Adagio = ${bl(130)}`,`Andante = ${bl(150)}`,`rit. = ${bl(150)}`,`a tempo = ${bl(170)}`,`fermata = ${bl(170)}`])),
+      key:"1) fast  2) slow  3) walking speed  4) slow down  5) back to original speed  6) hold longer"},
+     {t:"Fingers & hand position 指法",
+      learn:box("Remember","Thumb = 1, index = 2, middle = 3, ring = 4, pinky = 5 (both hands)",`<div class="pp-q"><b>Right hand</b> five-finger position on C: 1=C 2=D 3=E 4=F 5=G. <b>Left hand</b> on the C below: 5=C 4=D 3=E 2=F 1=G. Sit tall, wrists loose, curved fingers, play with the finger tips.</div>`),
+      ex:box("Think","Write the answer",Q([`Right hand: finger 3 plays ${bl(40)} (in C position).`,`Right hand: the pinky (5) plays ${bl(40)}.`,`Left hand: finger 2 plays ${bl(40)} (in C position).`,`Left hand: the thumb (1) plays ${bl(40)}.`,`Which is better for playing: curved fingers or flat fingers? ${bl(100)}`,`Practice: slowly play C D E F G with RH, then LH. Both smooth? □ yes`])),
+      key:"1) E  2) G  3) F  4) G  5) curved"},
+     {t:"Review & make a tune 复习创作",
+      learn:box("Remember","Lines E G B D F · Spaces F A C E · Middle C below the staff",STF.svg(["E4","G4","B4","D5","F5","F4","A4","C5","E5","C4"].map(n=>({note:n,label:n[0]})))),
+      ex:nameBox()+box("D. Make your own tune","Draw 6 notes you like. Write each letter on the line.",STF.svg(Array.from({length:6},()=>({line:1}))))+box("Play it!","Play your tune. Is it happy or sleepy? Which dynamic fits (p, mf, f)?",`<div class="pp-q">Dynamic: ${bl(60)} &nbsp; Tempo word (Allegro / Andante / Adagio): ${bl(90)}</div>`),
+      key:A8.map(letter).join(" ")+" (tune: answers vary)"}
+    ];
+    const kn=pi%KN.length,K=KN[kn];
+    B.push("<!--hard-->"+hdr("Piano · Grade 1–2 knowledge 钢琴知识",`Topic ${kn+1} of ${KN.length}: ${K.t} · about 10 minutes · pencil`));
+    B.push(K.learn);B.push(K.ex);
+    B.push(box("Play today's song","See the Piano tab",`<div class="pp-q">${esc(PL.t)} — play it slowly, hands separate first, then together. □ done</div>`));
+    pianoKey=`<div class="pp-key"><b>Piano (${esc(K.t.split(" ")[0])}…):</b> ${K.key}</div>`}
   // ---- Answer key ----
   B.push("<!--hard-->"+hdr("Answer key (for parents)","Check without telling her the answer first. If one is wrong, ask her for the first small step."));
   M.sec.forEach(sc=>{if(sc.explain)B.push(`<div class="pp-key"><b>${sc.title}:</b> answers vary — look for a clear reason that uses numbers.</div>`);else B.push(`<div class="pp-key"><b>${sc.title}:</b> ${sc.list.map(q=>`${q.n}. ${esc(q.show)}`).join(" &nbsp;·&nbsp; ")}</div>`)});

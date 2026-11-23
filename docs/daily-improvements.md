@@ -122,6 +122,12 @@
   1. apps/birdpal-ios/BirdPal/index.html 是 iOS 壳子里的同一页副本，语言按钮同样 34px；属于 App 发布线的文件，留给 Bird Pal 线下次发版时一起改。
   2. vetgame/index.html 在 375px 横向溢出到 378px，且语言切换 / 「选择病例」按钮只有 26–31px；该页另一条线仍在改版，暂不动。
 
+## 2026-11-23
+- 改了什么（修一个坏的地方）：Wild Case Files 兽医游戏（/vet-game.html 和 PWA 版 /vetgame/，两页共用 vet-game.css）的 中文 / EN / ES 语言切换、🔊 声音按钮只有 28px 高，「选择病例」按钮 31px，都低于 44px 点击区标准，是 11-13 起连续挂了十天的候选；该线自 11-15 起无新提交，现在修不会冲突。vet-game.css 把 `.lang-btn` 提到 min-height/min-width 44px、`.case-num` 提到 min-height 44px（版本 v=11 → v=12，两个页面同步更新）。375px 复查：五个按钮分别为 76×44 / 48×44 / 44×44 / 44×44 / 44×44，头部布局与改前一致，vet-game.html 无横向溢出，46 个测试全过。PR 号见 claude/daily-2026-11-23 合并记录。
+- 没做的候选：
+  1. vetgame/index.html 在 375px 横向溢出到 378px（改前已存在，与本次无关），另有「知道了 · OK」安装提示按钮 37px；留到下一天单独查。
+  2. apps/birdpal-ios/BirdPal/index.html（iOS 壳子副本）的语言按钮仍是 34px，留给 Bird Pal 线发版时一起改。
+
 ## 2026-11-11（PR #49，11-18 在最新 main 上重做）
 - 改了什么（删掉一个多余的东西）：product.html 是一个没有任何页面链到的孤儿页，内容还是旧方案（「Coming soon · 需家长审核」「USD 4.99 测试价」「Payhip 交付」「[parent-managed email required]」），和现在「Etsy $1.99 即时下载」的真实卖法矛盾，却仍在 sitemap 里、允许被 Google 索引。改为 noindex 并移出 sitemap，文件保留；tests/site.test.js 的索引/noindex 清单同步更新。无 CSS/JS 改动，不需要动 ?v=。45 个测试全过。PR #49。
 - 说明：#49 原本捆了当时未合并的 #47、#48；一周后 main 已通过其他 PR 落地了面包屑 44px 修复，首页也已改版（#66），#47/#48 已过时，可直接关闭。#49 改为只含 product.html 这一件事。
