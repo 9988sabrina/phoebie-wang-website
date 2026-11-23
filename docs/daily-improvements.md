@@ -121,3 +121,9 @@
 - 没做的候选：
   1. apps/birdpal-ios/BirdPal/index.html 是 iOS 壳子里的同一页副本，语言按钮同样 34px；属于 App 发布线的文件，留给 Bird Pal 线下次发版时一起改。
   2. vetgame/index.html 在 375px 横向溢出到 378px，且语言切换 / 「选择病例」按钮只有 26–31px；该页另一条线仍在改版，暂不动。
+
+## 2026-11-23
+- 改了什么（修一个坏的地方）：Wild Case Files 兽医游戏（/vet-game.html 和 PWA 版 /vetgame/，两页共用 vet-game.css）的 中文 / EN / ES 语言切换、🔊 声音按钮只有 28px 高，「选择病例」按钮 31px，都低于 44px 点击区标准，是 11-13 起连续挂了十天的候选；该线自 11-15 起无新提交，现在修不会冲突。vet-game.css 把 `.lang-btn` 提到 min-height/min-width 44px、`.case-num` 提到 min-height 44px（版本 v=11 → v=12，两个页面同步更新）。375px 复查：五个按钮分别为 76×44 / 48×44 / 44×44 / 44×44 / 44×44，头部布局与改前一致，vet-game.html 无横向溢出，46 个测试全过。PR 号见 claude/daily-2026-11-23 合并记录。
+- 没做的候选：
+  1. vetgame/index.html 在 375px 横向溢出到 378px（改前已存在，与本次无关），另有「知道了 · OK」安装提示按钮 37px；留到下一天单独查。
+  2. apps/birdpal-ios/BirdPal/index.html（iOS 壳子副本）的语言按钮仍是 34px，留给 Bird Pal 线发版时一起改。
