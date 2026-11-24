@@ -127,3 +127,9 @@
 - 没做的候选：
   1. vetgame/index.html 在 375px 横向溢出到 378px（改前已存在，与本次无关），另有「知道了 · OK」安装提示按钮 37px；留到下一天单独查。
   2. apps/birdpal-ios/BirdPal/index.html（iOS 壳子副本）的语言按钮仍是 34px，留给 Bird Pal 线发版时一起改。
+
+## 2026-11-24
+- 改了什么（修一个坏的地方）：Wild Case Files 的 PWA 版（/vetgame/）在 375px 手机上横向溢出到 378px（11-13 起挂着的候选），原因是 vetgame/app.css 给 `#vetapp` 设了左右 3px 边框但没设 `box-sizing:border-box`，`width:100%` 加边框就超出屏幕；同页「📱 装到手机主屏幕」安装提示的「知道了 · OK」按钮只有 37px 高。app.css 给 `#vetapp` 加 `box-sizing:border-box`，`.install-tip button` 提到 min-height 44px（v=1 → v=2）。顺手修正 vetgame/sw.js 的离线缓存清单：仍指向 `app.css?v=1` 和 `vet-game.css?v=11`（11-23 升到 v=12 时漏了），已更新到 v=2 / v=12 并把缓存名升到 vetgame-v6，否则已安装到主屏幕的用户拿不到新样式。375px 复查：页面 375px 无溢出，OK 按钮 106×44，头部与病例列表布局与改前一致，46 个测试全过。PR 号见 claude/daily-2026-11-24 合并记录。
+- 没做的候选：
+  1. apps/birdpal-ios/BirdPal/index.html（iOS 壳子副本）的语言按钮仍是 34px，留给 Bird Pal 线发版时一起改。
+  2. 首页新加的 Etsy / Amazon 链接（#76）在 375px 显示正常，暂无需改；下次可核对 Books & Songs 页的亚马逊链接是否与首页一致。
