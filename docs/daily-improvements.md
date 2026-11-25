@@ -134,6 +134,12 @@
   1. apps/birdpal-ios/BirdPal/index.html（iOS 壳子副本）的语言按钮仍是 34px，留给 Bird Pal 线发版时一起改。
   2. 首页新加的 Etsy / Amazon 链接（#76）在 375px 显示正常，暂无需改；下次可核对 Books & Songs 页的亚马逊链接是否与首页一致。
 
+## 2026-11-25
+- 改了什么（提升转化：亚马逊书籍链接的清晰度）：导航里的「Books & Songs」页（projects.html）书籍区只列了 Sabrina 的两本小说，Phoebie 的漫画书《My Super Dad》——首页唯一有直达购买按钮（ASIN B0HPM4S3K6，#76 加的）的书——在这页反而找不到，从导航进来找书的人会漏掉它。把它作为第一张卡片加进同一个 `.work-row`（标题、价格 $14.99、链接全部照搬首页，不新增任何信息），小标题改为「Books on Amazon.」并说明是一本漫画加两本小说。纯 HTML 改动，无需改 `?v=`。375px 复查：页面 375px 无溢出，三张卡片各 351×172–193px，46 个测试全过。PR 号见 claude/daily-2026-11-25 合并记录。
+- 没做的候选：
+  1. apps/birdpal-ios/BirdPal/index.html（iOS 壳子副本）的语言按钮仍是 34px，留给 Bird Pal 线发版时一起改。
+  2. 两本小说的亚马逊链接仍是搜索页（`/s?k=…`）而非商品页；没有核实过的 ASIN，不编造，等老板给链接再换。
+
 ## 2026-11-11（PR #49，11-18 在最新 main 上重做）
 - 改了什么（删掉一个多余的东西）：product.html 是一个没有任何页面链到的孤儿页，内容还是旧方案（「Coming soon · 需家长审核」「USD 4.99 测试价」「Payhip 交付」「[parent-managed email required]」），和现在「Etsy $1.99 即时下载」的真实卖法矛盾，却仍在 sitemap 里、允许被 Google 索引。改为 noindex 并移出 sitemap，文件保留；tests/site.test.js 的索引/noindex 清单同步更新。无 CSS/JS 改动，不需要动 ?v=。45 个测试全过。PR #49。
 - 说明：#49 原本捆了当时未合并的 #47、#48；一周后 main 已通过其他 PR 落地了面包屑 44px 修复，首页也已改版（#66），#47/#48 已过时，可直接关闭。#49 改为只含 product.html 这一件事。
