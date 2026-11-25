@@ -133,3 +133,9 @@
 - 没做的候选：
   1. apps/birdpal-ios/BirdPal/index.html（iOS 壳子副本）的语言按钮仍是 34px，留给 Bird Pal 线发版时一起改。
   2. 首页新加的 Etsy / Amazon 链接（#76）在 375px 显示正常，暂无需改；下次可核对 Books & Songs 页的亚马逊链接是否与首页一致。
+
+## 2026-11-25
+- 改了什么（提升转化：亚马逊书籍链接的清晰度）：导航里的「Books & Songs」页（projects.html）书籍区只列了 Sabrina 的两本小说，Phoebie 的漫画书《My Super Dad》——首页唯一有直达购买按钮（ASIN B0HPM4S3K6，#76 加的）的书——在这页反而找不到，从导航进来找书的人会漏掉它。把它作为第一张卡片加进同一个 `.work-row`（标题、价格 $14.99、链接全部照搬首页，不新增任何信息），小标题改为「Books on Amazon.」并说明是一本漫画加两本小说。纯 HTML 改动，无需改 `?v=`。375px 复查：页面 375px 无溢出，三张卡片各 351×172–193px，46 个测试全过。PR 号见 claude/daily-2026-11-25 合并记录。
+- 没做的候选：
+  1. apps/birdpal-ios/BirdPal/index.html（iOS 壳子副本）的语言按钮仍是 34px，留给 Bird Pal 线发版时一起改。
+  2. 两本小说的亚马逊链接仍是搜索页（`/s?k=…`）而非商品页；没有核实过的 ASIN，不编造，等老板给链接再换。
