@@ -139,3 +139,9 @@
 - 没做的候选：
   1. apps/birdpal-ios/BirdPal/index.html（iOS 壳子副本）的语言按钮仍是 34px，留给 Bird Pal 线发版时一起改。
   2. 两本小说的亚马逊链接仍是搜索页（`/s?k=…`）而非商品页；没有核实过的 ASIN，不编造，等老板给链接再换。
+
+## 2026-11-26
+- 改了什么（修一个坏的地方）：Parking Jam 停车游戏页（/parking-jam.html）在手机宽度（≤520px）下，parking-jam.css 的媒体查询把 Undo / Hint / Restart / Today's Jam 四个操作按钮的 min-height 从 44px 改回了 42px，实际只有 43.5px 高，低于 44px 点击区标准，是全站 18 个可索引页面扫描里唯一不达标的地方。把该媒体查询里的 min-height 改为 44px（桌面规则本来就是 44px，等于统一），parking-jam.css 版本 v=5 → v=6（只有这一页引用）。375px 复查：四个按钮为 69×44 / 60×44 / 83×44 / 123×44，页面无横向溢出，布局与改前一致，46 个测试全过。全站扫描：18 个可索引页面无死链、无横向溢出。PR 号见 claude/daily-2026-11-26 合并记录。
+- 没做的候选：
+  1. 首页邮件订阅区（#signup）仍是 hidden，未接后端，按「不收集数据」的铁律保持不动。
+  2. apps/birdpal-ios/BirdPal/index.html（iOS 壳子副本）的语言按钮仍是 34px，留给 Bird Pal 线发版时一起改。
