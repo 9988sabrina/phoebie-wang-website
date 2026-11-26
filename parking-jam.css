@@ -40,7 +40,7 @@
 .jam-stars{margin:0;font-size:2rem;letter-spacing:6px;color:#f5a623}.jam-stars.shine{animation:shine .6s ease}@keyframes shine{0%{transform:scale(.4);opacity:0}70%{transform:scale(1.2)}100%{transform:scale(1);opacity:1}}.jam-over-actions{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:14px}
 .jam-msg{min-height:1.6em;margin:14px 0 0;text-align:center;font-weight:750;color:var(--navy)}
 @media(max-width:900px){.jam-layout{grid-template-columns:minmax(0,1fr)}}
-@media(max-width:520px){.jam-top{justify-content:center}.jam-actions{justify-content:center;width:100%}.jam-actions .button{padding:8px 13px;min-height:42px;font-size:.92rem}.pax{width:26px;height:26px}.bay{min-height:64px}.jam-card{box-shadow:5px 5px 0 var(--sun)}}
+@media(max-width:520px){.jam-top{justify-content:center}.jam-actions{justify-content:center;width:100%}.jam-actions .button{padding:8px 13px;min-height:44px;font-size:.92rem}.pax{width:26px;height:26px}.bay{min-height:64px}.jam-card{box-shadow:5px 5px 0 var(--sun)}}
 @media(prefers-reduced-motion:reduce){.veh{transition-duration:.01ms}.pax.front,.bay.jam,.jam-stars.shine{animation:none}.veh.hint{animation:none;outline:4px solid var(--sun);outline-offset:-2px;border-radius:12px}}
 
 .jam-mapbox,.jam-codebox{margin-top:14px;border:1.5px solid var(--line);border-radius:12px;background:#fff;padding:8px 12px}.jam-mapbox summary,.jam-codebox summary{cursor:pointer;font-weight:800;color:var(--navy);min-height:44px;display:flex;align-items:center;gap:10px}.jam-map-sum{font-weight:650;color:var(--muted);font-size:.9rem}
