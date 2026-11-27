@@ -145,3 +145,9 @@
 - 没做的候选：
   1. 首页邮件订阅区（#signup）仍是 hidden，未接后端，按「不收集数据」的铁律保持不动。
   2. apps/birdpal-ios/BirdPal/index.html（iOS 壳子副本）的语言按钮仍是 34px，留给 Bird Pal 线发版时一起改。
+
+## 2026-11-27
+- 改了什么（提升转化：Etsy 店铺与亚马逊书籍链接的清晰度）：首页「Books, songs and the shop」一排里的 Etsy 店铺、两本小说的亚马逊链接、YouTube 频道，以及页脚「Message us through our Etsy shop」这 5 个站外链接都是在当前标签页直接跳走，而同一页顶部的「Buy on Amazon」「Shop printables on Etsy」和页脚其他站外链接都是新标签页打开。统一加上 `target="_blank"`（已有 `rel="noopener"`），访客点去 Etsy / 亚马逊后网站仍留在原标签页，不会一去不回。纯 HTML 改动，无需改 `?v=`。375px 复查：页面 375px 无溢出、5 个链接点击区 172–214px 高（页脚文字链接按惯例不强求 44px），46 个测试全过。全站扫描：22 个可索引页面无死链、无横向溢出、无不达标按钮，sitemap 23 条全部有效。PR 号见 claude/daily-2026-11-27 合并记录。
+- 没做的候选：
+  1. printables.html 上的 6 个 `data-etsy` 链接同样在当前标签页打开，下次可用同样方式统一（common.js 只给 product.html 的按钮设了 `target`）。
+  2. apps/birdpal-ios/BirdPal/index.html（iOS 壳子副本）的语言按钮仍是 34px，留给 Bird Pal 线发版时一起改。
