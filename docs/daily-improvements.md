@@ -151,3 +151,9 @@
 - 没做的候选：
   1. printables.html 上的 6 个 `data-etsy` 链接同样在当前标签页打开，下次可用同样方式统一（common.js 只给 product.html 的按钮设了 `target`）。
   2. apps/birdpal-ios/BirdPal/index.html（iOS 壳子副本）的语言按钮仍是 34px，留给 Bird Pal 线发版时一起改。
+
+## 2026-11-28
+- 改了什么（提升转化：Etsy 店铺链接的清晰度）：导航里的 Printables 页（/printables.html）是全站卖 Etsy 打印包的主页面，上面 6 个 `data-etsy` 链接（顶部「Browse $1.99 packs on Etsy」、三张卡片的「See on Etsy」、「See the shop」、底部「Shop printables on Etsy」）都在当前标签页直接跳走，而同一页页脚的 Etsy 链接、首页（#80）和 product.html（common.js）的 Etsy 按钮都是新标签页打开，是 11-27 留下的候选 1。统一加上 `target="_blank"`（已有 `rel="noopener"`），访客逛完 Etsy 回来网站还在。纯 HTML 改动，无需改 `?v=`。375px 复查：页面 375px 无溢出，6 个链接点击区 46–57px 高，46 个测试全过。PR 号见 claude/daily-2026-11-28 合并记录。
+- 没做的候选：
+  1. apps/birdpal-ios/BirdPal/index.html（iOS 壳子副本）的语言按钮仍是 34px，留给 Bird Pal 线发版时一起改。
+  2. 两本小说的亚马逊链接仍是搜索页（`/s?k=…`）而非商品页；没有核实过的 ASIN，不编造，等老板给链接再换。
