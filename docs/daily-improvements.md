@@ -152,6 +152,12 @@
   1. printables.html 上的 6 个 `data-etsy` 链接同样在当前标签页打开，下次可用同样方式统一（common.js 只给 product.html 的按钮设了 `target`）。
   2. apps/birdpal-ios/BirdPal/index.html（iOS 壳子副本）的语言按钮仍是 34px，留给 Bird Pal 线发版时一起改。
 
+## 2026-11-28
+- 改了什么（提升转化：Etsy 店铺链接的清晰度）：导航里的 Printables 页（/printables.html）是全站卖 Etsy 打印包的主页面，上面 6 个 `data-etsy` 链接（顶部「Browse $1.99 packs on Etsy」、三张卡片的「See on Etsy」、「See the shop」、底部「Shop printables on Etsy」）都在当前标签页直接跳走，而同一页页脚的 Etsy 链接、首页（#80）和 product.html（common.js）的 Etsy 按钮都是新标签页打开，是 11-27 留下的候选 1。统一加上 `target="_blank"`（已有 `rel="noopener"`），访客逛完 Etsy 回来网站还在。纯 HTML 改动，无需改 `?v=`。375px 复查：页面 375px 无溢出，6 个链接点击区 46–57px 高，46 个测试全过。PR 号见 claude/daily-2026-11-28 合并记录。
+- 没做的候选：
+  1. apps/birdpal-ios/BirdPal/index.html（iOS 壳子副本）的语言按钮仍是 34px，留给 Bird Pal 线发版时一起改。
+  2. 两本小说的亚马逊链接仍是搜索页（`/s?k=…`）而非商品页；没有核实过的 ASIN，不编造，等老板给链接再换。
+
 ## 2026-11-11（PR #49，11-18 在最新 main 上重做）
 - 改了什么（删掉一个多余的东西）：product.html 是一个没有任何页面链到的孤儿页，内容还是旧方案（「Coming soon · 需家长审核」「USD 4.99 测试价」「Payhip 交付」「[parent-managed email required]」），和现在「Etsy $1.99 即时下载」的真实卖法矛盾，却仍在 sitemap 里、允许被 Google 索引。改为 noindex 并移出 sitemap，文件保留；tests/site.test.js 的索引/noindex 清单同步更新。无 CSS/JS 改动，不需要动 ?v=。45 个测试全过。PR #49。
 - 说明：#49 原本捆了当时未合并的 #47、#48；一周后 main 已通过其他 PR 落地了面包屑 44px 修复，首页也已改版（#66），#47/#48 已过时，可直接关闭。#49 改为只含 product.html 这一件事。
